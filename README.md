@@ -12,10 +12,10 @@ Employee Learning Management System
 1. Import the DDL file present on the main branch into MySQL. To do this, open Command Prompt / Terminal, navigate to where the LearningMgmtDDL.sql file is located, run the command 
 
 ```bash
-mysql
+mysql -u root -p
 ```
 
-to load up the MySQL command line utility, then run the command 
+to load up the MySQL command line utility, then enter root password ,finally run the command 
 
 ```bash
 source LearningMgmtDDL.sql
