@@ -1,13 +1,20 @@
+/*Drops grp2PSL user and learningMgmtDB database not required to run in initial iteration*/
 drop user 'grp2PSL'@'localhost';
 drop database learningMgmtDB;
+
+/*Creates new database named learningMgmtDB*/
 Create database learningMgmtDB;
 
+/*Creates new user named grp2PSL*/
 CREATE USER 'grp2PSL'@'localhost' IDENTIFIED BY 'grp2PSLPass';
 
+/*Grants all privileges on the created database to the created user*/
 GRANT ALL PRIVILEGES ON learningMgmtDB.* TO 'grp2PSL'@'localhost';
 
+/*Switches database to learningMgmtDB*/
 use learningMgmtDB;
 
+/*Creates table to store learner's data*/
 create table learner(
 	learnerid int,
     name varchar(100),
@@ -18,6 +25,7 @@ create table learner(
     primary key(learnerid)
 );
 
+/*Creates table trainer's data*/
 create table trainer(
 	trainerid int,
     name varchar(100),
@@ -28,6 +36,7 @@ create table trainer(
     primary key(trainerid)
 );
 
+/*Creates table admin's data*/
 create table admin(
 	adminid int,
     name varchar(100),
@@ -37,6 +46,7 @@ create table admin(
     primary key(adminid)
 );
 
+/*Creates table to store course details*/
 create table course(
 	courseid int,
     coursename varchar(100),
@@ -45,6 +55,7 @@ create table course(
     primary key(courseid)
 );
 
+/*Create table to store course offering details*/
 create table courseoffering(
 	feedback varchar(150),
     ratings int CHECK (ratings >= 0 AND ratings <= 5),
@@ -57,6 +68,7 @@ create table courseoffering(
     primary key(learnerid, tcid)
 );
 
+/*Creates table which stores teachercourse mapping*/
 create table TeacherCourseMapping(
 	trainerid int,
     courseid int,
