@@ -1,29 +1,22 @@
 package com.psl.entities;
 
 public abstract class User {
-	private int id;
 	private String name;
-	private String phone;
+	private long phonenumber;
 	private String email;
 	private String password;
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getPhone() {
-		return phone;
+	public long getPhonenumber() {
+		return phonenumber;
 	}
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setPhone(long phonenumber) {
+		this.phonenumber = phonenumber;
 	}
 	public String getEmail() {
 		return email;

@@ -37,13 +37,13 @@ create table trainer(
 );
 
 /*Creates table admin's data*/
-create table admin(
-	adminid int,
+create table manager(
+	managerid int,
     name varchar(100),
     phonenumber long,
     email varchar(50),
     password varchar(25),
-    primary key(adminid)
+    primary key(managerid)
 );
 
 /*Creates table to store course details*/
@@ -54,6 +54,16 @@ create table course(
     syllabus varchar(300),
     duration int,
     primary key(courseid)
+);
+
+/*Creates table which stores teachercourse mapping*/
+create table TeacherCourseMapping(
+	trainerid int,
+    courseid int,
+    tcid int,
+    primary key (tcid),
+    foreign key(trainerid) references trainer(trainerid),
+    foreign key(courseid) references course(courseid)
 );
 
 /*Create table to store course offering details*/
@@ -71,12 +81,3 @@ create table courseoffering(
     foreign key(tcid) references TeacherCourseMapping(tcid)
 );
 
-/*Creates table which stores teachercourse mapping*/
-create table TeacherCourseMapping(
-	trainerid int,
-    courseid int,
-    tcid int,
-    primary key (tcid),
-    foreign key(trainerid) references trainer(trainerid),
-    foreign key(courseid) references course(courseid)
-)

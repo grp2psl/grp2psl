@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.psl.dao.ILearnerDAO;
-import com.psl.entity.Learner;
+import com.psl.entities.Learner;
 
 @Service("learnerService")
 public class LearnerService {
