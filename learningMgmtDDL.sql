@@ -66,8 +66,9 @@ create table courseoffering(
     tcid int,
     status varchar(20),
     percentage int check (percentage >= 0 AND percentage <= 100),
-    primary key(tcid),
-    foreign key(learnerid) references learner(learnerid)
+    primary key(tcid, learnerid),
+    foreign key(learnerid) references learner(learnerid),
+    foreign key(tcid) references TeacherCourseMapping(tcid)
 );
 
 /*Creates table which stores teachercourse mapping*/
