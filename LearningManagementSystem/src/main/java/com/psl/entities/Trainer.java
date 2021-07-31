@@ -5,7 +5,6 @@ public class Trainer extends User {
 	private String name;
 	private String phone;
 	private String department;
-	private String specialization; 
 	private String email;
 	private String password;
 	public Trainer() {
@@ -18,7 +17,6 @@ public class Trainer extends User {
 		this.name = name;
 		this.phone = phone;
 		this.department = department;
-		this.specialization = specialization;
 		this.email = email;
 		this.password = password;
 	}
@@ -28,16 +26,12 @@ public class Trainer extends User {
 	public void setDepartment(String department) {
 		this.department = department;
 	}
-	public String getSpecialization() {
-		return specialization;
-	}
-	public void setSpecialization(String specialization) {
-		this.specialization = specialization;
-	}
+	
+	
 	@Override
 	public String toString() {
 		return "Trainer [id=" + id + ", name=" + name + ", phone=" + phone + ", department=" + department
-				+ ", specialization=" + specialization + ", email=" + email + ", password=" + password + "]";
+				+ ", email=" + email + ", password=" + password + "]";
 	}
 			
 }
