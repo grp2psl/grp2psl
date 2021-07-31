@@ -51,6 +51,7 @@ create table course(
 	courseid int,
     coursename varchar(100),
     prerequisite varchar(300),
+    syllabus varchar(300),
     duration int,
     primary key(courseid)
 );
