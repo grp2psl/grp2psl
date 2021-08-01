@@ -90,8 +90,8 @@ create table courseoffering(
     foreign key(tcid) references TeacherCourseMapping(tcid)
 );
 
-ALTER TABLE admin ADD CONSTRAINT unique_constraint UNIQUE(email);
-ALTER TABLE admin CHANGE email email varchar(50) not null;
+ALTER TABLE manager ADD CONSTRAINT unique_constraint UNIQUE(email);
+ALTER TABLE manager CHANGE email email varchar(50) not null;
 ALTER TABLE learner ADD CONSTRAINT unique_constraint UNIQUE(email);
 ALTER TABLE learner CHANGE email email varchar(50) not null;
 ALTER TABLE trainer ADD CONSTRAINT unique_constraint UNIQUE(email);
