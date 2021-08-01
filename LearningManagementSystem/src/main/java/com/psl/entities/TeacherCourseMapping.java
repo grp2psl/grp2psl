@@ -1,6 +1,11 @@
 package com.psl.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class TeacherCourseMapping {
+	@Id
 	private int trainerId;
 	private int courseId;
 	private int tcId;
