@@ -1,13 +1,14 @@
 package com.psl.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Trainer extends User {
 	@Id
-	private int trainerid;
-	
+	private int trainerid;	
 	private String name;
 	private String department;
 	private long phonenumber;
