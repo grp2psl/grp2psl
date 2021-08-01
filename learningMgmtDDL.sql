@@ -14,6 +14,15 @@ GRANT ALL PRIVILEGES ON learningMgmtDB.* TO 'grp2PSL'@'localhost';
 /*Switches database to learningMgmtDB*/
 use learningMgmtDB;
 
+/*
+drop table courseoffering;
+drop table TeacherCourseMapping;
+drop table learner;
+drop table trainer;
+drop table admin;
+drop table course;
+*/
+
 /*Creates table to store learner's data*/
 create table learner(
 	learnerid int,
@@ -81,3 +90,9 @@ create table courseoffering(
     foreign key(tcid) references TeacherCourseMapping(tcid)
 );
 
+ALTER TABLE admin ADD CONSTRAINT unique_constraint UNIQUE(email);
+ALTER TABLE admin CHANGE email email varchar(50) not null;
+ALTER TABLE learner ADD CONSTRAINT unique_constraint UNIQUE(email);
+ALTER TABLE learner CHANGE email email varchar(50) not null;
+ALTER TABLE trainer ADD CONSTRAINT unique_constraint UNIQUE(email);
+ALTER TABLE trainer CHANGE email email varchar(50) not null;
