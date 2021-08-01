@@ -28,7 +28,7 @@ public class LearnerController {
 	}
 	
 	@PostMapping("/register")
-	public void addLearner(@RequestBody Learner l) {
-		service.addLearner(l);
+	public void addLearner(@RequestBody Learner learner) {
+		service.addLearner(learner);
 	}
 }
