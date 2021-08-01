@@ -37,13 +37,13 @@ create table trainer(
 );
 
 /*Creates table admin's data*/
-create table admin(
-	adminid int,
+create table manager(
+	managerid int,
     name varchar(100),
     phonenumber long,
     email varchar(50),
     password varchar(25),
-    primary key(adminid)
+    primary key(managerid)
 );
 
 /*Creates table to store course details*/
@@ -56,6 +56,16 @@ create table course(
     primary key(courseid)
 );
 
+/*Creates table which stores teachercourse mapping*/
+create table TeacherCourseMapping(
+	trainerid int,
+    courseid int,
+    tcid int,
+    primary key (tcid),
+    foreign key(trainerid) references trainer(trainerid),
+    foreign key(courseid) references course(courseid)
+);
+
 /*Create table to store course offering details*/
 create table courseoffering(
 	feedback varchar(150),
@@ -66,16 +76,8 @@ create table courseoffering(
     tcid int,
     status varchar(20),
     percentage int check (percentage >= 0 AND percentage <= 100),
-    primary key(tcid),
-    foreign key(learnerid) references learner(learnerid)
+    primary key(tcid, learnerid),
+    foreign key(learnerid) references learner(learnerid),
+    foreign key(tcid) references TeacherCourseMapping(tcid)
 );
 
-/*Creates table which stores teachercourse mapping*/
-create table TeacherCourseMapping(
-	trainerid int,
-    courseid int,
-    tcid int,
-    primary key (tcid),
-    foreign key(trainerid) references trainer(trainerid),
-    foreign key(courseid) references course(courseid)
-)
