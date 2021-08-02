@@ -28,7 +28,7 @@ create table learner(
 	learnerid int,
     name varchar(100),
     department varchar(50),
-    phonenumber long,
+    phonenumber varchar(15),
     email varchar(50),
     password varchar(25),
     primary key(learnerid)
@@ -39,7 +39,7 @@ create table trainer(
 	trainerid int,
     name varchar(100),
     department varchar(50),
-    phonenumber long,
+    phonenumber varchar(15),
     email varchar(50),
     password varchar(25),
     primary key(trainerid)
@@ -49,7 +49,7 @@ create table trainer(
 create table manager(
 	managerid int,
     name varchar(100),
-    phonenumber long,
+    phonenumber varchar(15),
     email varchar(50),
     password varchar(25),
     primary key(managerid)

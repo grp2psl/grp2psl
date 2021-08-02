@@ -20,3 +20,8 @@ to load up the MySQL command line utility, then enter root password ,finally run
 ```bash
 source LearningMgmtDDL.sql
 ```
+
+Run this file to create dummy data.
+```bash
+source createDummyData.sql
+```
