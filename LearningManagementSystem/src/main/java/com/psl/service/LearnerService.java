@@ -1,6 +1,7 @@
 package com.psl.service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.psl.dao.ILearnerDAO;
 import com.psl.entities.Learner;
+import com.psl.entities.Trainer;
 
 @Service("learnerService")
 public class LearnerService {
@@ -50,6 +52,10 @@ public class LearnerService {
 			service.sendEmail("group2.learning.management.system@gmail.com", learner.getEmail(), "Hi " + firstname +", \nYour password is "+password+"\nChange your password once you are logged in.", "Learner registered successfully - learning management portal");		
 	    }
 				
+	}
+
+	public List<Learner> getAllLearners(){
+		return dao.findAll();
 	}
 	
 	public Learner getLearner(int id) {
