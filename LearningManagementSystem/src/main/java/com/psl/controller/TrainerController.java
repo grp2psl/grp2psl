@@ -35,4 +35,5 @@ public class TrainerController {
 	public void addMultipleTrainers(@RequestParam("file") MultipartFile csvFilePath ) throws IOException {
 		service.addMultipleTrainers(csvFilePath);
 	}
+
 }
