@@ -1,6 +1,7 @@
 package com.psl.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,5 +35,10 @@ public class TrainerController {
 	@PostMapping("/register-multiple")
 	public void addMultipleTrainers(@RequestParam("file") MultipartFile csvFilePath ) throws IOException {
 		service.addMultipleTrainers(csvFilePath);
+	}
+	
+	@GetMapping("/")
+	public List<Trainer> getAllTrainers(){
+		return service.getAllTrainers();
 	}
 }

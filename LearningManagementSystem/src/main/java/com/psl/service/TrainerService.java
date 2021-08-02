@@ -1,6 +1,7 @@
 package com.psl.service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -52,6 +53,10 @@ public class TrainerService {
 				
 	}
 	
+	public List<Trainer> getAllTrainers(){
+		return dao.findAll();
+	}
+		
 	public Trainer getTrainer(int id) {
 		return dao.findById(id).get();
 	}
