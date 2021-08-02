@@ -1,6 +1,8 @@
 package com.psl.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
@@ -8,7 +10,7 @@ public class Learner extends User {
 	@Id
 	private int learnerid;
 	private String name;
-	private long phonenumber;
+	private String phonenumber;
 	private String department;
 	private String email;
 	private String password;
@@ -25,10 +27,10 @@ public class Learner extends User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public long getPhonenumber() {
+	public String getPhonenumber() {
 		return phonenumber;
 	}
-	public void setPhonenumber(long phonenumber) {
+	public void setPhonenumber(String phonenumber) {
 		this.phonenumber = phonenumber;
 	}
 	public String getDepartment() {
@@ -50,7 +52,7 @@ public class Learner extends User {
 		this.password = password;
 	}
 	
-	public Learner(int learnerid, String name, long phonenumber, String department, String email, String password) {
+	public Learner(int learnerid, String name, String phonenumber, String department, String email, String password) {
 		this.learnerid = learnerid;
 		this.name = name;
 		this.phonenumber = phonenumber;

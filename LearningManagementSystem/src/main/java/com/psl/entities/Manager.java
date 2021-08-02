@@ -8,7 +8,7 @@ public class Manager extends User {
 	@Id
 	private int managerid;
 	private String name;
-	private long phonenumber;
+	private String phonenumber;
 	private String email;
 	private String password;
 	
@@ -24,10 +24,10 @@ public class Manager extends User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public long getPhonenumber() {
+	public String getPhonenumber() {
 		return phonenumber;
 	}
-	public void setPhonenumber(long phonenumber) {
+	public void setPhonenumber(String phonenumber) {
 		this.phonenumber = phonenumber;
 	}
 	public String getEmail() {
@@ -47,7 +47,7 @@ public class Manager extends User {
 	public Manager() {
 		
 	}
-	public Manager(int managerid, String name, long phonenumber, String email, String password) {
+	public Manager(int managerid, String name, String phonenumber, String email, String password) {
 		this.managerid = managerid;
 		this.name = name;
 		this.phonenumber = phonenumber;

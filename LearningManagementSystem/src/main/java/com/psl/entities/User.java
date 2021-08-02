@@ -2,7 +2,7 @@ package com.psl.entities;
 
 public abstract class User {
 	private String name;
-	private long phonenumber;
+	private String phonenumber;
 	private String email;
 	private String password;
 	
@@ -12,10 +12,10 @@ public abstract class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public long getPhonenumber() {
+	public String getPhonenumber() {
 		return phonenumber;
 	}
-	public void setPhone(long phonenumber) {
+	public void setPhone(String phonenumber) {
 		this.phonenumber = phonenumber;
 	}
 	public String getEmail() {
