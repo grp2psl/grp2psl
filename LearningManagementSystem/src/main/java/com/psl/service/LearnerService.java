@@ -41,7 +41,7 @@ public class LearnerService {
 	        learner.setLearnerid((int)row.getCell(0).getNumericCellValue());   
 	        learner.setName(row.getCell(1).getStringCellValue());
 	        learner.setDepartment(row.getCell(2).getStringCellValue());
-	        learner.setPhonenumber((long)row.getCell(3).getNumericCellValue());
+	        learner.setPhonenumber(row.getCell(3).getStringCellValue());
 	        learner.setEmail(row.getCell(4).getStringCellValue());
 			String firstname = learner.getName().substring(0, learner.getName().indexOf(" "));
 			String password = firstname+learner.getLearnerid()+"@"+rand.nextInt(9999);

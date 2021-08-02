@@ -2,7 +2,12 @@ package com.psl.entities;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class CourseOffering {
+	@Id
 	private String Feedback;
 	private int ratings;
 	private Date startDate;

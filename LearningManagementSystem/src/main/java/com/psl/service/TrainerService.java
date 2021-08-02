@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.psl.dao.ITrainerDAO;
-import com.psl.entities.Learner;
 import com.psl.entities.Trainer;
 
 @Service("trainerService")
@@ -42,7 +41,7 @@ public class TrainerService {
 	        trainer.setTrainerid((int)row.getCell(0).getNumericCellValue());   
 	        trainer.setName(row.getCell(1).getStringCellValue());
 	        trainer.setDepartment(row.getCell(2).getStringCellValue());
-	        trainer.setPhonenumber((long)row.getCell(3).getNumericCellValue());
+	        trainer.setPhonenumber(row.getCell(3).getStringCellValue());
 	        trainer.setEmail(row.getCell(4).getStringCellValue());
 			String firstname = trainer.getName().substring(0, trainer.getName().indexOf(" "));
 			String password = firstname+trainer.getTrainerid()+"@"+rand.nextInt(9999);

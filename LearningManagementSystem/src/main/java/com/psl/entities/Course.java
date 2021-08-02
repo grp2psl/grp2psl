@@ -1,7 +1,13 @@
 package com.psl.entities;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Course {
-	
+	@Id
+	@Column(name="courseid")
 	private int courseId;
 	private String coursename;
 	private String prerequisite;
