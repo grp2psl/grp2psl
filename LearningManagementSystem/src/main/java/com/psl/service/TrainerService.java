@@ -23,7 +23,12 @@ public class TrainerService {
 	
 	public void addTrainer(Trainer trainer) {
 		Random rand = new Random();
-		String firstname = trainer.getName().substring(0, trainer.getName().indexOf(" "));
+        String firstname = trainer.getName();
+		try {
+			firstname = firstname.substring(0, trainer.getName().indexOf(" "));
+		}catch(StringIndexOutOfBoundsException e) {
+			e.printStackTrace();
+		}
 		String password = firstname+trainer.getTrainerid()+"@"+rand.nextInt(9999);
 		trainer.setPassword(password);
 		dao.save(trainer);
@@ -44,7 +49,12 @@ public class TrainerService {
 	        trainer.setDepartment(row.getCell(2).getStringCellValue());
 	        trainer.setPhonenumber(row.getCell(3).getStringCellValue());
 	        trainer.setEmail(row.getCell(4).getStringCellValue());
-			String firstname = trainer.getName().substring(0, trainer.getName().indexOf(" "));
+	        String firstname = trainer.getName();
+			try {
+				firstname = firstname.substring(0, trainer.getName().indexOf(" "));
+			}catch(StringIndexOutOfBoundsException e) {
+				e.printStackTrace();
+			}
 			String password = firstname+trainer.getTrainerid()+"@"+rand.nextInt(9999);
 			trainer.setPassword(password);
 			dao.save(trainer);

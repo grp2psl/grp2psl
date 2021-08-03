@@ -24,7 +24,12 @@ public class LearnerService {
 	
 	public void addLearner(Learner learner) {
 		Random rand = new Random();
-		String firstname = learner.getName().substring(0, learner.getName().indexOf(" "));
+		String firstname = learner.getName();
+		try {
+			firstname = firstname.substring(0, learner.getName().indexOf(" "));
+		}catch(StringIndexOutOfBoundsException e) {
+			e.printStackTrace();
+		}
 		String password = firstname+learner.getLearnerid()+"@"+rand.nextInt(9999);
 		learner.setPassword(password);
 		dao.save(learner);
@@ -45,7 +50,12 @@ public class LearnerService {
 	        learner.setDepartment(row.getCell(2).getStringCellValue());
 	        learner.setPhonenumber(row.getCell(3).getStringCellValue());
 	        learner.setEmail(row.getCell(4).getStringCellValue());
-			String firstname = learner.getName().substring(0, learner.getName().indexOf(" "));
+	        String firstname = learner.getName();
+			try {
+				firstname = firstname.substring(0, learner.getName().indexOf(" "));
+			}catch(StringIndexOutOfBoundsException e) {
+				e.printStackTrace();
+			}
 			String password = firstname+learner.getLearnerid()+"@"+rand.nextInt(9999);
 			learner.setPassword(password);
 			dao.save(learner);
