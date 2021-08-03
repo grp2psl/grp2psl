@@ -36,13 +36,9 @@ public class TrainerController {
 	public void addMultipleTrainers(@RequestParam("file") MultipartFile csvFilePath ) throws IOException {
 		service.addMultipleTrainers(csvFilePath);
 	}
-<<<<<<< HEAD
-
-=======
 	
 	@GetMapping("/")
 	public List<Trainer> getAllTrainers(){
 		return service.getAllTrainers();
 	}
->>>>>>> 74f6f38d0b599692bd4d33a1a2a05ea702480fe9
 }
