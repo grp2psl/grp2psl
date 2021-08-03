@@ -1,8 +1,22 @@
 package com.psl.entities;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "teachercoursemapping")
 public class TeacherCourseMapping {
+	
+	@Column(name = "trainerid")
 	private int trainerId;
+	
+	@Column(name = "courseid")
 	private int courseId;
+	
+	@Id
+	@Column(name = "tcid")
 	private int tcId;
 	public int getTrainerId() {
 		return trainerId;
