@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 import com.psl.entities.Learner;
 import com.psl.service.LearnerService;
 
@@ -15,7 +17,7 @@ import com.psl.service.LearnerService;
 @RequestMapping("/learners")
 public class LearnerController {
 	@Autowired
-	private LearnerService service;
+	public LearnerService service;
 	
 	@GetMapping("/test")
 	public String home(){
@@ -26,6 +28,12 @@ public class LearnerController {
 	public Learner getLearner(@PathVariable int id) {
 		return service.getLearner(id);
 	}
+
+	// @GetMapping("/{email}")
+	// public int getLearneridByEmail(@PathVariable String email) {
+	// 	return service.getLearneridByEmail(email);
+	// }
+	
 	
 	@PostMapping("/register")
 	public void addLearner(@RequestBody Learner l) {

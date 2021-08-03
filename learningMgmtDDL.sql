@@ -31,6 +31,8 @@ create table learner(
     phonenumber varchar(15),
     email varchar(50),
     password varchar(25),
+    role varchar(45) DEFAULT 'ROLE_USER',
+    enabled int DEFAULT 1,
     primary key(learnerid)
 );
 
@@ -42,6 +44,8 @@ create table trainer(
     phonenumber varchar(15),
     email varchar(50),
     password varchar(25),
+    role varchar(45) DEFAULT 'ROLE_USER',
+    enabled int DEFAULT 1,
     primary key(trainerid)
 );
 
@@ -52,6 +56,8 @@ create table manager(
     phonenumber varchar(15),
     email varchar(50),
     password varchar(25),
+    role varchar(45) DEFAULT 'ROLE_ADMIN',
+    enabled int DEFAULT 1,
     primary key(managerid)
 );
 

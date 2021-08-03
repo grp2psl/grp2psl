@@ -1,19 +1,30 @@
 package com.psl.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.NaturalId;
 
 @Entity
+@Table(name = "learner")
 public class Learner extends User {
 	@Id
 	private int learnerid;
 	private String name;
 	private String phonenumber;
 	private String department;
+
+	@NaturalId
+	@Column(name="email")
 	private String email;
+
 	private String password;
+	private String role;
+	private int enabled;
 	
 	public int getLearnerid() {
 		return learnerid;
@@ -51,6 +62,19 @@ public class Learner extends User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	public int getEnable() {
+		return enabled;
+	}
+	public void setEnable(int enabled) {
+		this.enabled = enabled;
+	}
+
 	
 	public Learner(int learnerid, String name, String phonenumber, String department, String email, String password) {
 		this.learnerid = learnerid;

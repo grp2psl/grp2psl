@@ -2,8 +2,10 @@ package com.psl.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "Manager")
 public class Manager extends User {
 	@Id
 	private int managerid;

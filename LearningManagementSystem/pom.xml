@@ -75,6 +75,12 @@
             <artifactId>tomcat-embed-jasper</artifactId>
             <scope>provided</scope>
         </dependency>
+
+		<!-- To secure application and implement authentication -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>			
+		</dependency>
 	</dependencies>
 
 	<build>

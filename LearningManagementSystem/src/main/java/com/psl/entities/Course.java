@@ -3,8 +3,10 @@ package com.psl.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "course")
 public class Course {
 	@Id
 	@Column(name="courseid")
