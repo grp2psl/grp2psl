@@ -96,15 +96,3 @@ ALTER TABLE learner ADD CONSTRAINT unique_constraint UNIQUE(email);
 ALTER TABLE learner CHANGE email email varchar(50) not null;
 ALTER TABLE trainer ADD CONSTRAINT unique_constraint UNIQUE(email);
 ALTER TABLE trainer CHANGE email email varchar(50) not null;
-
-alter table courseoffering add courseofferingid int;
-alter table courseoffering drop constraint courseoffering_ibfk_1;
-alter table courseoffering drop constraint courseoffering_ibfk_2;
-alter table courseoffering drop primary key;
-
-alter table courseoffering 
-add primary key(courseofferingid),
-add foreign key(learnerid) references learner(learnerid),
-add foreign key(tcid) references TeacherCourseMapping(tcid),
-modify learnerid int not null,
-modify tcid int not null;
