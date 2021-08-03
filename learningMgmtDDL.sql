@@ -19,7 +19,7 @@ drop table courseoffering;
 drop table TeacherCourseMapping;
 drop table learner;
 drop table trainer;
-drop table admin;
+drop table manager;
 drop table course;
 */
 
@@ -28,7 +28,7 @@ create table learner(
 	learnerid int,
     name varchar(100),
     department varchar(50),
-    phonenumber long,
+    phonenumber varchar(15),
     email varchar(50),
     password varchar(25),
     primary key(learnerid)
@@ -39,7 +39,7 @@ create table trainer(
 	trainerid int,
     name varchar(100),
     department varchar(50),
-    phonenumber long,
+    phonenumber varchar(15),
     email varchar(50),
     password varchar(25),
     primary key(trainerid)
@@ -49,7 +49,7 @@ create table trainer(
 create table manager(
 	managerid int,
     name varchar(100),
-    phonenumber long,
+    phonenumber varchar(15),
     email varchar(50),
     password varchar(25),
     primary key(managerid)
@@ -90,9 +90,21 @@ create table courseoffering(
     foreign key(tcid) references TeacherCourseMapping(tcid)
 );
 
-ALTER TABLE admin ADD CONSTRAINT unique_constraint UNIQUE(email);
-ALTER TABLE admin CHANGE email email varchar(50) not null;
+ALTER TABLE manager ADD CONSTRAINT unique_constraint UNIQUE(email);
+ALTER TABLE manager CHANGE email email varchar(50) not null;
 ALTER TABLE learner ADD CONSTRAINT unique_constraint UNIQUE(email);
 ALTER TABLE learner CHANGE email email varchar(50) not null;
 ALTER TABLE trainer ADD CONSTRAINT unique_constraint UNIQUE(email);
 ALTER TABLE trainer CHANGE email email varchar(50) not null;
+
+alter table courseoffering add courseofferingid int;
+alter table courseoffering drop constraint courseoffering_ibfk_1;
+alter table courseoffering drop constraint courseoffering_ibfk_2;
+alter table courseoffering drop primary key;
+
+alter table courseoffering 
+add primary key(courseofferingid),
+add foreign key(learnerid) references learner(learnerid),
+add foreign key(tcid) references TeacherCourseMapping(tcid),
+modify learnerid int not null,
+modify tcid int not null;

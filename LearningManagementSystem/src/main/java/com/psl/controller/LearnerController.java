@@ -1,6 +1,7 @@
-package com.psl.controller;
+	package com.psl.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.psl.entities.Learner;
+import com.psl.entities.Trainer;
 import com.psl.service.LearnerService;
 
 @RestController
@@ -35,10 +37,24 @@ public class LearnerController {
 	public void addLearner(@RequestBody Learner learner) {
 		service.addLearner(learner);
 	}
+	/*
+	@PostMapping("/register")
+	public ResponseEntity<Void> addLearner(@RequestBody Learner learner, UriComponentsBuilder ucBuilder) {
+		service.addLearner(learner);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(ucBuilder.path("/learners/{id}").buildAndExpand(learner.getLearnerid()).toUri());
+		return new ResponseEntity<Void> (headers, HttpStatus.CREATED);
+	}
+	 */
 	
 	/*For testing in postman: Enter url->body->form-data->key:file->select file from dropdown->select file*/
 	@PostMapping("/register-multiple")
 	public void addMultipleLearners(@RequestParam("file") MultipartFile csvFilePath ) throws IOException {
 		service.addMultipleLearners(csvFilePath);
+	}
+	
+	@GetMapping("/")
+	public List<Learner> getAllLearners(){
+		return service.getAllLearners();
 	}
 }

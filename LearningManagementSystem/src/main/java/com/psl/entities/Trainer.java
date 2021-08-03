@@ -11,7 +11,7 @@ public class Trainer extends User {
 	private int trainerid;	
 	private String name;
 	private String department;
-	private long phonenumber;
+	private String phonenumber;
 	private String email;
 	private String password;
 	
@@ -28,10 +28,10 @@ public class Trainer extends User {
 	public void setDepartment(String department) {
 		this.department = department;
 	}
-	public long getPhonenumber() {
+	public String getPhonenumber() {
 		return phonenumber;
 	}
-	public void setPhonenumber(long phonenumber) {
+	public void setPhonenumber(String phonenumber) {
 		this.phonenumber = phonenumber;
 	}
 	public String getEmail() {
@@ -58,7 +58,7 @@ public class Trainer extends User {
 		
 	}
 	
-	public Trainer(int trainerid, String name, String department, long phonenumber, String email, String password) {
+	public Trainer(int trainerid, String name, String department, String phonenumber, String email, String password) {
 		super();
 		this.trainerid = trainerid;
 		this.name = name;
