@@ -19,13 +19,6 @@ public class LearnerController {
 	@Autowired
 	public LearnerService service;
 
-	@GetMapping("/")
-	public RedirectView redirectAfterLogin() {
-		String currentUserId = String.valueOf(SecurityContextHolder.getContext().getAuthentication().getName());
-		String redirectSuccessURL = "/LearningManagementSystem/learners/" + currentUserId + "/";
-        return new RedirectView(redirectSuccessURL);
-    }
-	
 	@GetMapping("/test")
 	public String home() {
 		return "home";

@@ -18,13 +18,6 @@ import com.psl.service.ManagerService;
 public class ManagerController {
 	@Autowired
 	private ManagerService service;
-
-	@GetMapping("/")
-	public RedirectView redirectAfterLogin() {
-		String currentUserId = String.valueOf(SecurityContextHolder.getContext().getAuthentication().getName());
-		String redirectSuccessURL = "/LearningManagementSystem/managers/" + currentUserId + "/";
-        return new RedirectView(redirectSuccessURL);
-    }
 	
 	@GetMapping("/{id}")
 	public Manager getManager(@PathVariable int id) {

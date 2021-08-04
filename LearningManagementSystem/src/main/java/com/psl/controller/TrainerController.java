@@ -18,13 +18,6 @@ import com.psl.service.TrainerService;
 public class TrainerController {
 	@Autowired
 	private TrainerService service;
-
-	@GetMapping("/")
-	public RedirectView redirectAfterLogin() {
-		String currentUserId = String.valueOf(SecurityContextHolder.getContext().getAuthentication().getName());
-		String redirectSuccessURL = "/LearningManagementSystem/trainers/" + currentUserId + "/";
-        return new RedirectView(redirectSuccessURL);
-    }
 	
 	@GetMapping("/{id}")
 	public Trainer getTrainer(@PathVariable int id) {

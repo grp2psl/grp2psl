@@ -27,8 +27,8 @@ public class LearnersSecurityConfig extends WebSecurityConfigurerAdapter {
 		authBuilder.jdbcAuthentication()
 			.dataSource(dataSource)
 			.passwordEncoder(passwordEncoder())
-			.usersByUsernameQuery("select learnerid, password, enabled from learner where learnerid=?;")
-			.authoritiesByUsernameQuery("select learnerid, role from learner where learnerid=?;")
+			.usersByUsernameQuery("select username, password, enabled from usercredentials where username=?;")
+			.authoritiesByUsernameQuery("select username, role from usercredentials where username=?;")
 			;
 	}
 
@@ -36,11 +36,14 @@ public class LearnersSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 			.antMatchers("/learners/{id}/**").access("@userSecurity.hasId(authentication, #id)")
-			.antMatchers("/trainers/**").access("false")
-			.antMatchers("/managers/**").access("false")
+			.antMatchers("/trainers/{id}/**").access("@userSecurity.hasId(authentication, #id)")
+			.antMatchers("/managers/{id}/**").access("@userSecurity.hasManagerId(authentication, #id)")
+			.antMatchers("/learners/**").access("@userSecurity.hasAccessToLearners(authentication)")
+			.antMatchers("/trainers/**").access("@userSecurity.hasAccessToTrainers(authentication)")
+			.antMatchers("/managers/**").access("@userSecurity.hasAccessToManagers(authentication)")
 			.anyRequest().authenticated()
 			.and()
-			.formLogin().defaultSuccessUrl("/learners/").permitAll()
+			.formLogin().defaultSuccessUrl("/homepage/").permitAll()
 			.and()
 			.logout().permitAll()
 			.and()
