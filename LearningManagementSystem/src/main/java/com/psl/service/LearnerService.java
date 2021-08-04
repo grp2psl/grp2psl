@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.psl.dao.ILearnerDAO;
 import com.psl.entities.Learner;
-import com.psl.entities.Trainer;
 
 @Service("learnerService")
 public class LearnerService {
@@ -69,6 +68,7 @@ public class LearnerService {
 	}
 	
 	public Learner getLearner(int id) {
+		System.out.println(dao.findById(id).get());
 		return dao.findById(id).get();
 	}
 	
