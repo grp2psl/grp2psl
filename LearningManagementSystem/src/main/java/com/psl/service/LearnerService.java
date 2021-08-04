@@ -72,4 +72,8 @@ public class LearnerService {
 		return dao.findById(id).get();
 	}
 	
+	public void removeLearner(int id) {
+		dao.deleteById(id);
+	}
+	
 }

@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.psl.dao.ICourseDAO;
 import com.psl.dao.ICourseofferingDAO;
 import com.psl.entities.Course;
-import com.psl.entities.Courseoffering;
+import com.psl.entities.CourseOffering;
 
 @Service("courseService")
 public class CourseService {
@@ -38,7 +38,7 @@ public class CourseService {
 		return dao.findById(id).get();
 	}
 	
-	public void enrollLearner(Courseoffering offering) throws ParseException {
+	public void enrollLearner(CourseOffering offering) throws ParseException {
 		Integer maxId = offeringDao.getMaxId();
 		maxId = maxId==null ? 0 : maxId;
 		offering.setCourseofferingid(++maxId);
@@ -54,7 +54,7 @@ public class CourseService {
 	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
 	    
 	    for(int i=1;i<worksheet.getPhysicalNumberOfRows() ;i++) {
-	        Courseoffering offering = new Courseoffering();
+	        CourseOffering offering = new CourseOffering();
 	        XSSFRow row = worksheet.getRow(i);
 	        offering.setCourseofferingid(++maxId);
 	        offering.setStartdate(formatter.parse(row.getCell(2).getStringCellValue()));

@@ -1,22 +1,25 @@
 package com.psl.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
 public class Manager extends User {
 	@Id
-	private int managerid;
+	@Column(name="managerid")
+	private int managerId;
 	private String name;
-	private String phonenumber;
+	@Column(name="phonenumber")
+	private String phoneNumber;
 	private String email;
 	private String password;
 	
 	public int getManagerid() {
-		return managerid;
+		return managerId;
 	}
 	public void setManagerid(int managerid) {
-		this.managerid = managerid;
+		this.managerId = managerid;
 	}
 	public String getName() {
 		return name;
@@ -25,10 +28,10 @@ public class Manager extends User {
 		this.name = name;
 	}
 	public String getPhonenumber() {
-		return phonenumber;
+		return phoneNumber;
 	}
 	public void setPhonenumber(String phonenumber) {
-		this.phonenumber = phonenumber;
+		this.phoneNumber = phonenumber;
 	}
 	public String getEmail() {
 		return email;
@@ -48,15 +51,15 @@ public class Manager extends User {
 		
 	}
 	public Manager(int managerid, String name, String phonenumber, String email, String password) {
-		this.managerid = managerid;
+		this.managerId = managerid;
 		this.name = name;
-		this.phonenumber = phonenumber;
+		this.phoneNumber = phonenumber;
 		this.email = email;
 		this.password = password;
 	}
 	@Override
 	public String toString() {
-		return "Manager [managerid=" + managerid + ", name=" + name + ", phonenumber=" + phonenumber + ", email="
+		return "Manager [managerid=" + managerId + ", name=" + name + ", phonenumber=" + phoneNumber + ", email="
 				+ email + ", password=" + password + "]";
 	}
 	

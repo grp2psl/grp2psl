@@ -70,4 +70,8 @@ public class TrainerService {
 	public Trainer getTrainer(int id) {
 		return dao.findById(id).get();
 	}
+
+	public void removeTrainer(int id) {
+		dao.deleteById(id);
+	}
 }

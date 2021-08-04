@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.psl.entities.Courseoffering;
+import com.psl.entities.CourseOffering;
 import com.psl.entities.Manager;
 import com.psl.service.CourseService;
 import com.psl.service.ManagerService;
@@ -38,7 +38,7 @@ public class ManagerController {
 	}
 	
 	@PostMapping("/enroll-learner")
-	public void enrollLearner(@RequestBody Courseoffering offering) throws ParseException {
+	public void enrollLearner(@RequestBody CourseOffering offering) throws ParseException {
 		courseService.enrollLearner(offering);
 	}
 	

@@ -1,5 +1,6 @@
 package com.psl.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,10 +9,12 @@ import javax.persistence.Id;
 @Entity
 public class Trainer extends User {
 	@Id
-	private int trainerid;	
+	@Column(name="trainerid")
+	private int trainerId;	
 	private String name;
 	private String department;
-	private String phonenumber;
+	@Column(name="phonenumber")
+	private String phoneNumber;
 	private String email;
 	private String password;
 	
@@ -29,10 +32,10 @@ public class Trainer extends User {
 		this.department = department;
 	}
 	public String getPhonenumber() {
-		return phonenumber;
+		return phoneNumber;
 	}
 	public void setPhonenumber(String phonenumber) {
-		this.phonenumber = phonenumber;
+		this.phoneNumber = phonenumber;
 	}
 	public String getEmail() {
 		return email;
@@ -48,10 +51,10 @@ public class Trainer extends User {
 	}
 	
 	public int getTrainerid() {
-		return trainerid;
+		return trainerId;
 	}
 	public void setTrainerid(int trainerid) {
-		this.trainerid = trainerid;
+		this.trainerId = trainerid;
 	}
 	
 	public Trainer() {
@@ -60,18 +63,18 @@ public class Trainer extends User {
 	
 	public Trainer(int trainerid, String name, String department, String phonenumber, String email, String password) {
 		super();
-		this.trainerid = trainerid;
+		this.trainerId = trainerid;
 		this.name = name;
 		this.department = department;
-		this.phonenumber = phonenumber;
+		this.phoneNumber = phonenumber;
 		this.email = email;
 		this.password = password;
 	}
 	
 	@Override
 	public String toString() {
-		return "Trainer [trainerid=" + trainerid + ", name=" + name + ", department=" + department + ", phonenumber="
-				+ phonenumber + ", email=" + email + ", password=" + password + "]";
+		return "Trainer [trainerid=" + trainerId + ", name=" + name + ", department=" + department + ", phonenumber="
+				+ phoneNumber + ", email=" + email + ", password=" + password + "]";
 	}
 			
 }

@@ -2,29 +2,37 @@ package com.psl.entities;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class Courseoffering {
+@Table(name="courseoffering")
+public class CourseOffering {
 	@Id
-	private int courseofferingid;
+	@Column(name="courseofferingid")
+	private int courseOfferingId;
 	private String feedback;
 	private int ratings;
-	private Date startdate;
-	private Date enddate;
-	private int learnerid;
-	private int tcid;
+	@Column(name="startdate")
+	private Date startDate;
+	@Column(name="enddate")
+	private Date endDate;
+	@Column(name="learnerid")
+	private int learnerId;
+	@Column(name="tcid")
+	private int tcId;
 	private String status;
 	private int percentage;
 	public String getFeedback() {
 		return feedback;
 	}
 	public int getCourseofferingid() {
-		return courseofferingid;
+		return courseOfferingId;
 	}
 	public void setCourseofferingid(int courseofferingid) {
-		this.courseofferingid = courseofferingid;
+		this.courseOfferingId = courseofferingid;
 	}
 	public int getRatings() {
 		return ratings;
@@ -33,28 +41,28 @@ public class Courseoffering {
 		this.ratings = ratings;
 	}
 	public Date getStartdate() {
-		return startdate;
+		return startDate;
 	}
 	public void setStartdate(Date startdate) {
-		this.startdate = startdate;
+		this.startDate = startdate;
 	}
 	public Date getEnddate() {
-		return enddate;
+		return endDate;
 	}
 	public void setEnddate(Date enddate) {
-		this.enddate = enddate;
+		this.endDate = enddate;
 	}
 	public int getLearnerid() {
-		return learnerid;
+		return learnerId;
 	}
 	public void setLearnerid(int learnerid) {
-		this.learnerid = learnerid;
+		this.learnerId = learnerid;
 	}
 	public int getTcid() {
-		return tcid;
+		return tcId;
 	}
 	public void setTcid(int tcid) {
-		this.tcid = tcid;
+		this.tcId = tcid;
 	}
 	public String getStatus() {
 		return status;
@@ -71,24 +79,24 @@ public class Courseoffering {
 	public void setFeedback(String feedback) {
 		this.feedback = feedback;
 	}
-	public Courseoffering(int courseofferingid, String feedback, int ratings, Date startdate, Date enddate,
+	public CourseOffering(int courseofferingid, String feedback, int ratings, Date startdate, Date enddate,
 			int learnerid, int tcid, String status, int percentage) {
-		this.courseofferingid = courseofferingid;
+		this.courseOfferingId = courseofferingid;
 		this.feedback = feedback;
 		this.ratings = ratings;
-		this.startdate = startdate;
-		this.enddate = enddate;
-		this.learnerid = learnerid;
-		this.tcid = tcid;
+		this.startDate = startdate;
+		this.endDate = enddate;
+		this.learnerId = learnerid;
+		this.tcId = tcid;
 		this.status = status;
 		this.percentage = percentage;
 	}
-	public Courseoffering() {
+	public CourseOffering() {
 	}
 	@Override
 	public String toString() {
-		return "Courseoffering [courseofferingid=" + courseofferingid + ", feedback=" + feedback + ", ratings="
-				+ ratings + ", startdate=" + startdate + ", enddate=" + enddate + ", learnerid=" + learnerid + ", tcid="
-				+ tcid + ", status=" + status + ", percentage=" + percentage + "]";
+		return "Courseoffering [courseofferingid=" + courseOfferingId + ", feedback=" + feedback + ", ratings="
+				+ ratings + ", startdate=" + startDate + ", enddate=" + endDate + ", learnerid=" + learnerId + ", tcid="
+				+ tcId + ", status=" + status + ", percentage=" + percentage + "]";
 	}	
 }

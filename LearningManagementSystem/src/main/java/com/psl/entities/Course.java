@@ -3,13 +3,15 @@ package com.psl.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 public class Course {
 	@Id
 	@Column(name="courseid")
 	private int courseId;
-	private String coursename;
+	@Column(name="coursename")
+	private String courseName;
 	private String prerequisite;
 	private String syllabus;
 	private String duration;
@@ -20,10 +22,10 @@ public class Course {
 		this.courseId = courseid;
 	}
 	public String getCoursename() {
-		return coursename;
+		return courseName;
 	}
 	public void setCoursename(String coursename) {
-		this.coursename = coursename;
+		this.courseName = coursename;
 	}
 	public String getPrerequisite() {
 		return prerequisite;
@@ -45,7 +47,7 @@ public class Course {
 	}
 	public Course(int courseid, String coursename, String prerequisite, String syllabus, String duration) {
 		this.courseId = courseid;
-		this.coursename = coursename;
+		this.courseName = coursename;
 		this.prerequisite = prerequisite;
 		this.syllabus = syllabus;
 		this.duration = duration;
@@ -55,7 +57,7 @@ public class Course {
 	}
 	@Override
 	public String toString() {
-		return "Course [courseid=" + courseId + ", coursename=" + coursename + ", prerequisite=" + prerequisite
+		return "Course [courseid=" + courseId + ", coursename=" + courseName + ", prerequisite=" + prerequisite
 				+ ", syllabus=" + syllabus + ", duration=" + duration + "]";
 	}
 	

@@ -1,5 +1,6 @@
 package com.psl.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,18 +9,20 @@ import javax.persistence.Id;
 @Entity
 public class Learner extends User {
 	@Id
-	private int learnerid;
+	@Column(name="learnerid")
+	private int learnerId;
 	private String name;
-	private String phonenumber;
+	@Column(name="phonenumber")
+	private String phoneNumber;
 	private String department;
 	private String email;
 	private String password;
 	
 	public int getLearnerid() {
-		return learnerid;
+		return learnerId;
 	}
 	public void setLearnerid(int learnerid) {
-		this.learnerid = learnerid;
+		this.learnerId = learnerid;
 	}
 	public String getName() {
 		return name;
@@ -28,10 +31,10 @@ public class Learner extends User {
 		this.name = name;
 	}
 	public String getPhonenumber() {
-		return phonenumber;
+		return phoneNumber;
 	}
 	public void setPhonenumber(String phonenumber) {
-		this.phonenumber = phonenumber;
+		this.phoneNumber = phonenumber;
 	}
 	public String getDepartment() {
 		return department;
@@ -53,9 +56,9 @@ public class Learner extends User {
 	}
 	
 	public Learner(int learnerid, String name, String phonenumber, String department, String email, String password) {
-		this.learnerid = learnerid;
+		this.learnerId = learnerid;
 		this.name = name;
-		this.phonenumber = phonenumber;
+		this.phoneNumber = phonenumber;
 		this.department = department;
 		this.email = email;
 		this.password = password;

@@ -6,8 +6,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "teachercoursemapping")
-public class TeacherCourseMapping {
-	
+public class TeacherCourseMapping {	
 	@Column(name = "trainerid")
 	private int trainerId;
 	@Column(name = "courseid")
