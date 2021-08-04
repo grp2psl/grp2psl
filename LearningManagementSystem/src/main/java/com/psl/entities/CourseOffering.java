@@ -24,7 +24,7 @@ public class CourseOffering {
 	@Column(name="tcid")
 	private int tcId;
 	private String status;
-	private int percentage;
+	private double percentage;
 	public String getFeedback() {
 		return feedback;
 	}
@@ -70,17 +70,17 @@ public class CourseOffering {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public int getPercentage() {
+	public double getPercentage() {
 		return percentage;
 	}
-	public void setPercentage(int percentage) {
+	public void setPercentage(double percentage) {
 		this.percentage = percentage;
 	}
 	public void setFeedback(String feedback) {
 		this.feedback = feedback;
 	}
 	public CourseOffering(int courseofferingid, String feedback, int ratings, Date startdate, Date enddate,
-			int learnerid, int tcid, String status, int percentage) {
+			int learnerid, int tcid, String status, double percentage) {
 		this.courseOfferingId = courseofferingid;
 		this.feedback = feedback;
 		this.ratings = ratings;
