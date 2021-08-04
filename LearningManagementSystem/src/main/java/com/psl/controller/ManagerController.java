@@ -54,8 +54,8 @@ public class ManagerController {
 	}
 	
 	@PutMapping("/update-test-scores/{id}")
-	public void updateTestScore(@RequestBody CourseOffering offering) {
-		offeringService.updateTestScore(offering.getCourseofferingid(), offering.getPercentage());
+	public void updateTestScore(@RequestBody CourseOffering offering, @PathVariable int id) {
+		offeringService.updateTestScore(id, offering.getPercentage());
 	}
 
 	@PutMapping("/update-test-scores")

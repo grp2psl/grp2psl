@@ -38,8 +38,8 @@ public class CourseOfferingService {
 		Integer maxId = dao.getMaxId();
 		maxId = maxId==null ? 0 : maxId;
 		offering.setCourseofferingid(++maxId);
-        offering.setStatus("In Progress");
-        dao.save(offering);
+		System.out.println(offering.getStatus());
+        dao.save(updateCourseOfferingStatus(offering));
         Learner learner = learnerService.getLearner(offering.getLearnerid());
         Course course = tcService.getCourse(offering.getTcid());
         emailService.sendEmail("group2.learning.management.system@gmail.com", learner.getEmail(), "Hi " + learner.getName() +", \nYou have been enrolled to the Course - "+course.getCoursename()+".\nDuration of the course is - "+course.getDuration()+" hours, starting from "+formatter.format(offering.getStartdate()), "Learner enrolled to "+course.getCoursename()+" successfully - learning management portal");
@@ -60,25 +60,36 @@ public class CourseOfferingService {
 	        offering.setEnddate(formatter.parse(row.getCell(3).getStringCellValue()));
 	        offering.setLearnerid((int)row.getCell(0).getNumericCellValue());
 	        offering.setTcid((int)row.getCell(1).getNumericCellValue());
-	        offering.setStatus("In Progress");
 	        Learner learner = learnerService.getLearner(offering.getLearnerid());
 	        Course course = tcService.getCourse(offering.getTcid());
-	        dao.save(offering);
+	        dao.save(updateCourseOfferingStatus(offering));
 	        emailService.sendEmail("group2.learning.management.system@gmail.com", learner.getEmail(), "Hi " + learner.getName() +", \nYou have been enrolled to the Course - "+course.getCoursename()+".\nDuration of the course is - "+course.getDuration()+" hours, starting from "+formatter.format(offering.getStartdate()), "Learner enrolled to "+course.getCoursename()+" successfully - learning management portal");
 		}
 				
 	}
 	
-	
-	public void updateTestScore(int id, float percentage) {
-		CourseOffering offering = dao.findById(id).get();
-		offering.setPercentage((int)percentage);
-		if(percentage >= 70) {
-			offering.setStatus(CourseOfferingStatus.COMPLETE_PENDING.name());
-		}else {
-			offering.setStatus(CourseOfferingStatus.FAIL.name());
+	public CourseOffering updateCourseOfferingStatus(CourseOffering offering) {
+		double percentage = offering.getPercentage();
+		String feedback = offering.getFeedback();
+		String status = offering.getStatus();
+		if(percentage == 0.0 && status == null) {
+			offering.setStatus(CourseOfferingStatus.IN_PROGRESS.name());
+		} else if((percentage < 70.0) && feedback == null) {
+			offering.setStatus(CourseOfferingStatus.FAIL.name()+","+CourseOfferingStatus.FEEDBACK_PENDING.name());
+		} else if((percentage >= 70.0) && feedback == null) {
+			offering.setStatus(CourseOfferingStatus.PASS.name()+","+CourseOfferingStatus.FEEDBACK_PENDING.name());
+		} else if((percentage < 70.0) && feedback != null) {
+			offering.setStatus(CourseOfferingStatus.FAIL.name()+","+CourseOfferingStatus.FEEDBACK_GIVEN.name());
+		} else {
+			offering.setStatus(CourseOfferingStatus.COMPLETED.name());
 		}
-		dao.save(offering);
+		return offering;
+	}
+	
+	public void updateTestScore(int id, double percentage) {
+		CourseOffering offering = dao.findById(id).get();
+		offering.setPercentage(percentage);
+		dao.save(updateCourseOfferingStatus(offering));
 	}
 	
 	public void updateMultipleTestScores(MultipartFile csvFilePath) throws IOException, ParseException {
@@ -88,13 +99,8 @@ public class CourseOfferingService {
 	    for(int i=1;i<worksheet.getPhysicalNumberOfRows() ;i++) {
 	        XSSFRow row = worksheet.getRow(i);
 			CourseOffering offering = dao.findById((int)row.getCell(0).getNumericCellValue()).get();
-			offering.setPercentage((int)row.getCell(1).getNumericCellValue());
-			if(offering.getPercentage() >= 70) {
-				offering.setStatus(CourseOfferingStatus.COMPLETE_PENDING.name());
-			}else {
-				offering.setStatus(CourseOfferingStatus.FAIL.name());
-			}
-			dao.save(offering);
+			offering.setPercentage((double)row.getCell(1).getNumericCellValue());
+			dao.save(updateCourseOfferingStatus(offering));
 		}		
 		
 	}
