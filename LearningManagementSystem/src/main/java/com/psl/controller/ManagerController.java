@@ -32,7 +32,7 @@ public class ManagerController {
 	
 	@Autowired
 	private CourseOfferingService offeringService;
-	
+		
 	@GetMapping("/{id}")
 	public Manager getManager(@PathVariable int id) {
 		return service.getManager(id);
@@ -55,21 +55,21 @@ public class ManagerController {
 	
 	@PutMapping("/update-test-scores/{id}")
 	public void updateTestScore(@RequestBody CourseOffering offering) {
-		courseService.updateTestScore(offering.getCourseofferingid(), offering.getPercentage());
+		offeringService.updateTestScore(offering.getCourseofferingid(), offering.getPercentage());
 	}
 
 	@PutMapping("/update-test-scores")
 	public void updateMultipleTestScores(@RequestParam("file") MultipartFile csvFilePath) throws IOException, ParseException {
-		courseService.updateMultipleTestScores(csvFilePath);
+		offeringService.updateMultipleTestScores(csvFilePath);
 	}
 	
 	@GetMapping("/course-offerings")
 	public List<CourseOffering> viewCourseOfferings(){
-		return courseService.viewCourseOfferings();
+		return offeringService.viewCourseOfferings();
 	}
 	
 	@DeleteMapping("/course-offering/{id}")
 	public void removeCourseOffering(@PathVariable int id) {
-		courseService.removeCourseOffering(id);		
+		offeringService.removeCourseOffering(id);		
 	}
 }

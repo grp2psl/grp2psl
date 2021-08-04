@@ -3,6 +3,7 @@ package com.psl.service;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.psl.dao.ICourseOfferingDAO;
 import com.psl.entities.Course;
 import com.psl.entities.CourseOffering;
+import com.psl.entities.CourseOfferingStatus;
 import com.psl.entities.Learner;
 
 @Service("courseOfferingService")
@@ -65,6 +67,44 @@ public class CourseOfferingService {
 	        emailService.sendEmail("group2.learning.management.system@gmail.com", learner.getEmail(), "Hi " + learner.getName() +", \nYou have been enrolled to the Course - "+course.getCoursename()+".\nDuration of the course is - "+course.getDuration()+" hours, starting from "+formatter.format(offering.getStartdate()), "Learner enrolled to "+course.getCoursename()+" successfully - learning management portal");
 		}
 				
+	}
+	
+	
+	public void updateTestScore(int id, float percentage) {
+		CourseOffering offering = dao.findById(id).get();
+		offering.setPercentage((int)percentage);
+		if(percentage >= 70) {
+			offering.setStatus(CourseOfferingStatus.COMPLETE_PENDING.name());
+		}else {
+			offering.setStatus(CourseOfferingStatus.FAIL.name());
+		}
+		dao.save(offering);
+	}
+	
+	public void updateMultipleTestScores(MultipartFile csvFilePath) throws IOException, ParseException {
+		XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
+	    XSSFSheet worksheet = workbook.getSheetAt(0);
+	    
+	    for(int i=1;i<worksheet.getPhysicalNumberOfRows() ;i++) {
+	        XSSFRow row = worksheet.getRow(i);
+			CourseOffering offering = dao.findById((int)row.getCell(0).getNumericCellValue()).get();
+			offering.setPercentage((int)row.getCell(1).getNumericCellValue());
+			if(offering.getPercentage() >= 70) {
+				offering.setStatus(CourseOfferingStatus.COMPLETE_PENDING.name());
+			}else {
+				offering.setStatus(CourseOfferingStatus.FAIL.name());
+			}
+			dao.save(offering);
+		}		
+		
+	}
+	
+	public List<CourseOffering> viewCourseOfferings(){
+		return (List<CourseOffering>) dao.findAll();
+	}
+	
+	public void removeCourseOffering(int id) {
+		dao.deleteById(id);
 	}
 	
 }
