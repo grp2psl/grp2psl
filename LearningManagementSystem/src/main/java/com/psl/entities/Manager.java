@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Manager")
+@Table(name = "manager")
 public class Manager extends User {
 	@Id
 	private int managerid;

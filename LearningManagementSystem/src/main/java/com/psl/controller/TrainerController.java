@@ -1,12 +1,14 @@
 package com.psl.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.psl.entities.Trainer;
 import com.psl.service.TrainerService;
@@ -16,6 +18,13 @@ import com.psl.service.TrainerService;
 public class TrainerController {
 	@Autowired
 	private TrainerService service;
+
+	@GetMapping("/")
+	public RedirectView redirectAfterLogin() {
+		String currentUserId = String.valueOf(SecurityContextHolder.getContext().getAuthentication().getName());
+		String redirectSuccessURL = "/LearningManagementSystem/trainers/" + currentUserId + "/";
+        return new RedirectView(redirectSuccessURL);
+    }
 	
 	@GetMapping("/{id}")
 	public Trainer getTrainer(@PathVariable int id) {
