@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.psl.dao.ITeacherCourseMappingDAO;
+import com.psl.entities.Course;
 import com.psl.entities.TeacherCourseMapping;
 
 @Service("teacherCourseMappingService")
@@ -17,6 +18,9 @@ public class TeacherCourseMappingService {
 	
 	@Autowired
 	private ITeacherCourseMappingDAO dao;
+	
+	@Autowired
+	private CourseService courseService;
 	
 	public void addTeacherCourseMapping(TeacherCourseMapping teacherCourseMapping) {
 		
@@ -44,4 +48,8 @@ public class TeacherCourseMappingService {
 		
 	}
 
+	public Course getCourse(int tcid) {
+		TeacherCourseMapping tcMapping = dao.findById(tcid).get();
+		return courseService.getCourse(tcMapping.getCourseId());
+	}
 }

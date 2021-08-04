@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.psl.entities.CourseOffering;
 import com.psl.entities.Manager;
-import com.psl.service.CourseService;
+import com.psl.service.CourseOfferingService;
 import com.psl.service.ManagerService;
 
 @RestController
@@ -25,7 +25,7 @@ public class ManagerController {
 	private ManagerService service;
 	
 	@Autowired
-	private CourseService courseService;
+	private CourseOfferingService offeringService;
 	
 	@GetMapping("/{id}")
 	public Manager getManager(@PathVariable int id) {
@@ -39,11 +39,11 @@ public class ManagerController {
 	
 	@PostMapping("/enroll-learner")
 	public void enrollLearner(@RequestBody CourseOffering offering) throws ParseException {
-		courseService.enrollLearner(offering);
+		offeringService.enrollLearner(offering);
 	}
 	
 	@PostMapping("/enroll-learners")
 	public void enrollMultipleLearners(@RequestParam("file") MultipartFile csvFilePath) throws IOException, ParseException {
-		courseService.enrollMultipleLearners(csvFilePath);
+		offeringService.enrollMultipleLearners(csvFilePath);
 	}
 }
