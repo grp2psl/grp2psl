@@ -108,3 +108,7 @@ add foreign key(learnerid) references learner(learnerid),
 add foreign key(tcid) references TeacherCourseMapping(tcid),
 modify learnerid int not null,
 modify tcid int not null;
+
+alter table courseoffering
+modify percentage decimal(4,2),
+modify status varchar(30);
