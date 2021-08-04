@@ -16,6 +16,7 @@ import com.psl.dao.ICourseDAO;
 import com.psl.dao.ICourseofferingDAO;
 import com.psl.entities.Course;
 import com.psl.entities.CourseOffering;
+import com.psl.entities.CourseOfferingStatus;
 
 @Service("courseService")
 public class CourseService {
@@ -63,7 +64,43 @@ public class CourseService {
 	        offering.setTcid((int)row.getCell(1).getNumericCellValue());
 	        offering.setStatus("In Progress");
 			offeringDao.save(offering);
+		}				
+	}
+	
+	public void updateTestScore(int id, float percentage) {
+		CourseOffering offering = offeringDao.findById(id).get();
+		offering.setPercentage((int)percentage);
+		if(percentage >= 70) {
+			offering.setStatus(CourseOfferingStatus.COMPLETE_PENDING.name());
+		}else {
+			offering.setStatus(CourseOfferingStatus.FAIL.name());
 		}
-				
+		offeringDao.save(offering);
+	}
+	
+	public void updateMultipleTestScores(MultipartFile csvFilePath) throws IOException, ParseException {
+		XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
+	    XSSFSheet worksheet = workbook.getSheetAt(0);
+	    
+	    for(int i=1;i<worksheet.getPhysicalNumberOfRows() ;i++) {
+	        XSSFRow row = worksheet.getRow(i);
+			CourseOffering offering = offeringDao.findById((int)row.getCell(0).getNumericCellValue()).get();
+			offering.setPercentage((int)row.getCell(1).getNumericCellValue());
+			if(offering.getPercentage() >= 70) {
+				offering.setStatus(CourseOfferingStatus.COMPLETE_PENDING.name());
+			}else {
+				offering.setStatus(CourseOfferingStatus.FAIL.name());
+			}
+			offeringDao.save(offering);
+		}		
+		
+	}
+	
+	public List<CourseOffering> viewCourseOfferings(){
+		return (List<CourseOffering>) offeringDao.findAll();
+	}
+	
+	public void removeCourseOffering(int id) {
+		offeringDao.deleteById(id);
 	}
 }

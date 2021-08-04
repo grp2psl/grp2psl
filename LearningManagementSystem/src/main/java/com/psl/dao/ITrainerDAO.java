@@ -11,4 +11,7 @@ public interface ITrainerDAO extends CrudRepository<Trainer, Integer>{
 	@Query(value = "select trainerid, name, department, email, phonenumber, password=null as password from trainer", nativeQuery = true)
 	public List<Trainer> findAll();
 
+	@Query(value="select max(trainerid) from trainer", nativeQuery=true)
+	public Integer getNextId();
+
 }

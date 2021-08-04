@@ -2,11 +2,17 @@ package com.psl.controller;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Column;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,5 +51,25 @@ public class ManagerController {
 	@PostMapping("/enroll-learners")
 	public void enrollMultipleLearners(@RequestParam("file") MultipartFile csvFilePath) throws IOException, ParseException {
 		courseService.enrollMultipleLearners(csvFilePath);
+	}
+	
+	@PutMapping("/update-test-scores/{id}")
+	public void updateTestScore(@RequestBody CourseOffering offering) {
+		courseService.updateTestScore(offering.getCourseofferingid(), offering.getPercentage());
+	}
+
+	@PutMapping("/update-test-scores")
+	public void updateMultipleTestScores(@RequestParam("file") MultipartFile csvFilePath) throws IOException, ParseException {
+		courseService.updateMultipleTestScores(csvFilePath);
+	}
+	
+	@GetMapping("/course-offerings")
+	public List<CourseOffering> viewCourseOfferings(){
+		return courseService.viewCourseOfferings();
+	}
+	
+	@DeleteMapping("/course-offering/{id}")
+	public void removeCourseOffering(@PathVariable int id) {
+		courseService.removeCourseOffering(id);		
 	}
 }

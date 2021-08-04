@@ -23,6 +23,8 @@ public class LearnerService {
 	private EmailSenderService service;
 	
 	public void addLearner(Learner learner) {
+		Integer id = dao.getNextId();
+		id = (id==null ? 0 : id);
 		Random rand = new Random();
 		String firstname = learner.getName();
 		try {
@@ -30,13 +32,16 @@ public class LearnerService {
 		}catch(StringIndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
-		String password = firstname+learner.getLearnerid()+"@"+rand.nextInt(9999);
+		String password = firstname+id+"@"+rand.nextInt(9999);
+		learner.setLearnerid(id);
 		learner.setPassword(password);
 		dao.save(learner);
 		service.sendEmail("group2.learning.management.system@gmail.com", learner.getEmail(), "Hi " + firstname +", \nYour password is "+password+"\nChange your password once you are logged in.", "Learner registered successfully - learning management portal");		
 	} 
 	
 	public void addMultipleLearners(MultipartFile csvFilePath) throws IOException {
+		Integer id = dao.getNextId();
+		id = (id==null ? 0 : id);
 	    XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
 	    XSSFSheet worksheet = workbook.getSheetAt(0);
 		Random rand = new Random();
@@ -45,11 +50,11 @@ public class LearnerService {
 	        Learner learner = new Learner();
 	            
 	        XSSFRow row = worksheet.getRow(i);
-	        learner.setLearnerid((int)row.getCell(0).getNumericCellValue());   
-	        learner.setName(row.getCell(1).getStringCellValue());
-	        learner.setDepartment(row.getCell(2).getStringCellValue());
-	        learner.setPhonenumber(row.getCell(3).getStringCellValue());
-	        learner.setEmail(row.getCell(4).getStringCellValue());
+	        learner.setLearnerid(id++);   
+	        learner.setName(row.getCell(0).getStringCellValue());
+	        learner.setDepartment(row.getCell(1).getStringCellValue());
+	        learner.setPhonenumber(row.getCell(2).getStringCellValue());
+	        learner.setEmail(row.getCell(3).getStringCellValue());
 	        String firstname = learner.getName();
 			try {
 				firstname = firstname.substring(0, learner.getName().indexOf(" "));

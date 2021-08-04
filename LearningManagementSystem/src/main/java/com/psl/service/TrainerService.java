@@ -22,6 +22,8 @@ public class TrainerService {
 	private EmailSenderService service;
 	
 	public void addTrainer(Trainer trainer) {
+		Integer id = dao.getNextId();
+		id = (id==null ? 0 : id);
 		Random rand = new Random();
         String firstname = trainer.getName();
 		try {
@@ -29,13 +31,16 @@ public class TrainerService {
 		}catch(StringIndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
-		String password = firstname+trainer.getTrainerid()+"@"+rand.nextInt(9999);
+		String password = firstname+id+"@"+rand.nextInt(9999);
+		trainer.setTrainerid(id);
 		trainer.setPassword(password);
 		dao.save(trainer);
 		service.sendEmail("group2.learning.management.system@gmail.com", trainer.getEmail(), "Hi " + firstname +", \nYour password is "+password+"\nChange your password once you are logged in.", "Trainer registered successfully - learning management portal");		
 	} 
 
 	public void addMultipleTrainers(MultipartFile csvFilePath) throws IOException {
+		Integer id = dao.getNextId();
+		id = (id==null ? 0 : id);
 	    XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
 	    XSSFSheet worksheet = workbook.getSheetAt(0);
 		Random rand = new Random();
@@ -44,11 +49,11 @@ public class TrainerService {
 	        Trainer trainer = new Trainer();
 	            
 	        XSSFRow row = worksheet.getRow(i);
-	        trainer.setTrainerid((int)row.getCell(0).getNumericCellValue());   
-	        trainer.setName(row.getCell(1).getStringCellValue());
-	        trainer.setDepartment(row.getCell(2).getStringCellValue());
-	        trainer.setPhonenumber(row.getCell(3).getStringCellValue());
-	        trainer.setEmail(row.getCell(4).getStringCellValue());
+	        trainer.setTrainerid(id++);   
+	        trainer.setName(row.getCell(0).getStringCellValue());
+	        trainer.setDepartment(row.getCell(1).getStringCellValue());
+	        trainer.setPhonenumber(row.getCell(2).getStringCellValue());
+	        trainer.setEmail(row.getCell(3).getStringCellValue());
 	        String firstname = trainer.getName();
 			try {
 				firstname = firstname.substring(0, trainer.getName().indexOf(" "));
@@ -58,7 +63,7 @@ public class TrainerService {
 			String password = firstname+trainer.getTrainerid()+"@"+rand.nextInt(9999);
 			trainer.setPassword(password);
 			dao.save(trainer);
-			service.sendEmail("group2.learning.management.system@gmail.com", trainer.getEmail(), "Hi " + firstname +", \nYour password is "+password+"\nChange your password once you are logged in.", "Learner registered successfully - learning management portal");		
+			service.sendEmail("group2.learning.management.system@gmail.com", trainer.getEmail(), "Hi " + firstname +", \nYour password is "+password+"\nChange your password once you are logged in.", "Trainer registered successfully - learning management portal");		
 	    }
 				
 	}
