@@ -1,10 +1,20 @@
 package com.psl.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -99,6 +109,113 @@ public class CourseOfferingService {
 		
 	}
 	
+	public void generateExcelForEnrolment(String path) throws IOException {
+		Workbook workbook = new XSSFWorkbook();
+
+		Sheet sheet = workbook.createSheet("Sample Data");
+		sheet.setColumnWidth(0, 6000);
+		sheet.setColumnWidth(1, 4000);
+		
+		
+		Row header = sheet.createRow(0);
+
+		CellStyle headerStyle = workbook.createCellStyle();
+		headerStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
+
+		XSSFFont font = ((XSSFWorkbook) workbook).createFont();
+		font.setFontName("Arial");
+		font.setBold(true);
+		headerStyle.setFont(font);
+
+		Cell headerCell = header.createCell(0);
+		headerCell.setCellValue("Learner ID");
+		headerCell.setCellStyle(headerStyle);
+
+		headerCell = header.createCell(1);
+		headerCell.setCellValue("TCID");
+		headerCell.setCellStyle(headerStyle);
+
+		headerCell = header.createCell(2);
+		headerCell.setCellValue("Start Date");
+		headerCell.setCellStyle(headerStyle);
+		
+		headerCell = header.createCell(3);
+		headerCell.setCellValue("End Date");
+		headerCell.setCellStyle(headerStyle);
+
+		Row data = sheet.createRow(1);
+		Cell dataCell = data.createCell(0);
+		dataCell.setCellValue(1);
+		dataCell.setCellType(XSSFCell.CELL_TYPE_NUMERIC);
+
+		dataCell = data.createCell(1);
+		dataCell.setCellValue(2);
+		dataCell.setCellType(XSSFCell.CELL_TYPE_NUMERIC);
+
+		dataCell = data.createCell(2);
+		dataCell.setCellValue("YYYY-MM-DD");
+		dataCell.setCellType(XSSFCell.CELL_TYPE_STRING);
+
+		dataCell = data.createCell(3);
+		dataCell.setCellValue("YYYY-MM-DD");
+		dataCell.setCellType(XSSFCell.CELL_TYPE_STRING);
+		
+		String fileName = "enrollLearners.xlsx";
+		
+		File file = new File(path, fileName);
+		FileOutputStream outputStream = new FileOutputStream(file);
+		workbook.write(outputStream);
+		workbook.close();
+		outputStream.close();
+		System.out.println(file.getPath());
+	}
+
+	
+	public void generateExcelForScoreUpdate(String path) throws IOException {
+		Workbook workbook = new XSSFWorkbook();
+
+		Sheet sheet = workbook.createSheet("Sample Data");
+		sheet.setColumnWidth(0, 6000);
+		sheet.setColumnWidth(1, 4000);
+		
+		
+		Row header = sheet.createRow(0);
+
+		CellStyle headerStyle = workbook.createCellStyle();
+		headerStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
+
+		XSSFFont font = ((XSSFWorkbook) workbook).createFont();
+		font.setFontName("Arial");
+		font.setBold(true);
+		headerStyle.setFont(font);
+
+		Cell headerCell = header.createCell(0);
+		headerCell.setCellValue("Course Offering ID");
+		headerCell.setCellStyle(headerStyle);
+
+		headerCell = header.createCell(1);
+		headerCell.setCellValue("Percentage");
+		headerCell.setCellStyle(headerStyle);
+		
+		Row data = sheet.createRow(1);
+		Cell dataCell = data.createCell(0);
+		dataCell.setCellValue(1);
+		dataCell.setCellType(XSSFCell.CELL_TYPE_NUMERIC);
+
+		dataCell = data.createCell(1);
+		dataCell.setCellValue(70);
+		dataCell.setCellType(XSSFCell.CELL_TYPE_NUMERIC);
+
+		String fileName = "updateScores.xlsx";
+		
+		File file = new File(path, fileName);
+		FileOutputStream outputStream = new FileOutputStream(file);
+		workbook.write(outputStream);
+		workbook.close();
+		outputStream.close();
+		System.out.println(file.getPath());
+	}
+
 	public List<CourseOffering> viewCourseOfferings(){
 		return (List<CourseOffering>) dao.findAll();
 	}

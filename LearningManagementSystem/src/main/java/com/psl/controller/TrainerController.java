@@ -1,6 +1,8 @@
 package com.psl.controller;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +48,12 @@ public class TrainerController {
 	@DeleteMapping("/{id}")
 	public void removeTrainer(@PathVariable int id) {
 		service.removeTrainer(id);
+	}
+
+	@GetMapping("/generate-excel")
+	public void downloadFileFromLocal() throws IOException {
+		Path file = Paths.get(System.getProperty("user.home"), "Downloads");
+		service.generateExcel(file.toString());
+		System.out.println(file);
 	}
 }

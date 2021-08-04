@@ -1,6 +1,8 @@
 package com.psl.controller;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -71,5 +73,19 @@ public class ManagerController {
 	@DeleteMapping("/course-offering/{id}")
 	public void removeCourseOffering(@PathVariable int id) {
 		offeringService.removeCourseOffering(id);		
+	}
+	
+	@GetMapping("/generate-excel-enrolment")
+	public void downloadFileFromLocalEnrolment() throws IOException {
+		Path file = Paths.get(System.getProperty("user.home"), "Downloads");
+		offeringService.generateExcelForEnrolment(file.toString());
+		System.out.println(file);
+	}	
+
+	@GetMapping("/generate-excel-score-update")
+	public void downloadFileFromLocalScoreUpdate() throws IOException {
+		Path file = Paths.get(System.getProperty("user.home"), "Downloads");
+		offeringService.generateExcelForScoreUpdate(file.toString());
+		System.out.println(file);
 	}
 }
