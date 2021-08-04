@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.psl.entities.CourseOffering;
 
-public interface ICourseofferingDAO extends CrudRepository<CourseOffering, Integer> {
+public interface ICourseOfferingDAO extends CrudRepository<CourseOffering, Integer> {
 
 	@Query(value="select max(courseofferingid) from courseoffering", nativeQuery=true)
 	public Integer getMaxId();
