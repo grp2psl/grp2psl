@@ -2,8 +2,10 @@ package com.psl.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "TeacherCourseMapping")
 public class TeacherCourseMapping {
 	@Id
 	private int trainerId;

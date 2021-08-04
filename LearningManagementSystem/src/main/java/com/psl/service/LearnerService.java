@@ -20,4 +20,10 @@ public class LearnerService {
 		return dao.findById(id).get();
 	}
 	
+	public void updateLearner(int id, String email, String password) {
+	    Learner l = dao.findById(id).get();
+	    l.setEmail(email);
+	    l.setPassword(password);
+	    dao.save(l);
+	}
 }

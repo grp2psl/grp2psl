@@ -4,16 +4,23 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
 
 @Entity
+@IdClass(CourseOfferingId.class)
+@Table(name = "courseoffering")
 public class CourseOffering {
-	@Id
 	private String Feedback;
 	private int ratings;
-	private Date startDate;
-	private Date endDate;
-	private int learnerId;
-	private int tcId;
+	private Date startdate;
+	private Date enddate;
+
+	@Id
+	private int learnerid;
+	
+	@Id
+	private int tcid;
 	private String status;
 	private int percentage;
 	public String getFeedback() {
@@ -29,28 +36,28 @@ public class CourseOffering {
 		this.ratings = ratings;
 	}
 	public Date getStartDate() {
-		return startDate;
+		return startdate;
 	}
 	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+		this.startdate = startDate;
 	}
 	public Date getEndDate() {
-		return endDate;
+		return enddate;
 	}
 	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+		this.enddate = endDate;
 	}
 	public int getLearnerId() {
-		return learnerId;
+		return learnerid;
 	}
 	public void setLearnerId(int learnerId) {
-		this.learnerId = learnerId;
+		this.learnerid = learnerId;
 	}
 	public int getTcId() {
-		return tcId;
+		return tcid;
 	}
 	public void setTcId(int tcId) {
-		this.tcId = tcId;
+		this.tcid = tcId;
 	}
 	public String getStatus() {
 		return status;
@@ -69,10 +76,10 @@ public class CourseOffering {
 	
 		Feedback = feedback;
 		this.ratings = ratings;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.learnerId = learnerId;
-		this.tcId = tcId;
+		this.startdate = startDate;
+		this.enddate = endDate;
+		this.learnerid = learnerId;
+		this.tcid = tcId;
 		this.status = status;
 		this.percentage = percentage;
 	}
@@ -81,8 +88,8 @@ public class CourseOffering {
 	}
 	@Override
 	public String toString() {
-		return "CourseOffering [Feedback=" + Feedback + ", ratings=" + ratings + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", learnerId=" + learnerId + ", tcId=" + tcId + ", status=" + status
+		return "CourseOffering [Feedback=" + Feedback + ", ratings=" + ratings + ", startDate=" + startdate
+				+ ", endDate=" + enddate + ", learnerId=" + learnerid + ", tcId=" + tcid + ", status=" + status
 				+ ", percentage=" + percentage + "]";
 	}
 	
