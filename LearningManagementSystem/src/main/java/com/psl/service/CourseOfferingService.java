@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -258,21 +257,17 @@ public class CourseOfferingService {
 		return response;
 	}
 	
-	public Map<String, Object> viewCourseDetails(int id) {
+	public Map<String, Object> viewCourseDetailsByTrainerId(int id, int course_id) {
 		Map<String, Object> response = new HashMap<>();
-		Map<Integer, List<CourseOffering>> offerings = new HashMap<>();
-		Map<Integer, Double> avgRating = new HashMap<>();
-		Course course = courseService.getCourse(id);
-		List<TeacherCourseMapping> tcMappings = tcService.getByCourseId(id);
-		for(TeacherCourseMapping tc: tcMappings) {
-			int sum = 0;
-			List<CourseOffering> co = dao.findByTcId(tc.getTcId());
-			for(CourseOffering c : co) {
-				sum = sum + c.getRatings();
-			}
-			avgRating.put(tc.getTcId(), (double)sum/co.size());
-			offerings.put(tc.getTcId(), co);
+		double avgRating;
+		Course course = courseService.getCourse(course_id);
+		TeacherCourseMapping tc = tcService.getByTrainerIdAndCourseId(id, course_id);
+		int sum = 0;
+		List<CourseOffering> offerings = dao.findByTcId(tc.getTcId());
+		for(CourseOffering c : offerings) {
+			sum = sum + c.getRatings();
 		}
+		avgRating = (double)sum/offerings.size();
 		response.put("courseDetails", course);
 		response.put("offerings", offerings);
 		response.put("avgRating", avgRating);

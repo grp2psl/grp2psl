@@ -12,5 +12,6 @@ public interface ITeacherCourseMappingDAO extends CrudRepository<TeacherCourseMa
 
 	public List<TeacherCourseMapping> findByTrainerId(int id);
 	public List<TeacherCourseMapping> findByCourseId(int id);
+	public TeacherCourseMapping findByTrainerIdAndCourseId(int id, int courseid);
 	
 }
