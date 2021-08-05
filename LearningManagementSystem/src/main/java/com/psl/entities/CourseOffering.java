@@ -93,6 +93,28 @@ public class CourseOffering {
 	}
 	
 	@Override
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+	    }
+		
+		if (!(o instanceof CourseOffering)) {
+            return false;
+        }
+		
+		CourseOffering Co = (CourseOffering)o;
+		
+		return ((feedback == null && Co.getFeedback() == null)||feedback.equals(Co.getFeedback())) &&
+				ratings == Co.getRatings()&&
+				(( startDate == null && Co.getStartDate() == null ) ||startDate.equals(Co.getStartDate()))&&
+				(( endDate == null && Co.getEndDate() == null) || endDate.equals(Co.getEndDate())) &&
+				learnerId == Co.getLearnerId() &&
+				tcId == Co.getTcId() &&
+				(( status == null && Co.getStatus() == null ) ||status.equals(Co.getStatus()))&&
+				percentage == Co.getPercentage();
+	}
+	
+	@Override
 	public String toString() {
 		return "CourseOffering [feedback=" + feedback + ", ratings=" + ratings + ", startDate=" + startDate
 				+ ", endDate=" + endDate + ", learnerId=" + learnerId + ", tcId=" + tcId + ", status=" + status
