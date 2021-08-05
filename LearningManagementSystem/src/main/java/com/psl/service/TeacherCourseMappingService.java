@@ -63,6 +63,10 @@ public class TeacherCourseMappingService {
 		return dao.findByCourseId(courseid);
 	}
 	
+	public TeacherCourseMapping getByTrainerIdAndCourseId(int id, int courseid) {
+		return dao.findByTrainerIdAndCourseId(id, courseid);
+	}
+	
 	public List<Course> getCoursesByTrainerId(int trainerid) {
 		List<TeacherCourseMapping> tcMapping = dao.findByTrainerId(trainerid);
 		List<Course> courses = new ArrayList<>();

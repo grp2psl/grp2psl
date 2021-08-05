@@ -118,9 +118,9 @@ public class ManagerController {
 	/*
 	 * VIEW A COURSE's DETAILS, ITS OFFERINGS AND AVERAGE RATING OF THE TRAINER
 	 */
-	@GetMapping("/course/{id}")
-	public Map<String, Object> viewCourseDetails(@PathVariable int id) {
-		return offeringService.viewCourseDetails(id);
+	@GetMapping("/trainer/{id}/course/{course_id}")
+	public Map<String, Object> viewCourseDetails(@PathVariable int id, @PathVariable int course_id) {
+		return offeringService.viewCourseDetailsByTrainerId(id, course_id);
 	}
 	
 	/*
