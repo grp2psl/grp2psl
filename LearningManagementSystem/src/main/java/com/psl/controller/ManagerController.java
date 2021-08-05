@@ -4,11 +4,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import javax.persistence.Column;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,7 +23,6 @@ import com.psl.entities.CourseAttended;
 import com.psl.entities.CourseOffering;
 import com.psl.entities.Manager;
 import com.psl.entities.ScoreStatus;
-import com.psl.entities.Trainer;
 import com.psl.service.CourseOfferingService;
 import com.psl.service.LearnerService;
 import com.psl.service.ManagerService;
@@ -112,7 +108,7 @@ public class ManagerController {
 	}
 	
 	/*
-	 * VIEW A TRAINER's DETAILS 
+	 * VIEW A TRAINER's DETAILS, COURSES AND RESPECTIVE OFFERINGS TAKEN BY THE TRAINER 
 	 */
 	@GetMapping("/trainer/{id}")
 	public Map<String, Object> viewTrainerDetails(@PathVariable int id) {
@@ -120,7 +116,7 @@ public class ManagerController {
 	}
 	
 	/*
-	 * VIEW A COURSE's DETAILS
+	 * VIEW A COURSE's DETAILS, ITS OFFERINGS AND AVERAGE RATING OF THE TRAINER
 	 */
 	@GetMapping("/course/{id}")
 	public Map<String, Object> viewCourseDetails(@PathVariable int id) {
@@ -147,11 +143,17 @@ public class ManagerController {
 		System.out.println(file);
 	}
 	
+	/*
+	 * VIEW A LEARNER'S DETAILS, COURSE OFFERINGS ATTENDED
+	 */
 	@GetMapping("/course-attended/{id}")
 	public CourseAttended viewCourseAttended(@PathVariable int id ){
 		return lService.viewCourseAttended(id);
 	}
 	
+	/*
+	 * VIEW A COURSE TO CHECK THE SCORE AND STATUS OF THE LEARNER
+	 */
 	@GetMapping("/score-status/{id}")
 	public ScoreStatus viewScoreAndStatus(@PathVariable int id ){
 		return lService.viewScoreAndStatus(id);
