@@ -5,7 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -27,6 +30,8 @@ import com.psl.entities.Course;
 import com.psl.entities.CourseOffering;
 import com.psl.entities.CourseOfferingStatus;
 import com.psl.entities.Learner;
+import com.psl.entities.TeacherCourseMapping;
+import com.psl.entities.Trainer;
 
 @Service("courseOfferingService")
 public class CourseOfferingService {
@@ -36,6 +41,9 @@ public class CourseOfferingService {
 	
 	@Autowired
 	private LearnerService learnerService;
+	
+	@Autowired
+	private TrainerService trainerService;
 	
 	@Autowired
 	private EmailSenderService emailService;
@@ -230,4 +238,21 @@ public class CourseOfferingService {
 		dao.deleteById(id);
 	}
 	
+	public Map<String, Object> viewTrainerDetails(int id) {
+		Map<String, Object> response = new HashMap<>();
+		List<CourseOffering> offerings = new ArrayList<>();
+		Trainer trainer = trainerService.getTrainer(id);
+		List<Course> courses = tcService.getCoursesByTrainerId(id);
+		List<TeacherCourseMapping> tcMappings = tcService.getByTrainerId(id); 
+		for(TeacherCourseMapping tc: tcMappings) {
+			List<CourseOffering> co = dao.findByTcId(tc.getTcId());
+			for(CourseOffering c : co) {
+				offerings.add(c);
+			}
+		}
+		response.put("trainerDetails", trainer);
+		response.put("courses", courses);
+		response.put("offerings", offerings);
+		return response;
+	}
 }
