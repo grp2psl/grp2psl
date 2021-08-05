@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.psl.entities.CourseAttended;
 import com.psl.entities.Learner;
-import com.psl.entities.ScoreStatus;
 import com.psl.service.LearnerService;
 
 

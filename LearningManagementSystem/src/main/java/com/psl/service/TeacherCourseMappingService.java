@@ -24,12 +24,18 @@ public class TeacherCourseMappingService {
 	@Autowired
 	private CourseService courseService;
 	
+	/*
+	 *ADDING TEACHER-COURSE MAPPING DETAILS
+	 */
 	public void addTeacherCourseMapping(TeacherCourseMapping teacherCourseMapping) {
 		
 		dao.save(teacherCourseMapping);
 		
 	}
 	
+	/*
+	 *ADDING MULTIPLE TEACHER-COURSE MAPPING DETAILS FROM CSV FILE
+	 */
 	public void addMultipleTeacherCourseMapping(MultipartFile csvFilePath) throws IOException {
 		XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
 	    XSSFSheet worksheet = workbook.getSheetAt(0);

@@ -24,16 +24,25 @@ public class CourseController {
 		return "home";
 	}
 	
+	/*
+	 *VIEW ALL COURSES AVAILABLE
+	 */
 	@GetMapping("/allcourses")
     public List<Course> getCourse () {
         return service.findAll();
     }
 	
-	@GetMapping("/{id}")
-	public Course getCourse(@PathVariable int id) {
-		return service.getCourse(id);
+	/*
+	 *VIEW A COURSE BY COURSEID
+	 */
+	@GetMapping("/{courseId}")
+	public Course getCourse(@PathVariable int courseId) {
+		return service.getCourse(courseId);
 	}
 	
+	/*
+	 *ADDING A COURSE DETAILS
+	 */
 	@PostMapping("/addcourse")
 	public Course addCourse(@RequestBody Course course) {
 		return service.addCourse(course);

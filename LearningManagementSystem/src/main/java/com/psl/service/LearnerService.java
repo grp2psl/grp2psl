@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -29,18 +30,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.psl.dao.ICourseAttended;
 import com.psl.dao.ILearnerDAO;
-import com.psl.dao.IScoreStatus;
 import com.psl.entities.CourseAttended;
 import com.psl.entities.Learner;
-import com.psl.entities.ScoreStatus;
+
 
 @Service("learnerService")
 public class LearnerService {
 	@Autowired
 	private ILearnerDAO dao;
 	
-	@Autowired
-	private IScoreStatus Idao;
+
 	
 	@Autowired
 	private ICourseAttended Cdao;
@@ -168,27 +167,37 @@ public class LearnerService {
 	public void removeLearner(int id) {
 		dao.deleteById(id);
 	}
-
-	public CourseAttended viewCourseAttended(int id) {
-		CourseAttended cAttended=new CourseAttended();
+	
+	/*
+	 * VIEW ALL COURSES ATTENDED BY A LEARNER
+	 * FOR LOOP FOR GETTING SPECIFIC DETAILS OF LEARNERID
+	 */
+	public List<CourseAttended> viewCourseAttended(int id) {
+		List<CourseAttended> cAttended=new ArrayList<>();
 		List<CourseAttended> courseAttendedByLearners = Cdao.courseAttended();
 		for(CourseAttended cl:courseAttendedByLearners) {
 			if(cl.getLearnerid()==id){
-				cAttended=cl;
+				cAttended.add(cl);
 				
 			}
 		}
 		return cAttended;
 	}
 	
-	public ScoreStatus viewScoreAndStatus(int id) {
-		ScoreStatus sStatus=new ScoreStatus();
-		List<ScoreStatus> scoreOfLearner = Idao.scoreAndStatus();
-		for(ScoreStatus cl:scoreOfLearner) {
-			if(cl.getLearnerid()==id){
-				sStatus=cl;
+	/*
+	 * VIEW SCORE AND STATUS OF ALL COURSES ATTENDED BY A LEARNER
+	 * FOR LOOP FOR GETTING SPECIFIC DETAILS OF LEARNERID
+	 */
+	public CourseAttended viewScoreAndStatus(int id,int courseId) {
+		List<CourseAttended> cAttended= viewCourseAttended(id);
+		CourseAttended course= new CourseAttended();
+	
+		for(CourseAttended cl:cAttended) {
+			if(cl.getCourseid()==courseId){
+				course=cl;
+				
 			}
 		}
-		return sStatus;
+		return course;
 }
 }

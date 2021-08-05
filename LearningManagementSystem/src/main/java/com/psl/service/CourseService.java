@@ -27,14 +27,23 @@ public class CourseService {
 	@Autowired
 	private ICourseOfferingDAO offeringDao;
 		
+	/*
+	 *DISPLAY ALL COURSES
+	 */
 	public List<Course> findAll () {
         return (List<Course>) dao.findAll();
     }
 	
+	/*
+	 *ADD A COURSE DETAILS
+	 */
 	public Course addCourse(Course course) {
 	  return dao.save(course);		
 	}
-
+	
+	/*
+	 *VIEW A COURSE BY COURSEID
+	 */
 	public Course getCourse(int id) {
 		return dao.findById(id).get();
 	}

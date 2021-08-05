@@ -25,7 +25,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.psl.entities.CourseAttended;
 import com.psl.entities.CourseOffering;
 import com.psl.entities.Manager;
-import com.psl.entities.ScoreStatus;
 import com.psl.entities.Trainer;
 import com.psl.service.CourseOfferingService;
 import com.psl.service.LearnerService;
@@ -147,13 +146,22 @@ public class ManagerController {
 		System.out.println(file);
 	}
 	
+	/*
+	 * VIEW ALL COURSES ATTENDED BY LEARNER
+	 * RESPONSE BODY CONTAINS (LEARNER NAME,COURSE NAME,COURSE ID,LEARNER ID,PERCENTAGE AND STATUS)
+	 */
+	
 	@GetMapping("/course-attended/{id}")
-	public CourseAttended viewCourseAttended(@PathVariable int id ){
+	public List<CourseAttended> viewCourseAttended(@PathVariable int id ){
 		return lService.viewCourseAttended(id);
 	}
 	
-	@GetMapping("/score-status/{id}")
-	public ScoreStatus viewScoreAndStatus(@PathVariable int id ){
-		return lService.viewScoreAndStatus(id);
+	/*
+	 * VIEW SCORE AND STATUS OF A COURSE BY COURSEID FOR SPECIFIC LEARNER
+	 */
+	
+	@GetMapping("/score-status/{id}/{courseId}")
+	public CourseAttended viewScoreAndStatus(@PathVariable int id, @PathVariable int courseId ){
+		return lService.viewScoreAndStatus(id,courseId);
 	}
 }

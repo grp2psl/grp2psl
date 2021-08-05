@@ -1,5 +1,6 @@
 package com.psl.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -13,6 +14,11 @@ public class CourseAttended {
 	
 	@Id
 	private int learnerid;
+
+
+	private int percentage;
+	
+	private String status;
 
 	public String getName() {
 		return name;
@@ -46,12 +52,30 @@ public class CourseAttended {
 		this.learnerid = learnerid;
 	}
 
-	public CourseAttended(String name, int courseid, String coursename, int learnerid) {
+	public int getPercentage() {
+		return percentage;
+	}
+
+	public void setPercentage(int percentage) {
+		this.percentage = percentage;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public CourseAttended(String name, int courseid, String coursename, int learnerid, int percentage, String status) {
 		
 		this.name = name;
 		this.courseid = courseid;
 		this.coursename = coursename;
 		this.learnerid = learnerid;
+		this.percentage = percentage;
+		this.status = status;
 	}
 
 	public CourseAttended() {
@@ -61,8 +85,11 @@ public class CourseAttended {
 	@Override
 	public String toString() {
 		return "CourseAttended [name=" + name + ", courseid=" + courseid + ", coursename=" + coursename + ", learnerid="
-				+ learnerid + "]";
+				+ learnerid + ", percentage=" + percentage + ", status=" + status + "]";
 	}
+
+	
+	
 	
 
 }
