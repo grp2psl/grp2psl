@@ -1,21 +1,26 @@
 package com.psl.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Trainer extends User {
 	@Id
-	private int trainerid;	
+	@Column(name = "trainerid")
+	private int trainerId;	
 	private String name;
 	private String department;
-	private String phonenumber;
+	@Column(name = "phonenumber")
+	private String phoneNumber;
 	private String email;
 	private String password;
-	
-	
+	public int getTrainerId() {
+		return trainerId;
+	}
+	public void setTrainerId(int trainerId) {
+		this.trainerId = trainerId;
+	}
 	public String getName() {
 		return name;
 	}
@@ -28,11 +33,11 @@ public class Trainer extends User {
 	public void setDepartment(String department) {
 		this.department = department;
 	}
-	public String getPhonenumber() {
-		return phonenumber;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
-	public void setPhonenumber(String phonenumber) {
-		this.phonenumber = phonenumber;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 	public String getEmail() {
 		return email;
@@ -46,32 +51,19 @@ public class Trainer extends User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	public int getTrainerid() {
-		return trainerid;
+	@Override
+	public String toString() {
+		return "Trainer [trainerId=" + trainerId + ", name=" + name + ", department=" + department + ", phoneNumber="
+				+ phoneNumber + ", email=" + email + ", password=" + password + "]";
 	}
-	public void setTrainerid(int trainerid) {
-		this.trainerid = trainerid;
-	}
-	
-	public Trainer() {
-		
-	}
-	
-	public Trainer(int trainerid, String name, String department, String phonenumber, String email, String password) {
-		super();
-		this.trainerid = trainerid;
+	public Trainer(int trainerId, String name, String department, String phoneNumber, String email, String password) {
+		this.trainerId = trainerId;
 		this.name = name;
 		this.department = department;
-		this.phonenumber = phonenumber;
+		this.phoneNumber = phoneNumber;
 		this.email = email;
 		this.password = password;
 	}
-	
-	@Override
-	public String toString() {
-		return "Trainer [trainerid=" + trainerid + ", name=" + name + ", department=" + department + ", phonenumber="
-				+ phonenumber + ", email=" + email + ", password=" + password + "]";
+	public Trainer() {
 	}
-			
 }

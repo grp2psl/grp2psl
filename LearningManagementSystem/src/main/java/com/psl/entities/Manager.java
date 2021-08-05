@@ -1,22 +1,26 @@
 package com.psl.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "manager")
 public class Manager extends User {
 	@Id
-	private int managerid;
+	@Column(name = "managerid")
+	private int managerId;
 	private String name;
-	private String phonenumber;
+	@Column(name = "phonenumber")
+	private String phoneNumber;
 	private String email;
 	private String password;
-	
-	public int getManagerid() {
-		return managerid;
+	public int getManagerId() {
+		return managerId;
 	}
-	public void setManagerid(int managerid) {
-		this.managerid = managerid;
+	public void setManagerId(int managerId) {
+		this.managerId = managerId;
 	}
 	public String getName() {
 		return name;
@@ -24,11 +28,11 @@ public class Manager extends User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getPhonenumber() {
-		return phonenumber;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
-	public void setPhonenumber(String phonenumber) {
-		this.phonenumber = phonenumber;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 	public String getEmail() {
 		return email;
@@ -42,23 +46,21 @@ public class Manager extends User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
-	public Manager() {
-		
+	@Override
+	public String toString() {
+		return "Manager [managerId=" + managerId + ", name=" + name + ", phoneNumber=" + phoneNumber + ", email="
+				+ email + ", password=" + password + "]";
 	}
-	public Manager(int managerid, String name, String phonenumber, String email, String password) {
-		this.managerid = managerid;
+	public Manager(int managerId, String name, String phoneNumber, String email, String password) {
+		super();
+		this.managerId = managerId;
 		this.name = name;
-		this.phonenumber = phonenumber;
+		this.phoneNumber = phoneNumber;
 		this.email = email;
 		this.password = password;
 	}
-	@Override
-	public String toString() {
-		return "Manager [managerid=" + managerid + ", name=" + name + ", phonenumber=" + phonenumber + ", email="
-				+ email + ", password=" + password + "]";
+	public Manager() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
-	
-	
 }

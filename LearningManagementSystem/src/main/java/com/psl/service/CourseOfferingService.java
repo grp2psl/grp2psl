@@ -15,12 +15,12 @@ public class CourseOfferingService {
 	private ICourseOfferingDAO dao;
 	
 	public void AddFeedback(int learnerId, int tcId, String feedback) {
-		CourseOffering co = dao.findByTcidAndLearnerid(tcId, learnerId);
+		CourseOffering co = dao.findByTcIdAndLearnerId(tcId, learnerId);
 		co.setFeedback(feedback);
 		dao.save(co);
 	}
 	
 	public List<CourseOffering> getCourseOfferings(int learnerId) {
-		return dao.findByLearnerid(learnerId);
+		return dao.findByLearnerId(learnerId);
 	}
 }

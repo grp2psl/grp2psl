@@ -1,25 +1,28 @@
 package com.psl.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "learner")
 public class Learner extends User {
 	@Id
-	private int learnerid;
+	@Column(name = "learnerid")
+	private int learnerId;
 	private String name;
-	private String phonenumber;
+	
+	@Column(name = "phonenumber")
+	private String phoneNumber;
 	private String department;
 	private String email;
 	private String password;
-	
-	public int getLearnerid() {
-		return learnerid;
+	public int getLearnerId() {
+		return learnerId;
 	}
-	public void setLearnerid(int learnerid) {
-		this.learnerid = learnerid;
+	public void setLearnerId(int learnerId) {
+		this.learnerId = learnerId;
 	}
 	public String getName() {
 		return name;
@@ -27,11 +30,11 @@ public class Learner extends User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getPhonenumber() {
-		return phonenumber;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
-	public void setPhonenumber(String phonenumber) {
-		this.phonenumber = phonenumber;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 	public String getDepartment() {
 		return department;
@@ -51,15 +54,22 @@ public class Learner extends User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	public Learner(int learnerid, String name, String phonenumber, String department, String email, String password) {
-		this.learnerid = learnerid;
+	@Override
+	public String toString() {
+		return "Learner [learnerId=" + learnerId + ", name=" + name + ", phoneNumber=" + phoneNumber + ", department="
+				+ department + ", email=" + email + ", password=" + password + "]";
+	}
+	public Learner(int learnerId, String name, String phoneNumber, String department, String email, String password) {
+		super();
+		this.learnerId = learnerId;
 		this.name = name;
-		this.phonenumber = phonenumber;
+		this.phoneNumber = phoneNumber;
 		this.department = department;
 		this.email = email;
 		this.password = password;
 	}
 	public Learner() {
-	}	
+		super();
+		// TODO Auto-generated constructor stub
+	}
 }

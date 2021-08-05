@@ -9,8 +9,8 @@ import com.psl.entities.CourseOfferingId;
 
 public interface ICourseOfferingDAO extends CrudRepository<CourseOffering, CourseOfferingId>{
 
-	CourseOffering findByTcidAndLearnerid(int tcId, int learnerId);
+	CourseOffering findByTcIdAndLearnerId(int tcId, int learnerId);
 
-	List<CourseOffering> findByLearnerid(int learnerId);
+	List<CourseOffering> findByLearnerId(int learnerId);
 	
 }
