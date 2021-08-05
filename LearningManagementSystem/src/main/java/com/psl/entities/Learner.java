@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -28,6 +29,7 @@ public class Learner extends User {
 	private String department;
 	
 	@NotNull(message = "email field can't be empty")
+	@Email
 	private String email;
 	
 	@NotNull(message = "password field can't be empty")
