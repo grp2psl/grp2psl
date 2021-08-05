@@ -18,15 +18,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import com.psl.entities.CourseAttended;
 import com.psl.entities.Learner;
+import com.psl.entities.ScoreStatus;
 import com.psl.service.LearnerService;
+
 
 @RestController
 @RequestMapping("/learners")
 public class LearnerController {
 	@Autowired
 	private LearnerService service;
+	
 	
 	@GetMapping("/test")
 	public String home(){
@@ -65,12 +68,12 @@ public class LearnerController {
 	
 	
 	@GetMapping("/course-attended")
-	public List viewCourseAttended(){
+	public List<CourseAttended> viewCourseAttended(){
 		return service.viewCourseAttended();
 	}
 	
 	@GetMapping("/score-status")
-	public List viewScoreAndStatus(){
+	public List<ScoreStatus> viewScoreAndStatus(){
 		return service.viewScoreAndStatus();
 	}
 	

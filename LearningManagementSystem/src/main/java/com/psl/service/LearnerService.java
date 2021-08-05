@@ -26,13 +26,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.psl.dao.ICourseAttended;
 import com.psl.dao.ILearnerDAO;
+import com.psl.dao.IScoreStatus;
+import com.psl.entities.CourseAttended;
 import com.psl.entities.Learner;
+import com.psl.entities.ScoreStatus;
 
 @Service("learnerService")
 public class LearnerService {
 	@Autowired
 	private ILearnerDAO dao;
+	
+	@Autowired
+	private IScoreStatus Idao;
+	
+	@Autowired
+	private ICourseAttended Cdao;
+	
 	@Autowired
 	private EmailSenderService service;
 	
@@ -157,11 +168,11 @@ public class LearnerService {
 		dao.deleteById(id);
 	}
 
-	public List viewCourseAttended() {
-		return dao.courseAttended();
+	public List<CourseAttended> viewCourseAttended() {
+		return Cdao.courseAttended();
 	}
 	
-	public List viewScoreAndStatus() {
-		return dao.scoreAndStatus();
+	public List<ScoreStatus> viewScoreAndStatus() {
+		return Idao.scoreAndStatus();
 }
 }
