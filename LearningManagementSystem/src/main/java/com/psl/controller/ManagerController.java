@@ -22,10 +22,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.psl.entities.CourseAttended;
 import com.psl.entities.CourseOffering;
 import com.psl.entities.Manager;
+import com.psl.entities.ScoreStatus;
 import com.psl.entities.Trainer;
 import com.psl.service.CourseOfferingService;
+import com.psl.service.LearnerService;
 import com.psl.service.ManagerService;
 
 @RestController
@@ -33,6 +36,9 @@ import com.psl.service.ManagerService;
 public class ManagerController {
 	@Autowired
 	private ManagerService service;
+	
+	@Autowired
+	private LearnerService lService;
 	
 	@Autowired
 	private CourseOfferingService offeringService;
@@ -131,5 +137,15 @@ public class ManagerController {
 		Path file = Paths.get(System.getProperty("user.home"), "Downloads");
 		offeringService.generateExcelForScoreUpdate(file.toString());
 		System.out.println(file);
+	}
+	
+	@GetMapping("/course-attended/{id}")
+	public CourseAttended viewCourseAttended(@PathVariable int id ){
+		return lService.viewCourseAttended(id);
+	}
+	
+	@GetMapping("/score-status/{id}")
+	public ScoreStatus viewScoreAndStatus(@PathVariable int id ){
+		return lService.viewScoreAndStatus(id);
 	}
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -168,11 +169,26 @@ public class LearnerService {
 		dao.deleteById(id);
 	}
 
-	public List<CourseAttended> viewCourseAttended() {
-		return Cdao.courseAttended();
+	public CourseAttended viewCourseAttended(int id) {
+		CourseAttended cAttended=new CourseAttended();
+		List<CourseAttended> courseAttendedByLearners = Cdao.courseAttended();
+		for(CourseAttended cl:courseAttendedByLearners) {
+			if(cl.getLearnerid()==id){
+				cAttended=cl;
+				
+			}
+		}
+		return cAttended;
 	}
 	
-	public List<ScoreStatus> viewScoreAndStatus() {
-		return Idao.scoreAndStatus();
+	public ScoreStatus viewScoreAndStatus(int id) {
+		ScoreStatus sStatus=new ScoreStatus();
+		List<ScoreStatus> scoreOfLearner = Idao.scoreAndStatus();
+		for(ScoreStatus cl:scoreOfLearner) {
+			if(cl.getLearnerid()==id){
+				sStatus=cl;
+			}
+		}
+		return sStatus;
 }
 }

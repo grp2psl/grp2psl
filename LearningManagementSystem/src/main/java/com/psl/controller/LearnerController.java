@@ -67,15 +67,7 @@ public class LearnerController {
 	}
 	
 	
-	@GetMapping("/course-attended")
-	public List<CourseAttended> viewCourseAttended(){
-		return service.viewCourseAttended();
-	}
 	
-	@GetMapping("/score-status")
-	public List<ScoreStatus> viewScoreAndStatus(){
-		return service.viewScoreAndStatus();
-	}
 	
 	@DeleteMapping("/{id}")
 	public void removeLearner(@PathVariable int id) {

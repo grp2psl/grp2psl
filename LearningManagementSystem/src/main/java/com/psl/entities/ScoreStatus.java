@@ -9,7 +9,7 @@ public class ScoreStatus {
 	@Column(name="name")
 	private String name;
 	
-	@Id
+	
 	@Column(name="coursename")
 	private String coursename;
 	
@@ -18,7 +18,8 @@ public class ScoreStatus {
 	
 	@Column(name="status")
 	private String status;
-	
+	@Id
+	private int learnerid;
 	public String getName() {
 		return name;
 	}
@@ -43,12 +44,19 @@ public class ScoreStatus {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public ScoreStatus(String name, String coursename, int percentage, String status) {
+	public int getLearnerid() {
+		return learnerid;
+	}
+	public void setLearnerid(int learnerid) {
+		this.learnerid = learnerid;
+	}
+	public ScoreStatus(String name, String coursename, int percentage, String status, int learnerid) {
 		
 		this.name = name;
 		this.coursename = coursename;
 		this.percentage = percentage;
 		this.status = status;
+		this.learnerid = learnerid;
 	}
 	public ScoreStatus() {
 		
@@ -56,7 +64,8 @@ public class ScoreStatus {
 	@Override
 	public String toString() {
 		return "ScoreStatus [name=" + name + ", coursename=" + coursename + ", percentage=" + percentage + ", status="
-				+ status + "]";
+				+ status + ", learnerid=" + learnerid + "]";
 	}
+	
 	
 }

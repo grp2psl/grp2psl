@@ -7,10 +7,12 @@ import javax.persistence.Id;
 public class CourseAttended {
 	private String name;
 	
-	@Id
 	private int courseid;
 	
 	private String coursename;
+	
+	@Id
+	private int learnerid;
 
 	public String getName() {
 		return name;
@@ -24,22 +26,6 @@ public class CourseAttended {
 		return courseid;
 	}
 
-	@Override
-	public String toString() {
-		return "CourseAttended [name=" + name + ", courseid=" + courseid + ", coursename=" + coursename + "]";
-	}
-
-	public CourseAttended() {
-		super();
-	}
-
-	public CourseAttended(String name, int courseid, String coursename) {
-		super();
-		this.name = name;
-		this.courseid = courseid;
-		this.coursename = coursename;
-	}
-
 	public void setCourseid(int courseid) {
 		this.courseid = courseid;
 	}
@@ -51,4 +37,32 @@ public class CourseAttended {
 	public void setCoursename(String coursename) {
 		this.coursename = coursename;
 	}
+
+	public int getLearnerid() {
+		return learnerid;
+	}
+
+	public void setLearnerid(int learnerid) {
+		this.learnerid = learnerid;
+	}
+
+	public CourseAttended(String name, int courseid, String coursename, int learnerid) {
+		
+		this.name = name;
+		this.courseid = courseid;
+		this.coursename = coursename;
+		this.learnerid = learnerid;
+	}
+
+	public CourseAttended() {
+		
+	}
+
+	@Override
+	public String toString() {
+		return "CourseAttended [name=" + name + ", courseid=" + courseid + ", coursename=" + coursename + ", learnerid="
+				+ learnerid + "]";
+	}
+	
+
 }
