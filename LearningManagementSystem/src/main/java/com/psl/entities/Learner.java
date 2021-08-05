@@ -4,19 +4,33 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 
 @Entity
 @Table(name = "learner")
 public class Learner extends User {
 	@Id
 	@Column(name = "learnerid")
+	@NotNull(message = "LearnerId field can't be empty")
+	@Min(value = 1, message = "LearnerId field should be non zerp")
 	private int learnerId;
+	
+	@NotNull(message = "Name field can't be empty")
+	@Size(max = 50, message = "Length of name can't be more than 50 characheters!")
 	private String name;
 	
 	@Column(name = "phonenumber")
 	private String phoneNumber;
+	
 	private String department;
+	
+	@NotNull(message = "email field can't be empty")
 	private String email;
+	
+	@NotNull(message = "password field can't be empty")
 	private String password;
 	public int getLearnerId() {
 		return learnerId;
