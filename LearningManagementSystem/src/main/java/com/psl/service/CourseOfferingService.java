@@ -46,6 +46,9 @@ public class CourseOfferingService {
 	private TrainerService trainerService;
 	
 	@Autowired
+	private CourseService courseService;
+	
+	@Autowired
 	private EmailSenderService emailService;
 	
 	@Autowired
@@ -240,19 +243,39 @@ public class CourseOfferingService {
 	
 	public Map<String, Object> viewTrainerDetails(int id) {
 		Map<String, Object> response = new HashMap<>();
-		List<CourseOffering> offerings = new ArrayList<>();
+		Map<Integer, List<CourseOffering>> offerings = new HashMap<>();
 		Trainer trainer = trainerService.getTrainer(id);
 		List<Course> courses = tcService.getCoursesByTrainerId(id);
 		List<TeacherCourseMapping> tcMappings = tcService.getByTrainerId(id); 
 		for(TeacherCourseMapping tc: tcMappings) {
 			List<CourseOffering> co = dao.findByTcId(tc.getTcId());
-			for(CourseOffering c : co) {
-				offerings.add(c);
-			}
+			Course course = tcService.getCourse(tc.getTcId());
+			offerings.put(course.getCourseid(), co);
 		}
 		response.put("trainerDetails", trainer);
 		response.put("courses", courses);
 		response.put("offerings", offerings);
+		return response;
+	}
+	
+	public Map<String, Object> viewCourseDetails(int id) {
+		Map<String, Object> response = new HashMap<>();
+		Map<Integer, List<CourseOffering>> offerings = new HashMap<>();
+		Map<Integer, Double> avgRating = new HashMap<>();
+		Course course = courseService.getCourse(id);
+		List<TeacherCourseMapping> tcMappings = tcService.getByCourseId(id);
+		for(TeacherCourseMapping tc: tcMappings) {
+			int sum = 0;
+			List<CourseOffering> co = dao.findByTcId(tc.getTcId());
+			for(CourseOffering c : co) {
+				sum = sum + c.getRatings();
+			}
+			avgRating.put(tc.getTcId(), (double)sum/co.size());
+			offerings.put(tc.getTcId(), co);
+		}
+		response.put("courseDetails", course);
+		response.put("offerings", offerings);
+		response.put("avgRating", avgRating);
 		return response;
 	}
 }
