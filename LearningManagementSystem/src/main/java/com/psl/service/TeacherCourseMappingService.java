@@ -1,6 +1,8 @@
 package com.psl.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -51,5 +53,18 @@ public class TeacherCourseMappingService {
 	public Course getCourse(int tcid) {
 		TeacherCourseMapping tcMapping = dao.findById(tcid).get();
 		return courseService.getCourse(tcMapping.getCourseId());
+	}
+	
+	public List<TeacherCourseMapping> getByTrainerId(int trainerid) {
+		return dao.findByTrainerId(trainerid);
+	}
+	
+	public List<Course> getCoursesByTrainerId(int trainerid) {
+		List<TeacherCourseMapping> tcMapping = dao.findByTrainerId(trainerid);
+		List<Course> courses = new ArrayList<>();
+		for(TeacherCourseMapping i: tcMapping) {
+			courses.add(courseService.getCourse(i.getCourseId()));
+		}
+		return courses;
 	}
 }

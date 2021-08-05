@@ -1,5 +1,7 @@
 package com.psl.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -9,5 +11,6 @@ public interface ICourseOfferingDAO extends CrudRepository<CourseOffering, Integ
 
 	@Query(value="select max(courseofferingid) from courseoffering", nativeQuery=true)
 	public Integer getMaxId();
+	public List<CourseOffering> findByTcId(int id);
 	
 }

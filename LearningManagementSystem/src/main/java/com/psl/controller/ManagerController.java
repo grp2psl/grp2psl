@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Column;
 
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.psl.entities.CourseOffering;
 import com.psl.entities.Manager;
+import com.psl.entities.Trainer;
 import com.psl.service.CourseOfferingService;
 import com.psl.service.ManagerService;
 
@@ -101,6 +103,14 @@ public class ManagerController {
 	@DeleteMapping("/course-offering/{id}")
 	public void removeCourseOffering(@PathVariable int id) {
 		offeringService.removeCourseOffering(id);		
+	}
+	
+	/*
+	 * VIEW A TRAINER'S DETAILS 
+	 */
+	@GetMapping("/trainer/{id}")
+	public Map<String, Object> viewTrainerDetails(@PathVariable int id) {
+		return offeringService.viewTrainerDetails(id);
 	}
 	
 	/*
