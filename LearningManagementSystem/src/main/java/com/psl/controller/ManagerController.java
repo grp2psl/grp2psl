@@ -36,7 +36,7 @@ public class ManagerController {
 	private CourseOfferingService offeringService;
 		
 	/*
-	 * Get details of Manager by ID
+	 * GET DETAILS OF MANAGER BY ID
 	 */
 	@GetMapping("/{id}")
 	public Manager getManager(@PathVariable int id) {
@@ -44,7 +44,7 @@ public class ManagerController {
 	}
 	
 	/*
-	 * Add a manager
+	 * ADD A MANAGER
 	 */
 	@PostMapping("/register")
 	public void addManager(@RequestBody Manager m) {
@@ -52,8 +52,8 @@ public class ManagerController {
 	}
 	
 	/*
-	 * Enroll a leaner to a course
-	 * Request body contents :{leanerid, tcid, startdate, enddate}
+	 * ENROLL A LEARNER TO A COURSE
+	 * REQUEST BODY CONTENTS : {leanerid, tcid, startdate, enddate}
 	 */
 	@PostMapping("/enroll-learner")
 	public void enrollLearner(@RequestBody CourseOffering offering) throws ParseException {
@@ -61,8 +61,8 @@ public class ManagerController {
 	}
 	
 	/*
-	 * Enroll multiple learners to a course
-	 * RequestParam will be an excel file, for file contents use /generate-excel-enrolment
+	 * ENROLL MULTIPLE LEARNERS TO A COURSE
+	 * REQUEST PARAM WILL BE AN EXCEL FILE, FOR FILE CONTENTS USE /generate-excel-enrolment
 	 */
 	@PostMapping("/enroll-learners")
 	public void enrollMultipleLearners(@RequestParam("file") MultipartFile csvFilePath) throws IOException, ParseException {
@@ -70,8 +70,8 @@ public class ManagerController {
 	}
 	
 	/*
-	 * Update test scores of individual
-	 * Request body contents:{percentage}
+	 * UPDATE AN INDIVIDUAL TEST SCORE
+	 * REQUEST BODY CONTENTS : {percentage}
 	 */
 	@PutMapping("/update-test-scores/{id}")
 	public void updateTestScore(@RequestBody CourseOffering offering, @PathVariable int id) {
@@ -79,8 +79,8 @@ public class ManagerController {
 	}
 
 	/*
-	 * Update test scores of multiple
-	 * RequestParam will be an excel file, for file contents use /generate-excel-score-update
+	 * UPDATE TEST SCORES OF MULTIPLE
+	 * REQUEST PARAM WILL BE AN EXCEL FILE, FOR FILE CONTENTS USE /generate-excel-score-update
 	 */
 	@PutMapping("/update-test-scores")
 	public void updateMultipleTestScores(@RequestParam("file") MultipartFile csvFilePath) throws IOException, ParseException {
@@ -88,7 +88,7 @@ public class ManagerController {
 	}
 	
 	/*
-	 * View all course offerings
+	 * VIEW ALL COURSE OFFERINGS
 	 */
 	@GetMapping("/course-offerings")
 	public List<CourseOffering> viewCourseOfferings(){
@@ -96,7 +96,7 @@ public class ManagerController {
 	}
 	
 	/*
-	 * Delete a course offering by ID
+	 * DELETE A COURSE OFFERING BY ID
 	 */
 	@DeleteMapping("/course-offering/{id}")
 	public void removeCourseOffering(@PathVariable int id) {
@@ -104,7 +104,7 @@ public class ManagerController {
 	}
 	
 	/*
-	 * Download the excel format for multiple enrolment
+	 * DOWNLOAD THE EXCEL FORMAT FOR MULTIPLE ENROLMENT
 	 */
 	@GetMapping("/generate-excel-enrolment")
 	public void downloadFileFromLocalEnrolment() throws IOException {
@@ -114,7 +114,7 @@ public class ManagerController {
 	}	
 
 	/*
-	 * Download the excel format for updating multiple scores
+	 * DOWNLOAD THE EXCEL FORMAT FOR UPDATING MULTIPLE SCORES
 	 */
 	@GetMapping("/generate-excel-score-update")
 	public void downloadFileFromLocalScoreUpdate() throws IOException {
