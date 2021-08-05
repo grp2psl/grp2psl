@@ -112,11 +112,19 @@ public class ManagerController {
 	}
 	
 	/*
-	 * VIEW A TRAINER'S DETAILS 
+	 * VIEW A TRAINER's DETAILS 
 	 */
 	@GetMapping("/trainer/{id}")
 	public Map<String, Object> viewTrainerDetails(@PathVariable int id) {
 		return offeringService.viewTrainerDetails(id);
+	}
+	
+	/*
+	 * VIEW A COURSE's DETAILS
+	 */
+	@GetMapping("/course/{id}")
+	public Map<String, Object> viewCourseDetails(@PathVariable int id) {
+		return offeringService.viewCourseDetails(id);
 	}
 	
 	/*
