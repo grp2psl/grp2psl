@@ -156,5 +156,12 @@ public class LearnerService {
 	public void removeLearner(int id) {
 		dao.deleteById(id);
 	}
+
+	public List viewCourseAttended() {
+		return dao.courseAttended();
+	}
 	
+	public List viewScoreAndStatus() {
+		return dao.scoreAndStatus();
+}
 }

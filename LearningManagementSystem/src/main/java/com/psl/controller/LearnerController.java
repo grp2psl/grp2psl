@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import com.psl.entities.Learner;
 import com.psl.service.LearnerService;
 
@@ -60,6 +61,17 @@ public class LearnerController {
 	@GetMapping("/")
 	public List<Learner> getAllLearners(){
 		return service.getAllLearners();
+	}
+	
+	
+	@GetMapping("/course-attended")
+	public List viewCourseAttended(){
+		return service.viewCourseAttended();
+	}
+	
+	@GetMapping("/score-status")
+	public List viewScoreAndStatus(){
+		return service.viewScoreAndStatus();
 	}
 	
 	@DeleteMapping("/{id}")

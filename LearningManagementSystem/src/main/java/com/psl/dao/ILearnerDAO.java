@@ -13,4 +13,11 @@ public interface ILearnerDAO extends CrudRepository<Learner,Integer>{
 
 	@Query(value="select max(learnerid) from learner", nativeQuery=true)
 	public Integer getNextId();
+	
+	
+	@Query(value="select l.name, c.courseid, c.coursename from learner l, course c, TeacherCourseMapping tc, courseoffering co where c.courseid = tc.courseid and co.learnerid=l.learnerid and tc.tcid = co.tcid", nativeQuery=true)
+	public List courseAttended();
+	
+	@Query(value="select l.name as name,c.coursename as coursename,co.Percentage as percentage,co.status as status from learner l,courseoffering co,TeacherCourseMapping tc,course c where c.courseid = tc.courseid and co.learnerid=l.learnerid and tc.tcid = co.tcid",nativeQuery=true)
+	public List scoreAndStatus();
 }
