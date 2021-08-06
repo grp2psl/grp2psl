@@ -20,31 +20,34 @@ class Register extends React.Component{
         name: "",
         department: "",
         phonenumber: "",
-        email: ""
+        email: "",
+        msg:""
       };
 
     resetForm = () => {
         this.setState(() => this.initialState);
     };
 
-    registerTrainer(event){
-        event.preventDefault();
-        const trainer = {
+    async registerTrainer(event){
+		event.preventDefault();
+		const trainer = {
             name: this.state.name,
             department: this.state.department,
             phonenumber: this.state.phonenumber,
             email: this.state.email
         }
-        axios.post("http://localhost:8080/LearningManagementSystem/trainers/register", trainer)
-        .then(response =>{
-            if(response.data != null){
-                alert("Trainer registered successfully");
-                console.log(response.data);
-            }
-        })
-        .catch(error => {
-            alert(error);
-        });
+        this.setState({
+			msg:"Processing..\nPlease Wait"
+		});
+		try{
+			const response = await axios.post("http://localhost:8080/LearningManagementSystem/trainers/register", trainer);
+			if(response.data != null){
+	        	alert("Trainer registered successfully");
+	            console.log(response.data);
+        	}	
+		} catch(error) {
+			alert(error);
+		}
         this.setState(this.initialState);
     }
 
@@ -56,8 +59,10 @@ class Register extends React.Component{
 
     render(){
         return(
-            <Card className={"border border-dark bg-dark text-white mt-5"}>
+			<div className="mt-5">
+            <Card className={"border border-dark bg-dark text-white"}>
                 <Card.Header>Register Trainer</Card.Header>
+                <h3 className="text-white mt-2">{this.state.msg}</h3>
                 <Form onSubmit={this.registerTrainer} onReset={this.resetForm} id="registerId" >
                 <Card.Body>
                     <Container>
@@ -121,6 +126,7 @@ class Register extends React.Component{
                 </Card.Footer>
                 </Form>
             </Card>
+      </div>
         );
     }
 }

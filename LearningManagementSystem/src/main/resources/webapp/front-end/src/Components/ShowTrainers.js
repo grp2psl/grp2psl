@@ -4,8 +4,6 @@ import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faSave,
-    faUndo,
     faEdit,
     faTrash
   } from "@fortawesome/free-solid-svg-icons";
@@ -14,18 +12,28 @@ class ShowTrainers extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            trainers: []
+            trainers: [],
+            msg:""
         };
     }
     
-    showData(){
-        axios.get("http://localhost:8080/LearningManagementSystem/trainers/")
-        .then(response => response.data)
-        .then((data) => {
-            console.log(data)
-            this.setState({trainers : data});
-        });
-
+    async showData(){
+		this.setState({
+			msg:"Processing.. Please Wait"
+		});
+		try{
+			const response = await axios.get("http://localhost:8080/LearningManagementSystem/trainers/");
+			if(response.data != null) {
+				this.setState({
+					trainers: response.data
+				});	
+			}	
+		} catch(error) {
+			alert(error);
+		}
+        this.setState({
+			msg: ""
+		})
     }
 
     componentDidMount(){
@@ -36,6 +44,7 @@ class ShowTrainers extends React.Component{
         return(
             <Card className={"border border-dark bg-dark text-white mt-5"}>
                 <Card.Header>Trainers</Card.Header>
+                <h3 className="text-white mt-2">{this.state.msg}</h3>
                 <Card.Body>
                     <Table striped bordered hover variant="dark">
                         <thead>
