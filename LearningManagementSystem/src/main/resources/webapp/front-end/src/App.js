@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
@@ -17,11 +16,11 @@ function App() {
       <Container>
         <Row>
           <Col lg={12}>
-            <Switch>
+          <Switch>
               <Route path="/" exact component={Welcome}/>
               <Route path="/register" exact component={Register}/>
               <Route path="/show" exact component={ShowTrainers}/>
-            </Switch>
+          </Switch>
           </Col>
         </Row>
       </Container>

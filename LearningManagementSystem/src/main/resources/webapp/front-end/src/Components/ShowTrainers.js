@@ -34,7 +34,7 @@ class ShowTrainers extends React.Component{
 
     render(){
         return(
-            <Card className={"border border-dark bg-dark text-white"}>
+            <Card className={"border border-dark bg-dark text-white mt-5"}>
                 <Card.Header>Trainers</Card.Header>
                 <Card.Body>
                     <Table striped bordered hover variant="dark">

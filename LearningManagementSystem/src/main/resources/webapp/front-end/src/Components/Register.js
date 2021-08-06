@@ -56,7 +56,7 @@ class Register extends React.Component{
 
     render(){
         return(
-            <Card className={"border border-dark bg-dark text-white"}>
+            <Card className={"border border-dark bg-dark text-white mt-5"}>
                 <Card.Header>Register Trainer</Card.Header>
                 <Form onSubmit={this.registerTrainer} onReset={this.resetForm} id="registerId" >
                 <Card.Body>
@@ -69,7 +69,6 @@ class Register extends React.Component{
                                     type="test" 
                                     value={this.state.name}
                                     onChange={this.formChange}
-                                    className={"bg-dark text-white"}
                                     name="name"
                                     placeholder="Enter name" />
                             </Form.Group>
@@ -80,7 +79,6 @@ class Register extends React.Component{
                                     type="text" autoComplete="off" 
                                     value={this.state.department}
                                     onChange={this.formChange}
-                                    className={"bg-dark text-white"}
                                     name="department"
                                     placeholder="Enter department" />
                             </Form.Group>
@@ -92,7 +90,6 @@ class Register extends React.Component{
                                     type="text" 
                                     value={this.state.phonenumber}
                                     onChange={this.formChange}
-                                    className={"bg-dark text-white"}
                                     name="phonenumber"
                                     placeholder="Enter phone number" />
                             </Form.Group>
@@ -103,7 +100,6 @@ class Register extends React.Component{
                                     type="email" 
                                     value={this.state.email}
                                     onChange={this.formChange}
-                                    className={"bg-dark text-white"}
                                     name="email"
                                     placeholder="Enter email" />
                             </Form.Group>
