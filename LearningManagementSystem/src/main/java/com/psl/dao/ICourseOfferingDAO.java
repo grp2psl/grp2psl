@@ -7,7 +7,9 @@ package com.psl.dao;
 //Necessary imports for DAO declaration
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import com.psl.entities.CourseOffering;
 import com.psl.entities.CourseOfferingId;
@@ -25,5 +27,8 @@ public interface ICourseOfferingDAO extends CrudRepository<CourseOffering, Cours
 	
 	//This function finds all Course Offerings in which given learner is enrolled by learnerId.
 	List<CourseOffering> findByLearnerId(int learnerId);
+	
+	@Query("select avg(ratings) from CourseOffering where tcid = :tcid")
+	float getFeedbackResults(@Param("tcid") int tcid);
 	
 }

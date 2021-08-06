@@ -34,4 +34,9 @@ public class TrainerController {
 	public List<TeacherCourseMapping> findCoursesTaughtByTrainer(@PathVariable int id) {
 		return service.findCoursesTaughtByTrainer(id);
 	}
+	
+	@GetMapping("/{id}/{tcid}")
+	public float getFeedbackResults(@PathVariable int id, @PathVariable int tcid){
+		return service.getFeedbackResults(tcid);
+	}
 }
