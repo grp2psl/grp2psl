@@ -2,17 +2,32 @@ import React from 'react';
 
 import {Card, Form, Button, Container, Row, Col} from 'react-bootstrap';
 import axios from 'axios';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faSave,
+    faUndo
+  } from "@fortawesome/free-solid-svg-icons";
 
 class Register extends React.Component{
     constructor(props){
         super(props);
-        this.state = {name:'', department:'', phonenumber:'', email:''};
+        this.state = this.initialState;
         this.registerTrainer = this.registerTrainer.bind(this);
         this.formChange = this.formChange.bind(this);
     }
 
+    initialState = {
+        name: "",
+        department: "",
+        phonenumber: "",
+        email: ""
+      };
+
+    resetForm = () => {
+        this.setState(() => this.initialState);
+    };
+
     registerTrainer(event){
-        alert(this.state.name);
         event.preventDefault();
         const trainer = {
             name: this.state.name,
@@ -23,9 +38,14 @@ class Register extends React.Component{
         axios.post("http://localhost:8080/LearningManagementSystem/trainers/register", trainer)
         .then(response =>{
             if(response.data != null){
-                alert("Trainer registered successfully")
+                alert("Trainer registered successfully");
+                console.log(response.data);
             }
+        })
+        .catch(error => {
+            alert(error);
         });
+        this.setState(this.initialState);
     }
 
     formChange(event){
@@ -37,8 +57,8 @@ class Register extends React.Component{
     render(){
         return(
             <Card className={"border border-dark bg-dark text-white"}>
-                <Card.Header>Trainers</Card.Header>
-                <Form onSubmit={this.registerTrainer} id="registerId">
+                <Card.Header>Register Trainer</Card.Header>
+                <Form onSubmit={this.registerTrainer} onReset={this.resetForm} id="registerId" >
                 <Card.Body>
                     <Container>
                         <Row>
@@ -49,6 +69,7 @@ class Register extends React.Component{
                                     type="test" 
                                     value={this.state.name}
                                     onChange={this.formChange}
+                                    className={"bg-dark text-white"}
                                     name="name"
                                     placeholder="Enter name" />
                             </Form.Group>
@@ -59,6 +80,7 @@ class Register extends React.Component{
                                     type="text" autoComplete="off" 
                                     value={this.state.department}
                                     onChange={this.formChange}
+                                    className={"bg-dark text-white"}
                                     name="department"
                                     placeholder="Enter department" />
                             </Form.Group>
@@ -70,6 +92,7 @@ class Register extends React.Component{
                                     type="text" 
                                     value={this.state.phonenumber}
                                     onChange={this.formChange}
+                                    className={"bg-dark text-white"}
                                     name="phonenumber"
                                     placeholder="Enter phone number" />
                             </Form.Group>
@@ -80,6 +103,7 @@ class Register extends React.Component{
                                     type="email" 
                                     value={this.state.email}
                                     onChange={this.formChange}
+                                    className={"bg-dark text-white"}
                                     name="email"
                                     placeholder="Enter email" />
                             </Form.Group>
@@ -90,8 +114,13 @@ class Register extends React.Component{
                         
                 </Card.Body>
                 <Card.Footer style={{"text-align":"right"}}>
-                    <Button variant="primary" type="submit">
+                    <Button variant="success" type="submit">
+                        <FontAwesomeIcon icon={faSave} />{" "}
                         Submit
+                    </Button>{" "}
+                    <Button variant="danger" type="reset">
+                        <FontAwesomeIcon icon={faUndo} />{" "}
+                        Reset
                     </Button>
                 </Card.Footer>
                 </Form>

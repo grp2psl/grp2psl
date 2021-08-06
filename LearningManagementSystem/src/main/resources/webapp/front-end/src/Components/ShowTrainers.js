@@ -1,7 +1,14 @@
 import React from 'react';
 
-import {Card, Table} from 'react-bootstrap';
+import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
 import axios from 'axios';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faSave,
+    faUndo,
+    faEdit,
+    faTrash
+  } from "@fortawesome/free-solid-svg-icons";
 
 class ShowTrainers extends React.Component{
     constructor(props){
@@ -10,14 +17,19 @@ class ShowTrainers extends React.Component{
             trainers: []
         };
     }
-
-    componentDidMount(){
+    
+    showData(){
         axios.get("http://localhost:8080/LearningManagementSystem/trainers/")
         .then(response => response.data)
         .then((data) => {
             console.log(data)
             this.setState({trainers : data});
         });
+
+    }
+
+    componentDidMount(){
+        this.showData();
     }
 
     render(){
@@ -36,27 +48,38 @@ class ShowTrainers extends React.Component{
                             </tr>
                         </thead>
                         <tbody>
-                            {
-                                this.state.trainers.length === 0?
+                            {this.state.trainers.length === 0? (
                                 <tr align="center">
-                                    <td colSpan="5">No trainer Available</td>
-                                </tr>:
-                                this.state.trainers.map((trainer) => {
-                                    {console.log(trainer)}
-                                    {console.log(trainer.trainerid)}
-                                    {console.log(trainer.name)}
-                                    {console.log(trainer.department)}
-                                    {console.log(trainer.phonenumber)}
-                                    {console.log(trainer.email)}
-                                    <tr key={trainer.trainerid}> 
-                                        <td>{trainer.trainerid}</td>
-                                        <td>{trainer.name}</td>
-                                        <td>{trainer.department}</td>
-                                        <td>{trainer.phonenumber}</td>
-                                        <td>{trainer.email}</td>                          
+                                    <td colSpan="7">No Trainers Available.</td>
+                                </tr>
+                                ) : (
+                                this.state.trainers.map((trainer) => (
+                                    <tr key={trainer.trainerid}>
+                                    <td>{trainer.trainerid}</td>
+                                    <td>{trainer.name}</td>
+                                    <td>{trainer.department}</td>
+                                    <td>{trainer.phonenumber}</td>
+                                    <td>{trainer.email}</td>
+                                    <td>
+                                        <ButtonGroup>
+                                        <Button
+                                            size="sm"
+                                            variant="outline-primary"
+                                        >
+                                            <FontAwesomeIcon icon={faEdit} />
+                                        </Button>{" "}
+                                        <Button
+                                            size="sm"
+                                            variant="outline-danger"
+                                        >
+                                            <FontAwesomeIcon icon={faTrash} />
+                                        </Button>
+                                        </ButtonGroup>
+                                    </td>
                                     </tr>
-                                })
-                            }
+                                ))
+                                )}
+
                         </tbody>
                     </Table>
                 </Card.Body>
