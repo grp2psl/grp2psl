@@ -31,4 +31,7 @@ public interface ICourseOfferingDAO extends CrudRepository<CourseOffering, Cours
 	@Query("select avg(ratings) from CourseOffering where tcid = :tcid")
 	float getFeedbackResults(@Param("tcid") int tcid);
 	
+	@Query("select ratings from CourseOffering where tcid = :tcid")
+	List<Float> findAllCoursesTaughtRatings(@Param("tcid") int tcid);
+	
 }

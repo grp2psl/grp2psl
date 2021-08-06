@@ -40,4 +40,8 @@ public class TrainerService {
 	public float getFeedbackResults(int tcid) {
 		return offeringDAO.getFeedbackResults(tcid);
 	}
+	
+	public List<Float> findAllCoursesTaughtRatings(int id){
+		return offeringDAO.findAllCoursesTaughtRatings(id);
+	}
 }

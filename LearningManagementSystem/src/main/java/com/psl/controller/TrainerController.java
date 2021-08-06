@@ -1,5 +1,6 @@
 package com.psl.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.psl.entities.TeacherCourseMapping;
+import com.psl.entities.TeacherCoursesTaught;
 import com.psl.entities.Trainer;
 import com.psl.service.TrainerService;
 
@@ -31,8 +33,15 @@ public class TrainerController {
 	}
 	
 	@GetMapping("/{id}/coursestaughtbytrainer")
-	public List<TeacherCourseMapping> findCoursesTaughtByTrainer(@PathVariable int id) {
-		return service.findCoursesTaughtByTrainer(id);
+	public List<TeacherCoursesTaught> findCoursesTaughtByTrainer(@PathVariable int id) {
+		List<TeacherCourseMapping> l = service.findCoursesTaughtByTrainer(id);
+		List<TeacherCoursesTaught> tct = new ArrayList<>();
+		for (TeacherCourseMapping t: l) {
+			float ratings = getFeedbackResults(id, t.getTcId());
+			TeacherCoursesTaught taught = new TeacherCoursesTaught(t.getTrainerId(), t.getCourseId(), t.getTcId(), ratings); 
+			tct.add(taught);
+		}
+		return tct;
 	}
 	
 	@GetMapping("/{id}/{tcid}")
