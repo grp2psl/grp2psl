@@ -3,20 +3,27 @@
  */
 package com.psl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.test.annotation.Rollback;
 
@@ -24,22 +31,35 @@ import com.psl.dao.ICourseOfferingDAO;
 import com.psl.dao.ILearnerDAO;
 import com.psl.entities.CourseOffering;
 import com.psl.entities.Learner;
+import com.psl.service.CourseOfferingService;
+import com.psl.service.LearnerService;
 
+@ComponentScan(basePackages = "com.psl")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @TestMethodOrder(OrderAnnotation.class)
+@RunWith(MockitoJUnitRunner.class)
 class LearnerTests {
 
 	@Test
 	void contextLoads() {
 	}
 	
-	//Autowires dao to learner dao interfacr
-	@Autowired 
+	//Autowires service variable to LearnerService interface
+	@Autowired
+	private LearnerService service;
+	
+	//Declares a mock bean dao of type learnerDAO interface) 
+	@MockBean
 	private ILearnerDAO dao;
 	
-	//Autowires dao2 to courseoffering dao interface
+	
+	//Autowires service2 variable to CourseOfferingService interface
 	@Autowired
+	private CourseOfferingService service2;
+	
+	//Declares a mock bean dao2 of type ICourseOfferingDAO interface
+	@MockBean
 	private ICourseOfferingDAO dao2;
 	
 	//Testing addition of learner
@@ -47,19 +67,22 @@ class LearnerTests {
 	@Rollback(false)
 	@Order(1)
 	public void testAddLearner() {		
-		Learner savedLearner = dao.save(new Learner(12, "Shiva", "3454654342", "Mathematics", "shiva2@gmail.com", "shivapass")); 
-	    assertThat(savedLearner.getLearnerId()).isGreaterThan(0);
+		Learner l = new Learner(12, "Shiva", "3454654342", "Mathematics", "shiva2@gmail.com", "shivapass");
+		when(dao.save(l)).thenReturn(l);
+		assertEquals(l,service.addLearner(l));
 	}
 
 	//Tests retrieval of learner
 	@Test
 	@Order(2)
 	public void testFindLearnerById() {
-		Learner l = dao.findById(12).get();
-		assertThat(l.getName()).isEqualTo("Shiva");
+		Learner l = new Learner(12, "Shiva", "3454654342", "Mathematics", "shiva2@gmail.com", "shivapass");
+		System.out.println(l.getLearnerId());
+		when(dao.findById(l.getLearnerId())).thenReturn(Optional.of(l));
+		assertEquals(l,service.getLearner(l.getLearnerId()));
 	}
 	
-	//Tests course offering
+	//Tests function which lists all course offerings
 	@Test
 	@Rollback(false)
 	@Order(3)
@@ -73,21 +96,26 @@ class LearnerTests {
 		offerings.add(c2);
 		dao2.save(c1);
 		dao2.save(c2);
-		List<CourseOffering> offeringsRetrieved = dao2.findByLearnerId(12);
-		assertThat(offerings).isEqualTo(offeringsRetrieved);
+
+		when(dao2.findByLearnerId(12)).thenReturn(offerings);
+		assertEquals(offerings, service2.getCourseOfferings(12));
 	}
 	
 	//Test send feedback operation
 	@Test
 	@Order(4)
 	public void testSendFeedback() {
-		CourseOffering c1 = dao2.findByTcIdAndLearnerId(1, 12);
 		String feedback = "It was a good experience learnt many things in the course";
-		c1.setFeedback(feedback);
-		dao2.save(c1);
 		
-		CourseOffering updatedc1 = dao2.findByTcIdAndLearnerId(1, 12);
-		assertThat(updatedc1.getFeedback()).isEqualTo(feedback);
+		CourseOffering c1 = new CourseOffering();
+		c1.setLearnerId(12);
+		c1.setTcId(1);
+		c1.setPercentage(0);
+		c1.setRatings(0);		
+		
+		when(dao2.findByTcIdAndLearnerId(c1.getTcId(), c1.getLearnerId())).thenReturn(c1);
+		when(dao2.save(c1)).thenReturn(c1);
+		assertEquals(service2.AddFeedback(12, 1, feedback).getFeedback(), feedback);
 	}
 	
 	//Testing change credentials operation
@@ -95,15 +123,21 @@ class LearnerTests {
 	@Order(5)
 	@Rollback(false)
 	public void changeCredentials() {
-		Learner l = dao.findById(12).get();
+		Learner l = new Learner();
+		l.setLearnerId(12);
+		l.setName("Raj");
+		l.setEmail("rag@gmail.com");
+		l.setPassword("RajPass");
+		
+		String email = "newemail@test.com";
+		String password = "new password";
+		
+		when(dao.findById(l.getLearnerId())).thenReturn(Optional.of(l));
+		when(dao.save(l)).thenReturn(l);
 		l.setEmail("newemail@test.com");
 		l.setPassword("new password");
 		
-		dao.save(l);
-		
-		Learner updatedl = dao.findById(12).get();
-		assertThat(updatedl.getEmail()).isEqualTo("newemail@test.com");
-		assertThat(updatedl.getPassword()).isEqualTo("new password");		
+		assertEquals(service.updateLearner(12, email, password), l);
 	}
 	
 	//Testing the delete operation
@@ -111,9 +145,14 @@ class LearnerTests {
 	@Rollback(false)
 	@Order(6)
 	public void testDeleteLearner() {
-	    Learner l = dao.findById(12).get();
-	    dao.deleteById(l.getLearnerId());
-	    assertFalse(dao.existsById(l.getLearnerId()));
+		Learner l = new Learner();
+		l.setLearnerId(12);
+		l.setName("Raj");
+		l.setEmail("rag@gmail.com");
+		l.setPassword("RajPass");
+		
+		service.deleterLearner(l.getLearnerId());
+	    verify(dao, times(1)).deleteById(l.getLearnerId());
 	}
 	
 }

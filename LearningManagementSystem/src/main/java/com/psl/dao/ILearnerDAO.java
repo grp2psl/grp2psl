@@ -6,6 +6,7 @@ package com.psl.dao;
 
 //Necessary imports for DAO declaration
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import com.psl.entities.Learner;
 
@@ -15,5 +16,6 @@ import com.psl.entities.Learner;
  * Learner is Entity Class on which CRUD operations are to be performed
  * Integer is data type of primary key of Learner Class
  */
+@Repository
 public interface ILearnerDAO extends CrudRepository<Learner,Integer>{
 }

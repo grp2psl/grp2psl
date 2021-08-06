@@ -20,11 +20,19 @@ public class CourseOfferingService {
 	@Autowired
 	private ICourseOfferingDAO dao;
 	
+	public ICourseOfferingDAO getDao() {
+		return dao;
+	}
+
+	public void setDao(ICourseOfferingDAO dao) {
+		this.dao = dao;
+	}
+
 	//Function to allow Learner to given feedback on given course Offering
-	public void AddFeedback(int learnerId, int tcId, String feedback) {
+	public CourseOffering AddFeedback(int learnerId, int tcId, String feedback) {
 		CourseOffering co = dao.findByTcIdAndLearnerId(tcId, learnerId);
 		co.setFeedback(feedback);
-		dao.save(co);
+		return dao.save(co);
 	}
 	
 	//Lists all Course Offerings of given learner which is identified by learnerId 
