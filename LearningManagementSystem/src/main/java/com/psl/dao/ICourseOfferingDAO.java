@@ -9,6 +9,9 @@ import com.psl.entities.CourseOffering;
 
 public interface ICourseOfferingDAO extends CrudRepository<CourseOffering, Integer> {
 
+	/*
+	 * AUTO-INCREMENT ID
+	 */
 	@Query(value="select max(courseofferingid) from courseoffering", nativeQuery=true)
 	public Integer getMaxId();
 	public List<CourseOffering> findByTcId(int id);

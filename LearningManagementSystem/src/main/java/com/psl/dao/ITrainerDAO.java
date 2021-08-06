@@ -13,12 +13,21 @@ import org.springframework.data.repository.query.Param;
 import com.psl.entities.Trainer;
 
 public interface ITrainerDAO extends CrudRepository<Trainer, Integer>{
+	/*
+	 * CUSTOM QUERY TO HIDE PASSWORD
+	 */
 	@Query(value = "select trainerid, name, department, email, phonenumber, password=null as password from trainer", nativeQuery = true)
 	public List<Trainer> findAll();
 
+	/*
+	 * AUTO-INCREMENT ID
+	 */
 	@Query(value="select max(trainerid) from trainer", nativeQuery=true)
 	public Integer getNextId();
 
+	/*
+	 * CUSTOM QUERY FOR NEW RECORD INSERTION  
+	 */
 	@Transactional
 	@Modifying
 	@Query(value="insert into trainer(trainerid, name, department, phonenumber, email, password) values(?1, ?2, ?3, ?4, ?5, ?6)", nativeQuery=true)

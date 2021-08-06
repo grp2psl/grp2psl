@@ -28,50 +28,49 @@ public class LearnerController {
 	@Autowired
 	private LearnerService service;
 	
-	
-	@GetMapping("/test")
-	public String home(){
-		return "home";
-	}
-	
+	/*
+	 * GET DETAILS OF LEARNER BY ID
+	 */	
 	@GetMapping("/{id}")
 	public Learner getLearner(@PathVariable int id) {
 		return service.getLearner(id);
 	}
-	
-	@PostMapping("/register")
-	public void addLearner(@RequestBody Learner learner) {
-		service.addLearner(learner);
-	}
+
 	/*
-	@PostMapping("/register")
-	public ResponseEntity<Void> addLearner(@RequestBody Learner learner, UriComponentsBuilder ucBuilder) {
-		service.addLearner(learner);
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/learners/{id}").buildAndExpand(learner.getLearnerid()).toUri());
-		return new ResponseEntity<Void> (headers, HttpStatus.CREATED);
-	}
+	 * GET DETAILS OF ALL LEARNERS
 	 */
-	
-	/*For testing in postman: Enter url->body->form-data->key:file->select file from dropdown->select file*/
-	@PostMapping("/register-multiple")
-	public void addMultipleLearners(@RequestParam("file") MultipartFile csvFilePath ) throws IOException {
-		service.addMultipleLearners(csvFilePath);
-	}
-	
 	@GetMapping("/")
 	public List<Learner> getAllLearners(){
 		return service.getAllLearners();
 	}
 	
+	/*
+	 * REGISTER LEARNER
+	 */
+	@PostMapping("/register")
+	public void addLearner(@RequestBody Learner learner) {
+		service.addLearner(learner);
+	}
 	
+	/*
+	 * REGISTER MULTIPLE LEARNERS BY UPLOADING EXCEL FILE
+	 */
+	@PostMapping("/register-multiple")
+	public void addMultipleLearners(@RequestParam("file") MultipartFile csvFilePath ) throws IOException {
+		service.addMultipleLearners(csvFilePath);
+	}
 	
-	
+	/*
+	 * DELETE LEARNER BY ID
+	 */
 	@DeleteMapping("/{id}")
 	public void removeLearner(@PathVariable int id) {
 		service.removeLearner(id);
 	}
 	
+	/*
+	 * DOWNLOAD FORMAT OF EXCEL SHEET FOR UPLOADING MULTIPLE LEARNERS
+	 */
 	@GetMapping("/generate-excel")
 	public void downloadFileFromLocal() throws IOException {
 		Path file = Paths.get(System.getProperty("user.home"), "Downloads");

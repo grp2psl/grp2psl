@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,8 @@ import com.psl.entities.CourseOfferingStatus;
 import com.psl.entities.Learner;
 import com.psl.entities.TeacherCourseMapping;
 import com.psl.entities.Trainer;
+import com.psl.utils.ExcelFields;
+import com.psl.utils.ExcelHelper;
 
 @Service("courseOfferingService")
 public class CourseOfferingService {
@@ -53,6 +56,9 @@ public class CourseOfferingService {
 	@Autowired
 	private TeacherCourseMappingService tcService;
 	
+	/*
+	 * ENROLL LEARNER
+	 */
 	public void enrollLearner(CourseOffering offering) throws ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
 		Integer maxId = dao.getMaxId();
@@ -65,6 +71,9 @@ public class CourseOfferingService {
         emailService.sendEmail("group2.learning.management.system@gmail.com", learner.getEmail(), "Hi " + learner.getName() +", \nYou have been enrolled to the Course - "+course.getCoursename()+".\nDuration of the course is - "+course.getDuration()+" hours, starting from "+formatter.format(offering.getStartdate()), "Learner enrolled to "+course.getCoursename()+" successfully - learning management portal");
 	}
 	
+	/*
+	 * ENROLL MULTIPLE LEARNERS
+	 */
 	public void enrollMultipleLearners(MultipartFile csvFilePath) throws IOException, ParseException {
 		Integer maxId = dao.getMaxId();
 		maxId = maxId==null ? 0 : maxId;
@@ -88,6 +97,10 @@ public class CourseOfferingService {
 				
 	}
 	
+	/*
+	 * UPDATE STATUS OF COURSE OFFERING
+	 * STATUS CAN BE - IN_PROGRESS, FAILFEEDBACK_PENDING, PASSFEEDBACK_PENDING, FAILFEEDBACK_GIVEN, COMPLETED
+	 */
 	public CourseOffering updateCourseOfferingStatus(CourseOffering offering) {
 		double percentage = offering.getPercentage();
 		String feedback = offering.getFeedback();
@@ -106,12 +119,18 @@ public class CourseOfferingService {
 		return offering;
 	}
 	
+	/*
+	 * UPDATE TEST SCORE OF AN INDIVIDUAL
+	 */
 	public void updateTestScore(int id, double percentage) {
 		CourseOffering offering = dao.findById(id).get();
 		offering.setPercentage(percentage);
 		dao.save(updateCourseOfferingStatus(offering));
 	}
 	
+	/*
+	 * UPDATE TEST SCORE OF MULTIPLE LEARNERS
+	 */
 	public void updateMultipleTestScores(MultipartFile csvFilePath) throws IOException, ParseException {
 		XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
 	    XSSFSheet worksheet = workbook.getSheetAt(0);
@@ -125,121 +144,52 @@ public class CourseOfferingService {
 		
 	}
 	
+	/*
+	 * GENERATES EXCEL SHEET OF SAMPLE DATA FOR ENROLMENT
+	 */
 	public void generateExcelForEnrolment(String path) throws IOException {
-		Workbook workbook = new XSSFWorkbook();
-
-		Sheet sheet = workbook.createSheet("Sample Data");
-		sheet.setColumnWidth(0, 6000);
-		sheet.setColumnWidth(1, 4000);
+		ExcelHelper helper = new ExcelHelper();
 		
+		List<ExcelFields> fields = new ArrayList<>();
+		fields.add(new ExcelFields("Learner ID", "1", XSSFCell.CELL_TYPE_NUMERIC));
+		fields.add(new ExcelFields("TCID", "2", XSSFCell.CELL_TYPE_NUMERIC));
+		fields.add(new ExcelFields("Start Date", "YYYY-MM-DD", XSSFCell.CELL_TYPE_STRING));
+		fields.add(new ExcelFields("End Date", "YYYY-MM-DD", XSSFCell.CELL_TYPE_STRING));
 		
-		Row header = sheet.createRow(0);
-
-		CellStyle headerStyle = workbook.createCellStyle();
-		headerStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
-
-		XSSFFont font = ((XSSFWorkbook) workbook).createFont();
-		font.setFontName("Arial");
-		font.setBold(true);
-		headerStyle.setFont(font);
-
-		Cell headerCell = header.createCell(0);
-		headerCell.setCellValue("Learner ID");
-		headerCell.setCellStyle(headerStyle);
-
-		headerCell = header.createCell(1);
-		headerCell.setCellValue("TCID");
-		headerCell.setCellStyle(headerStyle);
-
-		headerCell = header.createCell(2);
-		headerCell.setCellValue("Start Date");
-		headerCell.setCellStyle(headerStyle);
+		helper.generateExcel(path, "enrollLearners.xlsx", "Sample Data", fields);
 		
-		headerCell = header.createCell(3);
-		headerCell.setCellValue("End Date");
-		headerCell.setCellStyle(headerStyle);
-
-		Row data = sheet.createRow(1);
-		Cell dataCell = data.createCell(0);
-		dataCell.setCellValue(1);
-		dataCell.setCellType(XSSFCell.CELL_TYPE_NUMERIC);
-
-		dataCell = data.createCell(1);
-		dataCell.setCellValue(2);
-		dataCell.setCellType(XSSFCell.CELL_TYPE_NUMERIC);
-
-		dataCell = data.createCell(2);
-		dataCell.setCellValue("YYYY-MM-DD");
-		dataCell.setCellType(XSSFCell.CELL_TYPE_STRING);
-
-		dataCell = data.createCell(3);
-		dataCell.setCellValue("YYYY-MM-DD");
-		dataCell.setCellType(XSSFCell.CELL_TYPE_STRING);
-		
-		String fileName = "enrollLearners.xlsx";
-		
-		File file = new File(path, fileName);
-		FileOutputStream outputStream = new FileOutputStream(file);
-		workbook.write(outputStream);
-		workbook.close();
-		outputStream.close();
-		System.out.println(file.getPath());
 	}
 
-	
+	/*
+	 * GENERATES EXCEL SHEET OF SAMPLE DATA FOR TEST SCORE UPDATE 
+	 */
 	public void generateExcelForScoreUpdate(String path) throws IOException {
-		Workbook workbook = new XSSFWorkbook();
-
-		Sheet sheet = workbook.createSheet("Sample Data");
-		sheet.setColumnWidth(0, 6000);
-		sheet.setColumnWidth(1, 4000);
+		ExcelHelper helper = new ExcelHelper();
 		
+		List<ExcelFields> fields = new ArrayList<>();
+		fields.add(new ExcelFields("Course Offering ID", "1", XSSFCell.CELL_TYPE_NUMERIC));
+		fields.add(new ExcelFields("Percentage", "70", XSSFCell.CELL_TYPE_NUMERIC));
 		
-		Row header = sheet.createRow(0);
-
-		CellStyle headerStyle = workbook.createCellStyle();
-		headerStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
-
-		XSSFFont font = ((XSSFWorkbook) workbook).createFont();
-		font.setFontName("Arial");
-		font.setBold(true);
-		headerStyle.setFont(font);
-
-		Cell headerCell = header.createCell(0);
-		headerCell.setCellValue("Course Offering ID");
-		headerCell.setCellStyle(headerStyle);
-
-		headerCell = header.createCell(1);
-		headerCell.setCellValue("Percentage");
-		headerCell.setCellStyle(headerStyle);
-		
-		Row data = sheet.createRow(1);
-		Cell dataCell = data.createCell(0);
-		dataCell.setCellValue(1);
-		dataCell.setCellType(XSSFCell.CELL_TYPE_NUMERIC);
-
-		dataCell = data.createCell(1);
-		dataCell.setCellValue(70);
-		dataCell.setCellType(XSSFCell.CELL_TYPE_NUMERIC);
-
-		String fileName = "updateScores.xlsx";
-		
-		File file = new File(path, fileName);
-		FileOutputStream outputStream = new FileOutputStream(file);
-		workbook.write(outputStream);
-		workbook.close();
-		outputStream.close();
-		System.out.println(file.getPath());
+		helper.generateExcel(path, "updateScores.xlsx", "Sample Data", fields);
 	}
 
+	/*
+	 * VIEW COURSE OFFERING
+	 */
 	public List<CourseOffering> viewCourseOfferings(){
 		return (List<CourseOffering>) dao.findAll();
 	}
 	
+	/*
+	 * REMOVE COURSE OFFERING
+	 */
 	public void removeCourseOffering(int id) {
 		dao.deleteById(id);
 	}
 	
+	/*
+	 * VIEW DETAILS OF TRAINER BY ID
+	 */
 	public Map<String, Object> viewTrainerDetails(int id) {
 		Map<String, Object> response = new HashMap<>();
 		Map<Integer, List<CourseOffering>> offerings = new HashMap<>();
@@ -257,6 +207,9 @@ public class CourseOfferingService {
 		return response;
 	}
 	
+	/*
+	 * VIEW DETAILS OF COURSE BY TRAINER ID
+	 */
 	public Map<String, Object> viewCourseDetailsByTrainerId(int id, int course_id) {
 		Map<String, Object> response = new HashMap<>();
 		double avgRating;

@@ -20,12 +20,7 @@ import com.psl.service.CourseService;
 public class CourseController {
 	@Autowired
 	private CourseService service;
-	
-	@GetMapping("/")
-	public String home(){
-		return "home";
-	}
-	
+		
 	/*
 	 *VIEW ALL COURSES AVAILABLE
 	 */

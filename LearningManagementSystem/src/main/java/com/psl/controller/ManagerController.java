@@ -59,6 +59,14 @@ public class ManagerController {
 	}
 	
 	/*
+	 * UPDATE DETAILS OF MANAGER
+	 */
+	@PutMapping("/update")
+	public void updateManager(@RequestBody Manager manager) {
+		service.updateManager(manager);
+	}
+	
+	/*
 	 * ENROLL A LEARNER TO A COURSE
 	 * REQUEST BODY CONTENTS : {leanerid, tcid, startdate, enddate}
 	 */
@@ -154,8 +162,7 @@ public class ManagerController {
 	@GetMapping("/course-attended/{id}")
 	public List<CourseAttended> viewCourseAttended(@PathVariable int id ){
 		return lService.viewCourseAttended(id);
-	}
-	
+	}	
 
 	/*
 	 * VIEW A COURSE TO CHECK THE SCORE AND STATUS OF THE LEARNER
@@ -165,5 +172,5 @@ public class ManagerController {
 	public CourseAttended viewScoreAndStatus(@PathVariable int id, @PathVariable int courseId ){
 		return lService.viewScoreAndStatus(id,courseId);
 	
-}
+	}
 }
