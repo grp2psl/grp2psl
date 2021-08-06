@@ -8,11 +8,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "teachercoursemapping")
 public class TeacherCourseMapping {
-	@Id
 	@Column(name = "trainerid")
 	private int trainerId;
 	@Column(name = "courseid")
 	private int courseId;
+	
+	@Id
 	@Column(name = "tcid")
 	private int tcId;
 	public int getTrainerId() {
