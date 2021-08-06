@@ -27,10 +27,8 @@ import javax.validation.constraints.Size;
 
 //Annotation to recognize learner as an Entity
 @Entity
-
 //Name of the MySql table in which Learner Entity records are stored
 @Table(name = "learner")
-
 //Definition of Learner Entity which inherits the user class
 public class Learner extends User {
 	
