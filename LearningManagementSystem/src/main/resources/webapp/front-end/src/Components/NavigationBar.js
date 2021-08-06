@@ -6,15 +6,21 @@ import {Link} from 'react-router-dom'
 class NavigationBar extends React.Component{
     render(){
         return(
-            <div>
+			<div>
                 <Navbar bg="dark" variant="dark">
-                    <Link to={""} className='navbar-brand'>
+					<Container>
+    				<Link to={""} className='navbar-brand'>
                         Learning Manager
                     </Link>
+               
                     <Nav className="me-auto">
-                        <Link to={"register"} className='nav-link'>Register</Link>
-                        <Link to={"show"} className='nav-link'>Show Trainers</Link>
+                        <Link to={""} className='nav-link'>Home</Link>
+                        <Link to={""} className='nav-link'>My Profile</Link>
                     </Nav>
+                    <Nav>
+                        <Link to={""} className='nav-link'>Logout</Link>
+                    </Nav>
+                    </Container>                
                 </Navbar>
             </div>);
     }
