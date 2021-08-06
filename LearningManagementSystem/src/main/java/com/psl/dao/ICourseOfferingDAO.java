@@ -34,4 +34,6 @@ public interface ICourseOfferingDAO extends CrudRepository<CourseOffering, Cours
 	@Query("select ratings from CourseOffering where tcid = :tcid")
 	List<Float> findAllCoursesTaughtRatings(@Param("tcid") int tcid);
 	
+	@Query("SELECT feedback from CourseOffering where tcid = :tcid")
+	List<String> findCommentsForACourse(@Param("tcid") int tcid);
 }

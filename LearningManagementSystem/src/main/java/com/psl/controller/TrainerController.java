@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.psl.entities.RatingAndComment;
 import com.psl.entities.TeacherCourseMapping;
 import com.psl.entities.TeacherCoursesTaught;
 import com.psl.entities.Trainer;
@@ -37,15 +38,22 @@ public class TrainerController {
 		List<TeacherCourseMapping> l = service.findCoursesTaughtByTrainer(id);
 		List<TeacherCoursesTaught> tct = new ArrayList<>();
 		for (TeacherCourseMapping t: l) {
-			float ratings = getFeedbackResults(id, t.getTcId());
+			float ratings = getFeedbackRatings(t.getTcId());
 			TeacherCoursesTaught taught = new TeacherCoursesTaught(t.getTrainerId(), t.getCourseId(), t.getTcId(), ratings); 
 			tct.add(taught);
 		}
 		return tct;
 	}
 	
-	@GetMapping("/{id}/{tcid}")
-	public float getFeedbackResults(@PathVariable int id, @PathVariable int tcid){
+	public float getFeedbackRatings(int tcid){		
 		return service.getFeedbackResults(tcid);
+	}
+	
+	@GetMapping("/{id}/{tcid}")
+	public RatingAndComment getFeedbackResults(@PathVariable int id, @PathVariable int tcid){
+		List<String> comments = service.findCommentsForACourse(tcid);
+		float rating = getFeedbackRatings(tcid);
+		RatingAndComment rac = new RatingAndComment(rating, comments);
+		return rac;
 	}
 }

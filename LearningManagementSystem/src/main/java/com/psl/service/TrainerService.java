@@ -44,4 +44,8 @@ public class TrainerService {
 	public List<Float> findAllCoursesTaughtRatings(int id){
 		return offeringDAO.findAllCoursesTaughtRatings(id);
 	}
+	
+	public List<String> findCommentsForACourse(int tcid){
+		return offeringDAO.findCommentsForACourse(tcid);
+	}
 }
