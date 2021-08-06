@@ -5,6 +5,7 @@
 package com.psl.entities;
 
 //Necessary imports for entity declaration
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
