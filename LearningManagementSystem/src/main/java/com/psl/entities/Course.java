@@ -22,9 +22,9 @@ import javax.validation.constraints.Size;
  * toString method is overridden to display instance of the class appropriately. 
  */
 
-//Annotation to recognize course as an Entity
+//Annotation to recognize Course as an Entity
 @Entity
-//Name of the MySql table in which course Entity records are stored
+//Name of the MySql table in which Course Entity records are stored
 @Table(name = "course")
 //Definition of Course Entity
 public class Course {
@@ -41,7 +41,7 @@ public class Course {
 	
 	/*
 	 * courseName attribute stores name of course in a string format 
-	 * with maximum limit on length of the string at 100.
+	 * with maximum limit on length of the string as 100.
 	 */
 	@Size(max = 100, message = "Length of courseName can't be more than 100 characheters!")
 	@Column(name="coursename")
@@ -49,14 +49,14 @@ public class Course {
 	
 	/*
 	 * prerequisite attribute stores prerquisites of the course in a string format 
-	 * with maximum limit on length of the string at 300.
+	 * with maximum limit on length of the string as 300.
 	 */
 	@Size(max = 300, message = "Length of prerequisite can't be more than 300 characheters!")	
 	private String prerequisite;
 	
 	/*
 	 * syllabus attribute stores syllabus of the course in a string format 
-	 * with maximum limit on length of the string at 300.
+	 * with maximum limit on length of the string as 300.
 	 */
 	@Size(max = 300, message = "Length of syllabus can't be more than 300 characheters!")		
 	private String syllabus;
