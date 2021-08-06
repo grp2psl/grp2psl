@@ -33,7 +33,7 @@ public class TrainerService {
 	
 	public void addTrainer(Trainer trainer) {
 		Integer id = dao.getNextId();
-		id = (id==null ? 0 : id);
+		id = (id==null ? 0 : id + 1);
 		Random rand = new Random();
         String firstname = trainer.getName();
 		try {
@@ -44,13 +44,18 @@ public class TrainerService {
 		String password = firstname+id+"@"+rand.nextInt(9999);
 		trainer.setTrainerid(id);
 		trainer.setPassword(password);
-		dao.save(trainer);
-		service.sendEmail("group2.learning.management.system@gmail.com", trainer.getEmail(), "Hi " + firstname +", \nYour password is "+password+"\nChange your password once you are logged in.", "Trainer registered successfully - learning management portal");		
+		try {
+			dao.saveNewEntry(trainer.getTrainerid(), trainer.getName(), trainer.getDepartment(), trainer.getPhonenumber(), trainer.getEmail(), trainer.getPassword());
+			service.sendEmail("group2.learning.management.system@gmail.com", trainer.getEmail(), "Hi " + firstname +", \nYour password is "+password+"\nChange your password once you are logged in.", "Trainer registered successfully - learning management portal");	
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	} 
 
 	public void addMultipleTrainers(MultipartFile csvFilePath) throws IOException {
 		Integer id = dao.getNextId();
-		id = (id==null ? 0 : id);
+		id = (id==null ? 0 : id + 1);
 	    XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
 	    XSSFSheet worksheet = workbook.getSheetAt(0);
 		Random rand = new Random();
@@ -72,9 +77,14 @@ public class TrainerService {
 			}
 			String password = firstname+trainer.getTrainerid()+"@"+rand.nextInt(9999);
 			trainer.setPassword(password);
-			dao.save(trainer);
-			service.sendEmail("group2.learning.management.system@gmail.com", trainer.getEmail(), "Hi " + firstname +", \nYour password is "+password+"\nChange your password once you are logged in.", "Trainer registered successfully - learning management portal");		
-	    }				
+			try {
+				dao.saveNewEntry(trainer.getTrainerid(), trainer.getName(), trainer.getDepartment(), trainer.getPhonenumber(), trainer.getEmail(), trainer.getPassword());
+				service.sendEmail("group2.learning.management.system@gmail.com", trainer.getEmail(), "Hi " + firstname +", \nYour password is "+password+"\nChange your password once you are logged in.", "Trainer registered successfully - learning management portal");	
+			}catch(Exception e) {
+				e.printStackTrace();
+				throw e;
+			}
+		}				
 	}
 	
 	public void generateExcel(String path) throws IOException {

@@ -45,7 +45,7 @@ public class LearnerService {
 	
 	public void addLearner(Learner learner) {
 		Integer id = dao.getNextId();
-		id = (id==null ? 0 : id);
+		id = (id==null ? 0 : id + 1);
 		Random rand = new Random();
 		String firstname = learner.getName();
 		try {
@@ -56,13 +56,18 @@ public class LearnerService {
 		String password = firstname+id+"@"+rand.nextInt(9999);
 		learner.setLearnerid(id);
 		learner.setPassword(password);
-		dao.save(learner);
-		service.sendEmail("group2.learning.management.system@gmail.com", learner.getEmail(), "Hi " + firstname +", \nYour password is "+password+"\nChange your password once you are logged in.", "Learner registered successfully - learning management portal");		
+		try {
+			dao.saveNewEntry(learner.getLearnerid(), learner.getName(), learner.getDepartment(), learner.getPhonenumber(), learner.getEmail(), learner.getPassword());
+			service.sendEmail("group2.learning.management.system@gmail.com", learner.getEmail(), "Hi " + firstname +", \nYour password is "+password+"\nChange your password once you are logged in.", "Learner registered successfully - learning management portal");		
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	} 
 	
 	public void addMultipleLearners(MultipartFile csvFilePath) throws IOException {
 		Integer id = dao.getNextId();
-		id = (id==null ? 0 : id);
+		id = (id==null ? 0 : id + 1);
 	    XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
 	    XSSFSheet worksheet = workbook.getSheetAt(0);
 		Random rand = new Random();
@@ -84,9 +89,15 @@ public class LearnerService {
 			}
 			String password = firstname+learner.getLearnerid()+"@"+rand.nextInt(9999);
 			learner.setPassword(password);
-			dao.save(learner);
-			service.sendEmail("group2.learning.management.system@gmail.com", learner.getEmail(), "Hi " + firstname +", \nYour password is "+password+"\nChange your password once you are logged in.", "Learner registered successfully - learning management portal");		
-	    }
+
+			try {
+				dao.saveNewEntry(learner.getLearnerid(), learner.getName(), learner.getDepartment(), learner.getPhonenumber(), learner.getEmail(), learner.getPassword());
+				service.sendEmail("group2.learning.management.system@gmail.com", learner.getEmail(), "Hi " + firstname +", \nYour password is "+password+"\nChange your password once you are logged in.", "Learner registered successfully - learning management portal");		
+			}catch(Exception e) {
+				e.printStackTrace();
+				throw e;
+			}
+		}
 				
 	}
 	
