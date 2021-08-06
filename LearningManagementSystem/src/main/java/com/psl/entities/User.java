@@ -1,11 +1,19 @@
 package com.psl.entities;
-
+/*
+ * Abstract entity from which entities like Learner, Admin, etc. inherit
+ */
 public abstract class User {
+	/*
+	 * Attributes of general user which store common details like name, contact number.
+	 */
 	private String name;
 	private String phonenumber;
 	private String email;
 	private String password;
 	
+	/*
+	 * Public Getter and Setter methods
+	 */
 	public String getName() {
 		return name;
 	}
