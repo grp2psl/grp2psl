@@ -6,6 +6,8 @@ import NavigationBar from './Components/NavigationBar';
 import Welcome from './Components/Welcome';
 import Register from './Components/Register';
 import ShowTrainers from './Components/ShowTrainers';
+import ViewCourses from './Components/ViewCourses';
+import CourseRegister from './Components/CourseRegister';
 import { Col, Container, Row } from 'react-bootstrap';
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
               <Route path="/" exact component={Welcome}/>
               <Route path="/register" exact component={Register}/>
               <Route path="/show" exact component={ShowTrainers}/>
+              <Route path="/viewCourse" exact component={ViewCourses}/>
+              <Route path="/registerCourse" exact component={CourseRegister}/>
           </Switch>
           </Col>
         </Row>
