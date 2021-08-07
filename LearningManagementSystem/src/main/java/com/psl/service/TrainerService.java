@@ -39,7 +39,7 @@ public class TrainerService {
 	 */
 	public void addTrainer(Trainer trainer) {
 		Integer id = dao.getNextId();
-		id = (id==null ? 0 : id + 1);
+		id = (id==null ? 20000 : id + 1);
 		Random rand = new Random();
         String firstname = trainer.getName();
 		try {
@@ -64,7 +64,7 @@ public class TrainerService {
 	 */
 	public void addMultipleTrainers(MultipartFile csvFilePath) throws IOException {
 		Integer id = dao.getNextId();
-		id = (id==null ? 0 : id + 1);
+		id = (id==null ? 20000 : id + 1);
 	    XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
 	    XSSFSheet worksheet = workbook.getSheetAt(0);
 		Random rand = new Random();
