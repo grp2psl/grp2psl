@@ -51,28 +51,40 @@ public class TeacherCourseMappingService {
 			dao.save(teacherCourseMapping);
 					
 	    }
-		
-		
-		
 	}
 
+	/*
+	 * GET COURSE BY TCID (TRAINER-COURSE MAPPING ID)
+	 */
 	public Course getCourse(int tcid) {
 		TeacherCourseMapping tcMapping = dao.findById(tcid).get();
 		return courseService.getCourse(tcMapping.getCourseId());
 	}
 	
+	/*
+	 * GET TRAINER-COURSE MAPPINGS BY TRAINER ID
+	 */
 	public List<TeacherCourseMapping> getByTrainerId(int trainerid) {
 		return dao.findByTrainerId(trainerid);
 	}
 	
+	/*
+	 * GET TRAINER-COURSE MAPPINGS BY COURSE ID
+	 */
 	public List<TeacherCourseMapping> getByCourseId(int courseid) {
 		return dao.findByCourseId(courseid);
 	}
 	
+	/*
+	 * GET TRAINER-COURSE MAPPING BY TRAINER ID AND COURSE ID
+	 */
 	public TeacherCourseMapping getByTrainerIdAndCourseId(int id, int courseid) {
 		return dao.findByTrainerIdAndCourseId(id, courseid);
 	}
 	
+	/*
+	 * GET COURSES BY TRAINER ID
+	 */
 	public List<Course> getCoursesByTrainerId(int trainerid) {
 		List<TeacherCourseMapping> tcMapping = dao.findByTrainerId(trainerid);
 		List<Course> courses = new ArrayList<>();

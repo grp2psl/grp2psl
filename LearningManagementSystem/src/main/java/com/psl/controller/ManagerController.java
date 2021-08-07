@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,6 +31,7 @@ import com.psl.service.ManagerService;
 
 @RestController
 @RequestMapping("/managers")
+@CrossOrigin(origins="http://localhost:3000")
 public class ManagerController {
 	@Autowired
 	private ManagerService service;
@@ -54,6 +56,14 @@ public class ManagerController {
 	@PostMapping("/register")
 	public void addManager(@RequestBody Manager m) {
 		service.addManager(m);
+	}
+	
+	/*
+	 * UPDATE DETAILS OF MANAGER
+	 */
+	@PutMapping("/update")
+	public void updateManager(@RequestBody Manager manager) {
+		service.updateManager(manager);
 	}
 	
 	/*
@@ -152,8 +162,7 @@ public class ManagerController {
 	@GetMapping("/course-attended/{id}")
 	public List<CourseAttended> viewCourseAttended(@PathVariable int id ){
 		return lService.viewCourseAttended(id);
-	}
-	
+	}	
 
 	/*
 	 * VIEW A COURSE TO CHECK THE SCORE AND STATUS OF THE LEARNER
@@ -163,5 +172,5 @@ public class ManagerController {
 	public CourseAttended viewScoreAndStatus(@PathVariable int id, @PathVariable int courseId ){
 		return lService.viewScoreAndStatus(id,courseId);
 	
-}
+	}
 }
