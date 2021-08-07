@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @Order(1)
 @EnableWebSecurity
-public class LearnersSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     
     @Autowired
 	private javax.sql.DataSource dataSource;
