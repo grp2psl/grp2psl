@@ -2,6 +2,10 @@ package com.psl.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
 import java.text.ParseException;
 import java.util.List;
 
@@ -11,6 +15,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -63,5 +70,21 @@ public class CourseOfferingServiceTest {
 		service.removeCourseOffering(id);
 		CourseOffering offering = service.getCourseOffering(service.getMaxId());
 		assertThat(offering.getCourseofferingid()).isEqualTo(id-1);
+	}
+	
+	@Test
+	@Order(5)
+	public void testEnrollMultipleLearners() throws IOException, ParseException {
+		int id = service.getMaxId();
+		Path path = Paths.get("EnrollMultipleLearners.xlsx");
+		String name = "EnrollMultipleLearners.xlsx";
+		String originalFileName = "EnrollMultipleLearners.xlsx";
+		String contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+		byte[] content = null;
+		content = Files.readAllBytes(path);
+		MultipartFile file = new MockMultipartFile(name,
+		                     originalFileName, contentType, content);
+		service.enrollMultipleLearners(file);
+		assertThat(service.getMaxId() > id);
 	}
 }
