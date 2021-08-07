@@ -22,8 +22,8 @@ INSERT INTO manager (managerid, name, phonenumber, email, password)
 VALUES (1, 'Zafar', 2189714300, 'zafar@gmail.com', 'zafarpass');
 
 INSERT INTO course (courseid, coursename, prerequisite, syllabus, duration) VALUES 
-(1, 'Introduction to OOPs', 'Basic Programming', 'Principles of OOPs, Classes and Objects, Constructors and Destructors, Polymorphism, Program development using Inheritance, Exception Handling', 12),
-(2, 'Finance 101', 'Basic Mathematics', 'Accounting, Financial Analysis, Corporate Finance', 8);
+(1, 'Introduction to OOPs', 'Basic Programming', 'Principles of OOPs, Classes and Objects, Constructors and Destructors, Polymorphism, Program development using Inheritance, Exception Handling', '12 hr'),
+(2, 'Finance 101', 'Basic Mathematics', 'Accounting, Financial Analysis, Corporate Finance', '8 days');
 
 INSERT INTO TeacherCourseMapping(tcid, trainerid, courseid) VALUES 
 (1, 1, 2),
