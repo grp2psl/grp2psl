@@ -10,6 +10,9 @@ import java.text.ParseException;
 import java.util.List;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -86,5 +89,25 @@ public class CourseOfferingServiceTest {
 		                     originalFileName, contentType, content);
 		service.enrollMultipleLearners(file);
 		assertThat(service.getMaxId() > id);
+	}
+	
+	@Test
+	@Order(6)
+	public void testUpdateMultipleTestScores() throws IOException, ParseException {
+		Path path = Paths.get("update-score.xlsx");
+		String name = "update-score.xlsx";
+		String originalFileName = "update-score.xlsx";
+		String contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+		byte[] content = null;
+		content = Files.readAllBytes(path);
+		MultipartFile file = new MockMultipartFile(name,
+		                     originalFileName, contentType, content);
+		service.updateMultipleTestScores(file);
+		XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
+	    XSSFSheet worksheet = workbook.getSheetAt(0);
+	    XSSFRow row = worksheet.getRow(worksheet.getPhysicalNumberOfRows()-1);
+		CourseOffering offering = service.getCourseOffering((int)row.getCell(0).getNumericCellValue());
+		double percentage = (double)row.getCell(1).getNumericCellValue();
+	    assertThat(offering.getPercentage()).isEqualTo(percentage);
 	}
 }
