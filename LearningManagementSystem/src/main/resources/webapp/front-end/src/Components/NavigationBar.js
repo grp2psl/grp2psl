@@ -16,6 +16,12 @@ class NavigationBar extends React.Component{
                 <Navbar bg="dark" variant="dark">
 					<Container>
     				<Link to={""} className='navbar-brand'>
+                    <img
+                        src="books.png"
+                        width="35"
+                        height="35"
+                        alt="brand"
+                    />{" "}
                         Learning Manager
                     </Link>
                     <Nav>

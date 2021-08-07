@@ -17,7 +17,7 @@ class Welcome extends React.Component{
                 <Container>
                         <Row xs={1} md={2} className="g-4">
 						    <Col>
-						      <Card>
+						      <Card className="bg-light">
 						        <Card.Body>
 						          <Card.Title>Register Trainer</Card.Title>
 						          <Card.Text>
@@ -29,7 +29,7 @@ class Welcome extends React.Component{
 						      </Card>
 						    </Col>
 						    <Col>
-						      <Card>
+						      <Card className="bg-light">
 						        <Card.Body>
 						          <Card.Title>View Trainers</Card.Title>
 						          <Card.Text>
