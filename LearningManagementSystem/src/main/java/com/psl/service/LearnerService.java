@@ -48,7 +48,7 @@ public class LearnerService {
 	 */
 	public void addLearner(Learner learner) {
 		Integer id = dao.getNextId();
-		id = (id==null ? 10000 : id + 1);
+		id = (id==null ? 10000 : id);
 		Random rand = new Random();
 		String firstname = learner.getName();
 		try {
@@ -73,7 +73,7 @@ public class LearnerService {
 	 */
 	public void addMultipleLearners(MultipartFile csvFilePath) throws IOException {
 		Integer id = dao.getNextId();
-		id = (id==null ? 10000 : id + 1);
+		id = (id==null ? 10000 : id);
 	    XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
 	    XSSFSheet worksheet = workbook.getSheetAt(0);
 		Random rand = new Random();
@@ -142,6 +142,13 @@ public class LearnerService {
 	public void removeLearner(int id) {
 		dao.deleteById(id);
 	}
+
+	/*
+	 * GET MAX ID OF LEARNER TABLE
+	 */
+	public int getNextId() {
+		return dao.getNextId();
+	}
 	
 	/*
 	 * VIEW ALL COURSES ATTENDED BY A LEARNER
@@ -174,5 +181,5 @@ public class LearnerService {
 			}
 		}
 		return course;
-}
+	}
 }

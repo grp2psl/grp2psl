@@ -39,7 +39,7 @@ public class TrainerService {
 	 */
 	public void addTrainer(Trainer trainer) {
 		Integer id = dao.getNextId();
-		id = (id==null ? 20000 : id + 1);
+		id = (id==null ? 20000 : id);
 		Random rand = new Random();
         String firstname = trainer.getName();
 		try {
@@ -64,7 +64,7 @@ public class TrainerService {
 	 */
 	public void addMultipleTrainers(MultipartFile csvFilePath) throws IOException {
 		Integer id = dao.getNextId();
-		id = (id==null ? 20000 : id + 1);
+		id = (id==null ? 20000 : id);
 	    XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
 	    XSSFSheet worksheet = workbook.getSheetAt(0);
 		Random rand = new Random();
@@ -130,5 +130,14 @@ public class TrainerService {
 	 */
 	public void removeTrainer(int id) {
 		dao.deleteById(id);
+	}
+	
+	/*
+	 * GET MAX ID OF TRAINER TABLE
+	 */
+	public int getNextId() {
+		Integer id = dao.getNextId();
+		id = (id==null ? 20000 : id);
+		return id;
 	}
 }

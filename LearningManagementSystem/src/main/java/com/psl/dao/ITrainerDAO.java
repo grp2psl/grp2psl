@@ -22,7 +22,7 @@ public interface ITrainerDAO extends CrudRepository<Trainer, Integer>{
 	/*
 	 * AUTO-INCREMENT ID
 	 */
-	@Query(value="select max(trainerid) from trainer", nativeQuery=true)
+	@Query(value="select max(trainerid) + 1 from trainer", nativeQuery=true)
 	public Integer getNextId();
 
 	/*
