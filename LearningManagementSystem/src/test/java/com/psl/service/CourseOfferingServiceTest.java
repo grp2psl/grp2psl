@@ -2,20 +2,29 @@ package com.psl.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.psl.entities.CourseOffering;
+import com.psl.utils.ExcelFields;
+import com.psl.utils.ExcelHelper;
 
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
@@ -64,4 +73,65 @@ public class CourseOfferingServiceTest {
 		CourseOffering offering = service.getCourseOffering(service.getMaxId());
 		assertThat(offering.getCourseofferingid()).isEqualTo(id-1);
 	}
+	
+	/*
+	 * TEST UPDATE TEST SCORE OF AN INDIVIDUAL
+	 */
+	@Test
+	@Order(5)
+	public void updateTestScoreTest(int id, double percentage) {
+	}
+	
+	/*
+	 * TEST UPDATE TEST SCORE OF MULTIPLE LEARNERS
+	 */
+	@Test
+	@Order(6)
+	public void updateMultipleTestScoresTest(MultipartFile csvFilePath) throws IOException, ParseException {
+		
+	}
+
+	/*
+	 * VIEW COURSE OFFERING
+	 */
+	@Test
+	@Order(7)
+	public void viewCourseOfferingsTest(){
+	}
+	
+	/*
+	 * GET COURSE OFFERING BY ID
+	 */
+	@Test
+	@Order(8)
+	public void getCourseOfferingTest(int id) {
+	}
+	
+	/*
+	 * REMOVE COURSE OFFERING
+	 */
+	@Test
+	@Order(9)
+	public void removeCourseOfferingTest(int id) {
+	}
+	
+	/*
+	 * TEST GENERATES EXCEL SHEET OF SAMPLE DATA FOR ENROLMENT
+	 */
+	@Test
+	@Order(10)
+	public void generateExcelForEnrolmentTest(String path) throws IOException {
+		
+	}
+
+	/*
+	 * TEST GENERATES EXCEL SHEET OF SAMPLE DATA FOR TEST SCORE UPDATE 
+	 */
+	@Test
+	@Order(11)
+	public void generateExcelForScoreUpdateTest(String path) throws IOException {
+		
+	}
+
+
 }
