@@ -181,6 +181,20 @@ public class CourseOfferingService {
 	}
 	
 	/*
+	 * GET MAX ID OF COURSE OFFERING TABLE
+	 */
+	public int getMaxId() {
+		return dao.getMaxId();
+	}
+	
+	/*
+	 * GET COURSE OFFERING BY ID
+	 */
+	public CourseOffering getCourseOffering(int id) {
+		return dao.findById(id).get();
+	}
+	
+	/*
 	 * REMOVE COURSE OFFERING
 	 */
 	public void removeCourseOffering(int id) {

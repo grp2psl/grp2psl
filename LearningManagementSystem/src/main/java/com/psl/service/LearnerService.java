@@ -48,7 +48,7 @@ public class LearnerService {
 	 */
 	public void addLearner(Learner learner) {
 		Integer id = dao.getNextId();
-		id = (id==null ? 0 : id + 1);
+		id = (id==null ? 10000 : id + 1);
 		Random rand = new Random();
 		String firstname = learner.getName();
 		try {
@@ -73,7 +73,7 @@ public class LearnerService {
 	 */
 	public void addMultipleLearners(MultipartFile csvFilePath) throws IOException {
 		Integer id = dao.getNextId();
-		id = (id==null ? 0 : id + 1);
+		id = (id==null ? 10000 : id + 1);
 	    XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
 	    XSSFSheet worksheet = workbook.getSheetAt(0);
 		Random rand = new Random();
