@@ -31,7 +31,10 @@ public class CourseService {
 	 *ADD A COURSE DETAILS
 	 */
 	public Course addCourse(Course course) {
-	  return dao.save(course);		
+		Integer id = dao.getNextId();
+		id = (id==null ? 0 : id + 1);
+		course.setCourseid(id);
+	    return dao.save(course);		
 	}
 	
 	/*

@@ -10,6 +10,14 @@ class Welcome extends React.Component{
 		show = () => {
 			this.props.history.push("/show");
 		}
+		
+		registerCourse = () => {
+			this.props.history.push("/registerCourse");
+		}
+		
+		viewCourse = () => {
+			this.props.history.push("/viewCourse");
+		}
 	
     render(){
         return(
@@ -37,6 +45,31 @@ class Welcome extends React.Component{
 						            and average ratings.
 						          </Card.Text>
 						          <Button variant="primary" onClick={this.show}>Go</Button>
+						        </Card.Body>
+						      </Card>
+						    </Col>
+						</Row>
+						
+						<Row xs={1} md={2} className="g-4">
+						    <Col>
+						      <Card className="bg-light">
+						        <Card.Body>
+						          <Card.Title>Register Course</Card.Title>
+						          <Card.Text>
+						            Register a course   
+						          </Card.Text>
+						          <Button variant="primary" onClick={this.registerCourse}>Go</Button>
+						        </Card.Body>
+						      </Card>
+						    </Col>
+						    <Col>
+						      <Card className="bg-light">
+						        <Card.Body>
+						          <Card.Title>View Courses</Card.Title>
+						          <Card.Text>
+						            View all the courses
+						          </Card.Text>
+						          <Button variant="primary" onClick={this.viewCourse}>Go</Button>
 						        </Card.Body>
 						      </Card>
 						    </Col>
