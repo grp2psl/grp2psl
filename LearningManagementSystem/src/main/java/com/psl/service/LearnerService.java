@@ -181,7 +181,7 @@ public class LearnerService {
 	}
 	
 	/*
-	 * VIEW SCORE AND STATUS OF ALL COURSES ATTENDED BY A LEARNER
+	 * VIEW SCORE AND STATUS OF A COURSES 
 	 * FOR LOOP FOR GETTING SPECIFIC DETAILS OF LEARNERID
 	 */
 	public CourseAttended viewScoreAndStatus(int id,int courseId) {
