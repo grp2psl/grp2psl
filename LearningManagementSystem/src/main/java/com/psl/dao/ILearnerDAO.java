@@ -21,7 +21,7 @@ public interface ILearnerDAO extends CrudRepository<Learner,Integer>{
 	/*
 	 * AUTO-INCREMENT ID
 	 */
-	@Query(value="select max(learnerid) from learner", nativeQuery=true)
+	@Query(value="select max(learnerid) + 1 from learner", nativeQuery=true)
 	public Integer getNextId();
 
 	/*

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.psl.dao.ICourseDAO;
-import com.psl.dao.ICourseOfferingDAO;
 import com.psl.entities.Course;
 
 @Service("courseService")
@@ -14,10 +13,7 @@ public class CourseService {
 	
 	@Autowired
 	private ICourseDAO dao;
-
 	
-	
-		
 	/*
 	 *DISPLAY ALL COURSES
 	 */

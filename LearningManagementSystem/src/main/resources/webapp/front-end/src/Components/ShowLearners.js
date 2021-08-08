@@ -9,11 +9,11 @@ import {
     faTrash
   } from "@fortawesome/free-solid-svg-icons";
 
-class ShowTrainers extends React.Component{
+class ShowLearners extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            trainers: [],
+            learners: [],
             msg:""
         };
     }
@@ -23,10 +23,10 @@ class ShowTrainers extends React.Component{
 			msg:"Processing.. Please Wait"
 		});
 		try{
-			const response = await axios.get("http://localhost:8080/LearningManagementSystem/trainers/");
+			const response = await axios.get("http://localhost:8080/LearningManagementSystem/learners/");
 			if(response.data != null) {
 				this.setState({
-					trainers: response.data
+					learners: response.data
 				});	
 			}	
 		} catch(error) {
@@ -43,7 +43,7 @@ class ShowTrainers extends React.Component{
             show: true
 		});
 		try{
-			const response = await axios.delete("http://localhost:8080/LearningManagementSystem/trainers/"+id);
+			const response = await axios.delete("http://localhost:8080/LearningManagementSystem/learners/"+id);
 		} catch(error) {
 			alert(error);
 		}
@@ -62,32 +62,32 @@ class ShowTrainers extends React.Component{
         return(            
             
             <Card className={"border border-dark bg-dark text-white mt-5"}>
-                <Card.Header>Trainers</Card.Header>
+                <Card.Header>Learners</Card.Header>
                 <h3 className="text-white mt-2">{this.state.msg}</h3>
                 <Card.Body>
                     <Table striped bordered hover variant="dark">
                         <thead>
                             <tr>
-                                <th>Trainer Id</th>
-                                <th>Trainer Name</th>
+                                <th>Learner Id</th>
+                                <th>Learner Name</th>
                                 <th>Department</th>
                                 <th>Phone Number</th>
                                 <th>Email</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.trainers.length === 0? (
+                            {this.state.learners.length === 0? (
                                 <tr align="center">
-                                    <td colSpan="7">No Trainers Available.</td>
+                                    <td colSpan="7">No Learner Available.</td>
                                 </tr>
                                 ) : (
-                                this.state.trainers.map((trainer) => (
-                                    <tr key={trainer.trainerid}>
-                                    <td>{trainer.trainerid}</td>
-                                    <td>{trainer.name}</td>
-                                    <td>{trainer.department}</td>
-                                    <td>{trainer.phonenumber}</td>
-                                    <td>{trainer.email}</td>
+                                this.state.learners.map((learner) => (
+                                    <tr key={learner.learnerid}>
+                                    <td>{learner.learnerid}</td>
+                                    <td>{learner.name}</td>
+                                    <td>{learner.department}</td>
+                                    <td>{learner.phonenumber}</td>
+                                    <td>{learner.email}</td>
                                     <td>
                                         <ButtonGroup>
                                         <Button
@@ -100,7 +100,7 @@ class ShowTrainers extends React.Component{
                                         <Button
                                             size="sm"
                                             variant="outline-danger"
-                                            onClick={() => this.deleteData(trainer.trainerid)}
+                                            onClick={() => this.deleteData(learner.learnerid)}
                                         >
                                             <FontAwesomeIcon icon={faTrash} />
                                         </Button>
@@ -118,4 +118,4 @@ class ShowTrainers extends React.Component{
     }
 }
 
-export default ShowTrainers;
+export default ShowLearners;

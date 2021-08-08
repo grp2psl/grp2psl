@@ -2,7 +2,6 @@ package com.psl.dao;
 
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -22,7 +21,7 @@ public interface ITrainerDAO extends CrudRepository<Trainer, Integer>{
 	/*
 	 * AUTO-INCREMENT ID
 	 */
-	@Query(value="select max(trainerid) from trainer", nativeQuery=true)
+	@Query(value="select max(trainerid) + 1 from trainer", nativeQuery=true)
 	public Integer getNextId();
 
 	/*
