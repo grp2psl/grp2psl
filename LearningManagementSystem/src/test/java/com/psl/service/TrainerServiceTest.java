@@ -11,23 +11,19 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Random;
 
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,11 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.psl.entities.CourseOffering;
-import com.psl.entities.Learner;
 import com.psl.entities.Trainer;
-import com.psl.utils.ExcelFields;
-import com.psl.utils.ExcelHelper;
 
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
@@ -68,12 +60,27 @@ public class TrainerServiceTest {
 		assertThat(createdTrainer.getPhonenumber()).isEqualTo("9657892335");
 		assertNotNull(createdTrainer.getPassword());
 	} 
+	
+	/*
+	 * TEST ADD TRAINER
+	 */
+	@Test
+	@Order(2)
+	public void addTrainerDuplicateEmailTest() throws JsonMappingException, JsonProcessingException {
+		int id = service.getNextId();
+		System.out.println(id);
+		String request = "{\"name\":\"John Radnor\",\"email\":\"group2.learning.management.system@gmail.com\","
+				+ "\"department\":\"L&D\",\"phonenumber\":\"9657892335\"}";
+		ObjectMapper mapper = new ObjectMapper();
+		Trainer trainer = mapper.readValue(request, Trainer.class);		
+		assertThrows(DataIntegrityViolationException.class, () -> service.addTrainer(trainer));
+	} 
 
 	/*
 	 * TEST GET DETAILS OF TRAINER
 	 */
 	@Test
-	@Order(2)
+	@Order(3)
 	public void getTrainerTest() {
 		int id = service.getNextId();
 		Trainer trainer = service.getTrainer(id - 1);
@@ -84,12 +91,33 @@ public class TrainerServiceTest {
 		assertThat(trainer.getPhonenumber()).isEqualTo("9657892335");
 		assertNotNull(trainer.getPassword());		
 	}
-
+	
+	/*
+	 * TEST REMOVE TRAINER BY ID
+	 */
+	@Test
+	@Order(4)
+	public void removeTrainerTest() {
+		int id = service.getNextId();
+		service.removeTrainer(id - 1);
+		assertThrows(NoSuchElementException.class, () -> service.getTrainer(id));
+	}
+	
+	/*
+	 * TEST REMOVE TRAINER BY ID
+	 */
+	@Test
+	@Order(5)
+	public void removeTrainerFromEmptyResultSetTest() {
+		int id = service.getNextId();
+		assertThrows(EmptyResultDataAccessException.class, () -> service.removeTrainer(id - 1));
+	}
+	
 	/*
 	 * TEST ADD MULTIPLE TRAINERS
 	 */
 	@Test
-	@Order(3)
+	@Order(6)
 	public void addMultipleTrainersTest() throws IOException {
 		String basePath = new File("").getAbsolutePath();
 		basePath = new File(basePath).getParent();
@@ -129,7 +157,7 @@ public class TrainerServiceTest {
 	 * TEST GET DETAILS OF ALL TRAINERS
 	 */
 	@Test
-	@Order(4)
+	@Order(7)
 	public void getAllTrainersTest(){
 		List<Trainer> trainers = service.getAllTrainers();
 		 assertThat(trainers).size().isGreaterThan(0);
@@ -138,22 +166,12 @@ public class TrainerServiceTest {
 		}
 	}
 
-	/*
-	 * TEST REMOVE TRAINER BY ID
-	 */
-	@Test
-	@Order(5)
-	public void removeTrainer() {
-		int id = service.getNextId();
-		service.removeTrainer(id - 1);
-		assertThrows(NoSuchElementException.class, () -> service.getTrainer(id));
-	}
-	
+
 	/*
 	 * TEST GENERATES EXCEL SHEET OF SAMPLE DATA OF TRAINER DETAILS
 	 */
 	@Test
-	@Order(6)
+	@Order(8)
 	public void generateExcelTest() throws IOException {
 		Path file = Paths.get(System.getProperty("user.home"), "Downloads");
 		service.generateExcel(file.toString());
