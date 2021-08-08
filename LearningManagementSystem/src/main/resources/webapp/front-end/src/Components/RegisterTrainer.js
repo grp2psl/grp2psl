@@ -22,7 +22,7 @@ class Register extends React.Component{
         phonenumber: "",
         email: "",
         msg:""
-      };
+    };
 
     resetForm = () => {
         this.setState(() => this.initialState);

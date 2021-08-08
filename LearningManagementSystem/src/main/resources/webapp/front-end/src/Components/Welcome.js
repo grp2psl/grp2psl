@@ -7,6 +7,13 @@ const cardStyle={
 	marginTop: '30px'
 };
 
+const buttonStyle={
+	width: '40%',
+    position: 'absolute',
+    bottom: '20px',
+    left: '30%'
+};
+
 class Welcome extends React.Component{
 	render(){
         return(
@@ -20,7 +27,7 @@ class Welcome extends React.Component{
 						          <Card.Text>
 						            Register a course   
 						          </Card.Text>
-						          <Button variant="primary" onClick={() => {
+						          <Button variant="primary" style={buttonStyle} onClick={() => {
 										this.props.history.push("/registerCourse");
 									}}>Go</Button>
 						        </Card.Body>
@@ -33,7 +40,7 @@ class Welcome extends React.Component{
 						          <Card.Text>
 						            View all the courses
 						          </Card.Text>
-						          <Button variant="primary" onClick={() => {
+						          <Button variant="primary" style={buttonStyle} onClick={() => {
 										this.props.history.push("/viewCourse");
 									}}>Go</Button>
 						        </Card.Body>
@@ -48,8 +55,8 @@ class Welcome extends React.Component{
 						          <Card.Text>
 						            Register learner(s)
 						          </Card.Text>
-						          <Button variant="primary" onClick={() => {
-										this.props.history.push("/registerLearner");
+						          <Button variant="primary" style={buttonStyle} onClick={() => {
+										this.props.history.push("/registerLearners");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>
@@ -61,7 +68,7 @@ class Welcome extends React.Component{
 						          <Card.Text>
 						            Enroll learner(s) to a course
 						          </Card.Text>
-						          <Button variant="primary" onClick={() => {
+						          <Button variant="primary" style={buttonStyle} onClick={() => {
 										this.props.history.push("/enroll");
 									}}>Go</Button>
 						        </Card.Body>
@@ -74,7 +81,7 @@ class Welcome extends React.Component{
 						          <Card.Text>
 						            View learners and their course details
 						          </Card.Text>
-						          <Button variant="primary" onClick={() => {
+						          <Button variant="primary" style={buttonStyle} onClick={() => {
 										this.props.history.push("/viewLearners");
 									}}>Go</Button>
 						        </Card.Body>
@@ -89,8 +96,8 @@ class Welcome extends React.Component{
 						          <Card.Text>
 						            Register trainer(s)
 						          </Card.Text>
-						          <Button variant="primary" onClick={() => {
-										this.props.history.push("/register");
+						          <Button variant="primary" style={buttonStyle} onClick={() => {
+										this.props.history.push("/registerTrainers");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>
@@ -102,7 +109,7 @@ class Welcome extends React.Component{
 						          <Card.Text>
 						            Assign trainer(s) to a course
 						          </Card.Text>
-						          <Button variant="primary" onClick={() => {
+						          <Button variant="primary" style={buttonStyle} onClick={() => {
 										this.props.history.push("/");
 									}}>Go</Button>
 						        </Card.Body>
@@ -115,8 +122,8 @@ class Welcome extends React.Component{
 						          <Card.Text>
 						            View trainers and their course details
 						          </Card.Text>
-						          <Button variant="primary" onClick={() => {
-										this.props.history.push("/show");
+						          <Button variant="primary" style={buttonStyle} onClick={() => {
+										this.props.history.push("/showTrainers");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>
