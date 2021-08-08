@@ -38,6 +38,9 @@ public class CourseOfferingServiceTest {
 	
 	@Test
 	@Order(1)
+	/*
+	 * TEST ENROLL LEARNER
+	 */
 	public void enrollLearnerTest() throws ParseException, JsonProcessingException, JsonMappingException{
 		int id = service.getMaxId(); //implicit testing of getMaxId()
 		String request = "{\"learnerid\":12,\"tcid\":1,\"startdate\":\"2021-09-01\",\"enddate\":\"2021-09-05\"}";
@@ -52,6 +55,9 @@ public class CourseOfferingServiceTest {
 	
 	@Test
 	@Order(2)
+	/*
+	 * TEST UPDATE TEST SCORE OF AN INDIVIDUAL
+	 */
 	public void updateTestScoreTest() {
 		service.updateTestScore(service.getMaxId(), 67);
 		CourseOffering result = service.getCourseOffering(service.getMaxId());
@@ -63,6 +69,9 @@ public class CourseOfferingServiceTest {
 	
 	@Test
 	@Order(3)
+	/*
+	 * TEST VIEW COURSE OFFERING
+	 */
 	public void viewCourseOfferingsTest() {
 		List<CourseOffering> offerings = service.viewCourseOfferings();
 		assertThat(offerings).size().isGreaterThan(0);
@@ -70,6 +79,9 @@ public class CourseOfferingServiceTest {
 	
 	@Test
 	@Order(4)
+	/*
+	 * TEST REMOVE COURSE OFFERING
+	 */
 	public void removeCourseOfferingTest() {
 		int id = service.getMaxId();
 		service.removeCourseOffering(id);
@@ -79,6 +91,9 @@ public class CourseOfferingServiceTest {
 
 	@Test
 	@Order(5)
+	/*
+	 * TEST ENROLL MULTIPLE LEARNERS
+	 */
 	public void enrollMultipleLearnersTest() throws IOException, ParseException {
 		int id = service.getMaxId();
 		Path path = Paths.get("EnrollMultipleLearners.xlsx");
@@ -95,6 +110,9 @@ public class CourseOfferingServiceTest {
 	
 	@Test
 	@Order(6)
+	/*
+	 * TEST UPDATE TEST SCORE OF MULTIPLE LEARNERS
+	 */
 	public void updateMultipleTestScoresTest() throws IOException, ParseException {
 		Path path = Paths.get("update-score.xlsx");
 		String name = "update-score.xlsx";
@@ -115,6 +133,9 @@ public class CourseOfferingServiceTest {
 	
 	@Test
 	@Order(7)
+	/*
+	 * TEST VIEW DETAILS OF TRAINER BY ID
+	 */
 	public void viewTrainerDetailsTest() {
 		Map<String, Object> response = service.viewTrainerDetails(1);
 		assertThat(response.get("trainerDetails")).hasFieldOrPropertyWithValue("trainerid", 1);
@@ -124,6 +145,9 @@ public class CourseOfferingServiceTest {
 	
 	@Test
 	@Order(8)
+	/*
+	 * TEST VIEW DETAILS OF COURSE BY TRAINER ID
+	 */
 	public void viewCourseDetailsByTrainerIdTest() {
 		Map<String, Object> response = service.viewCourseDetailsByTrainerId(1, 2);
 		assertThat(response.get("courseDetails")).hasFieldOrPropertyWithValue("courseid", 2);
@@ -133,6 +157,9 @@ public class CourseOfferingServiceTest {
 	
 	@Test
 	@Order(9)
+	/*
+	 * TEST GENERATE EXCEL SHEET OF SAMPLE DATA FOR ENROLMENT
+	 */
 	public void generateExcelForEnrolmentTest() throws IOException {
 		Path file = Paths.get(System.getProperty("user.home"), "Downloads");
 		service.generateExcelForEnrolment(file.toString());
@@ -145,6 +172,9 @@ public class CourseOfferingServiceTest {
 	
 	@Test
 	@Order(10)
+	/*
+	 * TEST GENERATE EXCEL SHEET OF SAMPLE DATA FOR TEST SCORE UPDATE 
+	 */
 	public void generateExcelForScoreUpdateTest() throws IOException {
 		Path file = Paths.get(System.getProperty("user.home"), "Downloads");
 		service.generateExcelForScoreUpdate(file.toString());
