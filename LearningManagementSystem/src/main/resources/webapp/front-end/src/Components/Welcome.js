@@ -30,6 +30,7 @@ class Welcome extends React.Component{
 		
 		viewCourseAttended = () => {
 			this.props.history.push("/ShowCourseAttended");
+			}
 
 		registerLearner = () => {
 			this.props.history.push("/registerLearner");
@@ -147,7 +148,7 @@ class Welcome extends React.Component{
 						</Row>
 						
                 </Container>
-            </div>)
+            </div>);
     }
 }
 
