@@ -6,87 +6,13 @@ const cardStyle={
 	height: '200px',
 	marginTop: '30px'
 };
+
 class Welcome extends React.Component{
-		registerTrainer = () => {
-			this.props.history.push("/register");
-		}
-		
-		showTrainer = () => {
-			this.props.history.push("/show");
-		}
-		
-		registerCourse = () => {
-			this.props.history.push("/registerCourse");
-		}
-		
-		viewCourse = () => {
-			this.props.history.push("/viewCourse");
-		}
-		
-		registerLearner = () => {
-			this.props.history.push("/registerLearner");
-		}
-		
-		showLearner = () => {
-			this.props.history.push("/showLearners");
-		}
-	
-    render(){
+	render(){
         return(
 			<div className="mt-5">
                 <Container>
-                        <Row xs={1} md={4} className="g-4">
-						    <Col>
-						      <Card className="bg-light" style={cardStyle}> 
-						        <Card.Body>
-						          <Card.Title>Register Trainer</Card.Title>
-						          <Card.Text>
-						            Register a trainer to a course OR
-						            Register multiple trainers to a course
-						          </Card.Text>
-						          <Button variant="primary" onClick={this.registerTrainer}>Go</Button>
-						        </Card.Body>
-						      </Card>
-						    </Col>
-						    <Col>
-						      <Card className="bg-light" style={cardStyle}>
-						        <Card.Body>
-						          <Card.Title>View Trainers</Card.Title>
-						          <Card.Text>
-						            View all the trainers, their respective course offerings
-						            and average ratings.
-						          </Card.Text>
-						          <Button variant="primary" onClick={this.showTrainer}>Go</Button>
-						        </Card.Body>
-						      </Card>
-						    </Col>
-						    <Col>
-						      <Card className="bg-light" style={cardStyle}>
-						        <Card.Body>
-						          <Card.Title>Register Learner</Card.Title>
-						          <Card.Text>
-						            Register a learner to a course OR
-						            Register multiple learners to a course  
-						          </Card.Text>
-						          <Button variant="primary" onClick={this.registerLearner}>Go</Button>
-						        </Card.Body>
-						      </Card>
-						    </Col>
-						    <Col>
-						      <Card className="bg-light" style={cardStyle}>
-						        <Card.Body>
-						          <Card.Title>View Learners</Card.Title>
-						          <Card.Text>
-						            View all the learners, their respective course offerings
-						            and average ratings.
-						          </Card.Text>
-						          <Button variant="primary" onClick={this.showLearner}>Go</Button>
-						        </Card.Body>
-						      </Card>
-						    </Col>
-						</Row>
-						
-						<Row xs={1} md={4} className="g-4">
+                		<Row xs={1} md={2} className="g-4 mb-4">
 						    <Col>
 						      <Card className="bg-light" style={cardStyle}>
 						        <Card.Body>
@@ -94,7 +20,9 @@ class Welcome extends React.Component{
 						          <Card.Text>
 						            Register a course   
 						          </Card.Text>
-						          <Button variant="primary" onClick={this.registerCourse}>Go</Button>
+						          <Button variant="primary" onClick={() => {
+										this.props.history.push("/registerCourse");
+									}}>Go</Button>
 						        </Card.Body>
 						      </Card>
 						    </Col>
@@ -105,7 +33,91 @@ class Welcome extends React.Component{
 						          <Card.Text>
 						            View all the courses
 						          </Card.Text>
-						          <Button variant="primary" onClick={this.viewCourse}>Go</Button>
+						          <Button variant="primary" onClick={() => {
+										this.props.history.push("/viewCourse");
+									}}>Go</Button>
+						        </Card.Body>
+						      </Card>
+						    </Col>
+						</Row>
+                        <Row xs={1} md={3} className="g-4 mb-4">
+						    <Col>
+						      <Card className="bg-light" style={cardStyle}>
+						        <Card.Body>
+						          <Card.Title>Register Learner</Card.Title>
+						          <Card.Text>
+						            Register learner(s)
+						          </Card.Text>
+						          <Button variant="primary" onClick={() => {
+										this.props.history.push("/registerLearner");
+									}}>Go</Button>
+						        </Card.Body>
+						      </Card>
+						    </Col>
+						    <Col>
+						      <Card className="bg-light" style={cardStyle}>
+						        <Card.Body>
+						          <Card.Title>Enroll Learner</Card.Title>
+						          <Card.Text>
+						            Enroll learner(s) to a course
+						          </Card.Text>
+						          <Button variant="primary" onClick={() => {
+										this.props.history.push("/enroll");
+									}}>Go</Button>
+						        </Card.Body>
+						      </Card>
+						    </Col>
+						    <Col>
+						      <Card className="bg-light" style={cardStyle}>
+						        <Card.Body>
+						          <Card.Title>View Learners</Card.Title>
+						          <Card.Text>
+						            View learners and their course details
+						          </Card.Text>
+						          <Button variant="primary" onClick={() => {
+										this.props.history.push("/viewLearners");
+									}}>Go</Button>
+						        </Card.Body>
+						      </Card>
+						    </Col>
+						</Row>
+                        <Row xs={1} md={3} className="g-4 mb-4">
+						    <Col>
+						      <Card className="bg-light" style={cardStyle}>
+						        <Card.Body>
+						          <Card.Title>Register Trainer</Card.Title>
+						          <Card.Text>
+						            Register trainer(s)
+						          </Card.Text>
+						          <Button variant="primary" onClick={() => {
+										this.props.history.push("/register");
+									}}>Go</Button>
+						        </Card.Body>
+						      </Card>
+						    </Col>
+						    <Col>
+						      <Card className="bg-light" style={cardStyle}>
+						        <Card.Body>
+						          <Card.Title>Assign Trainer</Card.Title>
+						          <Card.Text>
+						            Assign trainer(s) to a course
+						          </Card.Text>
+						          <Button variant="primary" onClick={() => {
+										this.props.history.push("/");
+									}}>Go</Button>
+						        </Card.Body>
+						      </Card>
+						    </Col>
+						    <Col>
+						      <Card className="bg-light" style={cardStyle}>
+						        <Card.Body>
+						          <Card.Title>View Trainers</Card.Title>
+						          <Card.Text>
+						            View trainers and their course details
+						          </Card.Text>
+						          <Button variant="primary" onClick={() => {
+										this.props.history.push("/show");
+									}}>Go</Button>
 						        </Card.Body>
 						      </Card>
 						    </Col>
