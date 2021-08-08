@@ -2,10 +2,17 @@ package com.psl.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Random;
 
 import org.junit.jupiter.api.Test;
@@ -15,6 +22,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -25,8 +35,12 @@ import org.junit.jupiter.api.Order;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 
 import com.psl.entities.Learner;
+import com.psl.entities.Trainer;
 import com.psl.utils.ExcelFields;
 import com.psl.utils.ExcelHelper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.psl.dao.ICourseAttended;
 import com.psl.entities.CourseAttended;
 
@@ -36,66 +50,6 @@ public class LearnerServiceTest {
 	@Autowired
 	LearnerService service;
 
-	/*
-	 * TEST ADD LEARNER
-	 */
-	@Test
-	@Order(3)
-	public void addLearnerTest() {
-		Learner learner = new Learner();
-		learner.setLearnerid(123);
-		learner.setName("Vaishnavi");
-		learner.setEmail("vaishnavivp18.it@coep.ac.in");
-		learner.setDepartment("L&D");
-		learner.setPhonenumber("9657892335");
-		service.addLearner(learner);
-		assertNotNull(service.getLearner(123));
-	}
-
-	/*
-	 * TEST ADD MULTIPLE LEARNERS
-	 */
-	@Test
-	@Order(4)
-	public void addMultipleLearnersTest(MultipartFile csvFilePath) throws IOException {
-		
-	}
-	
-	/*
-	 * TEST GENERATES EXCEL SHEET OF SAMPLE DATA OF LEARNER DETAILS
-	 */
-	@Test
-	@Order(8)
-	public void generateExcelTest(String path) throws IOException {
-		
-	}
-
-	/*
-	 * TEST GET DETAILS OF ALL LEARNERS
-	 */
-	@Test
-	@Order(6)
-	public void getAllLearnersTest(){
-	}
-	
-	/*
-	 * TEST GET DETAILS OF LEARNER BY ID
-	 */
-	@Test
-	@Order(5)
-	public void getLearnerTest(int id) {
-	}
-	
-	/*
-	 * TEST REMOVE LEARNER BY ID
-	 */
-	@Test
-	@Order(7)
-	public void removeLearnerTest(int id) {
-	}
-	
-
-	
 	@Test
 	@Order(1)
 	public void courseAttendedTest() {
@@ -114,4 +68,149 @@ public class LearnerServiceTest {
 		 assertThat(course.getCourseid()).isEqualTo(2);
 		 
 	}
+
+	/*
+	 * TEST ADD LEARNER
+	 */
+	@Test
+	@Order(3)
+	public void addLearnerTest() throws JsonMappingException, JsonProcessingException {
+		int id = service.getNextId();
+		System.out.println(id);
+		String request = "{\"name\":\"John Radnor\",\"email\":\"group2.learning.management.system@gmail.com\","
+				+ "\"department\":\"L&D\",\"phonenumber\":\"9657892335\"}";
+		ObjectMapper mapper = new ObjectMapper();
+		Learner learner = mapper.readValue(request, Learner.class);		
+		service.addLearner(learner);
+		Learner createdLearner = service.getLearner(id);
+		assertNotNull(createdLearner);
+		assertThat(createdLearner.getName()).isEqualTo("John Radnor");
+		assertThat(createdLearner.getEmail()).isEqualTo("group2.learning.management.system@gmail.com");
+		assertThat(createdLearner.getDepartment()).isEqualTo("L&D");		
+		assertThat(createdLearner.getPhonenumber()).isEqualTo("9657892335");
+		assertNotNull(createdLearner.getPassword());
+	}
+	
+	/*
+	 * TEST ADD LEARNER
+	 */
+	@Test
+	@Order(4)
+	public void addLearnerDuplicateEmailTest() throws JsonMappingException, JsonProcessingException {
+		int id = service.getNextId();
+		System.out.println(id);
+		String request = "{\"name\":\"John Radnor\",\"email\":\"group2.learning.management.system@gmail.com\","
+				+ "\"department\":\"L&D\",\"phonenumber\":\"9657892335\"}";
+		ObjectMapper mapper = new ObjectMapper();
+		Learner learner = mapper.readValue(request, Learner.class);		
+		assertThrows(DataIntegrityViolationException.class, () -> service.addLearner(learner));
+	}
+	
+	/*
+	 * TEST GET DETAILS OF LEARNER BY ID
+	 */
+	@Test
+	@Order(5)
+	public void getLearnerTest() {
+		int id = service.getNextId();
+		Learner learner = service.getLearner(id - 1);
+		assertNotNull(learner);
+		assertThat(learner.getName()).isEqualTo("John Radnor");
+		assertThat(learner.getEmail()).isEqualTo("group2.learning.management.system@gmail.com");
+		assertThat(learner.getDepartment()).isEqualTo("L&D");		
+		assertThat(learner.getPhonenumber()).isEqualTo("9657892335");
+		assertNotNull(learner.getPassword());	
+	}
+
+	/*
+	 * TEST REMOVE LEARNER BY ID
+	 */
+	@Test
+	@Order(6)
+	public void removeLearnerTest() {
+		int id = service.getNextId();
+		service.removeLearner(id - 1);
+		assertThrows(NoSuchElementException.class, () -> service.getLearner(id));
+	}	
+	
+	/*
+	 * TEST REMOVE LEARNER BY ID
+	 */
+	@Test
+	@Order(7)
+	public void removeLearnerFromEmptyResultSetTest() {
+		int id = service.getNextId();
+		assertThrows(EmptyResultDataAccessException.class, () -> service.removeLearner(id - 1));
+	}
+	
+	/*
+	 * TEST ADD MULTIPLE LEARNERS
+	 */
+	@Test
+	@Order(8)
+	public void addMultipleLearnersTest() throws IOException {
+		String basePath = new File("").getAbsolutePath();
+		basePath = new File(basePath).getParent();
+		Path path = Paths.get(basePath + "\\learners.xlsx");
+		System.out.println(path);
+		String name = "learners.xlsx";
+		String originalFileName = "learners.xlsx";
+		String contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+		byte[] content = null;
+		try {
+		    content = Files.readAllBytes(path);
+		} catch (final IOException e) {
+		}
+		MultipartFile csvFilePath = new MockMultipartFile(name,
+		                     originalFileName, contentType, content);
+		
+		int id = service.getNextId();
+		
+		service.addMultipleLearners(csvFilePath);
+		
+		XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
+	    XSSFSheet worksheet = workbook.getSheetAt(0);
+	    
+	    for(int i=1;i<worksheet.getPhysicalNumberOfRows() ;i++) {
+	        Learner learner = service.getLearner(id++);	        
+	        assertNotNull(learner);
+	        XSSFRow row = worksheet.getRow(i);
+	        assertThat(learner.getName()).isEqualTo(row.getCell(0).getStringCellValue());
+	        assertThat(learner.getDepartment()).isEqualTo(row.getCell(1).getStringCellValue());
+	        assertThat(learner.getPhonenumber()).isEqualTo(row.getCell(2).getStringCellValue());
+	        assertThat(learner.getEmail()).isEqualTo(row.getCell(3).getStringCellValue());
+	        assertNotNull(learner.getPassword());
+	    }
+		
+	}
+
+	/*
+	 * TEST GET DETAILS OF ALL LEARNERS
+	 */
+	@Test
+	@Order(9)
+	public void getAllLearnersTest(){
+		List<Learner> learners = service.getAllLearners();
+		 assertThat(learners).size().isGreaterThan(0);
+		for(Learner learner: learners) {
+			assertNotNull(learner);
+		}
+	}	
+	
+	/*
+	 * TEST GENERATES EXCEL SHEET OF SAMPLE DATA OF LEARNER DETAILS
+	 */
+	@Test
+	@Order(10)
+	public void generateExcelTest() throws IOException {
+		Path file = Paths.get(System.getProperty("user.home"), "Downloads");
+		service.generateExcel(file.toString());
+		File readFile = new File(file+"\\learners.xlsx");
+		String basePath = new File("").getAbsolutePath();
+		basePath = new File(basePath).getParent();
+		assertTrue(readFile.exists());
+		assertThat(readFile.length()).isGreaterThan(0);
+	}
+			
+
 }
