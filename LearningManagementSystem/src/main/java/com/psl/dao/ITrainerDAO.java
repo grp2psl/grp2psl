@@ -2,7 +2,6 @@ package com.psl.dao;
 
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.Modifying;

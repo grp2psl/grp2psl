@@ -9,12 +9,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.Files;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -30,8 +28,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.psl.entities.CourseOffering;
-import com.psl.utils.ExcelFields;
-import com.psl.utils.ExcelHelper;
 
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)

@@ -16,7 +16,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.psl.entities.Manager;
-import com.psl.entities.Trainer;
 
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)

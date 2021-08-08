@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.psl.entities.CourseAttended;
 import com.psl.entities.CourseOffering;
 import com.psl.entities.Manager;
-import com.psl.entities.Trainer;
 
 import com.psl.service.CourseOfferingService;
 import com.psl.service.LearnerService;

@@ -34,4 +34,10 @@ public class ManagerService {
 	public void updateManager(Manager manager) {
 		dao.save(manager);
 	}
+
+	public int getNextId() {
+		Integer id = dao.getNextId();
+		id = (id==null ? 30000 : id);
+		return id;
+	}
 }
