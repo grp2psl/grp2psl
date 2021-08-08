@@ -6,13 +6,19 @@ const cardStyle={
 	height: '200px',
 	marginTop: '30px'
 };
+const buttonStyle={
+	width: '40%',
+    position: 'absolute',
+    bottom: '20px',
+    left: '30%'
+};
 class Welcome extends React.Component{
 		registerTrainer = () => {
-			this.props.history.push("/register");
+			this.props.history.push("/registerTrainers");
 		}
 		
 		showTrainer = () => {
-			this.props.history.push("/show");
+			this.props.history.push("/showTrainers");
 		}
 		
 		registerCourse = () => {
@@ -24,7 +30,7 @@ class Welcome extends React.Component{
 		}
 		
 		registerLearner = () => {
-			this.props.history.push("/registerLearner");
+			this.props.history.push("/registerLearners");
 		}
 		
 		showLearner = () => {
@@ -44,7 +50,7 @@ class Welcome extends React.Component{
 						            Register a trainer to a course OR
 						            Register multiple trainers to a course
 						          </Card.Text>
-						          <Button variant="primary" onClick={this.registerTrainer}>Go</Button>
+						          <Button variant="primary" onClick={this.registerTrainer} style={buttonStyle}>Go</Button>
 						        </Card.Body>
 						      </Card>
 						    </Col>
@@ -56,7 +62,7 @@ class Welcome extends React.Component{
 						            View all the trainers, their respective course offerings
 						            and average ratings.
 						          </Card.Text>
-						          <Button variant="primary" onClick={this.showTrainer}>Go</Button>
+						          <Button variant="primary" onClick={this.showTrainer} style={buttonStyle}>Go</Button>
 						        </Card.Body>
 						      </Card>
 						    </Col>
@@ -68,7 +74,7 @@ class Welcome extends React.Component{
 						            Register a learner to a course OR
 						            Register multiple learners to a course  
 						          </Card.Text>
-						          <Button variant="primary" onClick={this.registerLearner}>Go</Button>
+						          <Button variant="primary" onClick={this.registerLearner} style={buttonStyle}>Go</Button>
 						        </Card.Body>
 						      </Card>
 						    </Col>
@@ -80,7 +86,7 @@ class Welcome extends React.Component{
 						            View all the learners, their respective course offerings
 						            and average ratings.
 						          </Card.Text>
-						          <Button variant="primary" onClick={this.showLearner}>Go</Button>
+						          <Button variant="primary" onClick={this.showLearner} style={buttonStyle}>Go</Button>
 						        </Card.Body>
 						      </Card>
 						    </Col>
@@ -94,7 +100,7 @@ class Welcome extends React.Component{
 						          <Card.Text>
 						            Register a course   
 						          </Card.Text>
-						          <Button variant="primary" onClick={this.registerCourse}>Go</Button>
+						          <Button variant="primary" onClick={this.registerCourse} style={buttonStyle}>Go</Button>
 						        </Card.Body>
 						      </Card>
 						    </Col>
@@ -105,7 +111,7 @@ class Welcome extends React.Component{
 						          <Card.Text>
 						            View all the courses
 						          </Card.Text>
-						          <Button variant="primary" onClick={this.viewCourse}>Go</Button>
+						          <Button variant="primary" onClick={this.viewCourse} style={buttonStyle}>Go</Button>
 						        </Card.Body>
 						      </Card>
 						    </Col>
