@@ -13,17 +13,18 @@ class CourseAttended extends React.Component{
         super(props);
         this.state={
             courses: [],
-            
+            id : 0,
             msg:""
         };
     }
     
-    async showData(){
+    async showData(id){
 		this.setState({
 			msg:"Processing.. Please Wait"
 		});
+		
 		try{
-			const response = await axios.get("http://localhost:8080/LearningManagementSystem/managers/course-attended/2");
+			const response = await axios.get("http://localhost:8080/LearningManagementSystem/managers/course-attended/{id}");
 			if(response.data != null) {
 				this.setState({
 					courses: response.data
@@ -38,7 +39,8 @@ class CourseAttended extends React.Component{
     }
 
     componentDidMount(){
-        this.showData();
+		const { id } = this.props.match.params;
+        this.showData(id);
     }
 
     render(){

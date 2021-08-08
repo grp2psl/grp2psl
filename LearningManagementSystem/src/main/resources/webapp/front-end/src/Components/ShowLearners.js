@@ -1,6 +1,9 @@
 import React from 'react';
 
 import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
+import CourseAttended from './CourseAttended';
+import {NavLink, Redirect} from "react-router-dom"
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -52,9 +55,20 @@ class ShowLearners extends React.Component{
 		})
         this.showData();
     }
-
+    
+    async showCourse(id){
+		 <Router>
+                <Switch>
+                    <Route exact path='/ShowCourseAttended/:id' component={CourseAttended} />
+                </Switch>
+            </Router>
+    }
+    
+    
+	
     componentDidMount(){
         this.showData();
+         <CourseAttended learnerid="3" />
     }
 
     render(){
@@ -82,7 +96,9 @@ class ShowLearners extends React.Component{
                                 </tr>
                                 ) : (
                                 this.state.learners.map((learner) => (
-                                    <tr key={learner.learnerid}>
+									
+                                    <tr key={learner.learnerid}>  
+                                            
                                     <td>{learner.learnerid}</td>
                                     <td>{learner.name}</td>
                                     <td>{learner.department}</td>
@@ -90,6 +106,17 @@ class ShowLearners extends React.Component{
                                     <td>{learner.email}</td>
                                     <td>
                                         <ButtonGroup>
+                                       
+                                       
+                                        
+                                        <Button
+                                            size="sm"
+                                            variant="outline-primary"
+                                            onClick={() => this.showCourse(learner.learnerid)}
+                                        >
+                                            Courses
+                                        </Button>{" "}
+                                        
                                         <Button
                                             size="sm"
                                             variant="outline-primary"
@@ -107,6 +134,7 @@ class ShowLearners extends React.Component{
                                         </ButtonGroup>
                                     </td>
                                     </tr>
+                                   
                                 ))
                                 )}
 
