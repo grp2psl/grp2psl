@@ -3,8 +3,8 @@ import React from 'react';
 import {Container, Row, Col, Card, Button} from 'react-bootstrap';
 
 const cardStyle={
-	height: '200px',
-	marginTop: '30px'
+	height: '150px',
+	marginTop: '20px'
 };
 
 const buttonStyle={
