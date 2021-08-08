@@ -16,8 +16,7 @@ public class CourseService {
 	private ICourseDAO dao;
 
 	
-	@Autowired
-	private ICourseOfferingDAO offeringDao;
+	
 		
 	/*
 	 *DISPLAY ALL COURSES

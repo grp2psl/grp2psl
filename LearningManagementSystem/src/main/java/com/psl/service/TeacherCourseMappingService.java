@@ -28,7 +28,9 @@ public class TeacherCourseMappingService {
 	 *ADDING TEACHER-COURSE MAPPING DETAILS
 	 */
 	public void addTeacherCourseMapping(TeacherCourseMapping teacherCourseMapping) {
-		
+		Integer id = dao.getNextId();
+		id = (id==null ? 0 : id + 1);
+		teacherCourseMapping.setTcId(id);
 		dao.save(teacherCourseMapping);
 		
 	}

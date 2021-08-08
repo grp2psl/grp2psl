@@ -18,6 +18,14 @@ class Welcome extends React.Component{
 		viewCourse = () => {
 			this.props.history.push("/viewCourse");
 		}
+		
+		teacherCourseMappingRegister = () => {
+			this.props.history.push("/TeacherCourseMappingRegister");
+		}
+		
+		viewCourseAttended = () => {
+			this.props.history.push("/ShowCourseAttended");
+		}
 	
     render(){
         return(
@@ -74,6 +82,34 @@ class Welcome extends React.Component{
 						      </Card>
 						    </Col>
 						</Row>
+						
+						<Row xs={1} md={2} className="g-4">
+						    <Col>
+						      <Card className="bg-light">
+						        <Card.Body>
+						          <Card.Title>Register Trainer to course</Card.Title>
+						          <Card.Text>
+						            Register a trainer to course   
+						          </Card.Text>
+						          <Button variant="primary" onClick={this.teacherCourseMappingRegister}>Go</Button>
+						        </Card.Body>
+						      </Card>
+						    </Col>
+						    
+						    <Col>
+						      <Card className="bg-light">
+						        <Card.Body>
+						          <Card.Title>View course attended</Card.Title>
+						          <Card.Text>
+						            View course attended  
+						          </Card.Text>
+						          <Button variant="primary" onClick={this.viewCourseAttended}>Go</Button>
+						        </Card.Body>
+						      </Card>
+						    </Col>
+						    
+						</Row>
+						
                 </Container>
             </div>);
     }

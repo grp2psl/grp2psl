@@ -156,6 +156,7 @@ public class LearnerService {
 				
 			}
 		}
+		System.out.println(cAttended);
 		return cAttended;
 	}
 	

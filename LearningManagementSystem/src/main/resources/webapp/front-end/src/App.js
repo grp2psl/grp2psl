@@ -8,6 +8,8 @@ import Register from './Components/Register';
 import ShowTrainers from './Components/ShowTrainers';
 import ViewCourses from './Components/ViewCourses';
 import CourseRegister from './Components/CourseRegister';
+import TeacherCourseMappingRegister from './Components/TeacherCourseMappingRegister';
+import CourseAttended from './Components/CourseAttended';
 import { Col, Container, Row } from 'react-bootstrap';
 
 function App() {
@@ -24,6 +26,9 @@ function App() {
               <Route path="/show" exact component={ShowTrainers}/>
               <Route path="/viewCourse" exact component={ViewCourses}/>
               <Route path="/registerCourse" exact component={CourseRegister}/>
+              <Route path="/TeacherCourseMappingRegister" exact component={TeacherCourseMappingRegister}/>
+              <Route path="/ShowCourseAttended" exact component={CourseAttended}/>
+              
           </Switch>
           </Col>
         </Row>

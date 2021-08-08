@@ -3,6 +3,7 @@ package com.psl.controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import com.psl.service.TeacherCourseMappingService;
 
 @RestController
 @RequestMapping("/teacherCourseMapping")
+@CrossOrigin(origins="http://localhost:3000")
 public class TeacherCourseMappingController {
 	
 	@Autowired
@@ -25,6 +27,7 @@ public class TeacherCourseMappingController {
 	 */
 	@PostMapping("/register")
 	public void addTeacherCourseMapping(@RequestBody TeacherCourseMapping teacherCourseMapping) {
+		//System.out.println(teacherCourseMapping);
 		service.addTeacherCourseMapping(teacherCourseMapping);
 	}
 	
