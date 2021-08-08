@@ -5,6 +5,7 @@ import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faEdit,
+    faThermometerQuarter,
     faTrash
   } from "@fortawesome/free-solid-svg-icons";
 
@@ -35,13 +36,31 @@ class ShowTrainers extends React.Component{
 			msg: ""
 		})
     }
+    
+    async deleteData(id){
+		this.setState({
+			msg:"Processing.. Please Wait",
+            show: true
+		});
+		try{
+			const response = await axios.delete("http://localhost:8080/LearningManagementSystem/trainers/"+id);
+		} catch(error) {
+			alert(error);
+		}
+        this.setState({
+			msg: ""
+		})
+        this.showData();
+    }
 
     componentDidMount(){
         this.showData();
     }
 
     render(){
-        return(
+        
+        return(            
+            
             <Card className={"border border-dark bg-dark text-white mt-5"}>
                 <Card.Header>Trainers</Card.Header>
                 <h3 className="text-white mt-2">{this.state.msg}</h3>
@@ -74,12 +93,14 @@ class ShowTrainers extends React.Component{
                                         <Button
                                             size="sm"
                                             variant="outline-primary"
+
                                         >
                                             <FontAwesomeIcon icon={faEdit} />
                                         </Button>{" "}
                                         <Button
                                             size="sm"
                                             variant="outline-danger"
+                                            onClick={() => this.deleteData(trainer.trainerid)}
                                         >
                                             <FontAwesomeIcon icon={faTrash} />
                                         </Button>
