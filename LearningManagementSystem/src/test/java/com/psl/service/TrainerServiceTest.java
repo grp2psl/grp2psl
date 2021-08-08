@@ -46,7 +46,6 @@ public class TrainerServiceTest {
 	@Order(1)
 	public void addTrainerTest() throws JsonMappingException, JsonProcessingException {
 		int id = service.getNextId();
-		System.out.println(id);
 		String request = "{\"name\":\"John Radnor\",\"email\":\"group2.learning.management.system@gmail.com\","
 				+ "\"department\":\"L&D\",\"phonenumber\":\"9657892335\"}";
 		ObjectMapper mapper = new ObjectMapper();
@@ -67,8 +66,6 @@ public class TrainerServiceTest {
 	@Test
 	@Order(2)
 	public void addTrainerDuplicateEmailTest() throws JsonMappingException, JsonProcessingException {
-		int id = service.getNextId();
-		System.out.println(id);
 		String request = "{\"name\":\"John Radnor\",\"email\":\"group2.learning.management.system@gmail.com\","
 				+ "\"department\":\"L&D\",\"phonenumber\":\"9657892335\"}";
 		ObjectMapper mapper = new ObjectMapper();
