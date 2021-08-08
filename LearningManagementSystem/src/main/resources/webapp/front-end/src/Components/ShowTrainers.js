@@ -5,7 +5,6 @@ import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faEdit,
-    faThermometerQuarter,
     faTrash
   } from "@fortawesome/free-solid-svg-icons";
 
@@ -43,7 +42,8 @@ class ShowTrainers extends React.Component{
             show: true
 		});
 		try{
-			const response = await axios.delete("http://localhost:8080/LearningManagementSystem/trainers/"+id);
+            const response = await axios.delete("http://localhost:8080/LearningManagementSystem/trainers/"+id);
+            console.log(response);
 		} catch(error) {
 			alert(error);
 		}
