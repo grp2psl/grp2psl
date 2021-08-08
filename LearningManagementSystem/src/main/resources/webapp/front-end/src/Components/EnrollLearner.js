@@ -8,7 +8,7 @@ import {
     faUndo
   } from "@fortawesome/free-solid-svg-icons";
 
-class Register extends React.Component{
+class EnrollLearner extends React.Component{
     constructor(props){
         super(props);
         this.state = this.initialState;
@@ -17,15 +17,32 @@ class Register extends React.Component{
     }
 
     initialState = {
+		learners:[],
         name: "",
         department: "",
         phonenumber: "",
         email: "",
         msg:""
-    };
+      };
+
+	async componentDidMount() {
+		try {
+			let learnersList = await axios.get("http://localhost:8090/LearningManagementSystem/learners/")
+			this.state.learners = learnersList.data;
+			console.log(this.state.learners);	
+		} catch(error) {
+			alert(error);
+		}
+	}
 
     resetForm = () => {
-        this.setState(() => this.initialState);
+        this.setState({
+			name:"",
+			department:"",
+			phonenumber:"",
+			email:"",
+			msg:""
+		});
     };
 
     async registerTrainer(event){
@@ -68,47 +85,11 @@ class Register extends React.Component{
                     <Container>
                         <Row>
                             <Col>
-                            <Form.Group className="mb-3" controlId="name">
-                                <Form.Label>Name</Form.Label>
-                                <Form.Control required autoComplete="off"
-                                    type="test" 
-                                    value={this.state.name}
-                                    onChange={this.formChange}
-                                    name="name"
-                                    placeholder="Enter name" />
-                            </Form.Group>
+                            <Form.Select aria-label="Default select example">
+							  <option>Open this select menu</option>
+							</Form.Select>
 
-                            <Form.Group className="mb-3" controlId="department">
-                                <Form.Label>Department</Form.Label>
-                                <Form.Control 
-                                    type="text" autoComplete="off" 
-                                    value={this.state.department}
-                                    onChange={this.formChange}
-                                    name="department"
-                                    placeholder="Enter department" />
-                            </Form.Group>
-                            </Col>
-                            <Col>
-                            <Form.Group className="mb-3" controlId="phoneNumber">
-                                <Form.Label>Phone Number</Form.Label>
-                                <Form.Control required autoComplete="off"
-                                    type="text" 
-                                    value={this.state.phonenumber}
-                                    onChange={this.formChange}
-                                    name="phonenumber"
-                                    placeholder="Enter phone number" />
-                            </Form.Group>
-
-                            <Form.Group className="mb-3" controlId="email">
-                                <Form.Label>Email</Form.Label>
-                                <Form.Control required autoComplete="off"
-                                    type="email" 
-                                    value={this.state.email}
-                                    onChange={this.formChange}
-                                    name="email"
-                                    placeholder="Enter email" />
-                            </Form.Group>
-                            </Col>
+                           	</Col>
                         </Row>
                         
                     </Container>
@@ -131,4 +112,4 @@ class Register extends React.Component{
     }
 }
 
-export default Register;
+export default EnrollLearner;
