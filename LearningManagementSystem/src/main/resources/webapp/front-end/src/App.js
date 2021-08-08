@@ -28,8 +28,6 @@ function App() {
           <Switch>
               <Route path="/" exact component={Welcome}/>
               <Route path="/enroll" exact component={EnrollLearner}/>
-              <Route path="/register" exact component={Register}/>
-              <Route path="/show" exact component={ShowTrainers}/>
               <Route path="/registerTrainer" exact component={Register}/>
               <Route path="/showTrainers" exact component={ShowTrainers}/>
               <Route path="/viewCourse" exact component={ViewCourses}/>
