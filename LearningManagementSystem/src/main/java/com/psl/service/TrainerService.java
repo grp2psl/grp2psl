@@ -63,36 +63,18 @@ public class TrainerService {
 	 * ADD MULTIPLE TRAINERS
 	 */
 	public void addMultipleTrainers(MultipartFile csvFilePath) throws IOException {
-		Integer id = dao.getNextId();
-		id = (id==null ? 20000 : id);
 	    XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
 	    XSSFSheet worksheet = workbook.getSheetAt(0);
-		Random rand = new Random();
 	    
 	    for(int i=1;i<worksheet.getPhysicalNumberOfRows() ;i++) {
 	        Trainer trainer = new Trainer();
 	            
 	        XSSFRow row = worksheet.getRow(i);
-	        trainer.setTrainerid(id++);   
 	        trainer.setName(row.getCell(0).getStringCellValue());
 	        trainer.setDepartment(row.getCell(1).getStringCellValue());
 	        trainer.setPhonenumber(row.getCell(2).getStringCellValue());
 	        trainer.setEmail(row.getCell(3).getStringCellValue());
-	        String firstname = trainer.getName();
-			try {
-				firstname = firstname.substring(0, trainer.getName().indexOf(" "));
-			}catch(StringIndexOutOfBoundsException e) {
-				e.printStackTrace();
-			}
-			String password = firstname+trainer.getTrainerid()+"@"+rand.nextInt(9999);
-			trainer.setPassword(password);
-			try {
-				dao.saveNewEntry(trainer.getTrainerid(), trainer.getName(), trainer.getDepartment(), trainer.getPhonenumber(), trainer.getEmail(), trainer.getPassword());
-				service.sendEmail("group2.learning.management.system@gmail.com", trainer.getEmail(), "Hi " + firstname +", \nYour password is "+password+"\nChange your password once you are logged in.", "Trainer registered successfully - learning management portal");	
-			}catch(Exception e) {
-				e.printStackTrace();
-				throw e;
-			}
+	        addTrainer(trainer);
 		}				
 	}
 	
