@@ -62,7 +62,7 @@ public class TrainerServiceTest {
 	} 
 	
 	/*
-	 * TEST ADD TRAINER
+	 * TEST ADD TRAINER WITH DUPLICATE EMAIL ID
 	 */
 	@Test
 	@Order(2)
@@ -122,15 +122,11 @@ public class TrainerServiceTest {
 		String basePath = new File("").getAbsolutePath();
 		basePath = new File(basePath).getParent();
 		Path path = Paths.get(basePath + "\\trainers.xlsx");
-		System.out.println(path);
 		String name = "trainers.xlsx";
 		String originalFileName = "trainers.xlsx";
 		String contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 		byte[] content = null;
-		try {
-		    content = Files.readAllBytes(path);
-		} catch (final IOException e) {
-		}
+		content = Files.readAllBytes(path);
 		MultipartFile csvFilePath = new MockMultipartFile(name,
 		                     originalFileName, contentType, content);
 		
