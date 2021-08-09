@@ -184,9 +184,9 @@ class Welcome extends React.Component{
 						    <Col>
 						      <Card className="bg-light" style={cardStyle}>
 						        <Card.Body>
-						          <Card.Title>View Courses</Card.Title>
+						          <Card.Title>View Course Offerings</Card.Title>
 						          <Card.Text>
-						            View all the courses
+						            View all the course offerings
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
 										this.props.history.push("/viewCourse");

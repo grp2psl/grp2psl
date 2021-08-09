@@ -107,7 +107,7 @@ class EnrollLearner extends React.Component{
                                 }}>
                                 <option>Select a learner</option>
                                 {this.state.learners.map((learner) => {
-                                    return <option key={learner.learnerid} value={learner.learnerid}>{learner.name}</option>  
+                                    return <option key={learner.learnerid} value={learner.learnerid}>{learner.name} - {learner.email}</option>  
                                 })}
                                 </Form.Select>
                            	</Col>

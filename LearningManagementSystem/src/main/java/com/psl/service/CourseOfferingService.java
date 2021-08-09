@@ -231,4 +231,16 @@ public class CourseOfferingService {
 		response.put("avgRating", avgRating);
 		return response;
 	}
+	
+	public int findCoIdByTcIdAndLearnerId(int tcId, int learnerId) {
+		return dao.findByTcIdAndLearnerId(tcId, learnerId).getCourseofferingid();
+	}
+	
+	public CourseOffering findCoByTcIdAndLearnerId(int tcId, int learnerId) {
+		return dao.findByTcIdAndLearnerId(tcId, learnerId);
+	}
+	
+	public List<CourseOffering> findCoByLearnerId(int learnerId) {
+		return dao.findByLearnerId(learnerId);
+	}
 }

@@ -12,115 +12,153 @@ class UpdateScoreIndividual extends React.Component{
     constructor(props){
         super(props);
         this.state = this.initialState;
-        this.register = this.register.bind(this);
+        this.updateScores = this.updateScores.bind(this);
         this.formChange = this.formChange.bind(this);
     }
 
     initialState = {
-        name: "",
-        department: "",
-        phonenumber: "",
-        email: "",
+        learners:[],
+        tcMappings:[],
+        learnerid: 0,
+        tcid: 0,
+        percentage: 0,
         msg:""
       };
 
-    resetForm = () => {
-        this.setState(() => this.initialState);
-    };
-    
-    validateForm(phoneNumber) {
-        if(phoneNumber.length > 11 || phoneNumber.length < 10){
-            alert("Enter valid phoneNumber");
-            return false;
+	async componentDidMount() {
+        this.setState({
+			msg:"Processing.. Please Wait"
+		});
+		try {
+			let learnersList = await axios.get("http://localhost:8080/LearningManagementSystem/learners/")
+            this.state.learners = learnersList.data;
+            let tcMappings = await axios.get("http://localhost:8080/LearningManagementSystem/teacherCourseMapping/trainer-course-names")
+			this.state.tcMappings = tcMappings.data;
+		} catch(error) {
+			alert(error);
         }
-        return true;
-    }
+        this.setState({
+            msg: ""
+        });
+	}
 
-    async register(event){
+    resetForm = () => {
+        this.setState({
+            learnerid: 0,
+            tcid: 0,
+            percentage: 0,
+            msg:""
+		});
+    };
+
+    async updateScores(event){
 		event.preventDefault();
-		const learner = {
-            name: this.state.name,
-            department: this.state.department,
-            phonenumber: this.state.phonenumber,
-            email: this.state.email
-        }
-        if(this.validateForm(learner.phonenumber) == true){
-            this.setState({
-                msg:"Processing..\nPlease Wait"
-            });
-            try{
-                const response = await axios.post("http://localhost:8080/LearningManagementSystem/learners/register", learner);
-                if(response.data != null){
-                    alert("Learner registered successfully");
-                    console.log(response.data);
-                }	
-            } catch(error) {
-                alert(error.response.data);
-            }
-            this.setState(this.initialState);
-        }
+        
+        this.setState({
+			msg:"Processing.. Please Wait"
+		});
+		try{
+            const params = JSON.stringify({ tcId: this.state.tcid,  learnerId: this.state.learnerid, percentage: this.state.percentage});
+            const response = await axios.put("http://localhost:8080/LearningManagementSystem/managers/update-test-score?tcId="+this.state.tcid+"&learnerId="+this.state.learnerid+"&percentage="+this.state.percentage);
+			// const response = await axios({
+            //     method: 'PUT',
+            //     url: 'http://localhost:8080/LearningManagementSystem/managers/update-test-score',
+            //     data: {
+            //         tcId: this.state.tcid,
+            //         learnerId: this.state.learnerid,
+            //         percentage: this.state.percentage
+            //     }
+            //   })
+            if(response.data != null){
+	        	alert("Score updated successfully");
+	            console.log(response.data);
+        	}	
+		} catch(error) {
+			alert(error);
+		}
+        this.resetForm();
     }
 
     formChange(event){
         this.setState({
             [event.target.name]:event.target.value
-        });
+        });        
+        // if(this.state.learners.length > 0){
+        //     const response = axios({
+        //         method: 'GET',
+        //         url: 'http://localhost:8080/LearningManagementSystem/managers/getCourseOffering',
+        //         data: {
+        //             learnerId: this.state.learnerid
+        //         }
+        //     })
+        //     this.setState({
+        //         tcMappings: response.data
+        //     })
+        // }
     }
 
     render(){
         return(
 			<div className="mt-5">
             <Card className={"border border-dark bg-dark text-white"}>
-                <Card.Header>Register Learner</Card.Header>
+                <Card.Header>Update Score</Card.Header>
                 <h3 className="text-white mt-2">{this.state.msg}</h3>
-                <Form onSubmit={this.register} onReset={this.resetForm} id="registerId" >
+                <Form onSubmit={this.updateScores} onReset={this.resetForm} id="registerId" >
                 <Card.Body>
                     <Container>
                         <Row>
                             <Col>
-                            <Form.Group className="mb-3" controlId="name">
-                                <Form.Label>Name</Form.Label>
-                                <Form.Control required autoComplete="off"
-                                    type="test" 
-                                    value={this.state.name}
-                                    onChange={this.formChange}
-                                    name="name"
-                                    placeholder="Enter name" />
-                            </Form.Group>
-
-                            <Form.Group className="mb-3" controlId="department">
-                                <Form.Label>Department</Form.Label>
-                                <Form.Control 
-                                    type="text" autoComplete="off" 
-                                    value={this.state.department}
-                                    onChange={this.formChange}
-                                    name="department"
-                                    placeholder="Enter department" />
-                            </Form.Group>
-                            </Col>
+                                <Form.Label>Learner</Form.Label>
+                                <Form.Select
+                                value={this.state.learnerid}
+                                onChange={(e)=>{
+                                    if(e.isInvalid) {
+                                        alert("Select a learner");
+                                    }
+                                    this.setState({
+                                        learnerid: e.target.value
+                                    })
+                                }}>
+                                <option>Select a learner</option>
+                                {this.state.learners.map((learner) => {
+                                    return <option key={learner.learnerid} value={learner.learnerid}>{learner.name} - {learner.email}</option>  
+                                })}
+                                </Form.Select>
+                           	</Col>
+                        </Row>
+                        <Row>
                             <Col>
-                            <Form.Group className="mb-3" controlId="phoneNumber">
-                                <Form.Label>Phone Number</Form.Label>
+                                <Form.Label>Trainer-Course</Form.Label>
+                                <Form.Select 
+                                value={this.state.tcid}
+                                onChange={(e)=>{
+                                    if(e.isInvalid) {
+                                        alert("Select a trainer-course mapping");
+                                    }
+                                    this.setState({
+                                        tcid: e.target.value
+                                    })
+                                }}>
+                                <option>Select Trainer and Course</option>
+                                {this.state.tcMappings.map((tcMapping) => {
+                                    return <option key={tcMapping.tcid} value={tcMapping.tcid}>Trainer - {tcMapping.trainerName}, Course - {tcMapping.courseName}</option>  
+                                })}
+                                </Form.Select>
+                           	</Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                            <Form.Group className="mb-3" controlId="percentage">
+                                <Form.Label>Percentage</Form.Label>
                                 <Form.Control required autoComplete="off"
-                                    type="text" 
-                                    value={this.state.phonenumber}
+                                    type="number" 
+                                    value={this.state.percentage}
                                     onChange={this.formChange}
-                                    name="phonenumber"
-                                    placeholder="Enter phone number" />
-                            </Form.Group>
-
-                            <Form.Group className="mb-3" controlId="email">
-                                <Form.Label>Email</Form.Label>
-                                <Form.Control required autoComplete="off"
-                                    type="email" 
-                                    value={this.state.email}
-                                    onChange={this.formChange}
-                                    name="email"
-                                    placeholder="Enter email" />
+                                    name="percentage"
+                                    placeholder="Enter percentage" />
                             </Form.Group>
                             </Col>
                         </Row>
-                        
                     </Container>
                         
                 </Card.Body>

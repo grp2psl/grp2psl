@@ -173,4 +173,24 @@ public class ManagerController {
 		return lService.viewScoreAndStatus(id,courseId);
 	
 	}
+
+	/*
+	 * UPDATE AN INDIVIDUAL TEST SCORE
+	 * REQUEST BODY CONTENTS : {percentage}
+	 */
+	@PutMapping("/update-test-score")
+	public void updateTestScoreByCourseOfferingId(@RequestParam(value="tcId") int tcId, @RequestParam(value="learnerId") int learnerId, @RequestParam(value="percentage") int percentage) {
+		int id = offeringService.findCoIdByTcIdAndLearnerId(tcId, learnerId);
+		offeringService.updateTestScore(id, percentage);
+	}
+	
+	@GetMapping("/getCourseOfferingId")
+	public int getCourseOfferingId(@RequestParam int tcId, @RequestParam int learnerId) {
+		return offeringService.findCoIdByTcIdAndLearnerId(tcId, learnerId);
+	}
+
+	@GetMapping("/getCourseOffering")
+	public List<CourseOffering> getCourseOffering(@RequestParam int learnerId) {
+		return offeringService.findCoByLearnerId(learnerId);
+	}
 }

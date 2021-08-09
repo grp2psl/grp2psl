@@ -15,5 +15,7 @@ public interface ICourseOfferingDAO extends CrudRepository<CourseOffering, Integ
 	@Query(value="select max(courseofferingid) from courseoffering", nativeQuery=true)
 	public Integer getMaxId();
 	public List<CourseOffering> findByTcId(int id);
+	public CourseOffering findByTcIdAndLearnerId(int tcId, int learnerId);
+	public List<CourseOffering> findByLearnerId(int learnerId);
 	
 }
