@@ -19,7 +19,7 @@ const buttonStyle={
     bottom: '20px',
     left: '30%'
 };
-class TeacherCourseMappingsRegister extends React.Component{	
+class MultipleTeacherCourseMappingRegister extends React.Component{	
     constructor(props){
         super(props);
         this.state={
@@ -36,7 +36,7 @@ class TeacherCourseMappingsRegister extends React.Component{
 			msg:"Downloading..Please Wait"
 		});
 		try{
-			const response = await axios.get("http://localhost:8080/LearningManagementSystem/learners/generate-excel");
+			const response = await axios.get("http://localhost:8080/LearningManagementSystem/teacherCourseMapping/generate-excel");
 			if(response.data != null) {
 				this.setState({
                     msg: "Downloading completed. Check your Downloads folder.."
@@ -78,10 +78,10 @@ class TeacherCourseMappingsRegister extends React.Component{
             }
 
             try{
-                const response = await axios.post("http://localhost:8080/LearningManagementSystem/learners/register-multiple", formData, config);
+                const response = await axios.post("http://localhost:8080/LearningManagementSystem/teacherCourseMapping/register-multiple", formData, config);
                 console.log(response)
                 if(response.data != null){
-                    alert("Learners registered successfully");
+                    alert("Trainers assigned successfully");
                     console.log(response.data);
                 }	
             } catch(error) {
@@ -133,7 +133,7 @@ class TeacherCourseMappingsRegister extends React.Component{
                                     size="lg"
                                     variant="outline-primary" 
                                     style={buttonStyle}
-                                    onClick={this.registerLearners}><FontAwesomeIcon icon={faUpload} />{" "}Upload</Button>
+                                    onClick={this.assignTrainers}><FontAwesomeIcon icon={faUpload} />{" "}Upload</Button>
                                  
 						        </Card.Body>
 						      </Card>
@@ -144,4 +144,4 @@ class TeacherCourseMappingsRegister extends React.Component{
     }
 }
 
-export default TeacherCourseMappingsRegister;
+export default MultipleTeacherCourseMappingRegister;

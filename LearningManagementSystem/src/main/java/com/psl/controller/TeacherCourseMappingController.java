@@ -1,9 +1,12 @@
 package com.psl.controller;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +40,16 @@ public class TeacherCourseMappingController {
 	@PostMapping("/register-multiple")
 	public void addMultipleTrainers(@RequestParam("file") MultipartFile csvFilePath ) throws IOException {
 		service.addMultipleTeacherCourseMapping(csvFilePath);
+	}
+	
+	/*
+	 * DOWNLOAD FORMAT OF EXCEL SHEET FOR UPLOADING MULTIPLE LEARNERS
+	 */
+	@GetMapping("/generate-excel")
+	public void downloadFileFromLocal() throws IOException {
+		Path file = Paths.get(System.getProperty("user.home"), "Downloads");
+		service.generateExcel(file.toString());
+		System.out.println(file);
 	}
 
 }

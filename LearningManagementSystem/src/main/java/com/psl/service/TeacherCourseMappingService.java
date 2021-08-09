@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -14,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.psl.dao.ITeacherCourseMappingDAO;
 import com.psl.entities.Course;
 import com.psl.entities.TeacherCourseMapping;
+import com.psl.utils.ExcelFields;
+import com.psl.utils.ExcelHelper;
 
 @Service("teacherCourseMappingService")
 public class TeacherCourseMappingService {
@@ -55,6 +58,20 @@ public class TeacherCourseMappingService {
 			dao.save(teacherCourseMapping);
 					
 	    }
+	}
+	
+	/*
+	 * GENERATES EXCEL SHEET OF SAMPLE DATA OF LEARNER DETAILS
+	 */
+	public void generateExcel(String path) throws IOException {
+		ExcelHelper helper = new ExcelHelper();
+		
+		List<ExcelFields> fields = new ArrayList<>();
+		fields.add(new ExcelFields("trainerid", "2", XSSFCell.CELL_TYPE_NUMERIC));
+		fields.add(new ExcelFields("courseid", "126", XSSFCell.CELL_TYPE_NUMERIC));
+		
+		
+		helper.generateExcel(path, "teachercoursemapping.xlsx", "Sample Data", fields);
 	}
 	
 	/*

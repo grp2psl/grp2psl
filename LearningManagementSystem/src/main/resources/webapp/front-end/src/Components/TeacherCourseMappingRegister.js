@@ -1,6 +1,12 @@
-import React, { Component } from 'react'
+import React, {Component } from 'react'
+import {Container, Row, Col, Card, Button, Form} from 'react-bootstrap';
 import Select from 'react-select'
 import axios from 'axios'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faSave,
+    faUndo
+  } from "@fortawesome/free-solid-svg-icons";
 
 export default class TeacherCourseMappingRegister extends Component {
 
@@ -82,7 +88,14 @@ export default class TeacherCourseMappingRegister extends Component {
   render() {
  
     return (
+	  <div className="mt-5">
+            <Card className={"border border-dark bg-dark text-white"}>
+                <Card.Header>Register Trainer</Card.Header>
+                
       <form onSubmit={this.teacherCourseMapping}>
+      <Card.Body>
+            <Container>
+                 <Row>
         <label>
           Select Trainer :
           <div>
@@ -90,7 +103,8 @@ export default class TeacherCourseMappingRegister extends Component {
     <p>You have selected <strong>{this.state.trainerName}</strong> whose id is <strong>{this.state.trainerId}</strong></p>
       </div>
         </label>
-        
+         </Row>
+   		<Row>
         <label>
           Select Course :
           <div>
@@ -98,8 +112,27 @@ export default class TeacherCourseMappingRegister extends Component {
     <p>You have selected <strong>{this.state.courseName}</strong> whose id is <strong>{this.state.courseId}</strong></p>
       </div>
         </label>
-        <input type="submit" value="Submit" />
+        </Row>
+         </Container>
+                        
+                </Card.Body>
+        
+           <Card.Footer style={{"text-align":"right"}}>
+         <Button variant="success" type="submit">
+                        <FontAwesomeIcon icon={faSave} />{" "}
+                        Submit
+                    </Button>{" "}
+          </Card.Footer>
       </form>
+       </Card>
+      </div>
     )
   }
 }
+
+<Form.Select aria-label="Default select example">
+  <option>Open this select menu</option>
+  <option value="1">One</option>
+  <option value="2">Two</option>
+  <option value="3">Three</option>
+</Form.Select>

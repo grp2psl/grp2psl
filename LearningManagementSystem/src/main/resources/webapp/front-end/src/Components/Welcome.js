@@ -152,24 +152,23 @@ class Welcome extends React.Component{
 						        </Card.Body>
 						      </Card>
 						    </Col>
-						</Row>
-						
-						<Row xs={1} md={2} className="g-4">
+						    
 						    <Col>
 						      <Card className="bg-light" style={cardStyle}>
 						        <Card.Body>
-						          <Card.Title>Register Trainer to course</Card.Title>
+						          <Card.Title>Assign Trainers</Card.Title>
 						          <Card.Text>
 						            Register a trainer to course   
 						          </Card.Text>
-						          <Button variant="primary" style={buttonStyle} onClick={this.teacherCourseMappingRegister}>Go</Button>
+						           <Button variant="primary" style={buttonStyle} onClick={() => {
+										this.props.history.push("/TeacherCourseMappingsRegister");
+									}}>Go</Button>
 						        </Card.Body>
 						      </Card>
 						    </Col>
-						    
-						    
-						    
 						</Row>
+						
+						
 						
                 </Container>
             </div>);

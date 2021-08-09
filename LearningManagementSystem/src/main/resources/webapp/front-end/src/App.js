@@ -22,6 +22,8 @@ import ShowLearners from './Components/ShowLearners';
 import EditTrainerDetails from './Components/EditTrainerDetails';
 import EditLearnerDetails from './Components/EditLearnerDetails';
 import { Col, Container, Row } from 'react-bootstrap';
+import MultipleTeacherCourseMappingRegister from './Components/MultipleTeacherCourseMappingRegister';
+import TeacherCourseMappingsRegister from './Components/TeacherCourseMappingsRegister';
 
 function App() {
   return (
@@ -50,6 +52,8 @@ function App() {
               <Route path="/enrollLearners" exact component={EnrollLearners}/>
               <Route path="/enrollLearner" exact component={EnrollLearner}/>
               <Route path="/enrollMultipleLearners" exact component={EnrollMultipleLearners}/>
+              <Route path="/MultipleTeacherCourseMappingRegister" exact component={MultipleTeacherCourseMappingRegister}/>
+              <Route path="/TeacherCourseMappingsRegister" exact component={TeacherCourseMappingsRegister}/>
           </Switch>
           </Col>
         </Row>
