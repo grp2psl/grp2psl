@@ -2,7 +2,9 @@ package com.psl.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -17,6 +19,7 @@ import com.psl.entities.Course;
 import com.psl.entities.TeacherCourseMapping;
 import com.psl.utils.ExcelFields;
 import com.psl.utils.ExcelHelper;
+import com.psl.entities.Trainer;
 
 @Service("teacherCourseMappingService")
 public class TeacherCourseMappingService {
@@ -26,6 +29,9 @@ public class TeacherCourseMappingService {
 	
 	@Autowired
 	private CourseService courseService;
+	
+	@Autowired
+	private TrainerService trainerService; 
 	
 	/*
 	 *ADDING TEACHER-COURSE MAPPING DETAILS
@@ -89,6 +95,26 @@ public class TeacherCourseMappingService {
 	public Course getCourse(int tcid) {
 		TeacherCourseMapping tcMapping = dao.findById(tcid).get();
 		return courseService.getCourse(tcMapping.getCourseId());
+	}
+	
+	/*
+	 * GET TRAINER AND COURSE NAMES FOR ALL TRAINER-COURSE MAPPINGS
+	 */
+	public List<Object> getAllTrainerCourseNames() {
+		List<TeacherCourseMapping> tcMappings = (List<TeacherCourseMapping>) dao.findAll();
+		List<Object> tcNames = new ArrayList<>();
+		for(TeacherCourseMapping tc: tcMappings) {
+			Map<String, Object> tcName = new HashMap<>();
+			Course course = courseService.getCourse(tc.getCourseId());
+			Trainer trainer = trainerService.getTrainer(tc.getTrainerId());
+			tcName.put("tcid", tc.getTcId());
+			tcName.put("trainerid", tc.getTrainerId());
+			tcName.put("trainerName", trainer.getName());
+			tcName.put("courseid", tc.getCourseId());
+			tcName.put("courseName", course.getCoursename());
+			tcNames.add(tcName);
+		}
+		return tcNames;
 	}
 	
 	/*
