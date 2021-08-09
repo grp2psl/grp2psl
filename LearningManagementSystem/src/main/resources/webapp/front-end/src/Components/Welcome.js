@@ -165,17 +165,36 @@ class Welcome extends React.Component{
 										this.props.history.push("/TeacherCourseMappingsRegister");
 									}}>Go</Button>
 
-						          <Card.Title>Update Score</Card.Title>
-						          <Card.Text>
-						            Update test scores of learners for courses attended  
-						          </Card.Text>
-						          <Button variant="primary" style={buttonStyle} onClick={this.updateScores}>Go</Button>
-
 						        </Card.Body>
 						      </Card>
 						    </Col>
 						</Row>
-						
+                		<Row xs={1} md={2} className="g-4 mb-4">
+						    <Col>
+						      <Card className="bg-light" style={cardStyle}>
+						        <Card.Body>
+						          <Card.Title>Update Score</Card.Title>
+						          <Card.Text>
+						            Update test scores of learners for courses attended  
+						          </Card.Text>
+								  <Button variant="primary" style={buttonStyle} onClick={this.updateScores}>Go</Button>
+						        </Card.Body>
+						      </Card>
+						    </Col>
+						    <Col>
+						      <Card className="bg-light" style={cardStyle}>
+						        <Card.Body>
+						          <Card.Title>View Courses</Card.Title>
+						          <Card.Text>
+						            View all the courses
+						          </Card.Text>
+						          <Button variant="primary" style={buttonStyle} onClick={() => {
+										this.props.history.push("/viewCourse");
+									}}>Go</Button>
+						        </Card.Body>
+						      </Card>
+						    </Col>
+						</Row>					
 						
 						
                 </Container>

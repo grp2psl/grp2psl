@@ -19,7 +19,7 @@ const buttonStyle={
     bottom: '20px',
     left: '30%'
 };
-class TeacherCourseMappingsRegister extends React.Component{	
+class RegisterMultipleLearners extends React.Component{	
     constructor(props){
         super(props);
         this.state={
@@ -144,4 +144,4 @@ class TeacherCourseMappingsRegister extends React.Component{
     }
 }
 
-export default TeacherCourseMappingsRegister;
+export default RegisterMultipleLearners;
