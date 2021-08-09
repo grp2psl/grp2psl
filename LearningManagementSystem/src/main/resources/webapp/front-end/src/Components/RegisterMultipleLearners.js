@@ -85,7 +85,7 @@ class RegisterMultipleLearners extends React.Component{
                     console.log(response.data);
                 }	
             } catch(error) {
-                alert(error);
+                alert(error.response.data);     
             }
             this.setState({
                 msg: "",
