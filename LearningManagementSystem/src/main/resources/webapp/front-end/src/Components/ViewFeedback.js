@@ -1,12 +1,8 @@
 import React from 'react';
 
-import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
+import {Card, Table, Row, Col} from 'react-bootstrap';
 import axios from 'axios';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faEdit,
-    faTrash
-  } from "@fortawesome/free-solid-svg-icons";
+import ReactStars from 'react-stars';
 
 class ViewFeedback extends React.Component{
 	
@@ -54,8 +50,22 @@ class ViewFeedback extends React.Component{
         return(
 	
             <Card className={"border border-dark bg-dark text-white mt-5"}>
-                <Card.Header>Feedback for Course - {this.state.courseDetails.coursename}</Card.Header>
-                <h5 className="text-white mt-2">Average Rating - {this.state.avgRating}</h5>
+                <Card.Header>Feedback for Course - {this.state.courseDetails.coursename}
+                <Row className="mt-2" xs={4} md={4} lg={4}>
+                    <Col md={{offset:8}}><h5 className="text-white mt-2">Average Rating</h5></Col>
+                </Row>
+                <Row>
+                    <Col md={{offset:9}}>
+                        <ReactStars
+                            count={5}
+                            value={this.state.avgRating}
+                            size={20}
+                            edit={false}
+                            color2={'#ffd700'} 
+                        />
+                    </Col>
+                </Row>
+                </Card.Header>
                 <h3 className="text-white mt-2">{this.state.msg}</h3>
                 <Card.Body>
                     <Table striped bordered hover variant="dark">
@@ -70,7 +80,7 @@ class ViewFeedback extends React.Component{
                         <tbody>
                             {this.state.offerings.length === 0? (
                                 <tr align="center">
-                                    <td colSpan="7">No Feedback Found.</td>
+                                    <td colSpan="4">No Feedback Found.</td>
                                 </tr>
                                 ) : (
                                 this.state.offerings.map((offering) => (
@@ -78,7 +88,15 @@ class ViewFeedback extends React.Component{
                                     <td>{offering.startdate}</td>
                                     <td>{offering.enddate}</td>
                                     <td>{offering.feedback}</td>
-                                    <td>{offering.ratings}</td>
+                                    <td>
+                                        <ReactStars
+                                            count={5}
+                                            value={offering.ratings}
+                                            size={20}
+                                            edit={false}
+                                            color2={'#ffd700'} 
+                                        />
+                                    </td>
                                     </tr>
                                 ))
                                 )}
