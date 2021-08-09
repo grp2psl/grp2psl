@@ -19,7 +19,7 @@ const buttonStyle={
     bottom: '20px',
     left: '30%'
 };
-class RegisterMultipleTrainers extends React.Component{	
+class EnrollMultipleLearners extends React.Component{	
     constructor(props){
         super(props);
         this.state={
@@ -28,7 +28,7 @@ class RegisterMultipleTrainers extends React.Component{
             showUpload: false
         };
         this.download = this.download.bind(this);
-        this.registerTrainers = this.registerTrainers.bind(this);
+        this.enrollLearners = this.enrollLearners.bind(this);
     }
     
     async download(){
@@ -36,16 +36,16 @@ class RegisterMultipleTrainers extends React.Component{
 			msg:"Downloading..Please Wait"
 		});
 		try{
-			const response = await axios.get("http://localhost:8080/LearningManagementSystem/trainers/generate-excel");
+			const response = await axios.get("http://localhost:8080/LearningManagementSystem/managers/generate-excel-enrolment");
 			if(response.data != null) {
 				this.setState({
-                    msg: "Downloading completed. Check your Downloads folder.."
+                    msg: "Downloading completed. Check your Downloads folder"
 				});	
 			}	
 		} catch(error) {
 			alert(error);
             this.setState({
-                msg: "Downloading failed.."
+                msg: "Downloading Failed"
             });	
 		}
     }
@@ -55,13 +55,13 @@ class RegisterMultipleTrainers extends React.Component{
       
     };
 
-    async registerTrainers(){
+    async enrollLearners(){
         this.setState({
             showUpload: true
 		});
         if(this.state.file != null){
             this.setState({
-                msg:"Processing..\nPlease Wait"
+                msg:"Processing.. Please Wait"
             });
             const formData = new FormData();
         
@@ -78,14 +78,14 @@ class RegisterMultipleTrainers extends React.Component{
             }
 
             try{
-                const response = await axios.post("http://localhost:8080/LearningManagementSystem/trainers/register-multiple", formData, config);
+                const response = await axios.post("http://localhost:8080/LearningManagementSystem/managers/enroll-learners", formData, config);
                 console.log(response)
                 if(response.data != null){
-                    alert("Trainers registered successfully");
+                    alert("Learners enrolled successfully");
                     console.log(response.data);
                 }	
             } catch(error) {
-                alert(error.response.data);
+                alert(error.response.data);     
             }
             this.setState({
                 msg: "",
@@ -133,7 +133,7 @@ class RegisterMultipleTrainers extends React.Component{
                                     size="lg"
                                     variant="outline-primary" 
                                     style={buttonStyle}
-                                    onClick={this.registerTrainers}><FontAwesomeIcon icon={faUpload} />{" "}Upload</Button>
+                                    onClick={this.enrollLearners}><FontAwesomeIcon icon={faUpload} />{" "}Upload</Button>
                                  
 						        </Card.Body>
 						      </Card>
@@ -144,4 +144,4 @@ class RegisterMultipleTrainers extends React.Component{
     }
 }
 
-export default RegisterMultipleTrainers;
+export default EnrollMultipleLearners;

@@ -8,7 +8,7 @@ import {
     faUndo
   } from "@fortawesome/free-solid-svg-icons";
 
-class Register extends React.Component{
+class EditTrainerDetails extends React.Component{
     constructor(props){
         super(props);
         this.state = this.initialState;
@@ -17,10 +17,11 @@ class Register extends React.Component{
     }
 
     initialState = {
-        name: "",
-        department: "",
-        phonenumber: "",
-        email: "",
+        id: this.props.location.state.trainer.trainerid,
+        name: this.props.location.state.trainer.name,
+        department: this.props.location.state.trainer.department,
+        phonenumber: this.props.location.state.trainer.phonenumber,
+        email: this.props.location.state.trainer.email,
         msg:""
     };
 
@@ -39,28 +40,30 @@ class Register extends React.Component{
     async registerTrainer(event){
 		event.preventDefault();
 		const trainer = {
+            trainerid: this.state.id,
             name: this.state.name,
             department: this.state.department,
             phonenumber: this.state.phonenumber,
             email: this.state.email
         }
+        console.log(trainer)
+        console.log(this.initialState)
         if(this.validateForm(trainer.phonenumber) == true){
             this.setState({
                 msg:"Processing..\nPlease Wait"
             });
             try{
-                const response = await axios.post("http://localhost:8080/LearningManagementSystem/trainers/register", trainer);
+                const response = await axios.put("http://localhost:8080/LearningManagementSystem/trainers/update", trainer);
                 if(response.data != null){
-                    alert("Trainer registered successfully");
+                    alert("Trainer updated successfully");
                     console.log(response.data);
                 }	
             } catch(error) {
-                alert(error.response.data);
+                alert(error);
             }
-            this.setState(this.initialState);
         }
     }
-
+    
     formChange(event){
         this.setState({
             [event.target.name]:event.target.value
@@ -83,7 +86,7 @@ class Register extends React.Component{
                                 <Form.Control required autoComplete="off"
                                     type="test" 
                                     value={this.state.name}
-                                    onChange={this.formChange}
+                                    disabled={true}
                                     name="name"
                                     placeholder="Enter name" />
                             </Form.Group>
@@ -114,7 +117,7 @@ class Register extends React.Component{
                                 <Form.Control required autoComplete="off"
                                     type="email" 
                                     value={this.state.email}
-                                    onChange={this.formChange}
+                                    disabled={true}
                                     name="email"
                                     placeholder="Enter email" />
                             </Form.Group>
@@ -141,4 +144,4 @@ class Register extends React.Component{
     }
 }
 
-export default Register;
+export default EditTrainerDetails;

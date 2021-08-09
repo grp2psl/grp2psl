@@ -105,7 +105,7 @@ class Welcome extends React.Component{
 						            Enroll learner(s) to a course
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push("/enroll");
+										this.props.history.push("/enrollLearners");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>

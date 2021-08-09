@@ -8,26 +8,27 @@ import {
     faUndo
   } from "@fortawesome/free-solid-svg-icons";
 
-class Register extends React.Component{
+class EditLearnerDetails extends React.Component{
     constructor(props){
         super(props);
         this.state = this.initialState;
-        this.registerTrainer = this.registerTrainer.bind(this);
+        this.register = this.register.bind(this);
         this.formChange = this.formChange.bind(this);
     }
 
     initialState = {
-        name: "",
-        department: "",
-        phonenumber: "",
-        email: "",
+        id: this.props.location.state.learner.learnerid,
+        name: this.props.location.state.learner.name,
+        department: this.props.location.state.learner.department,
+        phonenumber: this.props.location.state.learner.phonenumber,
+        email: this.props.location.state.learner.email,
         msg:""
-    };
+      };
 
     resetForm = () => {
         this.setState(() => this.initialState);
     };
-
+    
     validateForm(phoneNumber) {
         if(phoneNumber.length > 11 || phoneNumber.length < 10){
             alert("Enter valid phoneNumber");
@@ -36,28 +37,28 @@ class Register extends React.Component{
         return true;
     }
 
-    async registerTrainer(event){
+    async register(event){
 		event.preventDefault();
-		const trainer = {
+		const learner = {
+            learnerid: this.state.id,
             name: this.state.name,
             department: this.state.department,
             phonenumber: this.state.phonenumber,
             email: this.state.email
         }
-        if(this.validateForm(trainer.phonenumber) == true){
+        if(this.validateForm(learner.phonenumber) == true){
             this.setState({
                 msg:"Processing..\nPlease Wait"
             });
             try{
-                const response = await axios.post("http://localhost:8080/LearningManagementSystem/trainers/register", trainer);
+                const response = await axios.put("http://localhost:8080/LearningManagementSystem/learners/update", learner);
                 if(response.data != null){
-                    alert("Trainer registered successfully");
+                    alert("Learner updated successfully");
                     console.log(response.data);
                 }	
             } catch(error) {
-                alert(error.response.data);
+                alert(error);
             }
-            this.setState(this.initialState);
         }
     }
 
@@ -71,9 +72,9 @@ class Register extends React.Component{
         return(
 			<div className="mt-5">
             <Card className={"border border-dark bg-dark text-white"}>
-                <Card.Header>Register Trainer</Card.Header>
+                <Card.Header>Register Learner</Card.Header>
                 <h3 className="text-white mt-2">{this.state.msg}</h3>
-                <Form onSubmit={this.registerTrainer} onReset={this.resetForm} id="registerId" >
+                <Form onSubmit={this.register} onReset={this.resetForm} id="registerId" >
                 <Card.Body>
                     <Container>
                         <Row>
@@ -83,7 +84,7 @@ class Register extends React.Component{
                                 <Form.Control required autoComplete="off"
                                     type="test" 
                                     value={this.state.name}
-                                    onChange={this.formChange}
+                                    disabled={true}
                                     name="name"
                                     placeholder="Enter name" />
                             </Form.Group>
@@ -114,7 +115,7 @@ class Register extends React.Component{
                                 <Form.Control required autoComplete="off"
                                     type="email" 
                                     value={this.state.email}
-                                    onChange={this.formChange}
+                                    disabled={true}
                                     name="email"
                                     placeholder="Enter email" />
                             </Form.Group>
@@ -141,4 +142,4 @@ class Register extends React.Component{
     }
 }
 
-export default Register;
+export default EditLearnerDetails;

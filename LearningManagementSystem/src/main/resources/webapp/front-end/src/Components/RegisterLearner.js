@@ -27,6 +27,14 @@ class RegisterLearner extends React.Component{
     resetForm = () => {
         this.setState(() => this.initialState);
     };
+    
+    validateForm(phoneNumber) {
+        if(phoneNumber.length > 11 || phoneNumber.length < 10){
+            alert("Enter valid phoneNumber");
+            return false;
+        }
+        return true;
+    }
 
     async register(event){
 		event.preventDefault();
@@ -36,19 +44,21 @@ class RegisterLearner extends React.Component{
             phonenumber: this.state.phonenumber,
             email: this.state.email
         }
-        this.setState({
-			msg:"Processing..\nPlease Wait"
-		});
-		try{
-			const response = await axios.post("http://localhost:8080/LearningManagementSystem/learners/register", learner);
-			if(response.data != null){
-	        	alert("Learner registered successfully");
-	            console.log(response.data);
-        	}	
-		} catch(error) {
-			alert(error);
-		}
-        this.setState(this.initialState);
+        if(this.validateForm(learner.phonenumber) == true){
+            this.setState({
+                msg:"Processing..\nPlease Wait"
+            });
+            try{
+                const response = await axios.post("http://localhost:8080/LearningManagementSystem/learners/register", learner);
+                if(response.data != null){
+                    alert("Learner registered successfully");
+                    console.log(response.data);
+                }	
+            } catch(error) {
+                alert(error.response.data);
+            }
+            this.setState(this.initialState);
+        }
     }
 
     formChange(event){
