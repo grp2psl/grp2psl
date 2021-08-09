@@ -118,7 +118,7 @@ class Welcome extends React.Component{
 						            View learners and their course details
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push("/viewLearners");
+										this.props.history.push("/showLearners");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>
@@ -168,25 +168,25 @@ class Welcome extends React.Component{
 						
 						<Row xs={1} md={2} className="g-4">
 						    <Col>
-						      <Card className="bg-light">
+						      <Card className="bg-light" style={cardStyle}>
 						        <Card.Body>
 						          <Card.Title>Register Trainer to course</Card.Title>
 						          <Card.Text>
 						            Register a trainer to course   
 						          </Card.Text>
-						          <Button variant="primary" onClick={this.teacherCourseMappingRegister}>Go</Button>
+						          <Button variant="primary" style={buttonStyle} onClick={this.teacherCourseMappingRegister}>Go</Button>
 						        </Card.Body>
 						      </Card>
 						    </Col>
 						    
 						    <Col>
-						      <Card className="bg-light">
+						      <Card className="bg-light" style={cardStyle}>
 						        <Card.Body>
 						          <Card.Title>View course attended</Card.Title>
 						          <Card.Text>
 						            View course attended  
 						          </Card.Text>
-						          <Button variant="primary" onClick={this.viewCourseAttended}>Go</Button>
+						          <Button variant="primary" style={buttonStyle} onClick={this.viewCourseAttended}>Go</Button>
 						        </Card.Body>
 						      </Card>
 						    </Col>

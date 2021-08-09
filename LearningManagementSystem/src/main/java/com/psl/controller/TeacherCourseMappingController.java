@@ -27,7 +27,7 @@ public class TeacherCourseMappingController {
 	 */
 	@PostMapping("/register")
 	public void addTeacherCourseMapping(@RequestBody TeacherCourseMapping teacherCourseMapping) {
-		//System.out.println(teacherCourseMapping);
+		System.out.println(teacherCourseMapping);
 		service.addTeacherCourseMapping(teacherCourseMapping);
 	}
 	

@@ -160,6 +160,7 @@ public class ManagerController {
 	
 	@GetMapping("/course-attended/{id}")
 	public List<CourseAttended> viewCourseAttended(@PathVariable int id ){
+		System.out.println(id);
 		return lService.viewCourseAttended(id);
 	}	
 
