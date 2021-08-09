@@ -8,11 +8,11 @@ import {
     faUndo
   } from "@fortawesome/free-solid-svg-icons";
 
-class Register extends React.Component{
+class UpdateScoreIndividual extends React.Component{
     constructor(props){
         super(props);
         this.state = this.initialState;
-        this.registerTrainer = this.registerTrainer.bind(this);
+        this.register = this.register.bind(this);
         this.formChange = this.formChange.bind(this);
     }
 
@@ -22,36 +22,36 @@ class Register extends React.Component{
         phonenumber: "",
         email: "",
         msg:""
-    };
+      };
 
     resetForm = () => {
         this.setState(() => this.initialState);
     };
-
+    
     validateForm(phoneNumber) {
-        if(phoneNumber.length > 11 || phoneNumber.length < 10 || !(/^\d+$/.test(phoneNumber))){
+        if(phoneNumber.length > 11 || phoneNumber.length < 10){
             alert("Enter valid phoneNumber");
             return false;
         }
         return true;
     }
 
-    async registerTrainer(event){
+    async register(event){
 		event.preventDefault();
-		const trainer = {
+		const learner = {
             name: this.state.name,
             department: this.state.department,
             phonenumber: this.state.phonenumber,
             email: this.state.email
         }
-        if(this.validateForm(trainer.phonenumber) == true){
+        if(this.validateForm(learner.phonenumber) == true){
             this.setState({
                 msg:"Processing..\nPlease Wait"
             });
             try{
-                const response = await axios.post("http://localhost:8080/LearningManagementSystem/trainers/register", trainer);
+                const response = await axios.post("http://localhost:8080/LearningManagementSystem/learners/register", learner);
                 if(response.data != null){
-                    alert("Trainer registered successfully");
+                    alert("Learner registered successfully");
                     console.log(response.data);
                 }	
             } catch(error) {
@@ -71,9 +71,9 @@ class Register extends React.Component{
         return(
 			<div className="mt-5">
             <Card className={"border border-dark bg-dark text-white"}>
-                <Card.Header>Register Trainer</Card.Header>
+                <Card.Header>Register Learner</Card.Header>
                 <h3 className="text-white mt-2">{this.state.msg}</h3>
-                <Form onSubmit={this.registerTrainer} onReset={this.resetForm} id="registerId" >
+                <Form onSubmit={this.register} onReset={this.resetForm} id="registerId" >
                 <Card.Body>
                     <Container>
                         <Row>
@@ -141,4 +141,4 @@ class Register extends React.Component{
     }
 }
 
-export default Register;
+export default UpdateScoreIndividual;

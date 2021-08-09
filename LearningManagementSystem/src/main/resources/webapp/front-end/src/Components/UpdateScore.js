@@ -6,6 +6,7 @@ const cardStyle={
 	height: '200px',
 	marginTop: '30px'
 };
+
 const buttonStyle={
 	width: '40%',
     position: 'absolute',
@@ -13,13 +14,13 @@ const buttonStyle={
     left: '30%'
 };
 
-class RegisterTrainers extends React.Component{
-		registerTrainer = () => {
-			this.props.history.push("/registerTrainer");
+class UpdateScore extends React.Component{
+		updateScore = () => {
+			this.props.history.push("/update-score");
 		}
 		
-		registerMultipleTrainers = () => {
-			this.props.history.push("/registerMultipleTrainers");
+		updateScoreMultiple = () => {
+			this.props.history.push("/update-score-multiple");
 		}
 	
     render(){
@@ -30,22 +31,22 @@ class RegisterTrainers extends React.Component{
 						    <Col>
 						      <Card className="bg-light" style={cardStyle}> 
 						        <Card.Body>
-						          <Card.Title>Register A Trainer</Card.Title>
+						          <Card.Title>Update test score of a learner</Card.Title>
 						          <Card.Text>
-						            Register a trainer to a course by filling in a form
+                                  Update test score of a learner for a course attended by filling in a form
 						          </Card.Text>
-						          <Button variant="primary" onClick={this.registerTrainer} style={buttonStyle}>Go</Button>
+						          <Button variant="primary" onClick={this.updateScore} style={buttonStyle}>Go</Button>
 						        </Card.Body>
 						      </Card>
 						    </Col>
 						    <Col>
 						      <Card className="bg-light" style={cardStyle}>
 						        <Card.Body>
-						          <Card.Title>Register Multiple Trainers</Card.Title>
+						          <Card.Title>Update test score of multiple learners</Card.Title>
 						          <Card.Text>
-						            Register multiple trainers by uploading an EXCEL file
+						            Update test score of multiple learners by uploading an EXCEL file
 						          </Card.Text>
-						          <Button variant="primary" onClick={this.registerMultipleTrainers} style={buttonStyle}>Go</Button>
+						          <Button variant="primary" onClick={this.updateScoreMultiple} style={buttonStyle}>Go</Button>
 						        </Card.Body>
 						      </Card>
 						    </Col>
@@ -55,4 +56,4 @@ class RegisterTrainers extends React.Component{
     }
 }
 
-export default RegisterTrainers;
+export default UpdateScore;

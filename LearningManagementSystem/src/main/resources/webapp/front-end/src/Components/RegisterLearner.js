@@ -26,10 +26,10 @@ class RegisterLearner extends React.Component{
 
     resetForm = () => {
         this.setState(() => this.initialState);
-    };
+    };    
     
     validateForm(phoneNumber) {
-        if(phoneNumber.length > 11 || phoneNumber.length < 10){
+        if(phoneNumber.length > 11 || phoneNumber.length < 10 || !(/^\d+$/.test(phoneNumber))){
             alert("Enter valid phoneNumber");
             return false;
         }

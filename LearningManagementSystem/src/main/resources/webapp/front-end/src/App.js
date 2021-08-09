@@ -21,6 +21,9 @@ import RegisterMultipleLearners from './Components/RegisterMultipleLearners';
 import ShowLearners from './Components/ShowLearners';
 import EditTrainerDetails from './Components/EditTrainerDetails';
 import EditLearnerDetails from './Components/EditLearnerDetails';
+import UpdateScore from './Components/UpdateScore';
+import UpdateScoreIndividual from './Components/UpdateScoreIndividual';
+import UpdateScoreMultiple from './Components/UpdateScoreMultiple';
 import { Col, Container, Row } from 'react-bootstrap';
 import MultipleTeacherCourseMappingRegister from './Components/MultipleTeacherCourseMappingRegister';
 import TeacherCourseMappingsRegister from './Components/TeacherCourseMappingsRegister';
@@ -52,8 +55,13 @@ function App() {
               <Route path="/enrollLearners" exact component={EnrollLearners}/>
               <Route path="/enrollLearner" exact component={EnrollLearner}/>
               <Route path="/enrollMultipleLearners" exact component={EnrollMultipleLearners}/>
+
               <Route path="/MultipleTeacherCourseMappingRegister" exact component={MultipleTeacherCourseMappingRegister}/>
               <Route path="/TeacherCourseMappingsRegister" exact component={TeacherCourseMappingsRegister}/>
+		      <Route path="/update-scores" exact component={UpdateScore}/>
+              <Route path="/update-score" exact component={UpdateScoreIndividual}/>
+              <Route path="/update-score-multiple" exact component={UpdateScoreMultiple}/>
+
           </Switch>
           </Col>
         </Row>
