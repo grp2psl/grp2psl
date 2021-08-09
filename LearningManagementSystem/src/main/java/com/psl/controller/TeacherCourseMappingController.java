@@ -20,11 +20,17 @@ public class TeacherCourseMappingController {
 	@Autowired
 	private TeacherCourseMappingService service;
 	
+	/*
+	 *ADDING TEACHER-COURSE MAPPING DETAILS
+	 */
 	@PostMapping("/register")
 	public void addTeacherCourseMapping(@RequestBody TeacherCourseMapping teacherCourseMapping) {
 		service.addTeacherCourseMapping(teacherCourseMapping);
 	}
 	
+	/*
+	 *ADDING MULTIPLE TEACHER-COURSE MAPPING DETAILS
+	 */
 	@PostMapping("/register-multiple")
 	public void addMultipleTrainers(@RequestParam("file") MultipartFile csvFilePath ) throws IOException {
 		service.addMultipleTeacherCourseMapping(csvFilePath);

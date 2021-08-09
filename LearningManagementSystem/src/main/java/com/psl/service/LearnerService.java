@@ -1,18 +1,16 @@
 package com.psl.service;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import java.util.List;
 import java.util.Random;
 
-import org.apache.poi.ss.format.CellTextFormatter;
-import org.apache.poi.ss.formula.functions.Column;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.DataFormat;
-import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -28,10 +26,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.psl.dao.ICourseAttended;
 import com.psl.dao.ILearnerDAO;
-import com.psl.dao.IScoreStatus;
 import com.psl.entities.CourseAttended;
 import com.psl.entities.Learner;
-import com.psl.entities.ScoreStatus;
+import com.psl.utils.ExcelFields;
+import com.psl.utils.ExcelHelper;
+
 
 @Service("learnerService")
 public class LearnerService {
@@ -39,17 +38,17 @@ public class LearnerService {
 	private ILearnerDAO dao;
 	
 	@Autowired
-	private IScoreStatus Idao;
-	
-	@Autowired
 	private ICourseAttended Cdao;
 	
 	@Autowired
 	private EmailSenderService service;
 	
+	/*
+	 * ADD LEARNER
+	 */
 	public void addLearner(Learner learner) {
 		Integer id = dao.getNextId();
-		id = (id==null ? 0 : id);
+		id = (id==null ? 0 : id + 1);
 		Random rand = new Random();
 		String firstname = learner.getName();
 		try {
@@ -60,13 +59,21 @@ public class LearnerService {
 		String password = firstname+id+"@"+rand.nextInt(9999);
 		learner.setLearnerid(id);
 		learner.setPassword(password);
-		dao.save(learner);
-		service.sendEmail("group2.learning.management.system@gmail.com", learner.getEmail(), "Hi " + firstname +", \nYour password is "+password+"\nChange your password once you are logged in.", "Learner registered successfully - learning management portal");		
+		try {
+			dao.saveNewEntry(learner.getLearnerid(), learner.getName(), learner.getDepartment(), learner.getPhonenumber(), learner.getEmail(), learner.getPassword());
+			service.sendEmail("group2.learning.management.system@gmail.com", learner.getEmail(), "Hi " + firstname +", \nYour password is "+password+"\nChange your password once you are logged in.", "Learner registered successfully - learning management portal");		
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	} 
 	
+	/*
+	 * ADD MULTIPLE LEARNERS
+	 */
 	public void addMultipleLearners(MultipartFile csvFilePath) throws IOException {
 		Integer id = dao.getNextId();
-		id = (id==null ? 0 : id);
+		id = (id==null ? 0 : id + 1);
 	    XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
 	    XSSFSheet worksheet = workbook.getSheetAt(0);
 		Random rand = new Random();
@@ -88,91 +95,84 @@ public class LearnerService {
 			}
 			String password = firstname+learner.getLearnerid()+"@"+rand.nextInt(9999);
 			learner.setPassword(password);
-			dao.save(learner);
-			service.sendEmail("group2.learning.management.system@gmail.com", learner.getEmail(), "Hi " + firstname +", \nYour password is "+password+"\nChange your password once you are logged in.", "Learner registered successfully - learning management portal");		
-	    }
-				
+
+			try {
+				dao.saveNewEntry(learner.getLearnerid(), learner.getName(), learner.getDepartment(), learner.getPhonenumber(), learner.getEmail(), learner.getPassword());
+				service.sendEmail("group2.learning.management.system@gmail.com", learner.getEmail(), "Hi " + firstname +", \nYour password is "+password+"\nChange your password once you are logged in.", "Learner registered successfully - learning management portal");		
+			}catch(Exception e) {
+				e.printStackTrace();
+				throw e;
+			}
+		}				
 	}
 	
+	/*
+	 * GENERATES EXCEL SHEET OF SAMPLE DATA OF LEARNER DETAILS
+	 */
 	public void generateExcel(String path) throws IOException {
-		Workbook workbook = new XSSFWorkbook();
-
-		Sheet sheet = workbook.createSheet("Sample Data");
-		sheet.setColumnWidth(0, 6000);
-		sheet.setColumnWidth(1, 4000);
+		ExcelHelper helper = new ExcelHelper();
 		
+		List<ExcelFields> fields = new ArrayList<>();
+		fields.add(new ExcelFields("Name", "Firstname Lastname", XSSFCell.CELL_TYPE_STRING));
+		fields.add(new ExcelFields("Department", "DepartmentName", XSSFCell.CELL_TYPE_STRING));
+		fields.add(new ExcelFields("Phone Number", "9876543210", XSSFCell.CELL_TYPE_STRING));
+		fields.add(new ExcelFields("Email", "something@email.com", XSSFCell.CELL_TYPE_STRING));
 		
-		Row header = sheet.createRow(0);
-
-		CellStyle headerStyle = workbook.createCellStyle();
-		headerStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
-
-		XSSFFont font = ((XSSFWorkbook) workbook).createFont();
-		font.setFontName("Arial");
-		font.setBold(true);
-		headerStyle.setFont(font);
-
-		Cell headerCell = header.createCell(0);
-		headerCell.setCellValue("Name");
-		headerCell.setCellStyle(headerStyle);
-
-		headerCell = header.createCell(1);
-		headerCell.setCellValue("Department");
-		headerCell.setCellStyle(headerStyle);
-
-		headerCell = header.createCell(2);
-		headerCell.setCellValue("Phone Number");
-		headerCell.setCellStyle(headerStyle);
-		
-		headerCell = header.createCell(3);
-		headerCell.setCellValue("Email");
-		headerCell.setCellStyle(headerStyle);
-
-		Row data = sheet.createRow(1);
-		Cell dataCell = data.createCell(0);
-		dataCell.setCellValue("Firstname Lastname");
-		dataCell.setCellType(XSSFCell.CELL_TYPE_STRING);
-
-		dataCell = data.createCell(1);
-		dataCell.setCellValue("Department");
-		dataCell.setCellType(XSSFCell.CELL_TYPE_STRING);
-
-		dataCell = data.createCell(2);
-		dataCell.setCellValue("9876543210");
-		dataCell.setCellType(XSSFCell.CELL_TYPE_STRING);
-
-		dataCell = data.createCell(3);
-		dataCell.setCellValue("something@email.com");
-		dataCell.setCellType(XSSFCell.CELL_TYPE_STRING);
-		
-		String fileName = "learners.xlsx";
-		
-		File file = new File(path, fileName);
-		FileOutputStream outputStream = new FileOutputStream(file);
-		workbook.write(outputStream);
-		workbook.close();
-		outputStream.close();
-		System.out.println(file.getPath());
+		helper.generateExcel(path, "learners.xlsx", "Sample Data", fields);
 	}
 
+	/*
+	 * GET DETAILS OF ALL LEARNERS
+	 */
 	public List<Learner> getAllLearners(){
 		return dao.findAll();
 	}
 	
+	/*
+	 * GET DETAILS OF LEARNER BY ID
+	 */
 	public Learner getLearner(int id) {
 		System.out.println(dao.findById(id).get());
 		return dao.findById(id).get();
 	}
 	
+	/*
+	 * REMOVE LEARNER BY ID
+	 */
 	public void removeLearner(int id) {
 		dao.deleteById(id);
 	}
-
-	public List<CourseAttended> viewCourseAttended() {
-		return Cdao.courseAttended();
+	
+	/*
+	 * VIEW ALL COURSES ATTENDED BY A LEARNER
+	 * FOR LOOP FOR GETTING SPECIFIC DETAILS OF LEARNERID
+	 */
+	public List<CourseAttended> viewCourseAttended(int id) {
+		List<CourseAttended> cAttended=new ArrayList<>();
+		List<CourseAttended> courseAttendedByLearners = Cdao.courseAttended();
+		for(CourseAttended cl:courseAttendedByLearners) {
+			if(cl.getLearnerid()==id){
+				cAttended.add(cl);
+				
+			}
+		}
+		return cAttended;
 	}
 	
-	public List<ScoreStatus> viewScoreAndStatus() {
-		return Idao.scoreAndStatus();
+	/*
+	 * VIEW SCORE AND STATUS OF A COURSES 
+	 * FOR LOOP FOR GETTING SPECIFIC DETAILS OF LEARNERID
+	 */
+	public CourseAttended viewScoreAndStatus(int id,int courseId) {
+		List<CourseAttended> cAttended= viewCourseAttended(id);
+		CourseAttended course= new CourseAttended();
+	
+		for(CourseAttended cl:cAttended) {
+			if(cl.getCourseid()==courseId){
+				course=cl;
+				
+			}
+		}
+		return course;
 }
 }

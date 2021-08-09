@@ -11,11 +11,24 @@ public class ManagerService {
 	@Autowired
 	private IManagerDAO dao;
 	
+	/*
+	 * ADD MANAGER
+	 */
 	public void addManager(Manager m) {
 		dao.save(m);
 	}
 	
+	/*
+	 * GET DETAILS OF MANAGER BY ID
+	 */
 	public Manager getManager(int id) {
 		return dao.findById(id).get();
+	}
+	
+	/*
+	 * UPDATE MANAGER DETAILS
+	 */
+	public void updateManager(Manager manager) {
+		dao.save(manager);
 	}
 }

@@ -4,11 +4,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import javax.persistence.Column;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,20 +16,28 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.psl.entities.CourseAttended;
 import com.psl.entities.CourseOffering;
 import com.psl.entities.Manager;
 import com.psl.entities.Trainer;
+
 import com.psl.service.CourseOfferingService;
+import com.psl.service.LearnerService;
 import com.psl.service.ManagerService;
 
 @RestController
 @RequestMapping("/managers")
+@CrossOrigin(origins="http://localhost:3000")
 public class ManagerController {
 	@Autowired
 	private ManagerService service;
+	
+	@Autowired
+	private LearnerService lService;
 	
 	@Autowired
 	private CourseOfferingService offeringService;
@@ -51,6 +56,14 @@ public class ManagerController {
 	@PostMapping("/register")
 	public void addManager(@RequestBody Manager m) {
 		service.addManager(m);
+	}
+	
+	/*
+	 * UPDATE DETAILS OF MANAGER
+	 */
+	@PutMapping("/update")
+	public void updateManager(@RequestBody Manager manager) {
+		service.updateManager(manager);
 	}
 	
 	/*
@@ -106,11 +119,19 @@ public class ManagerController {
 	}
 	
 	/*
-	 * VIEW A TRAINER'S DETAILS 
+	 * VIEW A TRAINER's DETAILS, COURSES AND RESPECTIVE OFFERINGS TAKEN BY THE TRAINER 
 	 */
 	@GetMapping("/trainer/{id}")
 	public Map<String, Object> viewTrainerDetails(@PathVariable int id) {
 		return offeringService.viewTrainerDetails(id);
+	}
+	
+	/*
+	 * VIEW A COURSE's DETAILS, ITS OFFERINGS AND AVERAGE RATING OF THE TRAINER
+	 */
+	@GetMapping("/trainer/{id}/course/{course_id}")
+	public Map<String, Object> viewCourseDetails(@PathVariable int id, @PathVariable int course_id) {
+		return offeringService.viewCourseDetailsByTrainerId(id, course_id);
 	}
 	
 	/*
@@ -131,5 +152,25 @@ public class ManagerController {
 		Path file = Paths.get(System.getProperty("user.home"), "Downloads");
 		offeringService.generateExcelForScoreUpdate(file.toString());
 		System.out.println(file);
+	}
+	
+	/*
+	 * VIEW ALL COURSES ATTENDED BY LEARNER
+	 * RESPONSE BODY CONTAINS (LEARNER NAME,COURSE NAME,COURSE ID,LEARNER ID,PERCENTAGE AND STATUS)
+	 */
+	
+	@GetMapping("/course-attended/{id}")
+	public List<CourseAttended> viewCourseAttended(@PathVariable int id ){
+		return lService.viewCourseAttended(id);
+	}	
+
+	/*
+	 * VIEW A COURSE TO CHECK THE SCORE AND STATUS OF THE LEARNER
+	 */
+	
+	@GetMapping("/score-status/{id}/{courseId}")
+	public CourseAttended viewScoreAndStatus(@PathVariable int id, @PathVariable int courseId ){
+		return lService.viewScoreAndStatus(id,courseId);
+	
 	}
 }

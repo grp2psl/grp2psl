@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,35 +22,53 @@ import com.psl.service.TrainerService;
 
 @RestController
 @RequestMapping("/trainers")
+@CrossOrigin(origins="http://localhost:3000")
 public class TrainerController {
 	@Autowired
 	private TrainerService service;
-	
+	/*
+	 * GET DETAILS OF TRAINER BY ID
+	 */
 	@GetMapping("/{id}")
 	public Trainer getTrainer(@PathVariable int id) {
 		return service.getTrainer(id);
 	}
-	
-	@PostMapping("/register")
-	public void addTrainer(@RequestBody Trainer trainer) {
-		service.addTrainer(trainer);
-	}
 
-	@PostMapping("/register-multiple")
-	public void addMultipleTrainers(@RequestParam("file") MultipartFile csvFilePath ) throws IOException {
-		service.addMultipleTrainers(csvFilePath);
-	}
-	
+	/*
+	 * GET DETAILS OF ALL TRAINERS
+	 */
 	@GetMapping("/")
 	public List<Trainer> getAllTrainers(){
 		return service.getAllTrainers();
 	}
 	
+	/*
+	 * REGISTER TRAINER
+	 */
+	@PostMapping("/register")
+	public void addTrainer(@RequestBody Trainer trainer) {
+		service.addTrainer(trainer);
+	}
+
+	/*
+	 * REGISTER MULTIPLE TRAINERS BY UPLOADING EXCEL FILE
+	 */
+	@PostMapping("/register-multiple")
+	public void addMultipleTrainers(@RequestParam("file") MultipartFile csvFilePath ) throws IOException {
+		service.addMultipleTrainers(csvFilePath);
+	}
+	
+	/*
+	 * DELETE TRAINER BY ID
+	 */
 	@DeleteMapping("/{id}")
 	public void removeTrainer(@PathVariable int id) {
 		service.removeTrainer(id);
 	}
 
+	/*
+	 * DOWNLOAD FORMAT OF EXCEL SHEET FOR UPLOADING MULTIPLE TRAINERS
+	 */
 	@GetMapping("/generate-excel")
 	public void downloadFileFromLocal() throws IOException {
 		Path file = Paths.get(System.getProperty("user.home"), "Downloads");

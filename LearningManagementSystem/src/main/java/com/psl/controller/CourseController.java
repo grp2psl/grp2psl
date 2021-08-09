@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,25 +16,30 @@ import com.psl.service.CourseService;
 
 @RestController
 @RequestMapping("/course")
+@CrossOrigin(origins="http://localhost:3000")
 public class CourseController {
 	@Autowired
 	private CourseService service;
-	
-	@GetMapping("/")
-	public String home(){
-		return "home";
-	}
-	
+		
+	/*
+	 *VIEW ALL COURSES AVAILABLE
+	 */
 	@GetMapping("/allcourses")
     public List<Course> getCourse () {
         return service.findAll();
     }
 	
-	@GetMapping("/{id}")
-	public Course getCourse(@PathVariable int id) {
-		return service.getCourse(id);
+	/*
+	 *VIEW A COURSE BY COURSEID
+	 */
+	@GetMapping("/{courseId}")
+	public Course getCourse(@PathVariable int courseId) {
+		return service.getCourse(courseId);
 	}
 	
+	/*
+	 *ADDING A COURSE DETAILS
+	 */
 	@PostMapping("/addcourse")
 	public Course addCourse(@RequestBody Course course) {
 		return service.addCourse(course);

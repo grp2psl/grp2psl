@@ -11,5 +11,7 @@ import com.psl.entities.TeacherCourseMapping;
 public interface ITeacherCourseMappingDAO extends CrudRepository<TeacherCourseMapping, Integer>{
 
 	public List<TeacherCourseMapping> findByTrainerId(int id);
+	public List<TeacherCourseMapping> findByCourseId(int id);
+	public TeacherCourseMapping findByTrainerIdAndCourseId(int id, int courseid);
 	
 }
