@@ -3,6 +3,7 @@ package com.psl.controller;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -50,6 +51,14 @@ public class TeacherCourseMappingController {
 		Path file = Paths.get(System.getProperty("user.home"), "Downloads");
 		service.generateExcel(file.toString());
 		System.out.println(file);
+	}
+	
+	/*
+	 * GET TRAINER AND COURSE NAMES FOR ALL TRAINER-COURSE MAPPINGS
+	 */
+	@GetMapping("/trainer-course-names")
+	public List<Object> getAllTrainerCourseNames() {
+		return service.getAllTrainerCourseNames();
 	}
 
 }
