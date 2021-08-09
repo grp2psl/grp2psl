@@ -31,9 +31,9 @@ class EnrollLearner extends React.Component{
 			msg:"Processing.. Please Wait"
 		});
 		try {
-			let learnersList = await axios.get("http://localhost:8090/LearningManagementSystem/learners/")
+			let learnersList = await axios.get("http://localhost:8080/LearningManagementSystem/learners/")
             this.state.learners = learnersList.data;
-            let tcMappings = await axios.get("http://localhost:8090/LearningManagementSystem/teacherCourseMapping/trainer-course-names")
+            let tcMappings = await axios.get("http://localhost:8080/LearningManagementSystem/teacherCourseMapping/trainer-course-names")
 			this.state.tcMappings = tcMappings.data;
 		} catch(error) {
 			alert(error);
@@ -65,7 +65,7 @@ class EnrollLearner extends React.Component{
 			msg:"Processing.. Please Wait"
 		});
 		try{
-			const response = await axios.post("http://localhost:8090/LearningManagementSystem/managers/enroll-learner", courseOffering);
+			const response = await axios.post("http://localhost:8080/LearningManagementSystem/managers/enroll-learner", courseOffering);
 			if(response.data != null){
 	        	alert("Learner enrolled successfully");
 	            console.log(response.data);
