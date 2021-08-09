@@ -10,6 +10,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -44,9 +45,8 @@ public class TrainerService {
 		try {
 			dao.saveNewEntry(trainer.getTrainerid(), trainer.getName(), trainer.getDepartment(), trainer.getPhonenumber(), trainer.getEmail(), trainer.getPassword());
 			service.sendEmail("group2.learning.management.system@gmail.com", trainer.getEmail(), "Hi " + firstname +", \nYour password is "+password+"\nChange your password once you are logged in.", "Trainer registered successfully - learning management portal");	
-		}catch(Exception e) {
-			e.printStackTrace();
-			throw e;
+		}catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityViolationException("Duplicate email ID found for trainer with email ID: "+trainer.getEmail());
 		}
 	} 
 
@@ -66,6 +66,7 @@ public class TrainerService {
 	        trainer.setPhonenumber(row.getCell(2).getStringCellValue());
 	        trainer.setEmail(row.getCell(3).getStringCellValue());
 	        addTrainer(trainer);
+	        
 		}				
 	}
 	
