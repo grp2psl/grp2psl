@@ -2,11 +2,6 @@ import React from 'react';
 
 import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
 import axios from 'axios';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faEdit,
-    faTrash
-  } from "@fortawesome/free-solid-svg-icons";
 
 class CoursesOffered extends React.Component{
 	
@@ -17,7 +12,6 @@ class CoursesOffered extends React.Component{
             trainerDetails: [],
             courses: [],
             offerings: [],
-            id : 0,
             msg:""
         };
     }
@@ -81,15 +75,16 @@ class CoursesOffered extends React.Component{
                                         <Button
                                             size="sm"
                                             variant="outline-primary"
-                                        >
-                                            <FontAwesomeIcon icon={faEdit} />
-                                        </Button>{" "}
-                                        <Button
-                                            size="sm"
-                                            variant="outline-danger"
-                                        >
-                                            <FontAwesomeIcon icon={faTrash} />
-                                        </Button>
+                                            onClick={()=>{
+                                                this.props.history.push({
+                                                    pathname: "/viewFeedback",
+                                                    state: {
+                                                        courseId: course.courseid,
+                                                        trainerId: this.state.trainerDetails.trainerid
+                                                    },
+                                                })
+                                            }}
+                                        >View feedback and ratings</Button>
                                         </ButtonGroup>
                                     </td>
                                     </tr>
