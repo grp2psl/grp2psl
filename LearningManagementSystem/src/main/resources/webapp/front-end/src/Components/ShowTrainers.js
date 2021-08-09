@@ -100,6 +100,14 @@ class ShowTrainers extends React.Component{
                                         <Button
                                             size="sm"
                                             variant="outline-primary"
+                                            onClick={() => this.props.history.push({
+                                                pathname: "/viewCoursesOffered",
+                                                state: {id: trainer.trainerid}
+                                            })}
+                                        >Courses</Button>
+                                        <Button
+                                            size="sm"
+                                            variant="outline-primary"
                                             onClick={() => this.editDetails(trainer)}
                                         >
                                             <FontAwesomeIcon icon={faEdit} />
