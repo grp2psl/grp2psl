@@ -138,19 +138,7 @@ class Welcome extends React.Component{
 						        </Card.Body>
 						      </Card>
 						    </Col>
-						    <Col>
-						      <Card className="bg-light" style={cardStyle}>
-						        <Card.Body>
-						          <Card.Title>Assign Trainer</Card.Title>
-						          <Card.Text>
-						            Assign trainer(s) to a course
-						          </Card.Text>
-						          <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push("/");
-									}}>Go</Button>
-						        </Card.Body>
-						      </Card>
-						    </Col>
+						    
 						    <Col>
 						      <Card className="bg-light" style={cardStyle}>
 						        <Card.Body>
@@ -179,17 +167,7 @@ class Welcome extends React.Component{
 						      </Card>
 						    </Col>
 						    
-						    <Col>
-						      <Card className="bg-light" style={cardStyle}>
-						        <Card.Body>
-						          <Card.Title>View course attended</Card.Title>
-						          <Card.Text>
-						            View course attended  
-						          </Card.Text>
-						          <Button variant="primary" style={buttonStyle} onClick={this.viewCourseAttended}>Go</Button>
-						        </Card.Body>
-						      </Card>
-						    </Col>
+						    
 						    
 						</Row>
 						
