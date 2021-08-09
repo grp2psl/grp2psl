@@ -89,26 +89,26 @@ export default class TeacherCourseMappingRegister extends Component {
  
     return (
 	  <div className="mt-5">
-            <Card className={"border border-dark bg-dark text-white"}>
-                <Card.Header>Register Trainer</Card.Header>
+            <Card className={"border border-dark bg-dark"}>
+                <Card.Header className={"text-white"}>Register Trainer</Card.Header>
                 
       <form onSubmit={this.teacherCourseMapping}>
       <Card.Body>
             <Container>
                  <Row>
-        <label>
+        <label className={"text-white"}>
           Select Trainer :
           <div>
-        <Select options={this.state.trainerList} onChange={this.handleChangeTrainer.bind(this)} />
+        <Select className={"text-dark"} options={this.state.trainerList} onChange={this.handleChangeTrainer.bind(this)} />
     <p>You have selected <strong>{this.state.trainerName}</strong> whose id is <strong>{this.state.trainerId}</strong></p>
       </div>
         </label>
          </Row>
    		<Row>
-        <label>
+        <label className={"text-white"}>
           Select Course :
           <div>
-        <Select options={this.state.courseList} onChange={this.handleChangeCourse.bind(this)} />
+        <Select className={"text-dark"} options={this.state.courseList} onChange={this.handleChangeCourse.bind(this)} />
     <p>You have selected <strong>{this.state.courseName}</strong> whose id is <strong>{this.state.courseId}</strong></p>
       </div>
         </label>
