@@ -53,6 +53,13 @@ class ShowTrainers extends React.Component{
         this.showData();
     }
 
+    editDetails(trainer){
+        this.props.history.push({
+            pathname: '/editTrainerDetails',
+            state: { trainer: trainer}
+        });
+    }
+
     componentDidMount(){
         this.showData();
     }
@@ -93,7 +100,7 @@ class ShowTrainers extends React.Component{
                                         <Button
                                             size="sm"
                                             variant="outline-primary"
-
+                                            onClick={() => this.editDetails(trainer)}
                                         >
                                             <FontAwesomeIcon icon={faEdit} />
                                         </Button>{" "}

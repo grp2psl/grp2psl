@@ -17,6 +17,8 @@ import RegisterLearner from './Components/RegisterLearner';
 import RegisterLearners from './Components/RegisterLearners';
 import RegisterMultipleLearners from './Components/RegisterMultipleLearners';
 import ShowLearners from './Components/ShowLearners';
+import EditTrainerDetails from './Components/EditTrainerDetails';
+import EditLearnerDetails from './Components/EditLearnerDetails';
 import { Col, Container, Row } from 'react-bootstrap';
 
 function App() {
@@ -42,6 +44,8 @@ function App() {
               <Route path="/registerMultipleTrainers" exact component={RegisterMultipleTrainers}/>
               <Route path="/registerLearners" exact component={RegisterLearners}/>
               <Route path="/registerMultipleLearners" exact component={RegisterMultipleLearners}/>
+              <Route path="/editTrainerDetails" exact component={EditTrainerDetails}/>
+              <Route path="/editLearnerDetails" exact component={EditLearnerDetails}/>
           </Switch>
           </Col>
         </Row>

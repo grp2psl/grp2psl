@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.psl.entities.Learner;
+import com.psl.entities.Trainer;
 import com.psl.service.LearnerService;
 
 
@@ -83,6 +85,14 @@ public class LearnerController {
 	@DeleteMapping("/{id}")
 	public void removeLearner(@PathVariable int id) {
 		service.removeLearner(id);
+	}
+
+	/*
+	 * UPDATE LEARNER BY ID
+	 */
+	@PutMapping("/update")
+	public void updateLearner(@RequestBody Learner learner) {
+		service.updateLearner(learner);
 	}
 	
 	/*

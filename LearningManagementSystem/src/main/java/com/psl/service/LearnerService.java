@@ -19,6 +19,7 @@ import com.psl.dao.ICourseAttended;
 import com.psl.dao.ILearnerDAO;
 import com.psl.entities.CourseAttended;
 import com.psl.entities.Learner;
+import com.psl.entities.Trainer;
 import com.psl.utils.ExcelFields;
 import com.psl.utils.ExcelHelper;
 
@@ -114,6 +115,13 @@ public class LearnerService {
 		dao.deleteById(id);
 	}
 
+	/*
+	 * UPDATE LEARNER BY ID
+	 */
+	public void updateLearner(Learner learner) {
+		dao.updateEntry(learner.getDepartment(), learner.getPhonenumber(), learner.getLearnerid());
+	}
+	
 	/*
 	 * GET MAX ID OF LEARNER TABLE
 	 */

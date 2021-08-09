@@ -33,4 +33,13 @@ public interface ILearnerDAO extends CrudRepository<Learner,Integer>{
 	@Query(value="insert into learner(learnerid, name, department, phonenumber, email, password) values(?1, ?2, ?3, ?4, ?5, ?6)", nativeQuery=true)
 	public void saveNewEntry(@Param("id") int id, @Param("name") String name, @Param("department") String department, 
 			@Param("phoneNumber") String phoneNumber, @Param("email") String email, @Param("password") String password);
+
+	/*
+	 * CUSTOM QUERY TO UPDATE RECORD  
+	 */
+	@Transactional
+	@Modifying
+	@Query(value="update learner set department = ?1, phonenumber = ?2 where learnerid = ?3", nativeQuery=true)
+	public void updateEntry(@Param("department") String department, 
+			@Param("phoneNumber") String phoneNumber, @Param("id") int id);
 }

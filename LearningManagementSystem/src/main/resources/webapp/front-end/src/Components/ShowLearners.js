@@ -62,9 +62,14 @@ class ShowLearners extends React.Component{
            pathname: '/ShowCourseAttended',
            state: { detail: id }
        });
-
-          	//this.props.history.push("/ShowCourseAttended/:id")
     }
+    
+    editDetails(learner){
+        this.props.history.push({
+            pathname: '/editLearnerDetails',
+            state: { learner: learner }
+        });
+     }
     
     
 	
@@ -122,7 +127,7 @@ class ShowLearners extends React.Component{
                                         <Button
                                             size="sm"
                                             variant="outline-primary"
-
+                                            onClick={() => this.editDetails(learner)}
                                         >
                                             <FontAwesomeIcon icon={faEdit} />
                                         </Button>{" "}

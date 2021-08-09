@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -82,6 +83,14 @@ public class TrainerController {
 	public void removeTrainer(@PathVariable int id) {
 		service.removeTrainer(id);
 	}
+	
+	/*
+	 * UPDATE TRAINER BY ID
+	 */
+	@PutMapping("/update")
+	public void updateTrainer(@RequestBody Trainer trainer) {
+		service.updateTrainer(trainer);
+	}
 
 	/*
 	 * DOWNLOAD FORMAT OF EXCEL SHEET FOR UPLOADING MULTIPLE TRAINERS
@@ -92,4 +101,5 @@ public class TrainerController {
 		service.generateExcel(file.toString());
 		System.out.println(file);
 	}
+	
 }
