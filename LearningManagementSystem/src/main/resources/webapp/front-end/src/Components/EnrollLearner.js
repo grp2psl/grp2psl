@@ -27,7 +27,7 @@ class EnrollLearner extends React.Component{
 
 	async componentDidMount() {
 		try {
-			let learnersList = await axios.get("http://localhost:8090/LearningManagementSystem/learners/")
+			let learnersList = await axios.get("http://localhost:8080/LearningManagementSystem/learners/")
 			this.state.learners = learnersList.data;
 			console.log(this.state.learners);	
 		} catch(error) {

@@ -5,6 +5,8 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import NavigationBar from './Components/NavigationBar';
 import Welcome from './Components/Welcome';
 import EnrollLearner from './Components/EnrollLearner';
+import EnrollLearners from './Components/EnrollLearners';
+import EnrollMultipleLearners from './Components/EnrollMultipleLearners';
 import Register from './Components/RegisterTrainer';
 import RegisterTrainers from './Components/RegisterTrainers';
 import RegisterMultipleTrainers from './Components/RegisterMultipleTrainers';
@@ -29,7 +31,6 @@ function App() {
           <Col lg={12}>
           <Switch>
               <Route path="/" exact component={Welcome}/>
-              <Route path="/enroll" exact component={EnrollLearner}/>
               <Route path="/registerTrainer" exact component={Register}/>
               <Route path="/showTrainers" exact component={ShowTrainers}/>
               <Route path="/viewCourse" exact component={ViewCourses}/>
@@ -42,6 +43,9 @@ function App() {
               <Route path="/registerMultipleTrainers" exact component={RegisterMultipleTrainers}/>
               <Route path="/registerLearners" exact component={RegisterLearners}/>
               <Route path="/registerMultipleLearners" exact component={RegisterMultipleLearners}/>
+              <Route path="/enrollLearners" exact component={EnrollLearners}/>
+              <Route path="/enrollLearner" exact component={EnrollLearner}/>
+              <Route path="/enrollMultipleLearners" exact component={EnrollMultipleLearners}/>
           </Switch>
           </Col>
         </Row>
