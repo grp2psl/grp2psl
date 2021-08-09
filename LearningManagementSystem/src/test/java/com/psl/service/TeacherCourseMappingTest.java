@@ -37,7 +37,7 @@ public class TeacherCourseMappingTest {
 	@Test
 	@Order(1)
 	public void testAddTeacherCourseMapping() {
-		TeacherCourseMapping c=new TeacherCourseMapping(2,2,3);
+		TeacherCourseMapping c=new TeacherCourseMapping(4,2,6);
 	    service.addTeacherCourseMapping(c);
 	     
 	    TeacherCourseMapping tcmapping=service.getByTrainerIdAndCourseId(2,2);
