@@ -1,20 +1,11 @@
 package com.psl.service;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -39,7 +30,7 @@ public class TrainerService {
 	 */
 	public void addTrainer(Trainer trainer) {
 		Integer id = dao.getNextId();
-		id = (id==null ? 0 : id + 1);
+		id = (id==null ? 20000 : id);
 		Random rand = new Random();
         String firstname = trainer.getName();
 		try {
@@ -63,36 +54,18 @@ public class TrainerService {
 	 * ADD MULTIPLE TRAINERS
 	 */
 	public void addMultipleTrainers(MultipartFile csvFilePath) throws IOException {
-		Integer id = dao.getNextId();
-		id = (id==null ? 0 : id + 1);
 	    XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
 	    XSSFSheet worksheet = workbook.getSheetAt(0);
-		Random rand = new Random();
 	    
 	    for(int i=1;i<worksheet.getPhysicalNumberOfRows() ;i++) {
 	        Trainer trainer = new Trainer();
 	            
 	        XSSFRow row = worksheet.getRow(i);
-	        trainer.setTrainerid(id++);   
 	        trainer.setName(row.getCell(0).getStringCellValue());
 	        trainer.setDepartment(row.getCell(1).getStringCellValue());
 	        trainer.setPhonenumber(row.getCell(2).getStringCellValue());
 	        trainer.setEmail(row.getCell(3).getStringCellValue());
-	        String firstname = trainer.getName();
-			try {
-				firstname = firstname.substring(0, trainer.getName().indexOf(" "));
-			}catch(StringIndexOutOfBoundsException e) {
-				e.printStackTrace();
-			}
-			String password = firstname+trainer.getTrainerid()+"@"+rand.nextInt(9999);
-			trainer.setPassword(password);
-			try {
-				dao.saveNewEntry(trainer.getTrainerid(), trainer.getName(), trainer.getDepartment(), trainer.getPhonenumber(), trainer.getEmail(), trainer.getPassword());
-				service.sendEmail("group2.learning.management.system@gmail.com", trainer.getEmail(), "Hi " + firstname +", \nYour password is "+password+"\nChange your password once you are logged in.", "Trainer registered successfully - learning management portal");	
-			}catch(Exception e) {
-				e.printStackTrace();
-				throw e;
-			}
+	        addTrainer(trainer);
 		}				
 	}
 	
@@ -130,5 +103,14 @@ public class TrainerService {
 	 */
 	public void removeTrainer(int id) {
 		dao.deleteById(id);
+	}
+	
+	/*
+	 * GET MAX ID OF TRAINER TABLE
+	 */
+	public int getNextId() {
+		Integer id = dao.getNextId();
+		id = (id==null ? 20000 : id);
+		return id;
 	}
 }

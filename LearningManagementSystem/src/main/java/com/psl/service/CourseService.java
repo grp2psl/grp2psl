@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.psl.dao.ICourseDAO;
-import com.psl.dao.ICourseOfferingDAO;
 import com.psl.entities.Course;
 
 @Service("courseService")
@@ -14,11 +13,7 @@ public class CourseService {
 	
 	@Autowired
 	private ICourseDAO dao;
-
 	
-	@Autowired
-	private ICourseOfferingDAO offeringDao;
-		
 	/*
 	 *DISPLAY ALL COURSES
 	 */
@@ -31,7 +26,10 @@ public class CourseService {
 	 *ADD A COURSE DETAILS
 	 */
 	public Course addCourse(Course course) {
-	  return dao.save(course);		
+		Integer id = dao.getNextId();
+		id = (id==null ? 0 : id + 1);
+		course.setCourseid(id);
+	    return dao.save(course);		
 	}
 	
 	/*

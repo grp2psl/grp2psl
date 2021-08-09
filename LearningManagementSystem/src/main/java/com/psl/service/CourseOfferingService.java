@@ -1,7 +1,5 @@
 package com.psl.service;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,14 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -178,6 +169,20 @@ public class CourseOfferingService {
 	 */
 	public List<CourseOffering> viewCourseOfferings(){
 		return (List<CourseOffering>) dao.findAll();
+	}
+	
+	/*
+	 * GET MAX ID OF COURSE OFFERING TABLE
+	 */
+	public int getMaxId() {
+		return dao.getMaxId();
+	}
+	
+	/*
+	 * GET COURSE OFFERING BY ID
+	 */
+	public CourseOffering getCourseOffering(int id) {
+		return dao.findById(id).get();
 	}
 	
 	/*

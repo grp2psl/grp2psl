@@ -15,6 +15,9 @@ public class ManagerService {
 	 * ADD MANAGER
 	 */
 	public void addManager(Manager m) {
+		Integer id = dao.getNextId();
+		id = (id==null ? 30000 : id);
+		m.setManagerid(id);
 		dao.save(m);
 	}
 	
@@ -30,5 +33,11 @@ public class ManagerService {
 	 */
 	public void updateManager(Manager manager) {
 		dao.save(manager);
+	}
+
+	public int getNextId() {
+		Integer id = dao.getNextId();
+		id = (id==null ? 30000 : id);
+		return id;
 	}
 }
