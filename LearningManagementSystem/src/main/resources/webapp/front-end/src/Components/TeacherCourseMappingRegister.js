@@ -59,8 +59,8 @@ export default class TeacherCourseMappingRegister extends Component {
 	
 	event.preventDefault();
 	const trainerCourseMapping = {
-            trainerid: parseInt(this.state.trainerId,10),
-            courseid: parseInt(this.state.courseId,10)
+            trainerId: parseInt(this.state.trainerId,10),
+            courseId: parseInt(this.state.courseId,10)
         }
         console.log(trainerCourseMapping)
         console.log(typeof(this.state.trainerId))

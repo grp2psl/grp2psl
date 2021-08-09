@@ -2,7 +2,6 @@ import React from 'react';
 
 import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
 import CourseAttended from './CourseAttended';
-import {NavLink, Redirect} from "react-router-dom"
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,6 +17,7 @@ class ShowLearners extends React.Component{
             learners: [],
             msg:""
         };
+        
     }
     
     async showData(){
@@ -56,19 +56,21 @@ class ShowLearners extends React.Component{
         this.showData();
     }
     
-    async showCourse(id){
-		 <Router>
-                <Switch>
-                    <Route exact path='/ShowCourseAttended/:id' component={CourseAttended} />
-                </Switch>
-            </Router>
+    showCourse(id){
+       console.log(id);
+       this.props.history.push({
+           pathname: '/ShowCourseAttended',
+           state: { detail: id }
+       });
+
+          	//this.props.history.push("/ShowCourseAttended/:id")
     }
     
     
 	
     componentDidMount(){
         this.showData();
-         <CourseAttended learnerid="3" />
+         
     }
 
     render(){

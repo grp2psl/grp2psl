@@ -9,7 +9,9 @@ import {
   } from "@fortawesome/free-solid-svg-icons";
 
 class CourseAttended extends React.Component{
+	
     constructor(props){
+		
         super(props);
         this.state={
             courses: [],
@@ -18,13 +20,14 @@ class CourseAttended extends React.Component{
         };
     }
     
-    async showData(id){
+    async showData(){
+		
 		this.setState({
 			msg:"Processing.. Please Wait"
 		});
-		
+		const id = this.props.location.state.detail;
 		try{
-			const response = await axios.get("http://localhost:8080/LearningManagementSystem/managers/course-attended/{id}");
+			const response = await axios.get("http://localhost:8080/LearningManagementSystem/managers/course-attended/"+id);
 			if(response.data != null) {
 				this.setState({
 					courses: response.data
@@ -39,12 +42,13 @@ class CourseAttended extends React.Component{
     }
 
     componentDidMount(){
-		const { id } = this.props.match.params;
-        this.showData(id);
+		
+        this.showData();
     }
 
     render(){
         return(
+	
             <Card className={"border border-dark bg-dark text-white mt-5"}>
                 <Card.Header>Course Attended</Card.Header>
                 <h3 className="text-white mt-2">{this.state.msg}</h3>

@@ -155,7 +155,7 @@ public class LearnerServiceTest {
 	    
 	    for(int i=1;i<worksheet.getPhysicalNumberOfRows() ;i++) {
 	        Learner learner = service.getLearner(id++);	        
-	        assertNotNull(learner);
+	        assertNotNull(learner);	
 	        XSSFRow row = worksheet.getRow(i);
 	        assertThat(learner.getName()).isEqualTo(row.getCell(0).getStringCellValue());
 	        assertThat(learner.getDepartment()).isEqualTo(row.getCell(1).getStringCellValue());

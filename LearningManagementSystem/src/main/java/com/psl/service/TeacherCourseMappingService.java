@@ -39,6 +39,8 @@ public class TeacherCourseMappingService {
 	 *ADDING MULTIPLE TEACHER-COURSE MAPPING DETAILS FROM CSV FILE
 	 */
 	public void addMultipleTeacherCourseMapping(MultipartFile csvFilePath) throws IOException {
+		Integer id = dao.getNextId();
+		id = id==null ? 0 : id;
 		XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
 	    XSSFSheet worksheet = workbook.getSheetAt(0);
 	    
@@ -46,13 +48,22 @@ public class TeacherCourseMappingService {
 	        TeacherCourseMapping teacherCourseMapping = new TeacherCourseMapping();
 	            
 	        XSSFRow row = worksheet.getRow(i);
-	        teacherCourseMapping.setTcId((int)row.getCell(0).getNumericCellValue());
-	        teacherCourseMapping.setTrainerId((int)row.getCell(1).getNumericCellValue());
-	        teacherCourseMapping.setCourseId((int)row.getCell(2).getNumericCellValue());
-	        
+	        teacherCourseMapping.setTcId(++id);
+	        teacherCourseMapping.setTrainerId((int)row.getCell(0).getNumericCellValue());
+	        teacherCourseMapping.setCourseId((int)row.getCell(1).getNumericCellValue());
+	       // addTeacherCourseMapping(teacherCourseMapping);
 			dao.save(teacherCourseMapping);
 					
 	    }
+	}
+	
+	/*
+	 * GET MAX ID OF TeacherCourseMapping TABLE
+	 */
+	public int getNextId() {
+		Integer id = dao.getNextId();
+		id = (id==null ? 10000 : id);
+		return id;
 	}
 
 	/*
