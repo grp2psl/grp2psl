@@ -73,7 +73,7 @@ class EnrollLearner extends React.Component{
 		} catch(error) {
 			alert(error);
 		}
-        this.setState(this.initialState);
+        this.resetForm();
     }
 
     formChange(event){
