@@ -28,7 +28,7 @@ class RegisterMultipleLearners extends React.Component{
             showUpload: false
         };
         this.download = this.download.bind(this);
-        this.assignTrainers = this.assignTrainers.bind(this);
+        this.registerLearners = this.registerLearners.bind(this);
     }
     
     async download(){
@@ -55,7 +55,7 @@ class RegisterMultipleLearners extends React.Component{
       
     };
 
-    async assignTrainers(){
+    async registerLearners(){
         this.setState({
             showUpload: true
 		});
