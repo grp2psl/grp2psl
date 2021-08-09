@@ -16,6 +16,7 @@ import CourseRegister from './Components/CourseRegister';
 import TeacherCourseMappingRegister from './Components/TeacherCourseMappingRegister';
 import CourseAttended from './Components/CourseAttended';
 import CoursesOffered from './Components/CoursesOffered';
+import ViewFeedback from './Components/ViewFeedback';
 import RegisterLearner from './Components/RegisterLearner';
 import RegisterLearners from './Components/RegisterLearners';
 import RegisterMultipleLearners from './Components/RegisterMultipleLearners';
@@ -57,6 +58,7 @@ function App() {
               <Route path="/enrollLearner" exact component={EnrollLearner}/>
               <Route path="/enrollMultipleLearners" exact component={EnrollMultipleLearners}/>
               <Route path="/viewCoursesOffered" exact component={CoursesOffered} />
+              <Route path="/viewFeedback" exact component={ViewFeedback} />
               <Route path="/MultipleTeacherCourseMappingRegister" exact component={MultipleTeacherCourseMappingRegister}/>
               <Route path="/TeacherCourseMappingsRegister" exact component={TeacherCourseMappingsRegister}/>
 		      <Route path="/update-scores" exact component={UpdateScore}/>
