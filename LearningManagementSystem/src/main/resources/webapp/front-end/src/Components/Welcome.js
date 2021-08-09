@@ -37,8 +37,8 @@ class Welcome extends React.Component{
 			this.props.history.push("/TeacherCourseMappingRegister");
 		}
 		
-		viewCourseAttended = () => {
-			this.props.history.push("/ShowCourseAttended");
+		updateScores = () => {
+			this.props.history.push("/update-scores");
 			}
 
 		registerLearner = () => {
@@ -182,11 +182,11 @@ class Welcome extends React.Component{
 						    <Col>
 						      <Card className="bg-light" style={cardStyle}>
 						        <Card.Body>
-						          <Card.Title>View course attended</Card.Title>
+						          <Card.Title>Update Score</Card.Title>
 						          <Card.Text>
-						            View course attended  
+						            Update test scores of learners for courses attended  
 						          </Card.Text>
-						          <Button variant="primary" style={buttonStyle} onClick={this.viewCourseAttended}>Go</Button>
+						          <Button variant="primary" style={buttonStyle} onClick={this.updateScores}>Go</Button>
 						        </Card.Body>
 						      </Card>
 						    </Col>
