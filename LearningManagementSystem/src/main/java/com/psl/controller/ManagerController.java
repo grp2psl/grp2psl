@@ -191,4 +191,9 @@ public class ManagerController {
 			return new ResponseEntity<>("No such course offering exists.",HttpStatus.BAD_REQUEST);			
 		}
 	}
+	
+	@GetMapping("/viewCourseOfferingsDetails")
+	public List<Map<String, Object>> viewCourseOfferingsDetails() throws ParseException{
+		return offeringService.viewCourseOfferingsDetails();
+	}
 }
