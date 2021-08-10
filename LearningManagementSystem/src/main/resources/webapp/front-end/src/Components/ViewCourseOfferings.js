@@ -13,6 +13,22 @@ class ViewCourseOfferings extends React.Component{
             msg:""
         };
     }
+    
+    showLearnersCourse(id){
+        console.log(id);
+        this.props.history.push({
+            pathname: '/ShowCourseAttended',
+            state: { detail: id }
+        });
+    }
+
+    showTrainers(id){
+        console.log(id);
+        this.props.history.push({
+            pathname: '/viewCoursesOffered',
+            state: { id: id }
+        });
+    }
 
     formatDate(string){
         var options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -75,10 +91,14 @@ class ViewCourseOfferings extends React.Component{
                                     <tr key={courseOffering.offering.courseofferingid}>
                                     <td>{courseOffering.offering.courseofferingid}</td>
                                     <td>{courseOffering.learner.learnerid}</td>
-                                    <td>{courseOffering.learner.name}</td>
+                                    <td onClick={() => {
+										this.showLearnersCourse(courseOffering.learner.learnerid);
+									}}>{courseOffering.learner.name}</td>
                                     <td>{courseOffering.offering.tcid}</td>
-                                    <td>{courseOffering.trainer.name}</td>
-                                    <td>{courseOffering.course.coursename}</td>
+                                    <td onClick={() => {
+										this.showTrainers(courseOffering.trainer.trainerid);
+									}}>{courseOffering.trainer.name}</td>
+                                    <td><a href={courseOffering.course.syllabus} className="text-white"  style={{ textDecoration: 'none' }}>{courseOffering.course.coursename}</a></td>
                                     <td>{this.formatDate(courseOffering.offering.startdate)}</td>
                                     <td>{this.formatDate(courseOffering.offering.enddate)}</td>
                                     <td>{courseOffering.offering.percentage}</td>

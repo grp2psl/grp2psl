@@ -15,45 +15,6 @@ const buttonStyle={
 };
 
 class Welcome extends React.Component{
-
-		registerTrainer = () => {
-			this.props.history.push("/register");
-		}
-		
-		showTrainer = () => {
-			this.props.history.push("/show");
-		}
-		
-		registerCourse = () => {
-			this.props.history.push("/registerCourse");
-		}
-		
-		viewCourse = () => {
-			this.props.history.push("/viewCourse");
-		}
-		
-
-		teacherCourseMappingRegister = () => {
-			this.props.history.push("/TeacherCourseMappingRegister");
-		}
-		
-		updateScores = () => {
-			this.props.history.push("/update-scores");
-			}
-
-		registerLearner = () => {
-			this.props.history.push("/registerLearner");
-		}
-		
-		showLearner = () => {
-			this.props.history.push("/showLearners");
-		}
-		
-		viewCourseOfferings = () => {
-			this.props.history.push("/viewCourseOfferings");
-		}
-  
-
 	render(){
         return(
 			<div className="mt-5">
