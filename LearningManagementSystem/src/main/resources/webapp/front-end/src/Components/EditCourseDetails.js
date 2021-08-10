@@ -92,9 +92,9 @@ class EditCourseDetails extends React.Component{
                             </Col>
                             <Col>
                             <Form.Group className="mb-3" controlId="syllabus">
-                                <Form.Label>Syllabus</Form.Label>
+                                <Form.Label>Enter Syllabus URL</Form.Label>
                                 <Form.Control required autoComplete="off"
-                                    type="text" 
+                                    type="url" 
                                     value={this.state.syllabus}
                                     onChange={this.formChange}
                                     name="syllabus"

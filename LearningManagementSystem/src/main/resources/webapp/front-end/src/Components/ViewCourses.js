@@ -91,7 +91,7 @@ class ViewCourses extends React.Component{
                                     <td>{course.courseid}</td>
                                     <td>{course.coursename}</td>
                                     <td>{course.prerequisite}</td>
-                                    <td>{course.syllabus}</td>
+                                    <td>{<a href={course.syllabus}>Click here to see syllabus</a>}</td>
                                     <td>{course.duration}</td>
                                     <td>
                                         <ButtonGroup>
