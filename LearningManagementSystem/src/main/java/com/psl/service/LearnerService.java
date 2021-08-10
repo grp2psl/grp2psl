@@ -19,7 +19,6 @@ import com.psl.dao.ICourseAttended;
 import com.psl.dao.ILearnerDAO;
 import com.psl.entities.CourseAttended;
 import com.psl.entities.Learner;
-import com.psl.entities.Trainer;
 import com.psl.utils.ExcelFields;
 import com.psl.utils.ExcelHelper;
 

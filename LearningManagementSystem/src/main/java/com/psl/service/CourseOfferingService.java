@@ -235,29 +235,10 @@ public class CourseOfferingService {
 	public int findCourseOfferingIdByTcIdAndLearnerId(int tcId, int learnerId) {
 		return dao.findByTcIdAndLearnerId(tcId, learnerId).getCourseofferingid();
 	}
-	
-	public CourseOffering findCourseOfferingByTcIdAndLearnerId(int tcId, int learnerId) {
-		return dao.findByTcIdAndLearnerId(tcId, learnerId);
-	}
-	
-	public List<TeacherCourseMapping> findTeacherCourseMappingsByLearnerId(int learnerId) {
-		List<CourseOffering> courseOfferingList = dao.findByLearnerId(learnerId);
-		List<TeacherCourseMapping> list = new ArrayList<>();
-		for(CourseOffering co : courseOfferingList) {
-			list.add(tcService.getById(co.getTcid()));
-		}
-		return list;
-	}
 
-	public List<Learner> findLearnersByTcId(int tcId) {
-		List<CourseOffering> courseOfferingList = dao.findByTcId(tcId);
-		List<Learner> learners = new ArrayList<>();
-		for(CourseOffering co : courseOfferingList) {
-			learners.add(learnerService.getLearner(co.getLearnerid()));
-		}
-		return learners;
-	}
-	
+	/*
+	 * VIEW DETAILS OF COURSE OFFERINGS
+	 */	
 	public List<Map<String, Object>> viewCourseOfferingsDetails() throws ParseException {
 		List<Map<String, Object>> response = new ArrayList<Map<String,Object>>();
 		Map<String, Object> element;

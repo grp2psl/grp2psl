@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.psl.entities.Course;
-import com.psl.entities.Learner;
 import com.psl.service.CourseService;
 
 @RestController

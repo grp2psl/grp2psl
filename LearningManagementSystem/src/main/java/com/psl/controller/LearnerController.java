@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.psl.entities.Learner;
-import com.psl.entities.Trainer;
 import com.psl.service.LearnerService;
 
 

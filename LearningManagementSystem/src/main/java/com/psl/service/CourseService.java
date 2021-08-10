@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.psl.dao.ICourseDAO;
 import com.psl.entities.Course;
-import com.psl.entities.Trainer;
 
 @Service("courseService")
 public class CourseService {
