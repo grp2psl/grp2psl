@@ -1,6 +1,16 @@
 package com.psl.entities;
 
+/*
+ * Entity declaration of TeacherCoursesTaught
+ */
 
+
+
+
+// Stores courses taught by a teacher along with its rating. 
+// Not to be confused with TeacherCourseMapping which is an 
+// actual entity in DB and DOES NOT store feedback ratings 
+// of any course. This is sort of a temporary data storage class
 public class TeacherCoursesTaught {
 	
 	private int trainerId;

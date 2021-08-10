@@ -1,5 +1,11 @@
 package com.psl.controller;
 
+/*
+ * Defines TrainerController which handles various url requests 
+ * related to Learner.
+ */
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +23,10 @@ import com.psl.entities.TeacherCoursesTaught;
 import com.psl.entities.Trainer;
 import com.psl.service.TrainerService;
 
+/*Annotation to enable LearnerController to act as a RestController 
+ * Which handles all requests on url's having "/trainers" prefix
+ */
+
 @RestController
 @RequestMapping("/trainers")
 public class TrainerController {
@@ -32,9 +42,13 @@ public class TrainerController {
 	public void addTrainer(@RequestBody Trainer t) {
 		service.addTrainer(t);
 	}
-	
+
 	@GetMapping("/{id}/coursestaughtbytrainer")
 	public List<TeacherCoursesTaught> findCoursesTaughtByTrainer(@PathVariable int id) {
+
+	/*
+	 * Fetch Courses taught by trainer and feedback ratings merged and stored into TeacherCoursesTaught
+	*/
 		List<TeacherCourseMapping> l = service.findCoursesTaughtByTrainer(id);
 		List<TeacherCoursesTaught> tct = new ArrayList<>();
 		for (TeacherCourseMapping t: l) {
