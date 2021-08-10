@@ -23,6 +23,7 @@ import RegisterMultipleLearners from './Components/RegisterMultipleLearners';
 import ShowLearners from './Components/ShowLearners';
 import EditTrainerDetails from './Components/EditTrainerDetails';
 import EditLearnerDetails from './Components/EditLearnerDetails';
+import EditCourseDetails from './Components/EditCourseDetails';
 import UpdateScore from './Components/UpdateScore';
 import UpdateScoreIndividual from './Components/UpdateScoreIndividual';
 import UpdateScoreMultiple from './Components/UpdateScoreMultiple';
@@ -54,6 +55,7 @@ function App() {
               <Route path="/registerMultipleLearners" exact component={RegisterMultipleLearners}/>
               <Route path="/editTrainerDetails" exact component={EditTrainerDetails}/>
               <Route path="/editLearnerDetails" exact component={EditLearnerDetails}/>
+              <Route path="/editCourseDetails" exact component={EditCourseDetails}/>
               <Route path="/enrollLearners" exact component={EnrollLearners}/>
               <Route path="/enrollLearner" exact component={EnrollLearner}/>
               <Route path="/enrollMultipleLearners" exact component={EnrollMultipleLearners}/>

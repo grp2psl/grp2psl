@@ -35,6 +35,30 @@ class ViewCourses extends React.Component{
 			msg: ""
 		})
     }
+    
+     async deleteData(id){
+		this.setState({
+			msg:"Processing.. Please Wait",
+            show: true
+		});
+		try{
+            const response = await axios.delete("http://localhost:8080/LearningManagementSystem/course/delete/"+id);
+            console.log(response);
+		} catch(error) {
+			alert(error);
+		}
+        this.setState({
+			msg: ""
+		})
+        this.showData();
+    }
+    
+     editDetails(course){
+        this.props.history.push({
+            pathname: '/editCourseDetails',
+            state: { course: course }
+        });
+     }
 
     componentDidMount(){
         this.showData();
@@ -74,12 +98,14 @@ class ViewCourses extends React.Component{
                                         <Button
                                             size="sm"
                                             variant="outline-primary"
+                                            onClick={() => this.editDetails(course)}
                                         >
                                             <FontAwesomeIcon icon={faEdit} />
                                         </Button>{" "}
                                         <Button
                                             size="sm"
                                             variant="outline-danger"
+                                            onClick={() => this.deleteData(course.courseid)}
                                         >
                                             <FontAwesomeIcon icon={faTrash} />
                                         </Button>
