@@ -2,21 +2,16 @@ package com.psl.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
+import java.util.List;
 
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Order;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +19,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.psl.entities.Course;
-import com.psl.entities.Learner;
 import com.psl.entities.TeacherCourseMapping;
 
 @SpringBootTest
@@ -36,7 +29,7 @@ public class TeacherCourseMappingTest {
 	
 	@Test
 	@Order(1)
-	public void testAddTeacherCourseMapping() {
+	public void addTeacherCourseMappingTest() {
 		TeacherCourseMapping c=new TeacherCourseMapping(4,2,6);
 	    service.addTeacherCourseMapping(c);
 	     
@@ -50,7 +43,7 @@ public class TeacherCourseMappingTest {
 	 */
 	@Test
 	@Order(2)
-	public void AddMultipleTeacherCourseMappingTest() throws IOException, ParseException {
+	public void addMultipleTeacherCourseMappingTest() throws IOException, ParseException {
 		int id = service.getNextId();
 		Path path = Paths.get("teachercoursemapping.xlsx");
 		String name = "teachercoursemapping.xlsx";
@@ -62,5 +55,22 @@ public class TeacherCourseMappingTest {
 		                     originalFileName, contentType, content);
 		service.addMultipleTeacherCourseMapping(file);
 		assertThat(service.getNextId() > id);
+	}
+	
+	/*
+	 * TEST GET TRAINER AND COURSE NAMES FOR ALL TC MAPPINGS
+	 */
+	@Test
+	@Order(3)
+	public void getAllTrainerCourseNamesTest() {
+		List<Object> response = service.getAllTrainerCourseNames();
+		assertThat(response).size().isGreaterThan(0);
+		for(Object iterator: response) {
+			assertThat(iterator).hasFieldOrProperty("trainerName");
+			assertThat(iterator).hasFieldOrProperty("courseName");
+			assertThat(iterator).hasFieldOrProperty("trainerId");
+			assertThat(iterator).hasFieldOrProperty("courseId");
+			assertThat(iterator).hasFieldOrProperty("tcid");
+		}
 	}
 }
