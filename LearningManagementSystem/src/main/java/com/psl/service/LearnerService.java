@@ -18,9 +18,17 @@ public class LearnerService {
 	@Autowired
 	private ILearnerDAO dao;
 	
+	public ILearnerDAO getDao() {
+		return dao;
+	}
+
+	public void setDao(ILearnerDAO dao) {
+		this.dao = dao;
+	}
+
 	//Function which adds the learner to the table.
-	public void addLearner(Learner l) {
-		dao.save(l);
+	public Learner addLearner(Learner l) {
+		return dao.save(l);
 	} 
 	
 	//Function which retrieves learner from the table using learnerId.
@@ -29,10 +37,15 @@ public class LearnerService {
 	}
 	
 	//Function which updates credentials of a learner with given learnerId.
-	public void updateLearner(int id, String email, String password) {
+	public Learner updateLearner(int id, String email, String password) {
 	    Learner l = dao.findById(id).get();
 	    l.setEmail(email);
 	    l.setPassword(password);
-	    dao.save(l);
+	    return dao.save(l);
+	}
+	
+	//Function which removes a learner
+	public void deleterLearner(int id) {
+		dao.deleteById(id);
 	}
 }

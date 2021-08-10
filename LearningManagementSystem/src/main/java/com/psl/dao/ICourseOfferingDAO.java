@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import com.psl.entities.CourseOffering;
 import com.psl.entities.CourseOfferingId;
@@ -20,6 +21,7 @@ import com.psl.entities.CourseOfferingId;
  * CourseOffering is Entity Class on which CRUD operations are to be performed
  * CourseOfferingId is primary key Class of CourseOffering Class
  */
+@Repository
 public interface ICourseOfferingDAO extends CrudRepository<CourseOffering, CourseOfferingId>{
 	
 	//This function finds unique Course Offering and Learner Mapping using bpth tcId and learnerId
