@@ -44,7 +44,7 @@ class Register extends React.Component{
             phonenumber: this.state.phonenumber,
             email: this.state.email
         }
-        if(this.validateForm(trainer.phonenumber) == true){
+        if(this.validateForm(trainer.phonenumber) === true){
             this.setState({
                 msg:"Processing..\nPlease Wait"
             });

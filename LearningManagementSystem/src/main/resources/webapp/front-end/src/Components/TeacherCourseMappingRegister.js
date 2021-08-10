@@ -1,11 +1,10 @@
 import React, {Component } from 'react'
-import {Container, Row, Col, Card, Button, Form} from 'react-bootstrap';
+import {Container, Row, Card, Button, Form} from 'react-bootstrap';
 import Select from 'react-select'
 import axios from 'axios'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faSave,
-    faUndo
+    faSave
   } from "@fortawesome/free-solid-svg-icons";
 
 export default class TeacherCourseMappingRegister extends Component {

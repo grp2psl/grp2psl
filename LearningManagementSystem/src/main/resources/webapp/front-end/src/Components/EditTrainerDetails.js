@@ -48,7 +48,7 @@ class EditTrainerDetails extends React.Component{
         }
         console.log(trainer)
         console.log(this.initialState)
-        if(this.validateForm(trainer.phonenumber) == true){
+        if(this.validateForm(trainer.phonenumber) === true){
             this.setState({
                 msg:"Processing..\nPlease Wait"
             });

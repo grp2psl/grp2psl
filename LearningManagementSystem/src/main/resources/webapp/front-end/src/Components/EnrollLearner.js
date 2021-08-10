@@ -95,7 +95,7 @@ class EnrollLearner extends React.Component{
                             <Col>
                                 <Form.Label>Learner</Form.Label>
                                 <Form.Select
-                                isInvalid={this.state.learnerid == 0}
+                                isInvalid={this.state.learnerid === 0}
                                 value={this.state.learnerid}
                                 onChange={(e)=>{
                                     if(e.isInvalid) {
@@ -114,7 +114,7 @@ class EnrollLearner extends React.Component{
                             <Col>
                                 <Form.Label>Trainer-Course</Form.Label>
                                 <Form.Select 
-                                isInvalid={this.state.tcid == 0}
+                                isInvalid={this.state.tcid === 0}
                                 value={this.state.tcid}
                                 onChange={(e)=>{
                                     if(e.isInvalid) {

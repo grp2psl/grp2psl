@@ -1,8 +1,6 @@
 import React from 'react';
 
 import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
-import CourseAttended from './CourseAttended';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

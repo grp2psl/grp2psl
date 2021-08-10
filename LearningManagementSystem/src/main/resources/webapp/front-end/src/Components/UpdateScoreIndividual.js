@@ -58,7 +58,7 @@ class UpdateScoreIndividual extends React.Component{
 			msg:"Processing.. Please Wait"
 		});
 		try{
-            const params = JSON.stringify({ tcId: this.state.tcid,  learnerId: this.state.learnerid, percentage: this.state.percentage});
+            //const params = JSON.stringify({ tcId: this.state.tcid,  learnerId: this.state.learnerid, percentage: this.state.percentage});
             const response = await axios.put("http://localhost:8080/LearningManagementSystem/managers/update-test-score?tcId="+this.state.tcid+"&learnerId="+this.state.learnerid+"&percentage="+this.state.percentage);
 			// const response = await axios({
             //     method: 'PUT',
