@@ -100,6 +100,19 @@ class Welcome extends React.Component{
 						        </Card.Body>
 						      </Card>
 						    </Col>
+							<Col>
+						      <Card className="bg-light" style={cardStyle}>
+						        <Card.Body>
+						          <Card.Title>View Learners</Card.Title>
+						          <Card.Text>
+						            View learners and their course details
+						          </Card.Text>
+						          <Button variant="primary" style={buttonStyle} onClick={() => {
+										this.props.history.push("/showLearners");
+									}}>Go</Button>
+						        </Card.Body>
+						      </Card>
+						    </Col>
 						    <Col>
 						      <Card className="bg-light" style={cardStyle}>
 						        <Card.Body>
@@ -109,19 +122,6 @@ class Welcome extends React.Component{
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
 										this.props.history.push("/enrollLearners");
-									}}>Go</Button>
-						        </Card.Body>
-						      </Card>
-						    </Col>
-						    <Col>
-						      <Card className="bg-light" style={cardStyle}>
-						        <Card.Body>
-						          <Card.Title>View Learners</Card.Title>
-						          <Card.Text>
-						            View learners and their course details
-						          </Card.Text>
-						          <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push("/showLearners");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>
@@ -180,7 +180,9 @@ class Welcome extends React.Component{
 						          <Card.Text>
 						            Update test scores of learners for courses attended  
 						          </Card.Text>
-								  <Button variant="primary" style={buttonStyle} onClick={this.updateScores}>Go</Button>
+								  <Button variant="primary" style={buttonStyle} onClick={()=>{
+									  this.props.history.push("/update-scores");
+								  }}>Go</Button>
 						        </Card.Body>
 						      </Card>
 						    </Col>
