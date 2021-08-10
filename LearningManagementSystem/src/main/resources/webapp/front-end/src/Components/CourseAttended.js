@@ -78,22 +78,6 @@ class CourseAttended extends React.Component{
                                     <td>{course.learnerid}</td>
                                     <td>{course.percentage}</td>
                                     <td>{course.status}</td>
-                                    <td>
-                                        <ButtonGroup>
-                                        <Button
-                                            size="sm"
-                                            variant="outline-primary"
-                                        >
-                                            <FontAwesomeIcon icon={faEdit} />
-                                        </Button>{" "}
-                                        <Button
-                                            size="sm"
-                                            variant="outline-danger"
-                                        >
-                                            <FontAwesomeIcon icon={faTrash} />
-                                        </Button>
-                                        </ButtonGroup>
-                                    </td>
                                     </tr>
                                 ))
                                 )}
