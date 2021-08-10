@@ -1,6 +1,7 @@
 package com.psl.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
@@ -183,5 +184,16 @@ public class CourseOfferingServiceTest {
 		basePath = new File(basePath).getParent();
 		assertTrue(readFile.exists());
 		assertThat(readFile.length()).isGreaterThan(0);
+	}
+	
+	/*
+	 * TEST VIEW DETAILS OF COURSE OFFERINGS
+	 */
+	@Test
+	@Order(11)
+	public void viewCourseOfferingsDetailsTest() throws ParseException {
+		List<Map<String, Object>> list = service.viewCourseOfferingsDetails();
+		assertNotNull(list);
+		assertThat(list.size()).isGreaterThan(0);		
 	}
 }
