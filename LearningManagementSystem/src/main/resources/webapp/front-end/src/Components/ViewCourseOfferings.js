@@ -2,6 +2,10 @@ import React from 'react';
 
 import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
 import axios from 'axios';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faTrash
+  } from "@fortawesome/free-solid-svg-icons";
 
 class ViewCourseOfferings extends React.Component{
 	
@@ -54,6 +58,23 @@ class ViewCourseOfferings extends React.Component{
 			msg: ""
 		})
     }
+    
+    async deleteData(id){
+		this.setState({
+			msg:"Processing.. Please Wait",
+            show: true
+		});
+		try{
+            const response = await axios.delete("http://localhost:8080/LearningManagementSystem/managers/course-offering/"+id);
+            console.log(response);
+		} catch(error) {
+			alert(error);
+		}
+        this.setState({
+			msg: ""
+		})
+        this.showData();
+    }
 
     componentDidMount(){
 		
@@ -103,6 +124,17 @@ class ViewCourseOfferings extends React.Component{
                                     <td>{this.formatDate(courseOffering.offering.enddate)}</td>
                                     <td>{courseOffering.offering.percentage}</td>
                                     <td>{courseOffering.offering.status}</td>
+                                    <td>
+                                        <ButtonGroup>
+                                        <Button
+                                            size="sm"
+                                            variant="outline-danger"
+                                            onClick={() => this.deleteData(courseOffering.offering.courseofferingid)}
+                                        >
+                                            <FontAwesomeIcon icon={faTrash} />
+                                        </Button>
+                                        </ButtonGroup>
+                                    </td>
                                     </tr>
                                 ))
                                 )}
