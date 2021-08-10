@@ -63,7 +63,7 @@ class ViewCourseOfferings extends React.Component{
     render(){
         return(
             <Card className={"border border-dark bg-dark text-white mt-5"}>
-                <Card.Header>Trainers</Card.Header>
+                <Card.Header>View Course Offerings</Card.Header>
                 <h3 className="text-white mt-2">{this.state.msg}</h3>
                 <Card.Body>
                     <Table striped bordered hover variant="dark">
