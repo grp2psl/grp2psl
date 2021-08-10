@@ -16,6 +16,11 @@ class ViewFeedback extends React.Component{
             msg:""
         };
     }
+
+    formatDate(string){
+        var options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(string).toLocaleDateString([],options);
+    }
     
     async showData(){
 		
@@ -85,8 +90,8 @@ class ViewFeedback extends React.Component{
                                 ) : (
                                 this.state.offerings.map((offering) => (
                                     <tr key={offering.courseofferingid}>
-                                    <td>{offering.startdate}</td>
-                                    <td>{offering.enddate}</td>
+                                    <td>{this.formatDate(offering.startdate)}</td>
+                                    <td>{this.formatDate(offering.enddate)}</td>
                                     <td>{offering.feedback}</td>
                                     <td>
                                         <ReactStars
