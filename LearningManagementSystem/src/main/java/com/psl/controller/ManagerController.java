@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,8 +24,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.psl.entities.CourseAttended;
 import com.psl.entities.CourseOffering;
+import com.psl.entities.Learner;
 import com.psl.entities.Manager;
-
+import com.psl.entities.TeacherCourseMapping;
 import com.psl.service.CourseOfferingService;
 import com.psl.service.LearnerService;
 import com.psl.service.ManagerService;
@@ -179,18 +182,13 @@ public class ManagerController {
 	 * REQUEST BODY CONTENTS : {percentage}
 	 */
 	@PutMapping("/update-test-score")
-	public void updateTestScoreByCourseOfferingId(@RequestParam(value="tcId") int tcId, @RequestParam(value="learnerId") int learnerId, @RequestParam(value="percentage") int percentage) {
-		int id = offeringService.findCoIdByTcIdAndLearnerId(tcId, learnerId);
-		offeringService.updateTestScore(id, percentage);
-	}
-	
-	@GetMapping("/getCourseOfferingId")
-	public int getCourseOfferingId(@RequestParam int tcId, @RequestParam int learnerId) {
-		return offeringService.findCoIdByTcIdAndLearnerId(tcId, learnerId);
-	}
-
-	@GetMapping("/getCourseOffering")
-	public List<CourseOffering> getCourseOffering(@RequestParam int learnerId) {
-		return offeringService.findCoByLearnerId(learnerId);
+	public ResponseEntity<String> updateTestScoreByCourseOfferingId(@RequestParam(value="tcId") int tcId, @RequestParam(value="learnerId") int learnerId, @RequestParam(value="percentage") int percentage) {
+		try {
+			int id = offeringService.findCourseOfferingIdByTcIdAndLearnerId(tcId, learnerId);
+			offeringService.updateTestScore(id, percentage);
+			return new ResponseEntity<>("Score updated successfully",HttpStatus.OK);
+		}catch(NullPointerException e) {
+			return new ResponseEntity<>("No such course offering exists.",HttpStatus.BAD_REQUEST);			
+		}
 	}
 }

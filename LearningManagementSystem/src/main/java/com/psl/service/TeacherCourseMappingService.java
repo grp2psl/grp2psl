@@ -149,4 +149,8 @@ public class TeacherCourseMappingService {
 		}
 		return courses;
 	}
+	
+	public TeacherCourseMapping getById(int id) {
+		return dao.findById(id).get();
+	}
 }

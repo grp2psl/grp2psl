@@ -232,15 +232,29 @@ public class CourseOfferingService {
 		return response;
 	}
 	
-	public int findCoIdByTcIdAndLearnerId(int tcId, int learnerId) {
+	public int findCourseOfferingIdByTcIdAndLearnerId(int tcId, int learnerId) {
 		return dao.findByTcIdAndLearnerId(tcId, learnerId).getCourseofferingid();
 	}
 	
-	public CourseOffering findCoByTcIdAndLearnerId(int tcId, int learnerId) {
+	public CourseOffering findCourseOfferingByTcIdAndLearnerId(int tcId, int learnerId) {
 		return dao.findByTcIdAndLearnerId(tcId, learnerId);
 	}
 	
-	public List<CourseOffering> findCoByLearnerId(int learnerId) {
-		return dao.findByLearnerId(learnerId);
+	public List<TeacherCourseMapping> findTeacherCourseMappingsByLearnerId(int learnerId) {
+		List<CourseOffering> courseOfferingList = dao.findByLearnerId(learnerId);
+		List<TeacherCourseMapping> list = new ArrayList<>();
+		for(CourseOffering co : courseOfferingList) {
+			list.add(tcService.getById(co.getTcid()));
+		}
+		return list;
+	}
+
+	public List<Learner> findLearnersByTcId(int tcId) {
+		List<CourseOffering> courseOfferingList = dao.findByTcId(tcId);
+		List<Learner> learners = new ArrayList<>();
+		for(CourseOffering co : courseOfferingList) {
+			learners.add(learnerService.getLearner(co.getLearnerid()));
+		}
+		return learners;
 	}
 }

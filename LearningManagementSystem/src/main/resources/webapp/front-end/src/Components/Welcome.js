@@ -48,7 +48,10 @@ class Welcome extends React.Component{
 		showLearner = () => {
 			this.props.history.push("/showLearners");
 		}
-	
+		
+		viewCourseOfferings = () => {
+			this.props.history.push("/viewCourseOfferings");
+		}
   
 
 	render(){
@@ -189,7 +192,7 @@ class Welcome extends React.Component{
 						            View all the course offerings
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push("/viewCourse");
+										this.props.history.push("/viewCourseOfferings");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>

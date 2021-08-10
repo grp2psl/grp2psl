@@ -58,23 +58,14 @@ class UpdateScoreIndividual extends React.Component{
 			msg:"Processing.. Please Wait"
 		});
 		try{
-            const params = JSON.stringify({ tcId: this.state.tcid,  learnerId: this.state.learnerid, percentage: this.state.percentage});
             const response = await axios.put("http://localhost:8080/LearningManagementSystem/managers/update-test-score?tcId="+this.state.tcid+"&learnerId="+this.state.learnerid+"&percentage="+this.state.percentage);
-			// const response = await axios({
-            //     method: 'PUT',
-            //     url: 'http://localhost:8080/LearningManagementSystem/managers/update-test-score',
-            //     data: {
-            //         tcId: this.state.tcid,
-            //         learnerId: this.state.learnerid,
-            //         percentage: this.state.percentage
-            //     }
-            //   })
+			
             if(response.data != null){
 	        	alert("Score updated successfully");
 	            console.log(response.data);
         	}	
 		} catch(error) {
-			alert(error);
+			alert(error.response.data);
 		}
         this.resetForm();
     }
@@ -83,18 +74,6 @@ class UpdateScoreIndividual extends React.Component{
         this.setState({
             [event.target.name]:event.target.value
         });        
-        // if(this.state.learners.length > 0){
-        //     const response = axios({
-        //         method: 'GET',
-        //         url: 'http://localhost:8080/LearningManagementSystem/managers/getCourseOffering',
-        //         data: {
-        //             learnerId: this.state.learnerid
-        //         }
-        //     })
-        //     this.setState({
-        //         tcMappings: response.data
-        //     })
-        // }
     }
 
     render(){

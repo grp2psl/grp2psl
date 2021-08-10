@@ -26,6 +26,7 @@ import EditLearnerDetails from './Components/EditLearnerDetails';
 import UpdateScore from './Components/UpdateScore';
 import UpdateScoreIndividual from './Components/UpdateScoreIndividual';
 import UpdateScoreMultiple from './Components/UpdateScoreMultiple';
+import ViewCourseOfferings from './Components/ViewCourseOfferings';
 import { Col, Container, Row } from 'react-bootstrap';
 import MultipleTeacherCourseMappingRegister from './Components/MultipleTeacherCourseMappingRegister';
 import TeacherCourseMappingsRegister from './Components/TeacherCourseMappingsRegister';
@@ -64,7 +65,7 @@ function App() {
 		      <Route path="/update-scores" exact component={UpdateScore}/>
               <Route path="/update-score" exact component={UpdateScoreIndividual}/>
               <Route path="/update-score-multiple" exact component={UpdateScoreMultiple}/>
-
+              <Route path="/viewCourseOfferings" exact component={ViewCourseOfferings}/>
           </Switch>
           </Col>
         </Row>
