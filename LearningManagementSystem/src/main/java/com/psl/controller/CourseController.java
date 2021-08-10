@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.psl.entities.Course;
+import com.psl.entities.Learner;
 import com.psl.service.CourseService;
 
 @RestController
@@ -43,6 +46,22 @@ public class CourseController {
 	@PostMapping("/addcourse")
 	public Course addCourse(@RequestBody Course course) {
 		return service.addCourse(course);
+	}
+	
+	/*
+	 * DELETE COURSE BY ID
+	 */
+	@DeleteMapping("/delete/{courseid}")
+	public void removeCourse(@PathVariable int courseid) {
+		service.removeCourse(courseid);
+	}
+
+	/*
+	 * UPDATE COURSE BY ID
+	 */
+	@PutMapping("/update")
+	public void updateCourse(@RequestBody Course course) {
+		service.updateCourse(course);
 	}
 	
 }
