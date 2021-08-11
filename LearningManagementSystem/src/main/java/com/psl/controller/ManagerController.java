@@ -194,4 +194,8 @@ public class ManagerController {
 	public List<Map<String, Object>> viewCourseOfferingsDetails() throws ParseException{
 		return offeringService.viewCourseOfferingsDetails();
 	}
+	@GetMapping("/courses-attended/{id}")
+	public List<Map<String, Object>> viewCoursesAttended(@PathVariable int id ) throws ParseException{
+		return offeringService.viewCourseOfferingsDetailsByLearnerId(id);
+	}	
 }
