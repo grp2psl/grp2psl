@@ -29,6 +29,7 @@ class CourseAttended extends React.Component{
 		try{
 			const response = await axios.get("http://localhost:8080/LearningManagementSystem/managers/course-attended/"+id);
 			if(response.data != null) {
+				console.log(response.data)
 				this.setState({
 					courses: response.data
 				});	
@@ -56,10 +57,11 @@ class CourseAttended extends React.Component{
                     <Table striped bordered hover variant="dark">
                         <thead>
                             <tr>
+                            	<th>Learner ID</th>
                                 <th>Learner Name</th>
                                 <th>Course ID</th>
                                 <th>Course Name</th>
-                                <th>Learner ID</th>
+                                <th>Trainer Name</th>
                                 <th>Percentage</th>
                                 <th>Status</th>
                             </tr>
@@ -72,10 +74,11 @@ class CourseAttended extends React.Component{
                                 ) : (
                                 this.state.courses.map((course) => (
                                     <tr key={course.learnerid}>
+                                    <td>{course.learnerid}</td>
                                     <td>{course.name}</td>
                                     <td>{course.courseid}</td>
                                     <td>{course.coursename}</td>
-                                    <td>{course.learnerid}</td>
+                                    <td>{course.trainername}</td>
                                     <td>{course.percentage}</td>
                                     <td>{course.status}</td>
                                     </tr>

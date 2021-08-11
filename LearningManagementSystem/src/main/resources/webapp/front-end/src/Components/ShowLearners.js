@@ -55,7 +55,6 @@ class ShowLearners extends React.Component{
     }
     
     showCourse(id){
-       console.log(id);
        this.props.history.push({
            pathname: '/ShowCourseAttended',
            state: { detail: id }
