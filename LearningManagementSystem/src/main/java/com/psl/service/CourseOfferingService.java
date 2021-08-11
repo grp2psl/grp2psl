@@ -273,4 +273,28 @@ public class CourseOfferingService {
 		}
 		return response;
 	}
+
+	/*
+	 * FIND TEACHER-COURSE MAPPINGS BY LEARNER ID
+	 */	
+	public List<TeacherCourseMapping> findTeacherCourseMappingsByLearnerId(int learnerId) {
+		List<CourseOffering> courseOfferingList = dao.findByLearnerId(learnerId);
+		List<TeacherCourseMapping> list = new ArrayList<>();
+		for(CourseOffering co : courseOfferingList) {
+			list.add(tcService.getById(co.getTcid()));
+		}
+		return list;
+	}
+
+	/*
+	 * FIND LEARNERS BY TCID
+	 */	
+	public List<Learner> findLearnersByTcId(int tcId) {
+		List<CourseOffering> courseOfferingList = dao.findByTcId(tcId);
+		List<Learner> learners = new ArrayList<>();
+		for(CourseOffering co : courseOfferingList) {
+			learners.add(learnerService.getLearner(co.getLearnerid()));
+		}
+		return learners;
+	}
 }
