@@ -14,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.psl.dao.ICourseOfferingDAO;
 import com.psl.dao.ITeacherCourseMappingDAO;
 import com.psl.entities.Course;
+import com.psl.entities.CourseOffering;
 import com.psl.entities.TeacherCourseMapping;
 import com.psl.utils.ExcelFields;
 import com.psl.utils.ExcelHelper;
@@ -26,6 +28,9 @@ public class TeacherCourseMappingService {
 	
 	@Autowired
 	private ITeacherCourseMappingDAO dao;
+	
+	@Autowired
+	private ICourseOfferingDAO COdao;
 	
 	@Autowired
 	private CourseService courseService;
@@ -136,6 +141,20 @@ public class TeacherCourseMappingService {
 	 */
 	public TeacherCourseMapping getByTrainerIdAndCourseId(int id, int courseid) {
 		return dao.findByTrainerIdAndCourseId(id, courseid);
+	}
+	
+	public List<CourseOffering> getCourseOffering(int id, int courseid) {
+		List<CourseOffering> courseOffering = new ArrayList<>();
+		CourseOffering cOffering= new CourseOffering();
+		List<TeacherCourseMapping> list = dao.findByCourseId(courseid);
+		for(TeacherCourseMapping tc: list) {
+			cOffering = COdao.findByTcIdAndLearnerId(tc.getTcId(),id);
+			if(cOffering!= null) {
+				courseOffering.add(cOffering);
+			}
+			
+		}
+		return courseOffering;
 	}
 	
 	/*

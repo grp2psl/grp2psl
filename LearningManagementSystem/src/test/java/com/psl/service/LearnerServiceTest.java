@@ -49,14 +49,14 @@ public class LearnerServiceTest {
 		 }
 	}
 	
-	@Test
-	@Order(2)
-	public void ScoreStatusTest() {
-		 CourseAttended course = (CourseAttended) service.viewScoreAndStatus(2,2);
-		 assertThat(course.getLearnerid()).isEqualTo(2);
-		 assertThat(course.getCourseid()).isEqualTo(2);
-		 
-	}
+//	@Test
+//	@Order(2)
+//	public void ScoreStatusTest() {
+//		 CourseAttended course = (CourseAttended) service.viewScoreAndStatus(2,2);
+//		 assertThat(course.getLearnerid()).isEqualTo(2);
+//		 assertThat(course.getCourseid()).isEqualTo(2);
+//		 
+//	}
 
 	/*
 	 * TEST ADD LEARNER

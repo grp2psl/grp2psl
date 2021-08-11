@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.psl.entities.CourseAttended;
+
 import com.psl.entities.CourseOffering;
 import com.psl.entities.Manager;
 import com.psl.service.CourseOfferingService;
@@ -160,7 +160,7 @@ public class ManagerController {
 	 */
 	
 	@GetMapping("/course-attended/{id}")
-	public List<CourseAttended> viewCourseAttended(@PathVariable int id ){
+	public Map<String, Object> viewCourseAttended(@PathVariable int id ){
 		System.out.println(id);
 		return lService.viewCourseAttended(id);
 	}	
@@ -169,11 +169,11 @@ public class ManagerController {
 	 * VIEW A COURSE TO CHECK THE SCORE AND STATUS OF THE LEARNER
 	 */
 	
-	@GetMapping("/score-status/{id}/{courseId}")
-	public CourseAttended viewScoreAndStatus(@PathVariable int id, @PathVariable int courseId ){
-		return lService.viewScoreAndStatus(id,courseId);
-	
-	}
+//	@GetMapping("/score-status/{id}/{courseId}")
+//	public Map<String, Object> viewScoreAndStatus(@PathVariable int id, @PathVariable int courseId ){
+//		return lService.viewScoreAndStatus(id,courseId);
+//	
+//	}
 
 	/*
 	 * UPDATE AN INDIVIDUAL TEST SCORE

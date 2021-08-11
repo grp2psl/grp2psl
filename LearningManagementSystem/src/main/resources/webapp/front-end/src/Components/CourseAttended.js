@@ -14,8 +14,10 @@ class CourseAttended extends React.Component{
 		
         super(props);
         this.state={
+            trainers: [],
             courses: [],
-            id : 0,
+            offerings: [],
+            learner: null,
             msg:""
         };
     }
@@ -29,9 +31,13 @@ class CourseAttended extends React.Component{
 		try{
 			const response = await axios.get("http://localhost:8080/LearningManagementSystem/managers/course-attended/"+id);
 			if(response.data != null) {
-				console.log(response.data)
+				console.log(response.data.courses)
 				this.setState({
-					courses: response.data
+					
+					courses: response.data.courses,
+					 trainers: response.data.trainers,
+                    learner: response.data.learners,
+                    offerings: response.data.offerings   
 				});	
 			}	
 		} catch(error) {
@@ -57,13 +63,10 @@ class CourseAttended extends React.Component{
                     <Table striped bordered hover variant="dark">
                         <thead>
                             <tr>
-                            	<th>Learner ID</th>
-                                <th>Learner Name</th>
+                            	
                                 <th>Course ID</th>
                                 <th>Course Name</th>
-                                <th>Trainer Name</th>
-                                <th>Percentage</th>
-                                <th>Status</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -73,14 +76,27 @@ class CourseAttended extends React.Component{
                                 </tr>
                                 ) : (
                                 this.state.courses.map((course) => (
-                                    <tr key={course.learnerid}>
-                                    <td>{course.learnerid}</td>
-                                    <td>{course.name}</td>
+                                    <tr key={course.courseid}>
+                                
                                     <td>{course.courseid}</td>
                                     <td>{course.coursename}</td>
-                                    <td>{course.trainername}</td>
-                                    <td>{course.percentage}</td>
-                                    <td>{course.status}</td>
+                                    <td>
+                                        <ButtonGroup>
+                                        <Button
+                                            size="sm"
+                                            variant="outline-primary"
+                                            onClick={()=>{
+                                                this.props.history.push({
+                                                    pathname: "/viewScoreAndStatus",
+                                                    state: {
+                                                        courseId: course.courseid,
+                                                        learnerId: this.state.learner.learnerid
+                                                    },
+                                                })
+                                            }}
+                                        >View Score and Status</Button>
+                                        </ButtonGroup>
+                                    </td>
                                     </tr>
                                 ))
                                 )}

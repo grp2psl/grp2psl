@@ -2,8 +2,9 @@ package com.psl.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -15,10 +16,18 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.psl.dao.ICourseAttended;
+
+import com.psl.dao.ICourseDAO;
+import com.psl.dao.ICourseOfferingDAO;
 import com.psl.dao.ILearnerDAO;
-import com.psl.entities.CourseAttended;
+import com.psl.dao.ITeacherCourseMappingDAO;
+import com.psl.dao.ITrainerDAO;
+import com.psl.entities.Course;
+
+import com.psl.entities.CourseOffering;
 import com.psl.entities.Learner;
+import com.psl.entities.TeacherCourseMapping;
+import com.psl.entities.Trainer;
 import com.psl.utils.ExcelFields;
 import com.psl.utils.ExcelHelper;
 
@@ -28,11 +37,23 @@ public class LearnerService {
 	@Autowired
 	private ILearnerDAO dao;
 	
-	@Autowired
-	private ICourseAttended Cdao;
+
+	
 	
 	@Autowired
 	private EmailSenderService service;
+	
+	@Autowired
+	private ICourseOfferingDAO COdao;
+	
+	@Autowired
+	private ICourseDAO Coursedao;
+	
+	@Autowired
+	private ITrainerDAO Tdao;
+	
+	@Autowired
+	private ITeacherCourseMappingDAO TCdao;
 	
 	/*
 	 * ADD LEARNER
@@ -134,10 +155,33 @@ public class LearnerService {
 	 * VIEW ALL COURSES ATTENDED BY A LEARNER
 	 * FOR LOOP FOR GETTING SPECIFIC DETAILS OF LEARNERID
 	 */
-	public List<CourseAttended> viewCourseAttended(int id) {
-		List<CourseAttended> cAttended=new ArrayList<>();
-		List<CourseAttended> courseAttendedByLearners = Cdao.courseAttended(id);
-		System.out.println(courseAttendedByLearners);
+	public Map<String, Object> viewCourseAttended(int id) {
+		Map<String, Object> response = new HashMap<>();
+		Learner learner = getLearner(id);
+		List<CourseOffering> courseoffering = COdao.findByLearnerId(id);
+		List<TeacherCourseMapping> teacherCourseMapping= new ArrayList<>();
+		List<Course> course = new ArrayList<>();
+		List<Trainer> trainer = new ArrayList<>();
+		for(CourseOffering co : courseoffering) {
+			teacherCourseMapping.add(TCdao.findByTcId(co.getTcid()));
+			
+		}
+		
+		for(TeacherCourseMapping tc : teacherCourseMapping) {
+			course.add(Coursedao.findByCourseId(tc.getCourseId()));
+		}
+		
+		for(TeacherCourseMapping tc : teacherCourseMapping) {
+			trainer.add(Tdao.findByTrainerId(tc.getTrainerId()));
+		}
+		response.put("trainers", trainer);
+		response.put("courses", course);
+		response.put("offerings", courseoffering);
+		response.put("learners", learner);
+		return response;
+//		List<CourseAttended> cAttended=new ArrayList<>();
+//		List<CourseAttended> courseAttendedByLearners = Cdao.courseAttended(id);
+//		System.out.println(courseAttendedByLearners);
 //		for(CourseAttended cl:courseAttendedByLearners) {
 //			System.out.println(cl);
 //			if(cl.getLearnerid()==id){
@@ -145,24 +189,10 @@ public class LearnerService {
 //				
 //			}
 //		}
-		//System.out.println(cAttended);
-		return courseAttendedByLearners;
+		
+//		System.out.println(cAttended);
+//		return courseAttendedByLearners;
 	}
 	
-	/*
-	 * VIEW SCORE AND STATUS OF A COURSES 
-	 * FOR LOOP FOR GETTING SPECIFIC DETAILS OF LEARNERID
-	 */
-	public CourseAttended viewScoreAndStatus(int id,int courseId) {
-		List<CourseAttended> cAttended= viewCourseAttended(id);
-		CourseAttended course= new CourseAttended();
-	
-		for(CourseAttended cl:cAttended) {
-			if(cl.getCourseid()==courseId){
-				course=cl;
-				
-			}
-		}
-		return course;
-	}
+
 }

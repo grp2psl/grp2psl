@@ -13,6 +13,7 @@ public interface ITeacherCourseMappingDAO extends CrudRepository<TeacherCourseMa
 
 	public List<TeacherCourseMapping> findByTrainerId(int id);
 	public List<TeacherCourseMapping> findByCourseId(int id);
+	public TeacherCourseMapping findByTcId(int id);
 	public TeacherCourseMapping findByTrainerIdAndCourseId(int id, int courseid);
 	@Query(value="select max(tcid) from teachercoursemapping", nativeQuery=true)
 	public Integer getNextId();
