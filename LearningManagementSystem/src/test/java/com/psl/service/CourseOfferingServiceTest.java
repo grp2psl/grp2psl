@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.Files;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.psl.entities.CourseOffering;
+import com.psl.entities.Learner;
+import com.psl.entities.TeacherCourseMapping;
 
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
@@ -36,6 +39,10 @@ public class CourseOfferingServiceTest {
 
 	@Autowired
 	CourseOfferingService service;
+	@Autowired
+	LearnerService learnerService;
+	@Autowired
+	TeacherCourseMappingService tcService;
 	
 	@Test
 	@Order(1)
@@ -200,6 +207,34 @@ public class CourseOfferingServiceTest {
 			assertThat(response).hasFieldOrProperty("trainers");
 			assertThat(response).hasFieldOrProperty("learners");
 			assertThat(response).hasFieldOrProperty("courses");
+		}
+	}
+
+	/*
+	 * TEST FIND TEACHER-COURSE MAPPINGS BY LEARNER ID
+	 */	
+	@Test
+	@Order(12)
+	public void findTeacherCourseMappingsByLearnerIdTest() {
+		List<CourseOffering> courseOffering = service.viewCourseOfferings();
+		if(courseOffering.size() > 0) {
+			int learnerId = courseOffering.get(0).getLearnerid();
+			List<TeacherCourseMapping> response = service.findTeacherCourseMappingsByLearnerId(learnerId);
+			assertThat(response).isNotNull();			
+		}
+	}
+
+	/*
+	 * TEST FIND LEARNERS BY TCID
+	 */	
+	@Test
+	@Order(13)
+	public void findLearnersByTcIdTest() {
+		List<CourseOffering> courseOffering = service.viewCourseOfferings();
+		if(courseOffering.size() > 0) {
+			int tcId = service.viewCourseOfferings().get(0).getTcid();
+			List<Learner> response = service.findLearnersByTcId(tcId);
+			assertThat(response).isNotNull();			
 		}
 	}
 }
