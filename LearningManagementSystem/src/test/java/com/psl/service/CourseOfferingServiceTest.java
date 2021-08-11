@@ -195,5 +195,11 @@ public class CourseOfferingServiceTest {
 		List<Map<String, Object>> list = service.viewCourseOfferingsDetails();
 		assertNotNull(list);
 		assertThat(list.size()).isGreaterThan(0);		
+		for(Map<String, Object> response : list) {
+			assertThat(response).hasFieldOrProperty("offerings");
+			assertThat(response).hasFieldOrProperty("trainers");
+			assertThat(response).hasFieldOrProperty("learners");
+			assertThat(response).hasFieldOrProperty("courses");
+		}
 	}
 }
