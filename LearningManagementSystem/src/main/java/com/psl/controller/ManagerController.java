@@ -28,7 +28,6 @@ import com.psl.entities.Learner;
 import com.psl.entities.Manager;
 import com.psl.entities.TeacherCourseMapping;
 import com.psl.service.CourseOfferingService;
-import com.psl.service.LearnerService;
 import com.psl.service.ManagerService;
 
 @RestController
@@ -37,9 +36,6 @@ import com.psl.service.ManagerService;
 public class ManagerController {
 	@Autowired
 	private ManagerService service;
-	
-	@Autowired
-	private LearnerService lService;
 	
 	@Autowired
 	private CourseOfferingService offeringService;
