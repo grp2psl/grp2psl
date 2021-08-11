@@ -71,7 +71,7 @@ class Register extends React.Component{
         return(
 			<div className="mt-5">
             <Card className={"border border-dark bg-dark text-white"}>
-                <Card.Header>Register Trainer</Card.Header>
+                <Card.Header>Register a Trainer</Card.Header>
                 <h3 className="text-white mt-2">{this.state.msg}</h3>
                 <Form onSubmit={this.registerTrainer} onReset={this.resetForm} id="registerId" >
                 <Card.Body>
