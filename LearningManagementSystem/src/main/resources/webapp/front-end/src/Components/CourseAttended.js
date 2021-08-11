@@ -62,6 +62,7 @@ class CourseAttended extends React.Component{
                             	
                                 <th>Course ID</th>
                                 <th>Course Name</th>
+                                <th>Syllabus</th>
                                 <th>Trainer Name</th>
                                 
                             </tr>
@@ -77,6 +78,9 @@ class CourseAttended extends React.Component{
                                 
                                     <td>{course.courses.courseid}</td>
                                     <td>{course.courses.coursename}</td>
+                                  
+
+                                    <td>{<a target='_blank' href={course.courses.syllabus} className="text-white">{course.courses.coursename}</a>}</td>
                                     <td>{course.trainers.name}</td>
                                     <td>
                                         <ButtonGroup>
@@ -87,8 +91,8 @@ class CourseAttended extends React.Component{
                                                 this.props.history.push({
                                                     pathname: "/viewScoreAndStatus",
                                                     state: {
-                                                        courseId: course.courseid,
-                                                        learnerId: this.state.courseOffering.learners.learnerid
+                                                        courseId: course.courses.courseid,
+                                                        learnerId: course.learners.learnerid
                                                     },
                                                 })
                                             }}

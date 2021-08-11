@@ -41,6 +41,8 @@ public class ManagerController {
 	
 	@Autowired
 	private CourseOfferingService offeringService;
+	
+	
 		
 	/*
 	 * GET DETAILS OF MANAGER BY ID
@@ -161,8 +163,15 @@ public class ManagerController {
 	
 	@GetMapping("/course-attended/{id}")
 	public List<Map<String, Object>> viewCourseAttended(@PathVariable int id ){
+		List<Map<String, Object>> cAttended = null;
 		System.out.println(id);
-		return lService.viewCourseAttended(id);
+		try {
+			cAttended= offeringService.viewCourseOfferingsDetailsByLearnerId(id);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cAttended;
 	}	
 
 
