@@ -5,7 +5,8 @@ import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faSave,
-    faUndo
+    faUndo,
+    faEye
   } from "@fortawesome/free-solid-svg-icons";
 
 const buttonStyle={
@@ -132,7 +133,7 @@ class UpdateScoreIndividual extends React.Component{
                                     variant="primary" 
                                     style={buttonStyle}
                                     onClick={() => this.findLearners(this.state.tcid)}>
-                                    <FontAwesomeIcon icon={faSave} />{" "}
+                                    <FontAwesomeIcon icon={faEye} />{" "}
                                     Show Learners
                                 </Button>
                             </Col>
