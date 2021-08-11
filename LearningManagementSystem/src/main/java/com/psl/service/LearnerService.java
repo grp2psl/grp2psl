@@ -136,15 +136,17 @@ public class LearnerService {
 	 */
 	public List<CourseAttended> viewCourseAttended(int id) {
 		List<CourseAttended> cAttended=new ArrayList<>();
-		List<CourseAttended> courseAttendedByLearners = Cdao.courseAttended();
-		for(CourseAttended cl:courseAttendedByLearners) {
-			if(cl.getLearnerid()==id){
-				cAttended.add(cl);
-				
-			}
-		}
-		System.out.println(cAttended);
-		return cAttended;
+		List<CourseAttended> courseAttendedByLearners = Cdao.courseAttended(id);
+		System.out.println(courseAttendedByLearners);
+//		for(CourseAttended cl:courseAttendedByLearners) {
+//			System.out.println(cl);
+//			if(cl.getLearnerid()==id){
+//				cAttended.add(cl);
+//				
+//			}
+//		}
+		//System.out.println(cAttended);
+		return courseAttendedByLearners;
 	}
 	
 	/*
