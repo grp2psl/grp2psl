@@ -8,6 +8,7 @@ package com.psl.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,6 +21,7 @@ import com.psl.entities.CourseOffering;
 /*Annotation to enable CourseOfferingController to act as a RestController
  */
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class CourseOfferingController {
 
 	//Autowiring with CourseOfferingService
