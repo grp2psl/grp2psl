@@ -155,14 +155,17 @@ public class LearnerService {
 	 * VIEW ALL COURSES ATTENDED BY A LEARNER
 	 * FOR LOOP FOR GETTING SPECIFIC DETAILS OF LEARNERID
 	 */
-	public Map<String, Object> viewCourseAttended(int id) {
-		Map<String, Object> response = new HashMap<>();
+	public List<Map<String, Object>> viewCourseAttended(int id) {
+		List<Map<String, Object>> response = new ArrayList<Map<String,Object>>();
+		Map<String, Object> element = new HashMap<String, Object>();
+		
 		Learner learner = getLearner(id);
 		List<CourseOffering> courseoffering = COdao.findByLearnerId(id);
 		List<TeacherCourseMapping> teacherCourseMapping= new ArrayList<>();
 		List<Course> course = new ArrayList<>();
 		List<Trainer> trainer = new ArrayList<>();
 		for(CourseOffering co : courseoffering) {
+			
 			teacherCourseMapping.add(TCdao.findByTcId(co.getTcid()));
 			
 		}
@@ -174,25 +177,13 @@ public class LearnerService {
 		for(TeacherCourseMapping tc : teacherCourseMapping) {
 			trainer.add(Tdao.findByTrainerId(tc.getTrainerId()));
 		}
-		response.put("trainers", trainer);
-		response.put("courses", course);
-		response.put("offerings", courseoffering);
-		response.put("learners", learner);
+		element.put("trainers", trainer);
+		element.put("courses", course);
+		element.put("offerings", courseoffering);
+		element.put("learners", learner);
+		response.add(element);
 		return response;
-//		List<CourseAttended> cAttended=new ArrayList<>();
-//		List<CourseAttended> courseAttendedByLearners = Cdao.courseAttended(id);
-//		System.out.println(courseAttendedByLearners);
-//		for(CourseAttended cl:courseAttendedByLearners) {
-//			System.out.println(cl);
-//			if(cl.getLearnerid()==id){
-//				cAttended.add(cl);
-//				
-//			}
-//		}
-		
-//		System.out.println(cAttended);
-//		return courseAttendedByLearners;
-	}
+
 	
 
-}
+}}

@@ -14,10 +14,7 @@ class CourseAttended extends React.Component{
 		
         super(props);
         this.state={
-            trainers: [],
-            courses: [],
-            offerings: [],
-            learner: null,
+            courseOffering: [],
             msg:""
         };
     }
@@ -26,19 +23,18 @@ class CourseAttended extends React.Component{
 		
 		this.setState({
 			msg:"Processing.. Please Wait"
+			
 		});
 		const id = this.props.location.state.detail;
 		try{
 			const response = await axios.get("http://localhost:8080/LearningManagementSystem/managers/course-attended/"+id);
 			if(response.data != null) {
-				console.log(response.data.courses)
+				console.log(response.data)
 				this.setState({
 					
-					courses: response.data.courses,
-					 trainers: response.data.trainers,
-                    learner: response.data.learners,
-                    offerings: response.data.offerings   
+					courseOffering: response.data 
 				});	
+				console.log(this.state.courseOffering)
 			}	
 		} catch(error) {
 			alert(error);
@@ -66,20 +62,22 @@ class CourseAttended extends React.Component{
                             	
                                 <th>Course ID</th>
                                 <th>Course Name</th>
+                                <th>Trainer Name</th>
                                 
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.courses.length === 0? (
+                            {this.state.courseOffering.length === 0? (
                                 <tr align="center">
                                     <td colSpan="7">No Courses Attended.</td>
                                 </tr>
                                 ) : (
-                                this.state.courses.map((course) => (
-                                    <tr key={course.courseid}>
+                                this.state.courseOffering.map((course) => (
+                                    <tr key={course.offerings.courseofferingid}>
                                 
-                                    <td>{course.courseid}</td>
-                                    <td>{course.coursename}</td>
+                                    <td>{course.courses.courseid}</td>
+                                    <td>{course.courses.coursename}</td>
+                                    <td>{course.trainers.name}</td>
                                     <td>
                                         <ButtonGroup>
                                         <Button
@@ -90,7 +88,7 @@ class CourseAttended extends React.Component{
                                                     pathname: "/viewScoreAndStatus",
                                                     state: {
                                                         courseId: course.courseid,
-                                                        learnerId: this.state.learner.learnerid
+                                                        learnerId: this.state.courseOffering.learners.learnerid
                                                     },
                                                 })
                                             }}

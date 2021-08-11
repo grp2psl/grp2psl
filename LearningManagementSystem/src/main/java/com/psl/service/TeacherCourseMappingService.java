@@ -143,6 +143,10 @@ public class TeacherCourseMappingService {
 		return dao.findByTrainerIdAndCourseId(id, courseid);
 	}
 	
+
+	/*
+	 * GET COURSE OFFERING BY LEARNER ID AND COURSE ID
+	 */
 	public List<CourseOffering> getCourseOffering(int id, int courseid) {
 		List<CourseOffering> courseOffering = new ArrayList<>();
 		CourseOffering cOffering= new CourseOffering();
