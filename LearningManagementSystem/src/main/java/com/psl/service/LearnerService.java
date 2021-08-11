@@ -151,39 +151,7 @@ public class LearnerService {
 		return id;
 	}
 	
-	/*
-	 * VIEW ALL COURSES ATTENDED BY A LEARNER
-	 * FOR LOOP FOR GETTING SPECIFIC DETAILS OF LEARNERID
-	 */
-	public List<Map<String, Object>> viewCourseAttended(int id) {
-		List<Map<String, Object>> response = new ArrayList<Map<String,Object>>();
-		Map<String, Object> element = new HashMap<String, Object>();
-		
-		Learner learner = getLearner(id);
-		List<CourseOffering> courseoffering = COdao.findByLearnerId(id);
-		List<TeacherCourseMapping> teacherCourseMapping= new ArrayList<>();
-		List<Course> course = new ArrayList<>();
-		List<Trainer> trainer = new ArrayList<>();
-		for(CourseOffering co : courseoffering) {
-			
-			teacherCourseMapping.add(TCdao.findByTcId(co.getTcid()));
-			
-		}
-		
-		for(TeacherCourseMapping tc : teacherCourseMapping) {
-			course.add(Coursedao.findByCourseId(tc.getCourseId()));
-		}
-		
-		for(TeacherCourseMapping tc : teacherCourseMapping) {
-			trainer.add(Tdao.findByTrainerId(tc.getTrainerId()));
-		}
-		element.put("trainers", trainer);
-		element.put("courses", course);
-		element.put("offerings", courseoffering);
-		element.put("learners", learner);
-		response.add(element);
-		return response;
-
+	
 	
 
-}}
+}
