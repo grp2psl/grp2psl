@@ -221,4 +221,22 @@ public class ManagerControllerTest {
 		this.mvc.perform(get("/managers/courses-attended/"+1))
 		.andExpect(status().isOk());
 	}
+	
+	/*
+	 * TEST FIND TEACHER-COURSE MAPPINGS BY LEARNER ID
+	 */
+	@Test
+	public void findTeacherCourseMappingsByLearnerIdTest() throws Exception {
+		this.mvc.perform(get("/managers/findTeacherCourseMappingsByLearnerId/"+1))
+		.andExpect(status().isOk());
+	}
+	
+	/*
+	 * TEST FIND LEARNERS BY TCID
+	 */
+	@Test
+	public void findLearnersByTcIdTest() throws Exception {
+		this.mvc.perform(get("/managers/findLearnersByTcId/"+1))
+		.andExpect(status().isOk());
+	}
 }
