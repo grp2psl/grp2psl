@@ -76,8 +76,7 @@ class ViewCourseOfferings extends React.Component{
         this.showData();
     }
 
-    componentDidMount(){
-		
+    componentDidMount(){		
         this.showData();
     }
 

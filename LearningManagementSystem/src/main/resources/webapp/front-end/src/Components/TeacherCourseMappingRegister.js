@@ -89,7 +89,7 @@ export default class TeacherCourseMappingRegister extends Component {
     return (
 	  <div className="mt-5">
             <Card className={"border border-dark bg-dark"}>
-                <Card.Header className={"text-white"}>Register Trainer</Card.Header>
+                <Card.Header className={"text-white"}>Assign a Trainer</Card.Header>
                 
       <form onSubmit={this.teacherCourseMapping}>
       <Card.Body>
