@@ -9,9 +9,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import com.psl.entities.Course;
 import com.psl.entities.Trainer;
 
 public interface ITrainerDAO extends CrudRepository<Trainer, Integer>{
+	
+	public Trainer findByTrainerId(int id);
 	/*
 	 * CUSTOM QUERY TO HIDE PASSWORD
 	 */

@@ -18,4 +18,5 @@ public interface ICourseOfferingDAO extends CrudRepository<CourseOffering, Integ
 	public CourseOffering findByTcIdAndLearnerId(int tcId, int learnerId);
 	public List<CourseOffering> findByLearnerId(int learnerId);
 	
+	
 }

@@ -14,8 +14,7 @@ class CourseAttended extends React.Component{
 		
         super(props);
         this.state={
-            courses: [],
-            id : 0,
+            courseOffering: [],
             msg:""
         };
     }
@@ -24,6 +23,7 @@ class CourseAttended extends React.Component{
 		
 		this.setState({
 			msg:"Processing.. Please Wait"
+			
 		});
 		const id = this.props.location.state.detail;
 		try{
@@ -31,8 +31,10 @@ class CourseAttended extends React.Component{
 			if(response.data != null) {
 				console.log(response.data)
 				this.setState({
-					courses: response.data
+					
+					courseOffering: response.data 
 				});	
+				console.log(this.state.courseOffering)
 			}	
 		} catch(error) {
 			alert(error);
@@ -57,30 +59,46 @@ class CourseAttended extends React.Component{
                     <Table striped bordered hover variant="dark">
                         <thead>
                             <tr>
-                            	<th>Learner ID</th>
-                                <th>Learner Name</th>
+                            	
                                 <th>Course ID</th>
                                 <th>Course Name</th>
+                                <th>Syllabus</th>
                                 <th>Trainer Name</th>
-                                <th>Percentage</th>
-                                <th>Status</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.courses.length === 0? (
+                            {this.state.courseOffering.length === 0? (
                                 <tr align="center">
                                     <td colSpan="7">No Courses Attended.</td>
                                 </tr>
                                 ) : (
-                                this.state.courses.map((course) => (
-                                    <tr key={course.learnerid}>
-                                    <td>{course.learnerid}</td>
-                                    <td>{course.name}</td>
-                                    <td>{course.courseid}</td>
-                                    <td>{course.coursename}</td>
-                                    <td>{course.trainername}</td>
-                                    <td>{course.percentage}</td>
-                                    <td>{course.status}</td>
+                                this.state.courseOffering.map((course) => (
+                                    <tr key={course.offerings.courseofferingid}>
+                                
+                                    <td>{course.courses.courseid}</td>
+                                    <td>{course.courses.coursename}</td>
+                                  
+
+                                    <td>{<a target='_blank' href={course.courses.syllabus} className="text-white">{course.courses.coursename}</a>}</td>
+                                    <td>{course.trainers.name}</td>
+                                    <td>
+                                        <ButtonGroup>
+                                        <Button
+                                            size="sm"
+                                            variant="outline-primary"
+                                            onClick={()=>{
+                                                this.props.history.push({
+                                                    pathname: "/viewScoreAndStatus",
+                                                    state: {
+                                                        courseId: course.courses.courseid,
+                                                        learnerId: course.learners.learnerid
+                                                    },
+                                                })
+                                            }}
+                                        >View Score and Status</Button>
+                                        </ButtonGroup>
+                                    </td>
                                     </tr>
                                 ))
                                 )}

@@ -264,10 +264,10 @@ public class CourseOfferingService {
 		for(CourseOffering co : courseOfferingList) {
 			if(co.getLearnerid() == learnerid) {
 				element = new HashMap<String, Object>();
-				element.put("offering", co);
-				element.put("learner", learnerService.getLearner(co.getLearnerid()));
-				element.put("trainer", trainerService.getTrainer(tcService.getById(co.getTcid()).getTrainerId()));
-				element.put("course", courseService.getCourse(tcService.getById(co.getTcid()).getCourseId()));
+				element.put("offerings", co);
+				element.put("learners", learnerService.getLearner(co.getLearnerid()));
+				element.put("trainers", trainerService.getTrainer(tcService.getById(co.getTcid()).getTrainerId()));
+				element.put("courses", courseService.getCourse(tcService.getById(co.getTcid()).getCourseId()));
 				response.add(element);
 			}
 		}

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.psl.entities.CourseAttended;
+
 import com.psl.entities.CourseOffering;
 import com.psl.entities.Manager;
 import com.psl.service.CourseOfferingService;
@@ -41,6 +41,8 @@ public class ManagerController {
 	
 	@Autowired
 	private CourseOfferingService offeringService;
+	
+	
 		
 	/*
 	 * GET DETAILS OF MANAGER BY ID
@@ -160,21 +162,20 @@ public class ManagerController {
 	 */
 	
 	@GetMapping("/course-attended/{id}")
-	public List<CourseAttended> viewCourseAttended(@PathVariable int id ){
+	public List<Map<String, Object>> viewCourseAttended(@PathVariable int id ){
+		List<Map<String, Object>> cAttended = null;
 		System.out.println(id);
-		return lService.viewCourseAttended(id);
+		try {
+			cAttended= offeringService.viewCourseOfferingsDetailsByLearnerId(id);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cAttended;
 	}	
 
-	/*
-	 * VIEW A COURSE TO CHECK THE SCORE AND STATUS OF THE LEARNER
-	 */
-	
-	@GetMapping("/score-status/{id}/{courseId}")
-	public CourseAttended viewScoreAndStatus(@PathVariable int id, @PathVariable int courseId ){
-		return lService.viewScoreAndStatus(id,courseId);
-	
-	}
 
+	
 	/*
 	 * UPDATE AN INDIVIDUAL TEST SCORE
 	 * REQUEST BODY CONTENTS : {percentage}
