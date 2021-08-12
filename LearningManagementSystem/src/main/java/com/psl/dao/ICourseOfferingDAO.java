@@ -2,9 +2,10 @@
  * Data Access Object Interface of Course Offering Entity
  * Present in com.psl.dao package
  */
-package com.psl.dao;
 
 //Necessary imports for DAO declaration
+package com.psl.dao;
+
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -38,4 +39,11 @@ public interface ICourseOfferingDAO extends CrudRepository<CourseOffering, Cours
 	
 	@Query("SELECT feedback from CourseOffering where tcid = :tcid")
 	List<String> findCommentsForACourse(@Param("tcid") int tcid);
+
+	/*
+	 * AUTO-INCREMENT ID
+	 */
+	@Query(value="select max(courseofferingid) from courseoffering", nativeQuery=true)
+	public Integer getMaxId();
+	public List<CourseOffering> findByTcId(int id);
 }

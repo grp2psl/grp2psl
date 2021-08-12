@@ -66,18 +66,20 @@ public class CourseOffering {
 	 * Stored in learnerid column
 	 * It can't be null
 	 */
-	@Id
 	@Column(name = "learnerid")
 	@NotNull(message = "learnerId field can't be null")
 	private int learnerId;
 	
+	@Id
+	@Column(name="courseofferingid")
+	private int courseOfferingId;
+
 	/*
 	 * It is part of the composite key. 
 	 * Maps given courseOffering with learners.
 	 * Stored in tcid column
 	 * It can't be null
 	 */
-	@Id
 	@Column(name = "tcid")
 	@NotNull(message = "tcId field can't be null")
 	private int tcId;
@@ -106,6 +108,12 @@ public class CourseOffering {
 	}
 	public void setFeedback(String feedback) {
 		this.feedback = feedback;
+	
+	public int getCourseofferingid() {
+		return courseOfferingId;
+	}
+	public void setCourseofferingid(int courseofferingid) {
+		this.courseOfferingId = courseofferingid;
 	}
 	public int getRatings() {
 		return ratings;
@@ -113,29 +121,29 @@ public class CourseOffering {
 	public void setRatings(int ratings) {
 		this.ratings = ratings;
 	}
-	public Date getStartDate() {
+	public Date getStartdate() {
 		return startDate;
 	}
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setStartdate(Date startdate) {
+		this.startDate = startdate;
 	}
-	public Date getEndDate() {
+	public Date getEnddate() {
 		return endDate;
 	}
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setEnddate(Date enddate) {
+		this.endDate = enddate;
 	}
-	public int getLearnerId() {
+	public int getLearnerid() {
 		return learnerId;
 	}
-	public void setLearnerId(int learnerId) {
-		this.learnerId = learnerId;
+	public void setLearnerid(int learnerid) {
+		this.learnerId = learnerid;
 	}
-	public int getTcId() {
+	public int getTcid() {
 		return tcId;
 	}
-	public void setTcId(int tcId) {
-		this.tcId = tcId;
+	public void setTcid(int tcid) {
+		this.tcId = tcid;
 	}
 	public String getStatus() {
 		return status;
@@ -143,22 +151,25 @@ public class CourseOffering {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public int getPercentage() {
+	public double getPercentage() {
 		return percentage;
 	}
-	public void setPercentage(int percentage) {
+	public void setPercentage(double percentage) {
 		this.percentage = percentage;
 	}
-	
+	public void setFeedback(String feedback) {
+		this.feedback = feedback;
+	}
 	//Parameterized Constructor
-	public CourseOffering(String feedback, int ratings, Date startDate, Date endDate, int learnerId, int tcId,
-			String status, int percentage) {
+	public CourseOffering(int courseofferingid, String feedback, int ratings, Date startdate, Date enddate,
+			int learnerid, int tcid, String status, double percentage) {
+		this.courseOfferingId = courseofferingid;
 		this.feedback = feedback;
 		this.ratings = ratings;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.learnerId = learnerId;
-		this.tcId = tcId;
+		this.startDate = startdate;
+		this.endDate = enddate;
+		this.learnerId = learnerid;
+		this.tcId = tcid;
 		this.status = status;
 		this.percentage = percentage;
 	}
@@ -193,8 +204,8 @@ public class CourseOffering {
 	//Overrides toString function to change output of print function
 	@Override
 	public String toString() {
-		return "CourseOffering [feedback=" + feedback + ", ratings=" + ratings + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", learnerId=" + learnerId + ", tcId=" + tcId + ", status=" + status
-				+ ", percentage=" + percentage + "]";
-	}
+		return "Courseoffering [courseofferingid=" + courseOfferingId + ", feedback=" + feedback + ", ratings="
+				+ ratings + ", startdate=" + startDate + ", enddate=" + endDate + ", learnerid=" + learnerId + ", tcid="
+				+ tcId + ", status=" + status + ", percentage=" + percentage + "]";
+	}	
 }

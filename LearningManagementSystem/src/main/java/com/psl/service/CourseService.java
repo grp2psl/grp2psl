@@ -38,5 +38,20 @@ public class CourseService {
 	public Course getCourse(int id) {
 		return dao.findById(id).get();
 	}
+	
+	/*
+	 * REMOVE COURSE BY ID
+	 */
+	public void removeCourse(int id) {
+		dao.deleteById(id);
+	}
+
+	/*
+	 * Update COURSE BY ID
+	 */
+	public void updateCourse(Course course) {
+		dao.updateEntry(course.getPrerequisite(),course.getSyllabus(),course.getDuration(),course.getCourseid());
+	}
+	
 
 }

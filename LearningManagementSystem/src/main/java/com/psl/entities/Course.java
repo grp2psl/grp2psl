@@ -100,6 +100,14 @@ public class Course {
 	public void setDuration(String duration) {
 		this.duration = duration;
 	}
+	public Course(int courseid, String coursename, String prerequisite, String syllabus, String duration) {
+		this.courseId = courseid;
+		this.courseName = coursename;
+		this.prerequisite = prerequisite;
+		this.syllabus = syllabus;
+		this.duration = duration;
+	}
+	public Course() {
 		
 	//Overrides toString function to change output of print function
 	@Override
