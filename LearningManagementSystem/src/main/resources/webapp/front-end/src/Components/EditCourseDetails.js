@@ -106,7 +106,7 @@ class EditCourseDetails extends React.Component{
                                 <Form.Control required autoComplete="off"
                                     type="text" 
                                     value={this.state.duration}
-                                    disabled={true}
+                                    onChange={this.formChange}
                                     name="duration"
                                     placeholder="Enter duration" />
                             </Form.Group>

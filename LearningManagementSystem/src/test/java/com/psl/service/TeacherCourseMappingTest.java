@@ -39,7 +39,7 @@ public class TeacherCourseMappingTest {
 	
 	@Test
 	@Order(1)
-	public void testAddTeacherCourseMapping() {
+	public void addTeacherCourseMappingTest() {
 		TeacherCourseMapping c=new TeacherCourseMapping(4,2,6);
 	    service.addTeacherCourseMapping(c);
 	     
@@ -53,7 +53,7 @@ public class TeacherCourseMappingTest {
 	 */
 	@Test
 	@Order(2)
-	public void AddMultipleTeacherCourseMappingTest() throws IOException, ParseException {
+	public void addMultipleTeacherCourseMappingTest() throws IOException, ParseException {
 		int id = service.getNextId();
 		Path path = Paths.get("teachercoursemapping.xlsx");
 		String name = "teachercoursemapping.xlsx";
@@ -113,6 +113,27 @@ public class TeacherCourseMappingTest {
 //		}
 //	}
 	
+	/*
+	 * TEST GET TRAINER AND COURSE NAMES FOR ALL TC MAPPINGS
+	 */
+	@Test
+	@Order(3)
+	public void getAllTrainerCourseNamesTest() {
+		List<Object> response = service.getAllTrainerCourseNames();
+		assertThat(response).size().isGreaterThan(0);
+		for(Object iterator: response) {
+			assertThat(iterator).hasFieldOrProperty("trainerName");
+			assertThat(iterator).hasFieldOrProperty("courseName");
+			assertThat(iterator).hasFieldOrProperty("trainerId");
+			assertThat(iterator).hasFieldOrProperty("courseId");
+			assertThat(iterator).hasFieldOrProperty("tcid");
+		}
+	}
+	
+
+	/*
+	 * TEST FOR SCORE AND STATUS
+	 */
 	@Test
 	@Order(4)
 	public void getScoreAndStatus() {
