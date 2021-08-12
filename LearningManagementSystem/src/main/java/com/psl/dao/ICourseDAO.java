@@ -8,7 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.psl.entities.Course;
-import com.psl.entities.TeacherCourseMapping;
 
 
 public interface ICourseDAO extends CrudRepository<Course, Integer> {
