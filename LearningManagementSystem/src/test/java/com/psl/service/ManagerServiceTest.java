@@ -40,7 +40,7 @@ public class ManagerServiceTest {
 		assertThat(createdManager.getName()).isEqualTo("John Radnor");
 		assertThat(createdManager.getEmail()).isEqualTo("group2.learning.management.system@gmail.com");
 		assertThat(createdManager.getPassword()).isEqualTo("admin123");		
-		assertThat(createdManager.getPhonenumber()).isEqualTo("9657892335");
+		assertThat(createdManager.getPhoneNumber()).isEqualTo("9657892335");
 	}
 	
 	/*
@@ -67,7 +67,7 @@ public class ManagerServiceTest {
 		assertNotNull(manager);
 		assertThat(manager.getName()).isEqualTo("John Radnor");
 		assertThat(manager.getEmail()).isEqualTo("group2.learning.management.system@gmail.com");
-		assertThat(manager.getPhonenumber()).isEqualTo("9657892335");
+		assertThat(manager.getPhoneNumber()).isEqualTo("9657892335");
 		assertThat(manager.getPassword()).isEqualTo("admin123");
 	}
 	
@@ -85,7 +85,7 @@ public class ManagerServiceTest {
 		assertNotNull(manager);
 		assertThat(manager.getName()).isEqualTo("John Radnor");
 		assertThat(manager.getEmail()).isEqualTo("group2.learning.management.system@gmail.com");
-		assertThat(manager.getPhonenumber()).isEqualTo("9657892335");
+		assertThat(manager.getPhoneNumber()).isEqualTo("9657892335");
 		assertThat(manager.getPassword()).isEqualTo("manager123");
 	}
 

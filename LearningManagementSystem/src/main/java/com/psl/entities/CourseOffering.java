@@ -98,7 +98,7 @@ public class CourseOffering {
 	 * By default it can be initialized with some negative value.
 	 */
 	@NotNull(message = "percentage field can't be null")	
-	private int percentage;
+	private double percentage;
 	
 	/*
 	 * Public getter and setter methods of all attributes
@@ -108,11 +108,12 @@ public class CourseOffering {
 	}
 	public void setFeedback(String feedback) {
 		this.feedback = feedback;
+	}
 	
-	public int getCourseofferingid() {
+	public int getCourseOfferingId() {
 		return courseOfferingId;
 	}
-	public void setCourseofferingid(int courseofferingid) {
+	public void setCourseOfferingId(int courseofferingid) {
 		this.courseOfferingId = courseofferingid;
 	}
 	public int getRatings() {
@@ -121,28 +122,28 @@ public class CourseOffering {
 	public void setRatings(int ratings) {
 		this.ratings = ratings;
 	}
-	public Date getStartdate() {
+	public Date getStartDate() {
 		return startDate;
 	}
-	public void setStartdate(Date startdate) {
+	public void setStartDate(Date startdate) {
 		this.startDate = startdate;
 	}
-	public Date getEnddate() {
+	public Date getEndDate() {
 		return endDate;
 	}
-	public void setEnddate(Date enddate) {
+	public void setEndDate(Date enddate) {
 		this.endDate = enddate;
 	}
-	public int getLearnerid() {
+	public int getLearnerId() {
 		return learnerId;
 	}
-	public void setLearnerid(int learnerid) {
+	public void setLearnerId(int learnerid) {
 		this.learnerId = learnerid;
 	}
-	public int getTcid() {
+	public int getTcId() {
 		return tcId;
 	}
-	public void setTcid(int tcid) {
+	public void setTcId(int tcid) {
 		this.tcId = tcid;
 	}
 	public String getStatus() {
@@ -156,9 +157,6 @@ public class CourseOffering {
 	}
 	public void setPercentage(double percentage) {
 		this.percentage = percentage;
-	}
-	public void setFeedback(String feedback) {
-		this.feedback = feedback;
 	}
 	//Parameterized Constructor
 	public CourseOffering(int courseofferingid, String feedback, int ratings, Date startdate, Date enddate,

@@ -118,7 +118,7 @@ public class TeacherCourseMappingTest {
 	public void getScoreAndStatus() {
 		List<CourseOffering> cOffering = service.getCourseOffering(1,2);
 		for(CourseOffering co : cOffering) {
-			 assertThat(co.getLearnerid()).isEqualTo(1);
+			 assertThat(co.getLearnerId()).isEqualTo(1);
 		}
 	}
 }

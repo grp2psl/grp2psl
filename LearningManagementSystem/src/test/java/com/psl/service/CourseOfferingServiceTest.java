@@ -56,9 +56,9 @@ public class CourseOfferingServiceTest {
 		CourseOffering offering = mapper.readValue(request, CourseOffering.class);
 		service.enrollLearner(offering);
 		CourseOffering result = service.getCourseOffering(service.getMaxId()); //implicit testing of getCourseOffering(int id)
-		assertThat(result.getLearnerid()).isEqualTo(12);
-		assertThat(result.getTcid()).isEqualTo(1);
-		assertThat(result.getCourseofferingid()).isEqualTo(id+1);
+		assertThat(result.getLearnerId()).isEqualTo(12);
+		assertThat(result.getTcId()).isEqualTo(1);
+		assertThat(result.getCourseOfferingId()).isEqualTo(id+1);
 	}
 	
 	@Test
@@ -69,7 +69,7 @@ public class CourseOfferingServiceTest {
 	public void updateTestScoreTest() {
 		service.updateTestScore(service.getMaxId(), 67);
 		CourseOffering result = service.getCourseOffering(service.getMaxId());
-		assertThat(result.getLearnerid()).isEqualTo(12);
+		assertThat(result.getLearnerId()).isEqualTo(12);
 		assertThat(result.getPercentage()).isEqualTo(67);
 		assertThat(result.getFeedback()).isEqualTo(null);
 		assertThat(result.getStatus()).isEqualTo("FAIL,FEEDBACK_PENDING"); //implicit testing of updateCourseOfferingStatus(CourseOffering offering)
@@ -94,7 +94,7 @@ public class CourseOfferingServiceTest {
 		int id = service.getMaxId();
 		service.removeCourseOffering(id);
 		CourseOffering offering = service.getCourseOffering(service.getMaxId());
-		assertThat(offering.getCourseofferingid()).isEqualTo(id-1);
+		assertThat(offering.getCourseOfferingId()).isEqualTo(id-1);
 	}	
 
 	@Test
@@ -218,7 +218,7 @@ public class CourseOfferingServiceTest {
 	public void findTeacherCourseMappingsByLearnerIdTest() {
 		List<CourseOffering> courseOffering = service.viewCourseOfferings();
 		if(courseOffering.size() > 0) {
-			int learnerId = courseOffering.get(0).getLearnerid();
+			int learnerId = courseOffering.get(0).getLearnerId();
 			List<TeacherCourseMapping> response = service.findTeacherCourseMappingsByLearnerId(learnerId);
 			assertThat(response).isNotNull();			
 		}
@@ -232,7 +232,7 @@ public class CourseOfferingServiceTest {
 	public void findLearnersByTcIdTest() {
 		List<CourseOffering> courseOffering = service.viewCourseOfferings();
 		if(courseOffering.size() > 0) {
-			int tcId = service.viewCourseOfferings().get(0).getTcid();
+			int tcId = service.viewCourseOfferings().get(0).getTcId();
 			List<Learner> response = service.findLearnersByTcId(tcId);
 			assertThat(response).isNotNull();			
 		}

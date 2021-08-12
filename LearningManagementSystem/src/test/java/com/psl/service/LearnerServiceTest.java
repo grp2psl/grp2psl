@@ -94,7 +94,7 @@ public class LearnerServiceTest {
 		assertThat(createdLearner.getName()).isEqualTo("John Radnor");
 		assertThat(createdLearner.getEmail()).isEqualTo("group2.learning.management.system@gmail.com");
 		assertThat(createdLearner.getDepartment()).isEqualTo("L&D");		
-		assertThat(createdLearner.getPhonenumber()).isEqualTo("9657892335");
+		assertThat(createdLearner.getPhoneNumber()).isEqualTo("9657892335");
 		assertNotNull(createdLearner.getPassword());
 	}
 	
@@ -123,7 +123,7 @@ public class LearnerServiceTest {
 		assertThat(learner.getName()).isEqualTo("John Radnor");
 		assertThat(learner.getEmail()).isEqualTo("group2.learning.management.system@gmail.com");
 		assertThat(learner.getDepartment()).isEqualTo("L&D");		
-		assertThat(learner.getPhonenumber()).isEqualTo("9657892335");
+		assertThat(learner.getPhoneNumber()).isEqualTo("9657892335");
 		assertNotNull(learner.getPassword());	
 	}
 
@@ -178,7 +178,7 @@ public class LearnerServiceTest {
 	        XSSFRow row = worksheet.getRow(i);
 	        assertThat(learner.getName()).isEqualTo(row.getCell(0).getStringCellValue());
 	        assertThat(learner.getDepartment()).isEqualTo(row.getCell(1).getStringCellValue());
-	        assertThat(learner.getPhonenumber()).isEqualTo(row.getCell(2).getStringCellValue());
+	        assertThat(learner.getPhoneNumber()).isEqualTo(row.getCell(2).getStringCellValue());
 	        assertThat(learner.getEmail()).isEqualTo(row.getCell(3).getStringCellValue());
 	        assertNotNull(learner.getPassword());
 	    }

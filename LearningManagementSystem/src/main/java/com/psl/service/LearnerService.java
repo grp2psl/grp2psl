@@ -73,10 +73,10 @@ public class LearnerService {
 			e.printStackTrace();
 		}
 		String password = firstname+id+"@"+rand.nextInt(9999);
-		learner.setLearnerid(id);
+		learner.setLearnerId(id);
 		learner.setPassword(password);
 		try {
-			dao.saveNewEntry(learner.getLearnerid(), learner.getName(), learner.getDepartment(), learner.getPhonenumber(), learner.getEmail(), learner.getPassword());
+			dao.saveNewEntry(learner.getLearnerId(), learner.getName(), learner.getDepartment(), learner.getPhoneNumber(), learner.getEmail(), learner.getPassword());
 			service.sendEmail("group2.learning.management.system@gmail.com", learner.getEmail(), "Hi " + firstname +", \nYour password is "+password+"\nChange your password once you are logged in.", "Learner registered successfully - learning management portal");
 		}catch(DataIntegrityViolationException e) {
 			throw new DataIntegrityViolationException("Duplicate email ID found for learner with email ID: "+learner.getEmail());
@@ -96,7 +96,7 @@ public class LearnerService {
 	        XSSFRow row = worksheet.getRow(i);
 	        learner.setName(row.getCell(0).getStringCellValue());
 	        learner.setDepartment(row.getCell(1).getStringCellValue());
-	        learner.setPhonenumber(row.getCell(2).getStringCellValue());
+	        learner.setPhoneNumber(row.getCell(2).getStringCellValue());
 	        learner.setEmail(row.getCell(3).getStringCellValue());
 	        addLearner(learner);
 		}
@@ -166,7 +166,7 @@ public class LearnerService {
 	 * UPDATE LEARNER BY ID
 	 */
 	public void updateLearner(Learner learner) {
-		dao.updateEntry(learner.getDepartment(), learner.getPhonenumber(), learner.getLearnerid());
+		dao.updateEntry(learner.getDepartment(), learner.getPhoneNumber(), learner.getLearnerId());
 	}
 
 	/*

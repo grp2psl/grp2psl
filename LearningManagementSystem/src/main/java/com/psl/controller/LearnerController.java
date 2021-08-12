@@ -105,6 +105,7 @@ public class LearnerController {
 		// TODO check with Admin
 	}
 	
+	/*
 	 * DELETE LEARNER BY ID
 	 */
 	@DeleteMapping("/{id}")

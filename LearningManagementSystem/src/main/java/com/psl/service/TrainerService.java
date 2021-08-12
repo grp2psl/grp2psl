@@ -49,10 +49,10 @@ public class TrainerService {
 			e.printStackTrace();
 		}
 		String password = firstname+id+"@"+rand.nextInt(9999);
-		trainer.setTrainerid(id);
+		trainer.setTrainerId(id);
 		trainer.setPassword(password);
 		try {
-			dao.saveNewEntry(trainer.getTrainerid(), trainer.getName(), trainer.getDepartment(), trainer.getPhonenumber(), trainer.getEmail(), trainer.getPassword());
+			dao.saveNewEntry(trainer.getTrainerId(), trainer.getName(), trainer.getDepartment(), trainer.getPhoneNumber(), trainer.getEmail(), trainer.getPassword());
 			service.sendEmail("group2.learning.management.system@gmail.com", trainer.getEmail(), "Hi " + firstname +", \nYour password is "+password+"\nChange your password once you are logged in.", "Trainer registered successfully - learning management portal");
 		}catch(DataIntegrityViolationException e) {
 			throw new DataIntegrityViolationException("Duplicate email ID found for trainer with email ID: "+trainer.getEmail());
@@ -72,7 +72,7 @@ public class TrainerService {
 	        XSSFRow row = worksheet.getRow(i);
 	        trainer.setName(row.getCell(0).getStringCellValue());
 	        trainer.setDepartment(row.getCell(1).getStringCellValue());
-	        trainer.setPhonenumber(row.getCell(2).getStringCellValue());
+	        trainer.setPhoneNumber(row.getCell(2).getStringCellValue());
 	        trainer.setEmail(row.getCell(3).getStringCellValue());
 	        addTrainer(trainer);
 
@@ -131,6 +131,7 @@ public class TrainerService {
 
 	public List<String> findCommentsForACourse(int tcid){
 		return offeringDAO.findCommentsForACourse(tcid);
+	}
 
 	/*
 	 * REMOVE TRAINER BY ID
@@ -143,7 +144,7 @@ public class TrainerService {
 	 * Update TRAINER BY ID
 	 */
 	public void updateTrainer(Trainer trainer) {
-		dao.updateEntry(trainer.getDepartment(), trainer.getPhonenumber(), trainer.getTrainerid());
+		dao.updateEntry(trainer.getDepartment(), trainer.getPhoneNumber(), trainer.getTrainerId());
 	}
 
 	/*

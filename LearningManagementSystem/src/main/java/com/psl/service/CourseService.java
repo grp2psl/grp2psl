@@ -28,7 +28,7 @@ public class CourseService {
 	public Course addCourse(Course course) {
 		Integer id = dao.getNextId();
 		id = (id==null ? 0 : id + 1);
-		course.setCourseid(id);
+		course.setCourseId(id);
 	    return dao.save(course);		
 	}
 	
@@ -50,7 +50,7 @@ public class CourseService {
 	 * Update COURSE BY ID
 	 */
 	public void updateCourse(Course course) {
-		dao.updateEntry(course.getPrerequisite(),course.getSyllabus(),course.getDuration(),course.getCourseid());
+		dao.updateEntry(course.getPrerequisite(),course.getSyllabus(),course.getDuration(),course.getCourseId());
 	}
 	
 

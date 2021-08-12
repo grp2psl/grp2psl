@@ -17,7 +17,7 @@ public class ManagerService {
 	public void addManager(Manager m) {
 		Integer id = dao.getNextId();
 		id = (id==null ? 30000 : id);
-		m.setManagerid(id);
+		m.setManagerId(id);
 		dao.save(m);
 	}
 	

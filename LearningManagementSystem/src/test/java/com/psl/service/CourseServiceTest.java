@@ -33,7 +33,7 @@ public class CourseServiceTest {
 	    service.addCourse(c);
 	     
 	    Course course=service.getCourse(369);
-	    assertThat(course.getCourseid()).isEqualTo(369);
+	    assertThat(course.getCourseId()).isEqualTo(369);
 	    
 	}
 	
@@ -41,7 +41,7 @@ public class CourseServiceTest {
 	@Order(3)
 	public void testGetCourse() {
 	    Course course=service.getCourse(2);
-	    assertThat(course.getCourseid()).isEqualTo(2);
+	    assertThat(course.getCourseId()).isEqualTo(2);
 	    
 	}
 	

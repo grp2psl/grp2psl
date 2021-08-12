@@ -82,12 +82,12 @@ public class CourseOfferingService {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
 		Integer maxId = dao.getMaxId();
 		maxId = maxId==null ? 0 : maxId;
-		offering.setCourseofferingid(++maxId);
+		offering.setCourseOfferingId(++maxId);
 		System.out.println(offering.getStatus());
         dao.save(updateCourseOfferingStatus(offering));
-        Learner learner = learnerService.getLearner(offering.getLearnerid());
-        Course course = tcService.getCourse(offering.getTcid());
-        emailService.sendEmail("group2.learning.management.system@gmail.com", learner.getEmail(), "Hi " + learner.getName() +", \nYou have been enrolled to the Course - "+course.getCoursename()+".\nDuration of the course is - "+course.getDuration()+" hours, starting from "+formatter.format(offering.getStartdate()), "Learner enrolled to "+course.getCoursename()+" successfully - learning management portal");
+        Learner learner = learnerService.getLearner(offering.getLearnerId());
+        Course course = tcService.getCourse(offering.getTcId());
+        emailService.sendEmail("group2.learning.management.system@gmail.com", learner.getEmail(), "Hi " + learner.getName() +", \nYou have been enrolled to the Course - "+course.getCourseName()+".\nDuration of the course is - "+course.getDuration()+" hours, starting from "+formatter.format(offering.getStartDate()), "Learner enrolled to "+course.getCourseName()+" successfully - learning management portal");
 	}
 	
 	/*
@@ -103,15 +103,15 @@ public class CourseOfferingService {
 	    for(int i=1;i<worksheet.getPhysicalNumberOfRows() ;i++) {
 	        CourseOffering offering = new CourseOffering();
 	        XSSFRow row = worksheet.getRow(i);
-	        offering.setCourseofferingid(++maxId);
-	        offering.setStartdate(formatter.parse(row.getCell(2).getStringCellValue()));
-	        offering.setEnddate(formatter.parse(row.getCell(3).getStringCellValue()));
-	        offering.setLearnerid((int)row.getCell(0).getNumericCellValue());
-	        offering.setTcid((int)row.getCell(1).getNumericCellValue());
-	        Learner learner = learnerService.getLearner(offering.getLearnerid());
-	        Course course = tcService.getCourse(offering.getTcid());
+	        offering.setCourseOfferingId(++maxId);
+	        offering.setStartDate(formatter.parse(row.getCell(2).getStringCellValue()));
+	        offering.setEndDate(formatter.parse(row.getCell(3).getStringCellValue()));
+	        offering.setLearnerId((int)row.getCell(0).getNumericCellValue());
+	        offering.setTcId((int)row.getCell(1).getNumericCellValue());
+	        Learner learner = learnerService.getLearner(offering.getLearnerId());
+	        Course course = tcService.getCourse(offering.getTcId());
 	        dao.save(updateCourseOfferingStatus(offering));
-	        emailService.sendEmail("group2.learning.management.system@gmail.com", learner.getEmail(), "Hi " + learner.getName() +", \nYou have been enrolled to the Course - "+course.getCoursename()+".\nDuration of the course is - "+course.getDuration()+" hours, starting from "+formatter.format(offering.getStartdate()), "Learner enrolled to "+course.getCoursename()+" successfully - learning management portal");
+	        emailService.sendEmail("group2.learning.management.system@gmail.com", learner.getEmail(), "Hi " + learner.getName() +", \nYou have been enrolled to the Course - "+course.getCourseName()+".\nDuration of the course is - "+course.getDuration()+" hours, starting from "+formatter.format(offering.getStartDate()), "Learner enrolled to "+course.getCourseName()+" successfully - learning management portal");
 		}
 				
 	}
@@ -232,7 +232,7 @@ public class CourseOfferingService {
 		for(TeacherCourseMapping tc: tcMappings) {
 			List<CourseOffering> co = dao.findByTcId(tc.getTcId());
 			Course course = tcService.getCourse(tc.getTcId());
-			offerings.put(course.getCourseid(), co);
+			offerings.put(course.getCourseId(), co);
 		}
 		response.put("trainerDetails", trainer);
 		response.put("courses", courses);
@@ -261,7 +261,7 @@ public class CourseOfferingService {
 	}
 	
 	public int findCourseOfferingIdByTcIdAndLearnerId(int tcId, int learnerId) {
-		return dao.findByTcIdAndLearnerId(tcId, learnerId).getCourseofferingid();
+		return dao.findByTcIdAndLearnerId(tcId, learnerId).getCourseOfferingId();
 	}
 
 	/*
@@ -274,9 +274,9 @@ public class CourseOfferingService {
 		for(CourseOffering co : courseOfferingList) {
 			element = new HashMap<String, Object>();
 			element.put("offering", co);
-			element.put("learner", learnerService.getLearner(co.getLearnerid()));
-			element.put("trainer", trainerService.getTrainer(tcService.getById(co.getTcid()).getTrainerId()));
-			element.put("course", courseService.getCourse(tcService.getById(co.getTcid()).getCourseId()));
+			element.put("learner", learnerService.getLearner(co.getLearnerId()));
+			element.put("trainer", trainerService.getTrainer(tcService.getById(co.getTcId()).getTrainerId()));
+			element.put("course", courseService.getCourse(tcService.getById(co.getTcId()).getCourseId()));
 			response.add(element);
 		}
 		return response;
@@ -290,12 +290,12 @@ public class CourseOfferingService {
 		Map<String, Object> element;
 		List<CourseOffering> courseOfferingList = viewCourseOfferings();
 		for(CourseOffering co : courseOfferingList) {
-			if(co.getLearnerid() == learnerid) {
+			if(co.getLearnerId() == learnerid) {
 				element = new HashMap<String, Object>();
 				element.put("offerings", co);
-				element.put("learners", learnerService.getLearner(co.getLearnerid()));
-				element.put("trainers", trainerService.getTrainer(tcService.getById(co.getTcid()).getTrainerId()));
-				element.put("courses", courseService.getCourse(tcService.getById(co.getTcid()).getCourseId()));
+				element.put("learners", learnerService.getLearner(co.getLearnerId()));
+				element.put("trainers", trainerService.getTrainer(tcService.getById(co.getTcId()).getTrainerId()));
+				element.put("courses", courseService.getCourse(tcService.getById(co.getTcId()).getCourseId()));
 				response.add(element);
 			}
 		}
@@ -309,7 +309,7 @@ public class CourseOfferingService {
 		List<CourseOffering> courseOfferingList = dao.findByLearnerId(learnerId);
 		List<TeacherCourseMapping> list = new ArrayList<>();
 		for(CourseOffering co : courseOfferingList) {
-			list.add(tcService.getById(co.getTcid()));
+			list.add(tcService.getById(co.getTcId()));
 		}
 		return list;
 	}
@@ -321,7 +321,7 @@ public class CourseOfferingService {
 		List<CourseOffering> courseOfferingList = dao.findByTcId(tcId);
 		List<Learner> learners = new ArrayList<>();
 		for(CourseOffering co : courseOfferingList) {
-			learners.add(learnerService.getLearner(co.getLearnerid()));
+			learners.add(learnerService.getLearner(co.getLearnerId()));
 		}
 		return learners;
 	}

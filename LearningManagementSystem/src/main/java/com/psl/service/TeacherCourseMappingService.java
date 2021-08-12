@@ -120,7 +120,7 @@ public class TeacherCourseMappingService {
 			tcName.put("trainerid", tc.getTrainerId());
 			tcName.put("trainerName", trainer.getName());
 			tcName.put("courseid", tc.getCourseId());
-			tcName.put("courseName", course.getCoursename());
+			tcName.put("courseName", course.getCourseName());
 			tcNames.add(tcName);
 		}
 		return tcNames;
