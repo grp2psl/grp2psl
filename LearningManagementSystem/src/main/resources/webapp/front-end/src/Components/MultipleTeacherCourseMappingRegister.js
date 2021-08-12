@@ -78,7 +78,7 @@ class MultipleTeacherCourseMappingRegister extends React.Component{
             }
 
             try{
-                const response = await axios.post("http://localhost:8080/LearningManagementSystem/teacherCourseMapping/register-multiple", formData, config);
+                const response = await axios.post("http://localhost:8090/LearningManagementSystem/teacherCourseMapping/register-multiple", formData, config);
                 console.log(response)
                 if(response.data != null){
                     alert("Trainers assigned successfully");

@@ -17,10 +17,10 @@ class EditLearnerDetails extends React.Component{
     }
 
     initialState = {
-        id: this.props.location.state.learner.learnerid,
+        id: this.props.location.state.learner.learnerId,
         name: this.props.location.state.learner.name,
         department: this.props.location.state.learner.department,
-        phonenumber: this.props.location.state.learner.phonenumber,
+        phonenumber: this.props.location.state.learner.phoneNumber,
         email: this.props.location.state.learner.email,
         msg:""
       };
@@ -40,13 +40,13 @@ class EditLearnerDetails extends React.Component{
     async register(event){
 		event.preventDefault();
 		const learner = {
-            learnerid: this.state.id,
+            learnerId: this.state.id,
             name: this.state.name,
             department: this.state.department,
-            phonenumber: this.state.phonenumber,
+            phoneNumber: this.state.phonenumber,
             email: this.state.email
         }
-        if(this.validateForm(learner.phonenumber) === true){
+        if(this.validateForm(learner.phoneNumber) === true){
             this.setState({
                 msg:"Processing..\nPlease Wait"
             });

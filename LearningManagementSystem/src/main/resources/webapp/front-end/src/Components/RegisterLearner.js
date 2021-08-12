@@ -41,10 +41,10 @@ class RegisterLearner extends React.Component{
 		const learner = {
             name: this.state.name,
             department: this.state.department,
-            phonenumber: this.state.phonenumber,
+            phoneNumber: this.state.phonenumber,
             email: this.state.email
         }
-        if(this.validateForm(learner.phonenumber) === true){
+        if(this.validateForm(learner.phoneNumber) === true){
             this.setState({
                 msg:"Processing..\nPlease Wait"
             });

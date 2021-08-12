@@ -70,7 +70,7 @@ class ScoreAndStatus extends React.Component{
                                 </tr>
                                 ) : (
                                 this.state.offerings.map((course) => (
-                                    <tr key={course.tcid}>
+                                    <tr key={course.tcId}>
                                 	<td>{this.props.location.state.courseId}</td>
                                     <td>{course.percentage}</td>
                                     <td>{course.status}</td>

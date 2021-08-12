@@ -66,10 +66,10 @@ class CoursesOffered extends React.Component{
                                 </tr>
                                 ) : (
                                 this.state.courses.map((course) => (
-                                    <tr key={course.courseid}>
-                                    <td>{course.courseid}</td>
-                                    <td>{course.coursename}</td>
-                                    <td>{this.state.offerings[course.courseid].length}</td>
+                                    <tr key={course.courseId}>
+                                    <td>{course.courseId}</td>
+                                    <td>{course.courseName}</td>
+                                    <td>{this.state.offerings[course.courseId].length}</td>
                                     <td>
                                         <ButtonGroup>
                                         <Button
@@ -79,8 +79,8 @@ class CoursesOffered extends React.Component{
                                                 this.props.history.push({
                                                     pathname: "/viewFeedback",
                                                     state: {
-                                                        courseId: course.courseid,
-                                                        trainerId: this.state.trainerDetails.trainerid
+                                                        courseId: course.courseId,
+                                                        trainerId: this.state.trainerDetails.trainerId
                                                     },
                                                 })
                                             }}

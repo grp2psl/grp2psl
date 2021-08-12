@@ -31,7 +31,7 @@ class CourseRegister extends React.Component{
     async registerCourse(event){
 		event.preventDefault();
 		const course = {
-            coursename: this.state.coursename,
+            courseName: this.state.coursename,
             prerequisite: this.state.prerequisite,
             syllabus: this.state.syllabus,
             duration: this.state.duration

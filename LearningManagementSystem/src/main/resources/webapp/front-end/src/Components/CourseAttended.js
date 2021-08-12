@@ -74,13 +74,13 @@ class CourseAttended extends React.Component{
                                 </tr>
                                 ) : (
                                 this.state.courseOffering.map((course) => (
-                                    <tr key={course.offerings.courseofferingid}>
+                                    <tr key={course.offerings.courseOfferingId}>
                                 
-                                    <td>{course.courses.courseid}</td>
-                                    <td>{course.courses.coursename}</td>
+                                    <td>{course.courses.courseId}</td>
+                                    <td>{course.courses.courseName}</td>
                                   
 
-                                    <td>{<a target='_blank' href={course.courses.syllabus} className="text-white">{course.courses.coursename}</a>}</td>
+                                    <td>{<a target='_blank' href={course.courses.syllabus} className="text-white">{course.courses.courseName}</a>}</td>
                                     <td>{course.trainers.name}</td>
                                     <td>
                                         <ButtonGroup>
@@ -91,8 +91,8 @@ class CourseAttended extends React.Component{
                                                 this.props.history.push({
                                                     pathname: "/viewScoreAndStatus",
                                                     state: {
-                                                        courseId: course.courses.courseid,
-                                                        learnerId: course.learners.learnerid
+                                                        courseId: course.courses.courseId,
+                                                        learnerId: course.learners.learnerId
                                                     },
                                                 })
                                             }}

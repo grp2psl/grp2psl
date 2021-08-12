@@ -24,6 +24,7 @@ class ViewCourses extends React.Component{
 		try{
 			const response = await axios.get("http://localhost:8080/LearningManagementSystem/course/allcourses/");
 			if(response.data != null) {
+                console.log(response.data)
 				this.setState({
 					courses: response.data
 				});	
@@ -87,9 +88,9 @@ class ViewCourses extends React.Component{
                                 </tr>
                                 ) : (
                                 this.state.courses.map((course) => (
-                                    <tr key={course.courseid}>
-                                    <td>{course.courseid}</td>
-                                    <td>{course.coursename}</td>
+                                    <tr key={course.courseId}>
+                                    <td>{course.courseId}</td>
+                                    <td>{course.courseName}</td>
                                     <td>{course.prerequisite}</td>
                                     <td>{<a target='_blank' href={course.syllabus}>Click here to see syllabus</a>}</td>
                                     <td>{course.duration}</td>
@@ -105,7 +106,7 @@ class ViewCourses extends React.Component{
                                         <Button
                                             size="sm"
                                             variant="outline-danger"
-                                            onClick={() => this.deleteData(course.courseid)}
+                                            onClick={() => this.deleteData(course.courseId)}
                                         >
                                             <FontAwesomeIcon icon={faTrash} />
                                         </Button>

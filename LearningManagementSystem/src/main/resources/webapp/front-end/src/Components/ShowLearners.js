@@ -101,12 +101,12 @@ class ShowLearners extends React.Component{
                                 ) : (
                                 this.state.learners.map((learner) => (
 									
-                                    <tr key={learner.learnerid}>  
+                                    <tr key={learner.learnerId}>  
                                             
-                                    <td>{learner.learnerid}</td>
+                                    <td>{learner.learnerId}</td>
                                     <td>{learner.name}</td>
                                     <td>{learner.department}</td>
-                                    <td>{learner.phonenumber}</td>
+                                    <td>{learner.phoneNumber}</td>
                                     <td>{learner.email}</td>
                                     <td>
                                         <ButtonGroup>
@@ -116,7 +116,7 @@ class ShowLearners extends React.Component{
                                         <Button
                                             size="sm"
                                             variant="outline-primary"
-                                            onClick={() => this.showCourse(learner.learnerid)}
+                                            onClick={() => this.showCourse(learner.learnerId)}
                                         >
                                             Courses
                                         </Button>{" "}
@@ -131,7 +131,7 @@ class ShowLearners extends React.Component{
                                         <Button
                                             size="sm"
                                             variant="outline-danger"
-                                            onClick={() => this.deleteData(learner.learnerid)}
+                                            onClick={() => this.deleteData(learner.learnerId)}
                                         >
                                             <FontAwesomeIcon icon={faTrash} />
                                         </Button>

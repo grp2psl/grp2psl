@@ -41,10 +41,10 @@ class Register extends React.Component{
 		const trainer = {
             name: this.state.name,
             department: this.state.department,
-            phonenumber: this.state.phonenumber,
+            phoneNumber: this.state.phonenumber,
             email: this.state.email
         }
-        if(this.validateForm(trainer.phonenumber) === true){
+        if(this.validateForm(trainer.phoneNumber) === true){
             this.setState({
                 msg:"Processing..\nPlease Wait"
             });
@@ -103,7 +103,7 @@ class Register extends React.Component{
                                 <Form.Label>Phone Number</Form.Label>
                                 <Form.Control required autoComplete="off"
                                     type="text" 
-                                    value={this.state.phonenumber}
+                                    value={this.state.phoneNumber}
                                     onChange={this.formChange}
                                     name="phonenumber"
                                     placeholder="Enter phone number" />

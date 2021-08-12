@@ -30,7 +30,7 @@ export default class TeacherCourseMappingRegister extends Component {
     const trainerData = trainerResponse.data
 
     const tranierOptions = trainerData.map(d => ({
-      "value" : d.trainerid,
+      "value" : d.trainerId,
       "label" : d.name
 
     }))
@@ -41,8 +41,8 @@ export default class TeacherCourseMappingRegister extends Component {
     const courseData = courseResponse.data
 
     const courseOptions = courseData.map(d => ({
-      "value" : d.courseid,
-      "label" : d.coursename
+      "value" : d.courseId,
+      "label" : d.courseName
 
     }))
 	

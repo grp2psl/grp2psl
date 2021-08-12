@@ -17,8 +17,8 @@ class EditCourseDetails extends React.Component{
     }
 
     initialState = {
-        id: this.props.location.state.course.courseid,
-        coursename: this.props.location.state.course.coursename,
+        id: this.props.location.state.course.courseId,
+        coursename: this.props.location.state.course.courseName,
         prerequisite: this.props.location.state.course.prerequisite,
         syllabus: this.props.location.state.course.syllabus,
         duration: this.props.location.state.course.duration,
@@ -34,8 +34,8 @@ class EditCourseDetails extends React.Component{
     async register(event){
 		event.preventDefault();
 		const course = {
-            courseid: this.state.id,
-            coursename: this.state.coursename,
+            courseId: this.state.id,
+            courseName: this.state.coursename,
             prerequisite: this.state.prerequisite,
             syllabus: this.state.syllabus,
             duration: this.state.duration

@@ -55,7 +55,7 @@ class ViewFeedback extends React.Component{
         return(
 	
             <Card className={"border border-dark bg-dark text-white mt-5"}>
-                <Card.Header>Feedback for Course - {this.state.courseDetails.coursename}
+                <Card.Header>Feedback for Course - {this.state.courseDetails.courseName}
                 <Row className="mt-2" xs={4} md={4} lg={4}>
                     <Col md={{offset:8}}><h5 className="text-white mt-2">Average Rating</h5></Col>
                 </Row>
@@ -89,9 +89,9 @@ class ViewFeedback extends React.Component{
                                 </tr>
                                 ) : (
                                 this.state.offerings.map((offering) => (
-                                    <tr key={offering.courseofferingid}>
-                                    <td>{this.formatDate(offering.startdate)}</td>
-                                    <td>{this.formatDate(offering.enddate)}</td>
+                                    <tr key={offering.courseOfferingId}>
+                                    <td>{this.formatDate(offering.startDate)}</td>
+                                    <td>{this.formatDate(offering.endDate)}</td>
                                     <td>{offering.feedback}</td>
                                     <td>
                                         <ReactStars

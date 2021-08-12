@@ -89,11 +89,11 @@ class ShowTrainers extends React.Component{
                                 </tr>
                                 ) : (
                                 this.state.trainers.map((trainer) => (
-                                    <tr key={trainer.trainerid}>
-                                    <td>{trainer.trainerid}</td>
+                                    <tr key={trainer.trainerId}>
+                                    <td>{trainer.trainerId}</td>
                                     <td>{trainer.name}</td>
                                     <td>{trainer.department}</td>
-                                    <td>{trainer.phonenumber}</td>
+                                    <td>{trainer.phoneNumber}</td>
                                     <td>{trainer.email}</td>
                                     <td>
                                         <ButtonGroup>
@@ -102,7 +102,7 @@ class ShowTrainers extends React.Component{
                                             variant="outline-primary"
                                             onClick={() => this.props.history.push({
                                                 pathname: "/viewCoursesOffered",
-                                                state: {id: trainer.trainerid}
+                                                state: {id: trainer.trainerId}
                                             })}
                                         >Courses</Button>
                                         <Button
@@ -115,7 +115,7 @@ class ShowTrainers extends React.Component{
                                         <Button
                                             size="sm"
                                             variant="outline-danger"
-                                            onClick={() => this.deleteData(trainer.trainerid)}
+                                            onClick={() => this.deleteData(trainer.trainerId)}
                                         >
                                             <FontAwesomeIcon icon={faTrash} />
                                         </Button>
