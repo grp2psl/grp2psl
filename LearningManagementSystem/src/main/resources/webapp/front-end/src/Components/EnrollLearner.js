@@ -56,10 +56,10 @@ class EnrollLearner extends React.Component{
     async enrollLearner(event){
 		event.preventDefault();
 		const courseOffering = {
-            learnerid: this.state.learnerid,
-            tcid: this.state.tcid,
-            startdate: this.state.startdate,
-            enddate: this.state.enddate
+            learnerId: this.state.learnerid,
+            tcId: this.state.tcid,
+            startDate: this.state.startdate,
+            endDate: this.state.enddate
         }
         this.setState({
 			msg:"Processing.. Please Wait"
@@ -107,7 +107,7 @@ class EnrollLearner extends React.Component{
                                 }}>
                                 <option>Select a learner</option>
                                 {this.state.learners.map((learner) => {
-                                    return <option key={learner.learnerid} value={learner.learnerid}>{learner.name} - {learner.email}</option>  
+                                    return <option key={learner.learnerId} value={learner.learnerId}>{learner.name} - {learner.email}</option>  
                                 })}
                                 </Form.Select>
                            	</Col>

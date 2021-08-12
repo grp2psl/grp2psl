@@ -154,7 +154,7 @@ class UpdateScoreIndividual extends React.Component{
                                 }}>
                                 <option>Select a learner</option>
                                 {this.state.learners.map((learner) => {
-                                    return <option key={learner.learnerid} value={learner.learnerid}>{learner.name} - {learner.email}</option>  
+                                    return <option key={learner.learnerId} value={learner.learnerId}>{learner.name} - {learner.email}</option>  
                                 })}
                                 </Form.Select>
                            	</Col>

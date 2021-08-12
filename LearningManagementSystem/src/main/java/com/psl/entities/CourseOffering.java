@@ -26,8 +26,6 @@ import javax.validation.constraints.Size;
 
 //Annotation to recognize CourseOffering as an Entity
 @Entity
-//Annotation to map IdClass of CourseOffering which is stored as a separate class because primary key is composite
-@IdClass(CourseOfferingId.class)
 //Name of the MySql table in which CourseOffering Entity records are stored
 @Table(name = "courseoffering")
 //Definition of CourseOffering Entity

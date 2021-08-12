@@ -108,19 +108,19 @@ class ViewCourseOfferings extends React.Component{
                                 </tr>
                                 ) : (
                                 this.state.courseOfferings.map((courseOffering) => (
-                                    <tr key={courseOffering.offering.courseofferingid}>
-                                    <td>{courseOffering.offering.courseofferingid}</td>
-                                    <td>{courseOffering.learner.learnerid}</td>
+                                    <tr key={courseOffering.offering.courseOfferingId}>
+                                    <td>{courseOffering.offering.courseOfferingId}</td>
+                                    <td>{courseOffering.learner.learnerId}</td>
                                     <td onClick={() => {
-										this.showLearnersCourse(courseOffering.learner.learnerid);
+										this.showLearnersCourse(courseOffering.learner.learnerId);
 									}}>{courseOffering.learner.name}</td>
-                                    <td>{courseOffering.offering.tcid}</td>
+                                    <td>{courseOffering.offering.tcId}</td>
                                     <td onClick={() => {
-										this.showTrainers(courseOffering.trainer.trainerid);
+										this.showTrainers(courseOffering.trainer.trainerId);
 									}}>{courseOffering.trainer.name}</td>
-                                    <td><a href={courseOffering.course.syllabus} className="text-white"  style={{ textDecoration: 'none' }}>{courseOffering.course.coursename}</a></td>
-                                    <td>{this.formatDate(courseOffering.offering.startdate)}</td>
-                                    <td>{this.formatDate(courseOffering.offering.enddate)}</td>
+                                    <td><a href={courseOffering.course.syllabus} className="text-white"  style={{ textDecoration: 'none' }}>{courseOffering.course.courseName}</a></td>
+                                    <td>{this.formatDate(courseOffering.offering.startDate)}</td>
+                                    <td>{this.formatDate(courseOffering.offering.endDate)}</td>
                                     <td>{courseOffering.offering.percentage}</td>
                                     <td>{courseOffering.offering.status}</td>
                                     <td>
@@ -128,7 +128,7 @@ class ViewCourseOfferings extends React.Component{
                                         <Button
                                             size="sm"
                                             variant="outline-danger"
-                                            onClick={() => this.deleteData(courseOffering.offering.courseofferingid)}
+                                            onClick={() => this.deleteData(courseOffering.offering.courseOfferingId)}
                                         >
                                             <FontAwesomeIcon icon={faTrash} />
                                         </Button>

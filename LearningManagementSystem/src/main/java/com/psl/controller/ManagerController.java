@@ -40,8 +40,6 @@ public class ManagerController {
 	@Autowired
 	private CourseOfferingService offeringService;
 	
-	
-		
 	/*
 	 * GET DETAILS OF MANAGER BY ID
 	 */
