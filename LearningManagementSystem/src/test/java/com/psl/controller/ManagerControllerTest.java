@@ -16,8 +16,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.psl.service.CourseOfferingService;
@@ -121,10 +125,21 @@ public class ManagerControllerTest {
 		String contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 		byte[] content = null;
 		content = Files.readAllBytes(path);
-		MultipartFile file = new MockMultipartFile(name,
+		MockMultipartFile file = new MockMultipartFile(name,
 		                     originalFileName, contentType, content);
-		this.mvc.perform(multipart("/managers/update-test-scores").file((MockMultipartFile) file))
-	    .andExpect(status().isOk());
+		@SuppressWarnings("deprecation")
+		MockMultipartHttpServletRequestBuilder builder =
+	            MockMvcRequestBuilders.fileUpload("/managers/update-test-scores");
+	    builder.with(new RequestPostProcessor() {
+	        @Override
+	        public MockHttpServletRequest postProcessRequest(MockHttpServletRequest request) {
+	            request.setMethod("PUT");
+	            return request;
+	        }
+	    });
+	    mvc.perform(builder
+	            .file(file))
+	            .andExpect(status().isOk());
 	}
 	
 	/*
@@ -197,10 +212,11 @@ public class ManagerControllerTest {
 	 */
 	@Test
 	public void updateTestScoreByCourseOfferingIdTest() throws Exception {
-		int id = offeringService.getMaxId();
-		String request = "{\"percentage\":70}";
-		this.mvc.perform(put("/managers/update-test-score/"+id)
-				.contentType(MediaType.APPLICATION_JSON).content(request))
+		this.mvc.perform(put("/managers/update-test-score/")
+				.param("tcId", ""+0)
+				.param("learnerId", ""+10001)
+				.param("percentage", "70")
+				.contentType(MediaType.APPLICATION_JSON))
 		.andExpect(status().isOk());
 	}
 	
