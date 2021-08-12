@@ -66,53 +66,9 @@ public class TeacherCourseMappingTest {
 		service.addMultipleTeacherCourseMapping(file);
 		assertThat(service.getNextId() > id);
 	}
-//	@Test
-//	@Order(1)
-//	public void addTeacherCourseMappingTest() {
-//		TeacherCourseMapping c=new TeacherCourseMapping(4,2,6);
-//	    service.addTeacherCourseMapping(c);
-//	     
-//	    TeacherCourseMapping tcmapping=service.getByTrainerIdAndCourseId(2,2);
-//	    assertThat(tcmapping.getCourseId()).isEqualTo(2);
-//	    
-//	}
-//	
-//	/*
-//	 * TEST ADD MULTIPLE LEARNERS
-//	 */
-//	@Test
-//	@Order(2)
-//	public void addMultipleTeacherCourseMappingTest() throws IOException, ParseException {
-//		int id = service.getNextId();
-//		Path path = Paths.get("teachercoursemapping.xlsx");
-//		String name = "teachercoursemapping.xlsx";
-//		String originalFileName = "teachercoursemapping.xlsx";
-//		String contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-//		byte[] content = null;
-//		content = Files.readAllBytes(path);
-//		MultipartFile file = new MockMultipartFile(name,
-//		                     originalFileName, contentType, content);
-//		service.addMultipleTeacherCourseMapping(file);
-//		assertThat(service.getNextId() > id);
-//	}
-//	
-//	/*
-//	 * TEST GET TRAINER AND COURSE NAMES FOR ALL TC MAPPINGS
-//	 */
-//	@Test
-//	@Order(3)
-//	public void getAllTrainerCourseNamesTest() {
-//		List<Object> response = service.getAllTrainerCourseNames();
-//		assertThat(response).size().isGreaterThan(0);
-//		for(Object iterator: response) {
-//			assertThat(iterator).hasFieldOrProperty("trainerName");
-//			assertThat(iterator).hasFieldOrProperty("courseName");
-//			assertThat(iterator).hasFieldOrProperty("trainerId");
-//			assertThat(iterator).hasFieldOrProperty("courseId");
-//			assertThat(iterator).hasFieldOrProperty("tcid");
-//		}
-//	}
-	
+
+
+
 	/*
 	 * TEST GET TRAINER AND COURSE NAMES FOR ALL TC MAPPINGS
 	 */
