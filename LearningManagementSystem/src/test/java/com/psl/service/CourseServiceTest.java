@@ -37,6 +37,10 @@ public class CourseServiceTest {
 	    
 	}
 	
+
+	/*
+	 * TEST FOR GET COURSE BY COURSEID
+	 */
 	@Test
 	@Order(3)
 	public void testGetCourse() {
