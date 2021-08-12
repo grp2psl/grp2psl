@@ -24,9 +24,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import com.psl.entities.CourseOffering;
+import com.psl.entities.Learner;
 import com.psl.entities.Manager;
+import com.psl.entities.TeacherCourseMapping;
 import com.psl.service.CourseOfferingService;
-import com.psl.service.LearnerService;
 import com.psl.service.ManagerService;
 
 @RestController
@@ -35,9 +36,6 @@ import com.psl.service.ManagerService;
 public class ManagerController {
 	@Autowired
 	private ManagerService service;
-	
-	@Autowired
-	private LearnerService lService;
 	
 	@Autowired
 	private CourseOfferingService offeringService;
@@ -190,13 +188,36 @@ public class ManagerController {
 			return new ResponseEntity<>("No such course offering exists.",HttpStatus.BAD_REQUEST);			
 		}
 	}
-	
+
+	/*
+	 * VIEW DETAILS OF COURSE OFFERINGS
+	 */	
 	@GetMapping("/viewCourseOfferingsDetails")
 	public List<Map<String, Object>> viewCourseOfferingsDetails() throws ParseException{
 		return offeringService.viewCourseOfferingsDetails();
 	}
+
+	/*
+	 * VIEW DETAILS OF COURSES ATTENDED
+	 */	
 	@GetMapping("/courses-attended/{id}")
 	public List<Map<String, Object>> viewCoursesAttended(@PathVariable int id ) throws ParseException{
 		return offeringService.viewCourseOfferingsDetailsByLearnerId(id);
+	}	
+
+	/*
+	 * FIND TEACHER-COURSE MAPPINGS BY LEARNER ID
+	 */		
+	@GetMapping("/findTeacherCourseMappingsByLearnerId/{id}")
+	public List<TeacherCourseMapping> findTeacherCourseMappingsByLearnerId(@PathVariable("id") int learnerId) throws ParseException{
+		return offeringService.findTeacherCourseMappingsByLearnerId(learnerId);
+	}
+
+	/*
+	 * FIND LEARNERS BY TCID
+	 */	
+	@GetMapping("/findLearnersByTcId/{id}")
+	public List<Learner> findLearnersByTcId(@PathVariable("id") int tcId) throws ParseException{
+		return offeringService.findLearnersByTcId(tcId);
 	}	
 }

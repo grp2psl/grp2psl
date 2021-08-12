@@ -30,6 +30,7 @@ import com.psl.service.TrainerService;
 public class TrainerController {
 	@Autowired
 	private TrainerService service;
+	
 	/*
 	 * GET DETAILS OF TRAINER BY ID
 	 */
