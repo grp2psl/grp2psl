@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Card, Form, Button} from 'react-bootstrap';
+import MyToast from './MyToast';
+import axios from 'axios';
 
 export default class Feedback extends Component{
 	
@@ -8,18 +10,33 @@ export default class Feedback extends Component{
 		this.state = {feedback:''};
 		this.sendFeedback = this.sendFeedback.bind(this);
 		this.feedbackChange = this.feedbackChange.bind(this);
+		this.goBack = this.goBack.bind(this);
 	}
 	
-	sendFeedback(event){
-		alert(this.state.feedback);
+	async sendFeedback(event){
 		event.preventDefault();
-	}
+		
+		try{            const 
+			response = await axios.put("http://localhost:8080/LearningManagementSystem/feedback/" + this.props.location.state.id, {feedback:this.state.feedback});
+		} catch(error) {
+			alert(error.response.data);
+		}
+	};
 	
 	feedbackChange(event){
 		this.setState({
 			[event.target.name]:event.target.value
 		})
 	}
+		
+	goBack(){
+    	this.props.history.goBack();
+	}
+	
+	initialState = {
+		feedback:''
+	};
+	
 	
 	render(){
 		return (<Card className="text-black">
@@ -41,7 +58,8 @@ export default class Feedback extends Component{
 					</Form.Row>				  			
 				</Card.Body>
 			<Card.Footer style = {{"textAlign":"right"}}>
-				<Button size = "sm" variant="success" type="submit"> Submit </Button>				
+				<Button size = "sm" variant="success" type="submit"> Submit </Button>{" "}				
+				<Button size = "sm" variant="info" type="button" onClick = {this.goBack}> Go Back </Button>								
 			</Card.Footer>
 			</Form>
 		</Card>);

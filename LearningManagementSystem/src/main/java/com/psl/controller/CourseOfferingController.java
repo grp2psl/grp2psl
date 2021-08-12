@@ -32,9 +32,10 @@ public class CourseOfferingController {
 	 * This part handles put requests from url's ending with /feedback/{learnerid}/{tcid} pattern
 	 * It adds feedback of given course offering (identified with tcid) by given learner (identified with learnerid)
 	 */
-	@PutMapping("/feedback/{learnerid}/{tcid}")
-	public void sendfeedback(@PathVariable int learnerid, @PathVariable int tcid ,@RequestBody String feedBack) {
-		service.AddFeedback(learnerid, tcid, feedBack);
+	@PutMapping("/feedback/{courseOfferingId}")
+	public void sendfeedback(@PathVariable int courseOfferingId ,@RequestBody CourseOffering CO) {
+		//System.out.println(feedBack);
+		service.AddFeedback(courseOfferingId, CO.getFeedback());
 	}
 	
 	/*
@@ -44,5 +45,10 @@ public class CourseOfferingController {
 	@GetMapping("/Offering/{learnerid}")
 	public List<CourseOffering> getOfferings(@PathVariable int learnerid){
 		return service.getCourseOfferings(learnerid);
+	}
+	
+	@GetMapping("/GetOffering/{courseOfferingId}")
+	public CourseOffering getOffering(@PathVariable int courseOfferingId) {
+		return service.getCourseOffering(courseOfferingId);
 	}
 }

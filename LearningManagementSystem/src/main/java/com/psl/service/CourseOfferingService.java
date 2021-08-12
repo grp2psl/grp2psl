@@ -29,8 +29,8 @@ public class CourseOfferingService {
 	}
 
 	//Function to allow Learner to given feedback on given course Offering
-	public CourseOffering AddFeedback(int learnerId, int tcId, String feedback) {
-		CourseOffering co = dao.findByTcIdAndLearnerId(tcId, learnerId);
+	public CourseOffering AddFeedback(int courseOfferingId, String feedback) {
+		CourseOffering co = dao.findById(courseOfferingId).get();
 		co.setFeedback(feedback);
 		return dao.save(co);
 	}
@@ -38,5 +38,10 @@ public class CourseOfferingService {
 	//Lists all Course Offerings of given learner which is identified by learnerId 
 	public List<CourseOffering> getCourseOfferings(int learnerId) {
 		return dao.findByLearnerId(learnerId);
+	}
+	
+	//Returns course offering of given id
+	public CourseOffering getCourseOffering(int id) {
+		return dao.findById(id).get();
 	}
 }

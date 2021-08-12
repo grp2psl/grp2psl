@@ -8,7 +8,7 @@ import {Container, Row, Col} from 'react-bootstrap';
 import {BrowserRouter as Router,Switch, Route} from 'react-router-dom';
 import Footer from './components/Footer';
 
-function App() {
+export default function App() {
   return (
     <Router>
     	<NavigationBar/>
@@ -17,7 +17,7 @@ function App() {
     			<Col lg={12}>
     			<Switch>
     				<Route path = "/CourseOfferingListing/:learnerid" component = {CourseOfferingListing}/>
-    				<Route path = "/Feedback" exact component = {Feedback}/>
+    				<Route path = "/Feedback/:courseofferingid" component = {Feedback}/>
     				<Route path = "/Credentials" exact component = {Credentials}/>
     				<Route path = "/" exact component = {Welcome}/>
     			</Switch>
@@ -28,5 +28,3 @@ function App() {
     </Router>
   );
 }
-
-export default App;

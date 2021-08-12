@@ -11,7 +11,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
+//import javax.persistence.IdClass;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -27,12 +27,24 @@ import javax.validation.constraints.Size;
 //Annotation to recognize CourseOffering as an Entity
 @Entity
 //Annotation to map IdClass of CourseOffering which is stored as a separate class because primary key is composite
-@IdClass(CourseOfferingId.class)
+//@IdClass(CourseOfferingId.class)
 //Name of the MySql table in which CourseOffering Entity records are stored
 @Table(name = "courseoffering")
 //Definition of CourseOffering Entity
 public class CourseOffering {
 	
+	@Id
+	@NotNull(message = "Course Offering id field can't be null")
+	@Column(name = "courseofferingid")
+	private int CourseOfferingId;
+	
+	public int getCourseOfferingId() {
+		return CourseOfferingId;
+	}
+	public void setCourseOfferingId(int courseOfferingId) {
+		CourseOfferingId = courseOfferingId;
+	}
+
 	/*
 	 * feedback attribute stores feedback of course offering in a string format 
 	 * with maximum limit on length of the string as 255.
@@ -66,7 +78,7 @@ public class CourseOffering {
 	 * Stored in learnerid column
 	 * It can't be null
 	 */
-	@Id
+//	@Id
 	@Column(name = "learnerid")
 	@NotNull(message = "learnerId field can't be null")
 	private int learnerId;
@@ -77,7 +89,7 @@ public class CourseOffering {
 	 * Stored in tcid column
 	 * It can't be null
 	 */
-	@Id
+//	@Id
 	@Column(name = "tcid")
 	@NotNull(message = "tcId field can't be null")
 	private int tcId;
@@ -97,7 +109,7 @@ public class CourseOffering {
 	 */
 	@NotNull(message = "percentage field can't be null")	
 	private int percentage;
-	
+		
 	/*
 	 * Public getter and setter methods of all attributes
 	 */
@@ -151,8 +163,15 @@ public class CourseOffering {
 	}
 	
 	//Parameterized Constructor
-	public CourseOffering(String feedback, int ratings, Date startDate, Date endDate, int learnerId, int tcId,
-			String status, int percentage) {
+	public CourseOffering(@NotNull(message = "Course Offering id field can't be null") int courseOfferingId,
+			@Size(max = 255, message = "Length of feedback can't be more than 255 characheters!") String feedback,
+			@NotNull(message = "ratings field can't be null") int ratings, Date startDate, Date endDate,
+			@NotNull(message = "learnerId field can't be null") int learnerId,
+			@NotNull(message = "tcId field can't be null") int tcId,
+			@Size(max = 255, message = "Length of status can't be more than 255 characheters!") String status,
+			@NotNull(message = "percentage field can't be null") int percentage) {
+		super();
+		this.CourseOfferingId = courseOfferingId;
 		this.feedback = feedback;
 		this.ratings = ratings;
 		this.startDate = startDate;
@@ -162,7 +181,6 @@ public class CourseOffering {
 		this.status = status;
 		this.percentage = percentage;
 	}
-	
 	//Default Constructor
 	public CourseOffering() {
 	}

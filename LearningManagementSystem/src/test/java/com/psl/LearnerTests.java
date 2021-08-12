@@ -87,9 +87,9 @@ class LearnerTests {
 	@Rollback(false)
 	@Order(3)
 	public void testListCourseOffering() {
-		CourseOffering c1 = new CourseOffering(null, 3, new Date(), new Date(), 12, 1,
+		CourseOffering c1 = new CourseOffering(1, null, 3, new Date(), new Date(), 12, 1,
 				"enrolled", 75);
-		CourseOffering c2 = new CourseOffering("learnt to apply new problem solving techniques", 4, new Date(), new Date(), 12, 2,
+		CourseOffering c2 = new CourseOffering(2, "learnt to apply new problem solving techniques", 4, new Date(), new Date(), 12, 2,
 				"registered", 65);
 		List<CourseOffering> offerings = new ArrayList<CourseOffering>();
 		offerings.add(c1);
@@ -115,7 +115,7 @@ class LearnerTests {
 		
 		when(dao2.findByTcIdAndLearnerId(c1.getTcId(), c1.getLearnerId())).thenReturn(c1);
 		when(dao2.save(c1)).thenReturn(c1);
-		assertEquals(service2.AddFeedback(12, 1, feedback).getFeedback(), feedback);
+		assertEquals(service2.AddFeedback(1, feedback).getFeedback(), feedback);
 	}
 	
 	//Testing change credentials operation
