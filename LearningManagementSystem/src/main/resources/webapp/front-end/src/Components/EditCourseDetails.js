@@ -7,6 +7,7 @@ import {
     faSave,
     faUndo
   } from "@fortawesome/free-solid-svg-icons";
+import { COURSE_URL, DATABASE_URL } from '../constants';
 
 class EditCourseDetails extends React.Component{
     constructor(props){
@@ -42,7 +43,7 @@ class EditCourseDetails extends React.Component{
         }
      
             try{
-                const response = await axios.put("http://localhost:8080/LearningManagementSystem/course/update", course);
+                const response = await axios.put(DATABASE_URL+COURSE_URL+"/update", course);
                 if(response.data != null){
                     alert("Course updated successfully");
                     console.log(response.data);

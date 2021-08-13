@@ -32,8 +32,7 @@ import ScoreAndStatus from './Components/ScoreAndStatus';
 import { Col, Container, Row } from 'react-bootstrap';
 import MultipleTeacherCourseMappingRegister from './Components/MultipleTeacherCourseMappingRegister';
 import TeacherCourseMappingsRegister from './Components/TeacherCourseMappingsRegister';
-
-const MANAGER_URL = process.env.REACT_APP_MANAGER_URL;
+import {MANAGER_URL} from './constants';
 
 function App() {
   return (

@@ -2,6 +2,7 @@ import React from 'react';
 
 import {Card, Table} from 'react-bootstrap';
 import axios from 'axios';
+import { DATABASE_URL, TCMAPPING_URL } from '../constants';
 
 class ScoreAndStatus extends React.Component{
 	
@@ -22,7 +23,7 @@ class ScoreAndStatus extends React.Component{
 		const id = this.props.location.state.learnerId;
 		const courseid = this.props.location.state.courseId;
 		try{
-			const response = await axios.get("http://localhost:8080/LearningManagementSystem/teacherCourseMapping/learner/"+id+"/course/"+courseid+"/");
+			const response = await axios.get(DATABASE_URL+TCMAPPING_URL+"/learner/"+id+"/course/"+courseid+"/");
 			if(response.data != null) {
 				console.log(response.data)
 				this.setState({

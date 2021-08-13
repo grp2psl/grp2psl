@@ -7,6 +7,7 @@ import {
     faDownload,
     faUpload
   } from "@fortawesome/free-solid-svg-icons";
+import { DATABASE_URL, LEARNER_URL } from '../constants';
 
 const cardStyle={
 	height: '250px',
@@ -36,7 +37,7 @@ class RegisterMultipleLearners extends React.Component{
 			msg:"Downloading..Please Wait"
 		});
 		try{
-			const response = await axios.get("http://localhost:8080/LearningManagementSystem/learners/generate-excel");
+			const response = await axios.get(DATABASE_URL+LEARNER_URL+"/generate-excel");
 			if(response.data != null) {
 				this.setState({
                     msg: "Downloading completed. Check your Downloads folder.."
@@ -78,7 +79,7 @@ class RegisterMultipleLearners extends React.Component{
             }
 
             try{
-                const response = await axios.post("http://localhost:8080/LearningManagementSystem/learners/register-multiple", formData, config);
+                const response = await axios.post(DATABASE_URL+LEARNER_URL+"/register-multiple", formData, config);
                 console.log(response)
                 if(response.data != null){
                     alert("Learners registered successfully");

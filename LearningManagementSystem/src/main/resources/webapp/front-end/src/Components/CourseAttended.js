@@ -2,8 +2,7 @@ import React from 'react';
 
 import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
 import axios from 'axios';
-
-const MANAGER_URL = process.env.REACT_APP_MANAGER_URL;
+import {DATABASE_URL, MANAGER_URL} from '../constants';
 
 class CourseAttended extends React.Component{
 	
@@ -24,7 +23,7 @@ class CourseAttended extends React.Component{
 		});
 		const id = this.props.location.state.detail;
 		try{
-			const response = await axios.get("http://localhost:8080/LearningManagementSystem/managers/course-attended/"+id);
+			const response = await axios.get(DATABASE_URL+MANAGER_URL+"/course-attended/"+id);
 			if(response.data != null) {
 				console.log(response.data)
 				this.setState({

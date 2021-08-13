@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {Container, Row, Col, Card, Button} from 'react-bootstrap';
+import {MANAGER_URL} from '../constants';
 
 const cardStyle={
 	height: '200px',
@@ -12,8 +13,6 @@ const buttonStyle={
     bottom: '20px',
     left: '30%'
 };
-
-const MANAGER_URL = process.env.REACT_APP_MANAGER_URL;
 
 class RegisterLearners extends React.Component{
 		registerLearner = () => {

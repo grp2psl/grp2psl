@@ -6,8 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faTrash
   } from "@fortawesome/free-solid-svg-icons";
-
-const MANAGER_URL = process.env.REACT_APP_MANAGER_URL;
+import {DATABASE_URL,MANAGER_URL} from '../constants'
 
 class ViewCourseOfferings extends React.Component{
 	
@@ -47,7 +46,7 @@ class ViewCourseOfferings extends React.Component{
 			msg:"Processing.. Please Wait"
 		});
 		try{
-			const response = await axios.get("http://localhost:8080/LearningManagementSystem/managers/viewCourseOfferingsDetails");
+			const response = await axios.get(DATABASE_URL+MANAGER_URL+"/viewCourseOfferingsDetails");
 			if(response.data != null) {
 				this.setState({
                     courseOfferings: response.data                 
@@ -67,7 +66,7 @@ class ViewCourseOfferings extends React.Component{
             show: true
 		});
 		try{
-            const response = await axios.delete("http://localhost:8080/LearningManagementSystem/managers/course-offering/"+id);
+            const response = await axios.delete(DATABASE_URL+MANAGER_URL+"/course-offering/"+id);
             console.log(response);
 		} catch(error) {
 			alert(error);

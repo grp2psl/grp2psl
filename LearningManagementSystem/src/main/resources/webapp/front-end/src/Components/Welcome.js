@@ -1,8 +1,7 @@
 import React from 'react';
 
 import {Container, Row, Col, Card, Button} from 'react-bootstrap';
-
-const MANAGER_URL = process.env.REACT_APP_MANAGER_URL;
+import {MANAGER_URL} from '../constants';
 
 const cardStyle={
 	height: '150px',

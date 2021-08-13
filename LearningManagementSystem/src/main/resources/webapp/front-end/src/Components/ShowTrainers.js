@@ -7,8 +7,7 @@ import {
     faEdit,
     faTrash
   } from "@fortawesome/free-solid-svg-icons";
-
-const MANAGER_URL = process.env.REACT_APP_MANAGER_URL;
+import { DATABASE_URL, TRAINER_URL, MANAGER_URL } from '../constants';
 
 class ShowTrainers extends React.Component{
     constructor(props){
@@ -24,7 +23,7 @@ class ShowTrainers extends React.Component{
 			msg:"Processing.. Please Wait"
 		});
 		try{
-			const response = await axios.get("http://localhost:8080/LearningManagementSystem/trainers/");
+			const response = await axios.get(DATABASE_URL+TRAINER_URL+"/");
 			if(response.data != null) {
 				this.setState({
 					trainers: response.data
@@ -44,7 +43,7 @@ class ShowTrainers extends React.Component{
             show: true
 		});
 		try{
-            const response = await axios.delete("http://localhost:8080/LearningManagementSystem/trainers/"+id);
+            const response = await axios.delete(DATABASE_URL+TRAINER_URL+"/"+id);
             console.log(response);
 		} catch(error) {
 			alert(error);

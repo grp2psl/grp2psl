@@ -3,6 +3,7 @@ import React from 'react';
 import {Card, Table, Row, Col} from 'react-bootstrap';
 import axios from 'axios';
 import ReactStars from 'react-stars';
+import {MANAGER_URL, DATABASE_URL} from '../constants';
 
 class ViewFeedback extends React.Component{
 	
@@ -30,7 +31,7 @@ class ViewFeedback extends React.Component{
         const courseId = this.props.location.state.courseId;
         const trainerId = this.props.location.state.trainerId;
 		try{
-			const response = await axios.get("http://localhost:8080/LearningManagementSystem/managers/trainer/"+trainerId+"/course/"+courseId);
+			const response = await axios.get(DATABASE_URL+MANAGER_URL+"/trainer/"+trainerId+"/course/"+courseId);
 			if(response.data != null) {
 				this.setState({
                     courseDetails: response.data.courseDetails,
