@@ -12,6 +12,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -45,11 +47,15 @@ public class TrainerController {
 	@Autowired
 	private TrainerService service;
 	
+	public static final Logger LOGGER = LoggerFactory.getLogger(TrainerController.class);
+	private final String logPrefix = "Trainer Controller - ";
+
 	/*
 	 * GET DETAILS OF TRAINER BY ID
 	 */
 	@GetMapping("/{id}")
 	public Trainer getTrainer(@PathVariable int id) {
+		LOGGER.info(logPrefix+"GET /{id} called to get details of a trainer by ID");
 		return service.getTrainer(id);
 	}
 
@@ -58,6 +64,7 @@ public class TrainerController {
 	 */
 	@GetMapping("/")
 	public List<Trainer> getAllTrainers(){
+		LOGGER.info(logPrefix+"GET / called to get details of all trainers");
 		return service.getAllTrainers();
 	}
 	
@@ -66,12 +73,16 @@ public class TrainerController {
 	 */
 	@PostMapping("/register")
 	public ResponseEntity<String> addTrainer(@RequestBody Trainer trainer) {
+		LOGGER.info(logPrefix+"POST /register called to add a trainer");
 		try {
 			service.addTrainer(trainer);
+			LOGGER.info("Trainer registered successfully")
 			return new ResponseEntity<>("Trainer registered successfully", HttpStatus.OK);			
 		}catch(DataIntegrityViolationException e) {
+			LOGGER.error(e.getMessage());
 			return new ResponseEntity<>(e.getMessage()+"\nPlease register with another email ID", HttpStatus.CONFLICT);	
 		}catch(Exception e) {
+			LOGGER.error(e.getMessage());
 			return new ResponseEntity<>("Server error. Please try again later", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -81,12 +92,16 @@ public class TrainerController {
 	 */
 	@PostMapping("/register-multiple")
 	public ResponseEntity<String> addMultipleTrainers(@RequestParam("file") MultipartFile csvFilePath ) throws IOException {
+		LOGGER.info(logPrefix+"POST /register-multiple called to add multiple trainers");
 		try {
 			service.addMultipleTrainers(csvFilePath);
+			LOGGER.info("Trainer registered successfully");
 			return new ResponseEntity<>("Trainer registered successfully", HttpStatus.OK);			
 		}catch(DataIntegrityViolationException e) {
+			LOGGER.error(e.getMessage());
 			return new ResponseEntity<>(e.getMessage()+"\nPlease delete records till this email ID and upload the file again.", HttpStatus.CONFLICT);	
 		}catch(Exception e) {
+			LOGGER.error(e.getMessage());
 			return new ResponseEntity<>("Server error. Please try again later", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -96,6 +111,7 @@ public class TrainerController {
 	 */
 	@DeleteMapping("/{id}")
 	public void removeTrainer(@PathVariable int id) {
+		LOGGER.info(logPrefix+"DELETE /{id} called to delete a trainer by ID");
 		service.removeTrainer(id);
 	}
 	
@@ -104,6 +120,7 @@ public class TrainerController {
 	 */
 	@PutMapping("/update")
 	public void updateTrainer(@RequestBody Trainer trainer) {
+		LOGGER.info(logPrefix+"PUT /update called to update details of a trainer");
 		service.updateTrainer(trainer);
 	}
 
@@ -113,6 +130,7 @@ public class TrainerController {
 	/*
 	 * Fetch Courses taught by trainer and feedback ratings merged and stored into TeacherCoursesTaught
 	*/
+		LOGGER.info(logPrefix+"GET /{id}/coursestaughtbytrainer called to get courses taught by trainer and respective feedbacks and ratings");
 		List<TeacherCourseMapping> l = service.findCoursesTaughtByTrainer(id);
 		List<TeacherCoursesTaught> tct = new ArrayList<>();
 		for (TeacherCourseMapping t: l) {
@@ -129,6 +147,7 @@ public class TrainerController {
 	
 	@GetMapping("/{id}/{tcid}")
 	public RatingAndComment getFeedbackResults(@PathVariable int id, @PathVariable int tcid){
+		LOGGER.info(logPrefix+"GET /{id}/{tcid} called to get feedback results");
 		List<String> comments = service.findCommentsForACourse(tcid);
 		float rating = getFeedbackRatings(tcid);
 		RatingAndComment rac = new RatingAndComment(rating, comments);
@@ -139,6 +158,7 @@ public class TrainerController {
 	 */
 	@GetMapping("/generate-excel")
 	public void downloadFileFromLocal() throws IOException {
+		LOGGER.info(logPrefix+"GET /generate-excel called to download excel format for uploading multiple trainers");
 		Path file = Paths.get(System.getProperty("user.home"), "Downloads");
 		service.generateExcel(file.toString());
 		System.out.println(file);
