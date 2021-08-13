@@ -130,15 +130,14 @@ class LearnerTests {
 		l.setEmail("rag@gmail.com");
 		l.setPassword("RajPass");
 		
-		String email = "newemail@test.com";
+//		String email = "newemail@test.com";
 		String password = "new password";
 		
 		when(dao.findById(l.getLearnerId())).thenReturn(Optional.of(l));
 		when(dao.save(l)).thenReturn(l);
-		l.setEmail("newemail@test.com");
 		l.setPassword("new password");
 		
-		assertEquals(service.updateLearner(12, email, password), l);
+		assertEquals(service.updateLearner(12, password), l);
 	}
 	
 	//Testing the delete operation

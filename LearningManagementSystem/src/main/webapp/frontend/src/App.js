@@ -18,7 +18,7 @@ export default function App() {
     			<Switch>
     				<Route path = "/CourseOfferingListing/:learnerid" component = {CourseOfferingListing}/>
     				<Route path = "/Feedback/:courseofferingid" component = {Feedback}/>
-    				<Route path = "/Credentials" exact component = {Credentials}/>
+    				<Route path = "/Credentials/:learnerid" exact component = {Credentials}/>
     				<Route path = "/" exact component = {Welcome}/>
     			</Switch>
     			</Col>

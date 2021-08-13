@@ -5,9 +5,8 @@
 package com.psl.controller;
 
 //Importing required imports for Learner Controller Definition.
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +23,7 @@ import com.psl.service.LearnerService;
  */
 @RestController
 @RequestMapping("/learners")
+@CrossOrigin(origins = "http://localhost:3000")
 //Definition of the class
 public class LearnerController {
 	
@@ -56,8 +56,8 @@ public class LearnerController {
 	 * It updates credentials of Learner with given id.
 	 */
 	@PutMapping("/update/{id}")
-	public void updateLearner(@PathVariable int id, @RequestBody Map<String, String> credentials) {
-		service.updateLearner(id, credentials.get("email"), credentials.get("password"));
+	public void updateLearner(@PathVariable int id, @RequestBody Learner newLearner) {
+		service.updateLearner(id, newLearner.getPassword());
 	}
 	
 }
