@@ -112,8 +112,9 @@ class LearnerTests {
 		c1.setTcId(1);
 		c1.setPercentage(0);
 		c1.setRatings(0);		
-		
-		when(dao2.findByTcIdAndLearnerId(c1.getTcId(), c1.getLearnerId())).thenReturn(c1);
+				
+		//when(dao2.findByTcIdAndLearnerId(c1.getTcId(), c1.getLearnerId())).thenReturn(c1);
+		when(dao2.findById(c1.getTcId())).thenReturn(Optional.of(c1));
 		when(dao2.save(c1)).thenReturn(c1);
 		assertEquals(service2.AddFeedback(1, feedback).getFeedback(), feedback);
 	}
