@@ -205,7 +205,8 @@ public class CourseOffering {
 				learnerId == Co.getLearnerId() &&
 				tcId == Co.getTcId() &&
 				(( status == null && Co.getStatus() == null ) ||status.equals(Co.getStatus()))&&
-				percentage == Co.getPercentage();
+				percentage == Co.getPercentage() &&
+				CourseOfferingId == Co.getCourseOfferingId();
 	}
 	
 	//Overrides toString function to change output of print function
