@@ -1,12 +1,7 @@
 import React from 'react';
 
-import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
+import {Card, Table} from 'react-bootstrap';
 import axios from 'axios';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faEdit,
-    faTrash
-  } from "@fortawesome/free-solid-svg-icons";
 
 class ScoreAndStatus extends React.Component{
 	
