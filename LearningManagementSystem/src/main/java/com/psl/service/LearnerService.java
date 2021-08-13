@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -59,10 +61,14 @@ public class LearnerService {
 	@Autowired
 	private ITeacherCourseMappingDAO TCdao;
 
+	public static final Logger LOGGER = LoggerFactory.getLogger(LearnerService.class);
+	private final String logPrefix = "Learner Service - ";
+
 	/*
 	 * ADD LEARNER
 	 */
 	public void addLearner(Learner learner) {
+		LOGGER.info(logPrefix+"Adding a learner - "+learner);
 		Integer id = dao.getNextId();
 		id = (id==null ? 10000 : id);
 		Random rand = new Random();
@@ -87,6 +93,7 @@ public class LearnerService {
 	 * ADD MULTIPLE LEARNERS
 	 */
 	public void addMultipleLearners(MultipartFile csvFilePath) throws IOException {
+		LOGGER.info(logPrefix+"Adding multiple learners using file - "+csvFilePath);
 	    XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
 	    XSSFSheet worksheet = workbook.getSheetAt(0);
 
@@ -106,6 +113,7 @@ public class LearnerService {
 	 * GENERATES EXCEL SHEET OF SAMPLE DATA OF LEARNER DETAILS
 	 */
 	public void generateExcel(String path) throws IOException {
+		LOGGER.info(logPrefix+"Generating excel format for adding multiple learners");
 		ExcelHelper helper = new ExcelHelper();
 
 		List<ExcelFields> fields = new ArrayList<>();
@@ -121,6 +129,7 @@ public class LearnerService {
 	 * GET DETAILS OF ALL LEARNERS
 	 */
 	public List<Learner> getAllLearners(){
+		LOGGER.info(logPrefix+"Returning list of all learners");
 		return dao.findAll();
 	}
 
@@ -137,12 +146,14 @@ public class LearnerService {
 	//Function which retrieves learner from the table using learnerId.
 
 	public Learner getLearner(int id) {
+		LOGGER.info(logPrefix+"Returning a learner with ID - "+id);
 		System.out.println(dao.findById(id).get());
 		return dao.findById(id).get();
 	}
 
 	//Function which updates credentials of a learner with given learnerId.
 	public Learner updateLearner(int id, String email, String password) {
+		LOGGER.info(logPrefix+"Updating credentials of a learner with ID - "+id+" to email - "+email+" and password - "+password);
 	    Learner l = dao.findById(id).get();
 	    l.setEmail(email);
 	    l.setPassword(password);
@@ -154,11 +165,13 @@ public class LearnerService {
 	 * REMOVE LEARNER BY ID
 	 */
 	public void removeLearner(int id) {
+		LOGGER.info(logPrefix+"Deleting a learner with ID - "+id);
 		dao.deleteById(id);
 	}
 
 	//Function which removes a learner
-	public void deleterLearner(int id) {
+	public void deleteLearner(int id) {
+		LOGGER.info(logPrefix+"Deleting a learner with ID - "+id);
 		dao.deleteById(id);
 	}
 
@@ -166,6 +179,7 @@ public class LearnerService {
 	 * UPDATE LEARNER BY ID
 	 */
 	public void updateLearner(Learner learner) {
+		LOGGER.info(logPrefix+"Updating a learner details to - "+learner);
 		dao.updateEntry(learner.getDepartment(), learner.getPhoneNumber(), learner.getLearnerId());
 	}
 
@@ -173,6 +187,7 @@ public class LearnerService {
 	 * GET MAX ID OF LEARNER TABLE
 	 */
 	public int getNextId() {
+		LOGGER.info(logPrefix+"Getting next id of learner");
 		Integer id = dao.getNextId();
 		id = (id==null ? 10000 : id);
 		return id;

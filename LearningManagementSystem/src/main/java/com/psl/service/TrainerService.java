@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -35,10 +37,14 @@ public class TrainerService {
 	@Autowired
 	private EmailSenderService service;
 
+	public static final Logger LOGGER = LoggerFactory.getLogger(TrainerService.class);
+	private final String logPrefix = "Trainer Service - ";
+
 	/*
 	 * ADD TRAINER
 	 */
 	public void addTrainer(Trainer trainer) {
+		LOGGER.info(logPrefix+"Adding a trainer - "+trainer);
 		Integer id = dao.getNextId();
 		id = (id==null ? 20000 : id);
 		Random rand = new Random();
@@ -63,6 +69,7 @@ public class TrainerService {
 	 * ADD MULTIPLE TRAINERS
 	 */
 	public void addMultipleTrainers(MultipartFile csvFilePath) throws IOException {
+		LOGGER.info(logPrefix+"Adding multiple trainers using file - "+csvFilePath);
 	    XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
 	    XSSFSheet worksheet = workbook.getSheetAt(0);
 
@@ -89,6 +96,7 @@ public class TrainerService {
 	 * GENERATES EXCEL SHEET OF SAMPLE DATA OF TRAINER DETAILS
 	 */
 	public void generateExcel(String path) throws IOException {
+		LOGGER.info(logPrefix+"Generating excel format for adding multiple trainers");
 		ExcelHelper helper = new ExcelHelper();
 
 		List<ExcelFields> fields = new ArrayList<>();
@@ -104,6 +112,7 @@ public class TrainerService {
 	 * GET DETAILS OF ALL TRAINERS
 	 */
 	public List<Trainer> getAllTrainers(){
+		LOGGER.info(logPrefix+"Returning list of all the trainers");
 		return dao.findAll();
 	}
 
@@ -111,10 +120,12 @@ public class TrainerService {
 	 * GET DETAILS OF TRAINER
 	 */
 	public Trainer getTrainer(int id) {
+		LOGGER.info(logPrefix+"Returning details of trainer with ID - "+id);
 		return dao.findById(id).get();
 	}
 
 	public List<TeacherCourseMapping> findCoursesTaughtByTrainer(int id){
+		LOGGER.info(logPrefix+"Returning List of Trainer-Course Mappings for trainer with ID - "+id);
 		List<TeacherCourseMapping> l = mappingDAO.findCoursesTaughtByTrainer(id);
 		System.out.println(l.size()); // Awlays returing zero
 		System.out.println("Trainer Query id: " + id + " ==>");
@@ -122,14 +133,17 @@ public class TrainerService {
 	}
 
 	public float getFeedbackResults(int tcid) {
+		LOGGER.info(logPrefix+"Returning feedback results for Trainer-Course Mapping with ID - "+tcid);
 		return offeringDAO.getFeedbackResults(tcid);
 	}
 
 	public List<Float> findAllCoursesTaughtRatings(int id){
+		LOGGER.info(logPrefix+"Returning list of ratings for trainer with ID - "+id);
 		return offeringDAO.findAllCoursesTaughtRatings(id);
 	}
 
 	public List<String> findCommentsForACourse(int tcid){
+		LOGGER.info(logPrefix+"Returning lsit of feedbacks for a Trainer-Course Mapping with ID - "+tcid);
 		return offeringDAO.findCommentsForACourse(tcid);
 	}
 
@@ -137,6 +151,7 @@ public class TrainerService {
 	 * REMOVE TRAINER BY ID
 	 */
 	public void removeTrainer(int id) {
+		LOGGER.info(logPrefix+"Deleting a trainer with ID - "+id);
 		dao.deleteById(id);
 	}
 
@@ -144,6 +159,7 @@ public class TrainerService {
 	 * Update TRAINER BY ID
 	 */
 	public void updateTrainer(Trainer trainer) {
+		LOGGER.info(logPrefix+"Updating details of a trainer to - "+trainer);
 		dao.updateEntry(trainer.getDepartment(), trainer.getPhoneNumber(), trainer.getTrainerId());
 	}
 
@@ -151,6 +167,7 @@ public class TrainerService {
 	 * GET MAX ID OF TRAINER TABLE
 	 */
 	public int getNextId() {
+		LOGGER.info(logPrefix+"Getting next ID of trainer");
 		Integer id = dao.getNextId();
 		id = (id==null ? 20000 : id);
 		return id;
