@@ -26,8 +26,6 @@ import javax.validation.constraints.Size;
 
 //Annotation to recognize CourseOffering as an Entity
 @Entity
-//Annotation to map IdClass of CourseOffering which is stored as a separate class because primary key is composite
-//@IdClass(CourseOfferingId.class)
 //Name of the MySql table in which CourseOffering Entity records are stored
 @Table(name = "courseoffering")
 //Definition of CourseOffering Entity
@@ -38,13 +36,6 @@ public class CourseOffering {
 	@Column(name = "courseofferingid")
 	private int CourseOfferingId;
 	
-	public int getCourseOfferingId() {
-		return CourseOfferingId;
-	}
-	public void setCourseOfferingId(int courseOfferingId) {
-		CourseOfferingId = courseOfferingId;
-	}
-
 	/*
 	 * feedback attribute stores feedback of course offering in a string format 
 	 * with maximum limit on length of the string as 255.
@@ -78,7 +69,6 @@ public class CourseOffering {
 	 * Stored in learnerid column
 	 * It can't be null
 	 */
-//	@Id
 	@Column(name = "learnerid")
 	@NotNull(message = "learnerId field can't be null")
 	private int learnerId;
@@ -89,7 +79,6 @@ public class CourseOffering {
 	 * Stored in tcid column
 	 * It can't be null
 	 */
-//	@Id
 	@Column(name = "tcid")
 	@NotNull(message = "tcId field can't be null")
 	private int tcId;
@@ -161,15 +150,16 @@ public class CourseOffering {
 	public void setPercentage(int percentage) {
 		this.percentage = percentage;
 	}
+	public int getCourseOfferingId() {
+		return CourseOfferingId;
+	}
+	public void setCourseOfferingId(int courseOfferingId) {
+		CourseOfferingId = courseOfferingId;
+	}
 	
 	//Parameterized Constructor
-	public CourseOffering(@NotNull(message = "Course Offering id field can't be null") int courseOfferingId,
-			@Size(max = 255, message = "Length of feedback can't be more than 255 characheters!") String feedback,
-			@NotNull(message = "ratings field can't be null") int ratings, Date startDate, Date endDate,
-			@NotNull(message = "learnerId field can't be null") int learnerId,
-			@NotNull(message = "tcId field can't be null") int tcId,
-			@Size(max = 255, message = "Length of status can't be more than 255 characheters!") String status,
-			@NotNull(message = "percentage field can't be null") int percentage) {
+	public CourseOffering(int courseOfferingId, String feedback, int ratings, Date startDate, Date endDate,
+			int learnerId, int tcId, String status, int percentage) {
 		super();
 		this.CourseOfferingId = courseOfferingId;
 		this.feedback = feedback;
@@ -209,11 +199,10 @@ public class CourseOffering {
 				CourseOfferingId == Co.getCourseOfferingId();
 	}
 	
-	//Overrides toString function to change output of print function
 	@Override
 	public String toString() {
-		return "CourseOffering [feedback=" + feedback + ", ratings=" + ratings + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", learnerId=" + learnerId + ", tcId=" + tcId + ", status=" + status
-				+ ", percentage=" + percentage + "]";
+		return "CourseOffering [CourseOfferingId=" + CourseOfferingId + ", feedback=" + feedback + ", ratings="
+				+ ratings + ", startDate=" + startDate + ", endDate=" + endDate + ", learnerId=" + learnerId + ", tcId="
+				+ tcId + ", status=" + status + ", percentage=" + percentage + "]";
 	}
 }
