@@ -76,7 +76,7 @@ public class TrainerController {
 		LOGGER.info(logPrefix+"POST /register called to add a trainer");
 		try {
 			service.addTrainer(trainer);
-			LOGGER.info("Trainer registered successfully")
+			LOGGER.info("Trainer registered successfully");
 			return new ResponseEntity<>("Trainer registered successfully", HttpStatus.OK);			
 		}catch(DataIntegrityViolationException e) {
 			LOGGER.error(e.getMessage());

@@ -79,7 +79,7 @@ public class LearnerController {
 		LOGGER.info(logPrefix+"POST /register called to add a new learner");
 		try {
 			service.addLearner(learner);
-			LOGGER.info("Learner registered successfully")
+			LOGGER.info("Learner registered successfully");
 			return new ResponseEntity<>("Learner registered successfully", HttpStatus.OK);			
 		}catch(DataIntegrityViolationException e) {
 			LOGGER.error(e.getMessage());
