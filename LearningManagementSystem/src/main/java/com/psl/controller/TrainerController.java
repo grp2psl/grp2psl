@@ -15,17 +15,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartFile; 
 
 import com.psl.entities.Trainer;
 import com.psl.service.TrainerService;
+
+import com.psl.entities.TeacherCourseMapping;
+import com.psl.service.TeacherCourseMappingService;
+
+import com.psl.entities.Course;
 
 @RestController
 @RequestMapping("/trainers")
 @CrossOrigin(origins="http://localhost:3000")
 public class TrainerController {
+
 	@Autowired
 	private TrainerService service;
+
+	@Autowired
+	private TeacherCourseMappingService service1;
+	
 	/*
 	 * GET DETAILS OF TRAINER BY ID
 	 */
@@ -75,4 +85,11 @@ public class TrainerController {
 		service.generateExcel(file.toString());
 		System.out.println(file);
 	}
+
+	@GetMapping("/{id}/coursestaughtbytrainer")
+	public List<Course> getCoursesByTrainerId(@PathVariable int id) {
+		return service1.getCoursesByTrainerId(id);
+	}
+
+
 }

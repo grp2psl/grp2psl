@@ -3,6 +3,8 @@ import React from 'react';
 import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {BrowserRouter as useParams} from 'react-router-dom';
+
 import {
     faEdit,
     faTrash
