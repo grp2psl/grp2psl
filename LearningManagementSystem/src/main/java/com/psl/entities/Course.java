@@ -36,7 +36,7 @@ public class Course {
 	@NotNull(message = "courseId field can't be empty")
 	@Id
 	@Column(name="courseid")
-	@Min(value = 1, message = "courseId field should be non zerp")
+	@Min(value = 1, message = "courseId field should be non zero")
 	private int courseId;
 	
 	/*
