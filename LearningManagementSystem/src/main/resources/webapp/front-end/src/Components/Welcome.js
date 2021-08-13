@@ -2,6 +2,8 @@ import React from 'react';
 
 import {Container, Row, Col, Card, Button} from 'react-bootstrap';
 
+const MANAGER_URL = process.env.REACT_APP_MANAGER_URL;
+
 const cardStyle={
 	height: '150px',
 	marginTop: '20px'
@@ -28,7 +30,7 @@ class Welcome extends React.Component{
 						            Register a course   
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push("/registerCourse");
+										this.props.history.push(MANAGER_URL+"/registerCourse");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>
@@ -41,7 +43,7 @@ class Welcome extends React.Component{
 						            View all the courses
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push("/viewCourse");
+										this.props.history.push(MANAGER_URL+"/viewCourse");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>
@@ -56,7 +58,7 @@ class Welcome extends React.Component{
 						            Register learner(s)
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push("/registerLearners");
+										this.props.history.push(MANAGER_URL+"/registerLearners");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>
@@ -69,7 +71,7 @@ class Welcome extends React.Component{
 						            View learners and their course details
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push("/showLearners");
+										this.props.history.push(MANAGER_URL+"/showLearners");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>
@@ -82,7 +84,7 @@ class Welcome extends React.Component{
 						            Enroll learner(s) to a course
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push("/enrollLearners");
+										this.props.history.push(MANAGER_URL+"/enrollLearners");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>
@@ -97,7 +99,7 @@ class Welcome extends React.Component{
 						            Register trainer(s)
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push("/registerTrainers");
+										this.props.history.push(MANAGER_URL+"/registerTrainers");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>
@@ -111,7 +113,7 @@ class Welcome extends React.Component{
 						            View trainers and their course details
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push("/showTrainers");
+										this.props.history.push(MANAGER_URL+"/showTrainers");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>
@@ -126,7 +128,7 @@ class Welcome extends React.Component{
 						            Register a trainer to course   
 						          </Card.Text>
 						           <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push("/TeacherCourseMappingsRegister");
+										this.props.history.push(MANAGER_URL+"/TeacherCourseMappingsRegister");
 									}}>Go</Button>
 
 						        </Card.Body>
@@ -142,7 +144,7 @@ class Welcome extends React.Component{
 						            Update test scores of learners for courses attended  
 						          </Card.Text>
 								  <Button variant="primary" style={buttonStyle} onClick={()=>{
-									  this.props.history.push("/update-scores");
+									  this.props.history.push(MANAGER_URL+"/update-scores");
 								  }}>Go</Button>
 						        </Card.Body>
 						      </Card>
@@ -155,7 +157,7 @@ class Welcome extends React.Component{
 						            View all the course offerings
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push("/viewCourseOfferings");
+										this.props.history.push(MANAGER_URL+"/viewCourseOfferings");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>

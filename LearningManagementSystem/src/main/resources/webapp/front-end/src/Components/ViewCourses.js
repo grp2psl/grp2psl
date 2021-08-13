@@ -8,6 +8,8 @@ import {
     faTrash
   } from "@fortawesome/free-solid-svg-icons";
 
+const MANAGER_URL = process.env.REACT_APP_MANAGER_URL;
+
 class ViewCourses extends React.Component{
     constructor(props){
         super(props);
@@ -56,7 +58,7 @@ class ViewCourses extends React.Component{
     
      editDetails(course){
         this.props.history.push({
-            pathname: '/editCourseDetails',
+            pathname: MANAGER_URL+'/editCourseDetails',
             state: { course: course }
         });
      }

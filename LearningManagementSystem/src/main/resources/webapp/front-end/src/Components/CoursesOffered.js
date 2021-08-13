@@ -3,6 +3,8 @@ import React from 'react';
 import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
 import axios from 'axios';
 
+const MANAGER_URL = process.env.REACT_APP_MANAGER_URL;
+
 class CoursesOffered extends React.Component{
 	
     constructor(props){
@@ -77,7 +79,7 @@ class CoursesOffered extends React.Component{
                                             variant="outline-primary"
                                             onClick={()=>{
                                                 this.props.history.push({
-                                                    pathname: "/viewFeedback",
+                                                    pathname: MANAGER_URL+"/viewFeedback",
                                                     state: {
                                                         courseId: course.courseId,
                                                         trainerId: this.state.trainerDetails.trainerId

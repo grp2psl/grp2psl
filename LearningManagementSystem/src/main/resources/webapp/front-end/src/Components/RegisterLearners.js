@@ -12,13 +12,16 @@ const buttonStyle={
     bottom: '20px',
     left: '30%'
 };
+
+const MANAGER_URL = process.env.REACT_APP_MANAGER_URL;
+
 class RegisterLearners extends React.Component{
 		registerLearner = () => {
-			this.props.history.push("/registerLearner");
+			this.props.history.push(MANAGER_URL+"/registerLearner");
 		}
 		
 		registerMultipleLearners = () => {
-			this.props.history.push("/registerMultipleLearners");
+			this.props.history.push(MANAGER_URL+"/registerMultipleLearners");
 		}
 	
     render(){

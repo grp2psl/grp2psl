@@ -2,6 +2,7 @@ import React from 'react';
 
 import {Navbar, Nav, Container, Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
+import book from '../books.png';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faHome,
@@ -15,9 +16,9 @@ class NavigationBar extends React.Component{
 			<div>
                 <Navbar bg="dark" variant="dark">
 					<Container>
-    				<Link to={""} className='navbar-brand'>
+    				<Link to={"/manager/"} className='navbar-brand'>
                     <img
-                        src="books.png"
+                        src={book}
                         width="35"
                         height="35"
                         alt="brand"
@@ -25,21 +26,21 @@ class NavigationBar extends React.Component{
                         Learning Manager
                     </Link>
                     <Nav>
-                        <Link to={""} className='nav-link'>
+                        <Link to={"/manager/"} className='nav-link'>
                             <Button
                                 size="md"
                                 variant="outline-success"
                             >
                             <FontAwesomeIcon icon={faHome} />
                             </Button>{" "}</Link>
-                        <Link to={""} className='nav-link'>
+                        <Link to={"/manager/"} className='nav-link'>
                             <Button
                                 size="md"
                                 variant="outline-primary"
                             >
                             <FontAwesomeIcon icon={faUser} />
                             </Button>{" "}</Link>
-                        <Link to={""} className='nav-link'>
+                        <Link to={"/manager/"} className='nav-link'>
                             <Button
                                 size="md"
                                 variant="outline-danger"
