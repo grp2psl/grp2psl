@@ -34,8 +34,8 @@ public class CourseOfferingController {
 	 */
 	@PutMapping("/feedback/{courseOfferingId}")
 	public void sendfeedback(@PathVariable int courseOfferingId ,@RequestBody CourseOffering CO) {
-		//System.out.println(feedBack);
-		service.AddFeedback(courseOfferingId, CO.getFeedback());
+		System.out.println(CO);
+		service.AddFeedback(courseOfferingId, CO.getFeedback(), CO.getRatings());
 	}
 	
 	/*

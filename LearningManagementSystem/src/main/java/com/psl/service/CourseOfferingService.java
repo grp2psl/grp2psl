@@ -29,9 +29,10 @@ public class CourseOfferingService {
 	}
 
 	//Function to allow Learner to given feedback on given course Offering
-	public CourseOffering AddFeedback(int courseOfferingId, String feedback) {
+	public CourseOffering AddFeedback(int courseOfferingId, String feedback, int rating) {
 		CourseOffering co = dao.findById(courseOfferingId).get();
 		co.setFeedback(feedback);
+		co.setRatings(rating);
 		return dao.save(co);
 	}
 	

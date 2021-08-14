@@ -2,22 +2,29 @@ import React, {Component} from 'react';
 import {Card, Form, Button} from 'react-bootstrap';
 import MyToast from './MyToast';
 import axios from 'axios';
+import Slider from 'react-rangeslider';
+import NumericInput from 'react-numeric-input';
+
+
+
 
 export default class Feedback extends Component{
 	
 	constructor(props){
 		super(props);
-		this.state = {feedback:''};
+		this.state = {feedback:'', ratings:0};
 		this.sendFeedback = this.sendFeedback.bind(this);
 		this.feedbackChange = this.feedbackChange.bind(this);
+		this.ratingChange = this.ratingChange.bind(this);
 		this.goBack = this.goBack.bind(this);
 	}
 	
 	async sendFeedback(event){
 		event.preventDefault();
-		
-		try{            const 
-			response = await axios.put("http://localhost:8080/LearningManagementSystem/feedback/" + this.props.location.state.id, {feedback:this.state.feedback});
+						
+		try{
+			console.log(this.state.ratings)           
+		const  response = await axios.put("http://localhost:8080/LearningManagementSystem/feedback/" + this.props.location.state.id, {feedback:this.state.feedback, ratings:this.state.ratings});
 		} catch(error) {
 			alert(error.response.data);
 		}
@@ -25,7 +32,13 @@ export default class Feedback extends Component{
 	
 	feedbackChange(event){
 		this.setState({
-			[event.target.name]:event.target.value
+			feedback:event.target.value
+		})
+	}
+	
+	ratingChange(event){
+		this.setState({
+			ratings:+event.target.value
 		})
 	}
 		
@@ -34,14 +47,15 @@ export default class Feedback extends Component{
 	}
 	
 	initialState = {
-		feedback:''
+		feedback:'',
+		ratings:0
 	};
 	
 	
 	render(){
 		return (<Card className="text-black">
 			<Card.Header>
-				Submit Feedback
+				Submit Feedback And Ratings
 			</Card.Header>
 			<Form id = "feedbackform" onSubmit = {this.sendFeedback}>
 				<Card.Body>
@@ -55,7 +69,20 @@ export default class Feedback extends Component{
 					    value = {this.state.feedback}
 					    name = "feedback"/>
 					  </Form.Group>
-					</Form.Row>				  			
+					</Form.Row>
+					
+					<Form.Row>
+						<Form.Group controlId = "formGridRatings">
+							<Form.Label>Ratings</Form.Label>							
+							<NumericInput 
+								min={0} 
+								max={5} 
+								step = {1}
+								onValueChange={this.ratingChange}
+								value={this.state.ratings}
+								name = "ratings"/>
+						</Form.Group>
+					</Form.Row>
 				</Card.Body>
 			<Card.Footer style = {{"textAlign":"right"}}>
 				<Button size = "sm" variant="success" type="submit"> Submit </Button>{" "}				

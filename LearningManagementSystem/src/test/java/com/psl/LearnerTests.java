@@ -109,6 +109,7 @@ class LearnerTests {
 	@Order(4)
 	public void testSendFeedback() {
 		String feedback = "It was a good experience learnt many things in the course";
+		int rating = 4;
 		
 		CourseOffering c1 = new CourseOffering();
 		c1.setLearnerId(12);
@@ -119,7 +120,8 @@ class LearnerTests {
 		//when(dao2.findByTcIdAndLearnerId(c1.getTcId(), c1.getLearnerId())).thenReturn(c1);
 		when(dao2.findById(c1.getTcId())).thenReturn(Optional.of(c1));
 		when(dao2.save(c1)).thenReturn(c1);
-		assertEquals(service2.AddFeedback(1, feedback).getFeedback(), feedback);
+		assertEquals(service2.AddFeedback(1, feedback, rating).getFeedback(), feedback);
+		assertEquals(service2.AddFeedback(1, feedback, rating).getRatings(), rating);		
 	}
 	
 	//Testing change credentials operation
