@@ -28,6 +28,7 @@ public class CourseControllerTest {
 	 * TEST VIEW ALL COURSES AVAILABLE
 	 */
 	@Test
+	
 	public void getCoursesTest() throws Exception {
 		this.mvc.perform(get("/course/allcourses"))
 		.andExpect(status().isOk());
