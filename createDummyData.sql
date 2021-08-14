@@ -18,6 +18,10 @@ INSERT INTO learner(`learnerid`,`name`,`department`,`phonenumber`,`email`,`passw
 INSERT INTO learner(`learnerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (10001,'Pradnya','Sales','8585454525','pradnya@gmail.com','Pradnya10001@8063');
 INSERT INTO learner(`learnerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (10002,'Ted Mosby','HR','9876543210','vaishnavipatil10march@gmail.com','Ted10002@5525');
 INSERT INTO learner(`learnerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (10003,'Sheldon Cooper','L&D','9876543210','vaishnavi10march2000@gmail.com','Sheldon10003@3533');
+INSERT INTO learner(`learnerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (10004,'Atul Kulkarni','L&D','9872343210','atulkulkarni@email.com','atul@kulkarni12');
+INSERT INTO learner(`learnerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (10005,'Amogh Patil','HR','9442343210','amoghpatil@email.com','amogh@patil62');
+INSERT INTO learner(`learnerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (10006,'Dinesh Chopada','IT','9442222340','dineshchopada@email.com','dinesh@chopada45');
+INSERT INTO learner(`learnerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (10007,'Priya Sharma','IT','9443212340','priyasharma@email.com','priya@sharma32');
 
 
 /*
