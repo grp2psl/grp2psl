@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {Container, Row, Col, Card, Button} from 'react-bootstrap';
+import {MANAGER_URL} from '../constants';
 
 const cardStyle={
 	height: '200px',
@@ -15,11 +16,11 @@ const buttonStyle={
 
 class RegisterTrainers extends React.Component{
 		registerTrainer = () => {
-			this.props.history.push("/registerTrainer");
+			this.props.history.push(MANAGER_URL+"/registerTrainer");
 		}
 		
 		registerMultipleTrainers = () => {
-			this.props.history.push("/registerMultipleTrainers");
+			this.props.history.push(MANAGER_URL+"/registerMultipleTrainers");
 		}
 	
     render(){

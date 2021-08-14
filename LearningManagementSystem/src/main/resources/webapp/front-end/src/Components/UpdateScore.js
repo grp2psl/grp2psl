@@ -14,13 +14,15 @@ const buttonStyle={
     left: '30%'
 };
 
+const MANAGER_URL = process.env.REACT_APP_MANAGER_URL;
+
 class UpdateScore extends React.Component{
 		updateScore = () => {
-			this.props.history.push("/update-score");
+			this.props.history.push(MANAGER_URL+"/update-score");
 		}
 		
 		updateScoreMultiple = () => {
-			this.props.history.push("/update-score-multiple");
+			this.props.history.push(MANAGER_URL+"/update-score-multiple");
 		}
 	
     render(){

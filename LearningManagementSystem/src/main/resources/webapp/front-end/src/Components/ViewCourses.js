@@ -7,6 +7,7 @@ import {
     faEdit,
     faTrash
   } from "@fortawesome/free-solid-svg-icons";
+import {DATABASE_URL,MANAGER_URL,COURSE_URL} from '../constants'
 
 class ViewCourses extends React.Component{
     constructor(props){
@@ -22,7 +23,7 @@ class ViewCourses extends React.Component{
 			msg:"Processing.. Please Wait"
 		});
 		try{
-			const response = await axios.get("http://localhost:8080/LearningManagementSystem/course/allcourses/");
+			const response = await axios.get(DATABASE_URL+COURSE_URL+"/allcourses/");
 			if(response.data != null) {
                 console.log(response.data)
 				this.setState({
@@ -43,7 +44,7 @@ class ViewCourses extends React.Component{
             show: true
 		});
 		try{
-            const response = await axios.delete("http://localhost:8080/LearningManagementSystem/course/delete/"+id);
+            const response = await axios.delete(DATABASE_URL+COURSE_URL+"/course/delete/"+id);
             console.log(response);
 		} catch(error) {
 			alert(error);
@@ -56,7 +57,7 @@ class ViewCourses extends React.Component{
     
      editDetails(course){
         this.props.history.push({
-            pathname: '/editCourseDetails',
+            pathname: MANAGER_URL+'/editCourseDetails',
             state: { course: course }
         });
      }

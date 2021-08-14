@@ -7,6 +7,7 @@ import {
     faSave,
     faUndo
   } from "@fortawesome/free-solid-svg-icons";
+import { DATABASE_URL, TRAINER_URL } from '../constants';
 
 class Register extends React.Component{
     constructor(props){
@@ -49,7 +50,7 @@ class Register extends React.Component{
                 msg:"Processing..\nPlease Wait"
             });
             try{
-                const response = await axios.post("http://localhost:8080/LearningManagementSystem/trainers/register", trainer);
+                const response = await axios.post(DATABASE_URL+TRAINER_URL+"/register", trainer);
                 if(response.data != null){
                     alert("Trainer registered successfully");
                     console.log(response.data);

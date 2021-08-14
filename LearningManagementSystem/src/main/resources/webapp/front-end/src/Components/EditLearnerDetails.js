@@ -7,6 +7,7 @@ import {
     faSave,
     faUndo
   } from "@fortawesome/free-solid-svg-icons";
+import { DATABASE_URL, LEARNER_URL } from '../constants';
 
 class EditLearnerDetails extends React.Component{
     constructor(props){
@@ -51,7 +52,7 @@ class EditLearnerDetails extends React.Component{
                 msg:"Processing..\nPlease Wait"
             });
             try{
-                const response = await axios.put("http://localhost:8080/LearningManagementSystem/learners/update", learner);
+                const response = await axios.put(DATABASE_URL+LEARNER_URL+"/update", learner);
                 if(response.data != null){
                     alert("Learner updated successfully");
                     console.log(response.data);

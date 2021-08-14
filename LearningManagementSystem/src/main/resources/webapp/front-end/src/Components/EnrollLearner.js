@@ -7,6 +7,7 @@ import {
     faSave,
     faUndo
   } from "@fortawesome/free-solid-svg-icons";
+import { DATABASE_URL, LEARNER_URL, MANAGER_URL, TCMAPPING_URL } from '../constants';
 
 class EnrollLearner extends React.Component{
     constructor(props){
@@ -31,9 +32,9 @@ class EnrollLearner extends React.Component{
 			msg:"Processing.. Please Wait"
 		});
 		try {
-			let learnersList = await axios.get("http://localhost:8080/LearningManagementSystem/learners/")
+			let learnersList = await axios.get(DATABASE_URL+LEARNER_URL+"/")
             this.state.learners = learnersList.data;
-            let tcMappings = await axios.get("http://localhost:8080/LearningManagementSystem/teacherCourseMapping/trainer-course-names")
+            let tcMappings = await axios.get(DATABASE_URL+TCMAPPING_URL+"/trainer-course-names")
 			this.state.tcMappings = tcMappings.data;
 		} catch(error) {
 			alert(error);
@@ -65,7 +66,7 @@ class EnrollLearner extends React.Component{
 			msg:"Processing.. Please Wait"
 		});
 		try{
-			const response = await axios.post("http://localhost:8080/LearningManagementSystem/managers/enroll-learner", courseOffering);
+			const response = await axios.post(DATABASE_URL+MANAGER_URL+"/enroll-learner", courseOffering);
 			if(response.data != null){
 	        	alert("Learner enrolled successfully");
 	            console.log(response.data);

@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faSave
   } from "@fortawesome/free-solid-svg-icons";
+import {COURSE_URL, DATABASE_URL,TCMAPPING_URL,TRAINER_URL} from '../constants';
 
 export default class TeacherCourseMappingRegister extends Component {
 
@@ -26,7 +27,7 @@ export default class TeacherCourseMappingRegister extends Component {
   }
 
  async getOptions() {
-    const trainerResponse = await axios.get("http://localhost:8080/LearningManagementSystem/trainers/")
+    const trainerResponse = await axios.get(DATABASE_URL+TRAINER_URL+"/")
     const trainerData = trainerResponse.data
 
     const tranierOptions = trainerData.map(d => ({
@@ -37,7 +38,7 @@ export default class TeacherCourseMappingRegister extends Component {
 
     this.setState({trainerList: tranierOptions})
     
-    const courseResponse = await axios.get("http://localhost:8080/LearningManagementSystem/course/allcourses")
+    const courseResponse = await axios.get(DATABASE_URL+COURSE_URL+"/allcourses")
     const courseData = courseResponse.data
 
     const courseOptions = courseData.map(d => ({
@@ -70,7 +71,7 @@ export default class TeacherCourseMappingRegister extends Component {
         console.log(trainerCourseMapping)
         console.log(typeof(this.state.trainerId))
 	try{
-			const response = await axios.post("http://localhost:8080/LearningManagementSystem/teacherCourseMapping/register", trainerCourseMapping);
+			const response = await axios.post(DATABASE_URL+TCMAPPING_URL+"/register", trainerCourseMapping);
 			if(response.data != null){
 	        	alert("Trainer assigned to course successfully");
 	            console.log(response.data);

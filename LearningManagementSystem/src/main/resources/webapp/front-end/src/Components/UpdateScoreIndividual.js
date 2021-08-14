@@ -8,12 +8,14 @@ import {
     faUndo,
     faEye
   } from "@fortawesome/free-solid-svg-icons";
+import {DATABASE_URL, MANAGER_URL, TCMAPPING_URL} from '../constants';
 
 const buttonStyle={
     position: 'absolute',
     top: '105px',
     right: '35%'
 };
+
 class UpdateScoreIndividual extends React.Component{
     constructor(props){
         super(props);
@@ -39,7 +41,7 @@ class UpdateScoreIndividual extends React.Component{
 		try {
 			// let learnersList = await axios.get("http://localhost:8080/LearningManagementSystem/learners/")
             // this.state.learners = learnersList.data;
-            let tcMappings = await axios.get("http://localhost:8080/LearningManagementSystem/teacherCourseMapping/trainer-course-names")
+            let tcMappings = await axios.get(DATABASE_URL+TCMAPPING_URL+"/trainer-course-names")
 			this.state.tcMappings = tcMappings.data;
 		} catch(error) {
 			alert(error);
@@ -54,7 +56,7 @@ class UpdateScoreIndividual extends React.Component{
 			msg:"Processing.. Please Wait"
 		});
 		try {
-			let learnersList = await axios.get("http://localhost:8080/LearningManagementSystem/managers/findLearnersByTcId/"+id)
+			let learnersList = await axios.get(DATABASE_URL+MANAGER_URL+"/findLearnersByTcId/"+id)
 			this.state.learners = learnersList.data;
             
 		} catch(error) {
@@ -82,7 +84,7 @@ class UpdateScoreIndividual extends React.Component{
 			msg:"Processing.. Please Wait"
 		});
 		try{
-            const response = await axios.put("http://localhost:8080/LearningManagementSystem/managers/update-test-score?tcId="+this.state.tcid+"&learnerId="+this.state.learnerid+"&percentage="+this.state.percentage);
+            const response = await axios.put(DATABASE_URL+MANAGER_URL+"/update-test-score?tcId="+this.state.tcid+"&learnerId="+this.state.learnerid+"&percentage="+this.state.percentage);
 			
             if(response.data != null){
 	        	alert("Score updated successfully");

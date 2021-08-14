@@ -2,11 +2,7 @@ import React from 'react';
 
 import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
 import axios from 'axios';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faEdit,
-    faTrash
-  } from "@fortawesome/free-solid-svg-icons";
+import {DATABASE_URL, MANAGER_URL} from '../constants';
 
 class CourseAttended extends React.Component{
 	
@@ -27,7 +23,7 @@ class CourseAttended extends React.Component{
 		});
 		const id = this.props.location.state.detail;
 		try{
-			const response = await axios.get("http://localhost:8080/LearningManagementSystem/managers/course-attended/"+id);
+			const response = await axios.get(DATABASE_URL+MANAGER_URL+"/course-attended/"+id);
 			if(response.data != null) {
 				console.log(response.data)
 				this.setState({
@@ -89,7 +85,7 @@ class CourseAttended extends React.Component{
                                             variant="outline-primary"
                                             onClick={()=>{
                                                 this.props.history.push({
-                                                    pathname: "/viewScoreAndStatus",
+                                                    pathname: MANAGER_URL+"/viewScoreAndStatus",
                                                     state: {
                                                         courseId: course.courses.courseId,
                                                         learnerId: course.learners.learnerId

@@ -2,6 +2,7 @@ import React from 'react';
 
 import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
 import axios from 'axios';
+import {DATABASE_URL, MANAGER_URL} from '../constants';
 
 class CoursesOffered extends React.Component{
 	
@@ -23,7 +24,7 @@ class CoursesOffered extends React.Component{
 		});
 		const id = this.props.location.state.id;
 		try{
-			const response = await axios.get("http://localhost:8080/LearningManagementSystem/managers/trainer/"+id);
+			const response = await axios.get(DATABASE_URL+MANAGER_URL+"/trainer/"+id);
 			if(response.data != null) {
 				this.setState({
                     trainerDetails: response.data.trainerDetails,
@@ -77,7 +78,7 @@ class CoursesOffered extends React.Component{
                                             variant="outline-primary"
                                             onClick={()=>{
                                                 this.props.history.push({
-                                                    pathname: "/viewFeedback",
+                                                    pathname: MANAGER_URL+"/viewFeedback",
                                                     state: {
                                                         courseId: course.courseId,
                                                         trainerId: this.state.trainerDetails.trainerId

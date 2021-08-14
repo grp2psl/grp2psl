@@ -2,6 +2,8 @@ package com.psl.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,13 +24,17 @@ import com.psl.service.CourseService;
 public class CourseController {
 	@Autowired
 	private CourseService service;
-		
+	
+	public static final Logger LOGGER = LoggerFactory.getLogger(CourseController.class);
+	private final String logPrefix = "Course Controller - ";
+
 	/*
 	 *VIEW ALL COURSES AVAILABLE
 	 */
 	@GetMapping("/allcourses")
     public List<Course> getCourse () {
-        return service.findAll();
+		LOGGER.info(logPrefix+"GET /allcourses called to view all courses");
+		return service.findAll();
     }
 	
 	/*
@@ -36,6 +42,7 @@ public class CourseController {
 	 */
 	@GetMapping("/{courseId}")
 	public Course getCourse(@PathVariable int courseId) {
+		LOGGER.info(logPrefix+"GET /{courseId} called view details of a course by ID");
 		return service.getCourse(courseId);
 	}
 	
@@ -44,6 +51,7 @@ public class CourseController {
 	 */
 	@PostMapping("/addcourse")
 	public Course addCourse(@RequestBody Course course) {
+		LOGGER.info(logPrefix+"POST /addcourse called to add a course");
 		return service.addCourse(course);
 	}
 	
@@ -52,6 +60,7 @@ public class CourseController {
 	 */
 	@DeleteMapping("/delete/{courseid}")
 	public void removeCourse(@PathVariable int courseid) {
+		LOGGER.info(logPrefix+"DELETE /delete/{courseid} called to delete a course by ID");
 		service.removeCourse(courseid);
 	}
 
@@ -60,6 +69,7 @@ public class CourseController {
 	 */
 	@PutMapping("/update")
 	public void updateCourse(@RequestBody Course course) {
+		LOGGER.info(logPrefix+"PUT /update called to update details of a course by ID");
 		service.updateCourse(course);
 	}
 	

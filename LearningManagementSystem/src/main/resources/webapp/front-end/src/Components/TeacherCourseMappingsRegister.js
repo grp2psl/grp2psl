@@ -12,13 +12,16 @@ const buttonStyle={
     bottom: '20px',
     left: '30%'
 };
+
+const MANAGER_URL = process.env.REACT_APP_MANAGER_URL;
+
 class TeacherCourseMappingsRegister extends React.Component{
 		assignTrainer = () => {
-			this.props.history.push("/TeacherCourseMappingRegister");
+			this.props.history.push(MANAGER_URL+"/TeacherCourseMappingRegister");
 		}
 		
 		assignMultipleTrainers = () => {
-			this.props.history.push("/MultipleTeacherCourseMappingRegister");
+			this.props.history.push(MANAGER_URL+"/MultipleTeacherCourseMappingRegister");
 		}
 	
     render(){

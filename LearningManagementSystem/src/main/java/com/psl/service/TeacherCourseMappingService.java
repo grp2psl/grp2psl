@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -42,10 +44,14 @@ public class TeacherCourseMappingService {
 	@Autowired
 	private TrainerService trainerService;
 
+	public static final Logger LOGGER = LoggerFactory.getLogger(TeacherCourseMappingService.class);
+	private final String logPrefix = "Trainer Course Mapping Service - ";
+
 	/*
 	 *ADDING TEACHER-COURSE MAPPING DETAILS
 	 */
 	public void addTeacherCourseMapping(TeacherCourseMapping teacherCourseMapping) {
+		LOGGER.info(logPrefix+"Adding a Trainer-Course Mapping - "+teacherCourseMapping);
 		Integer id = dao.getNextId();
 		id = (id==null ? 0 : id + 1);
 		teacherCourseMapping.setTcId(id);
@@ -57,6 +63,7 @@ public class TeacherCourseMappingService {
 	 *ADDING MULTIPLE TEACHER-COURSE MAPPING DETAILS FROM CSV FILE
 	 */
 	public void addMultipleTeacherCourseMapping(MultipartFile csvFilePath) throws IOException {
+		LOGGER.info(logPrefix+"Adding multiple Trainer-Course mappings using file - "+csvFilePath);
 		Integer id = dao.getNextId();
 		id = id==null ? 0 : id;
 		XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
@@ -79,6 +86,7 @@ public class TeacherCourseMappingService {
 	 * GENERATES EXCEL SHEET OF SAMPLE DATA OF LEARNER DETAILS
 	 */
 	public void generateExcel(String path) throws IOException {
+		LOGGER.info(logPrefix+"Generating the excel format for adding multiple Trainer-Course Mappings");
 		ExcelHelper helper = new ExcelHelper();
 
 		List<ExcelFields> fields = new ArrayList<>();
@@ -93,6 +101,7 @@ public class TeacherCourseMappingService {
 	 * GET MAX ID OF TeacherCourseMapping TABLE
 	 */
 	public int getNextId() {
+		LOGGER.info(logPrefix+"Getting next ID of Trainer-Course Mapping");
 		Integer id = dao.getNextId();
 		id = (id==null ? 10000 : id);
 		return id;
@@ -102,6 +111,7 @@ public class TeacherCourseMappingService {
 	 * GET COURSE BY TCID (TRAINER-COURSE MAPPING ID)
 	 */
 	public Course getCourse(int tcid) {
+		LOGGER.info(logPrefix+"Returning a course details for Trainer-Course Mapping with ID - "+tcid);
 		TeacherCourseMapping tcMapping = dao.findById(tcid).get();
 		return courseService.getCourse(tcMapping.getCourseId());
 	}
@@ -110,6 +120,7 @@ public class TeacherCourseMappingService {
 	 * GET TRAINER AND COURSE NAMES FOR ALL TRAINER-COURSE MAPPINGS
 	 */
 	public List<Object> getAllTrainerCourseNames() {
+		LOGGER.info(logPrefix+"Returning trainer and course names for all Trainer-Course Mappings");
 		List<TeacherCourseMapping> tcMappings = (List<TeacherCourseMapping>) dao.findAll();
 		List<Object> tcNames = new ArrayList<>();
 		for(TeacherCourseMapping tc: tcMappings) {
@@ -130,6 +141,7 @@ public class TeacherCourseMappingService {
 	 * GET TRAINER-COURSE MAPPINGS BY TRAINER ID
 	 */
 	public List<TeacherCourseMapping> getByTrainerId(int trainerid) {
+		LOGGER.info(logPrefix+"Returning list of Trainer-Course Mappings for the trainer with ID - "+trainerid);
 		return dao.findByTrainerId(trainerid);
 	}
 
@@ -137,6 +149,7 @@ public class TeacherCourseMappingService {
 	 * GET TRAINER-COURSE MAPPINGS BY COURSE ID
 	 */
 	public List<TeacherCourseMapping> getByCourseId(int courseid) {
+		LOGGER.info(logPrefix+"Returning list of Trainer-Course Mappings for Course with ID - "+courseid);
 		return dao.findByCourseId(courseid);
 	}
 
@@ -144,6 +157,7 @@ public class TeacherCourseMappingService {
 	 * GET TRAINER-COURSE MAPPING BY TRAINER ID AND COURSE ID
 	 */
 	public TeacherCourseMapping getByTrainerIdAndCourseId(int id, int courseid) {
+		LOGGER.info(logPrefix+"Returning Trainer-Course Mapping for Trainer with ID - "+id+" and Course with ID - "+courseid);
 		return dao.findByTrainerIdAndCourseId(id, courseid);
 	}
 
@@ -152,6 +166,7 @@ public class TeacherCourseMappingService {
 	 * GET COURSE OFFERING BY LEARNER ID AND COURSE ID
 	 */
 	public List<CourseOffering> getCourseOffering(int id, int courseid) {
+		LOGGER.info(logPrefix+"Returning list of course offerings for learner with ID - "+id+" and course - "+courseid);
 		List<CourseOffering> courseOffering = new ArrayList<>();
 		CourseOffering cOffering= new CourseOffering();
 		List<TeacherCourseMapping> list = dao.findByCourseId(courseid);
@@ -169,6 +184,7 @@ public class TeacherCourseMappingService {
 	 * GET COURSES BY TRAINER ID
 	 */
 	public List<Course> getCoursesByTrainerId(int trainerid) {
+		LOGGER.info(logPrefix+"Returning list of courses for Trainer with ID - "+trainerid);
 		List<TeacherCourseMapping> tcMapping = dao.findByTrainerId(trainerid);
 		List<Course> courses = new ArrayList<>();
 		for(TeacherCourseMapping i: tcMapping) {
@@ -178,6 +194,7 @@ public class TeacherCourseMappingService {
 	}
 
 	public TeacherCourseMapping getById(int id) {
+		LOGGER.info(logPrefix+"Returning Trainer-Course Mapping with ID - "+id);
 		return dao.findById(id).get();
 	}
 }
