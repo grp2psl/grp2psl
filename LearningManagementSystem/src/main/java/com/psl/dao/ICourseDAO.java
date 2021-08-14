@@ -21,7 +21,7 @@ public interface ICourseDAO extends CrudRepository<Course, Integer> {
 	 * AUTO-INCREMENT ID
 	 */
 	@Query(value="select max(courseid) from course", nativeQuery=true)
-	public Integer getNextId();
+	Integer getNextId();
 	
 
 	/*
@@ -30,7 +30,7 @@ public interface ICourseDAO extends CrudRepository<Course, Integer> {
 	@Modifying
 	@Transactional
 	@Query(value="insert into course(courseid, coursename, prerequisite, syllabus, duration) values(?1, ?2, ?3, ?4, ?5)", nativeQuery=true)
-	public void saveNewEntry(@Param("id") int id, @Param("coursename") String coursename, @Param("prerequisite") String prerequisite, 
+	void saveNewEntry(@Param("id") int id, @Param("coursename") String coursename, @Param("prerequisite") String prerequisite, 
 			@Param("syllabus") String syllabus, @Param("duration") String duration);
 
 	/*
@@ -39,6 +39,6 @@ public interface ICourseDAO extends CrudRepository<Course, Integer> {
 	@Transactional
 	@Modifying
 	@Query(value="update course set prerequisite = ?1, syllabus = ?2, duration = ?3 where courseid = ?4", nativeQuery=true)
-	public void updateEntry(@Param("prerequisite") String prerequisite, 
+	void updateEntry(@Param("prerequisite") String prerequisite, 
 			@Param("syllabus") String syllabus,@Param("duration") String duration, @Param("id") int id);
 }

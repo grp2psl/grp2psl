@@ -16,13 +16,19 @@ const buttonStyle={
 const MANAGER_URL = process.env.REACT_APP_MANAGER_URL;
 
 class TeacherCourseMappingsRegister extends React.Component{
-		assignTrainer = () => {
-			this.props.history.push(MANAGER_URL+"/TeacherCourseMappingRegister");
-		}
+	assignTrainer = () => {
+		this.props.history.push(MANAGER_URL+"/TeacherCourseMappingRegister");
+	}
 		
-		assignMultipleTrainers = () => {
-			this.props.history.push(MANAGER_URL+"/MultipleTeacherCourseMappingRegister");
+	assignMultipleTrainers = () => {
+		this.props.history.push(MANAGER_URL+"/MultipleTeacherCourseMappingRegister");
+	}
+	componentWillMount(){
+		if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+			alert("User not logged in!");
+			return this.props.history.push("/");
 		}
+   	}
 	
     render(){
         return(

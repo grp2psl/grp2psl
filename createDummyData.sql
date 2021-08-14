@@ -20,6 +20,8 @@ INSERT INTO learner(`learnerid`,`name`,`department`,`phonenumber`,`email`,`passw
 INSERT INTO learner(`learnerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (10003,'Sheldon Cooper','L&D','9876543210','vaishnavi10march2000@gmail.com','Sheldon10003@3533');
 INSERT INTO learner (`learnerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES(10006,'John','Marketing','9696454525','john@gmail.com','John10006@6565');
 
+
+
 /*
 -- Query: SELECT * FROM learningmgmtdb.trainer
 LIMIT 0, 1000
@@ -28,7 +30,7 @@ LIMIT 0, 1000
 */
 INSERT INTO trainer(`trainerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (20000,'John','IT','3656562585','john@gmail.com','John20000@6495');
 INSERT INTO trainer(`trainerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (20001,'Jill','HR','3656562563','jill@gmail.com','Jill20001@3196');
-INSERT INTO trainer(`trainerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (20002,'Firstname Lastname','DepartmentName','9876543210','something@email.com','Firstname20002@7307');
+
 
 /*
 -- Query: SELECT * FROM learningmgmtdb.manager

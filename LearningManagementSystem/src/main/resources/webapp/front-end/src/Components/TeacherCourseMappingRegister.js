@@ -25,7 +25,12 @@ export default class TeacherCourseMappingRegister extends Component {
     this.teacherCourseMapping = this.teacherCourseMapping.bind(this);
   
   }
-
+  componentWillMount(){
+		if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+			alert("User not logged in!");
+			return this.props.history.push("/");
+		}
+  }
  async getOptions() {
     const trainerResponse = await axios.get(DATABASE_URL+TRAINER_URL+"/")
     const trainerData = trainerResponse.data

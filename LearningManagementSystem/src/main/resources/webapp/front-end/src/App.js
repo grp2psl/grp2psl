@@ -32,9 +32,19 @@ import ScoreAndStatus from './Components/ScoreAndStatus';
 import { Col, Container, Row } from 'react-bootstrap';
 import MultipleTeacherCourseMappingRegister from './Components/MultipleTeacherCourseMappingRegister';
 import TeacherCourseMappingsRegister from './Components/TeacherCourseMappingsRegister';
+import Login from './Components/Login';
+import AdminLogin from './Components/AdminLogin';
+import LearnerLogin from './Components/LearnerLogin'; 
+import TrainerLogin from './Components/TrainerLogin';
+import AdminDetails from './Components/AdminDetails';
+import TrainerDetails from './Components/TrainerDetails';
+import LearnerDetails from './Components/LearnerDetails';
 import {MANAGER_URL} from './constants';
+import { useHistory } from "react-router-dom";
 
 function App() {
+  const history = useHistory();
+
   return (
     <div className="App">
     <Router basename="/LearningManager">
@@ -43,6 +53,10 @@ function App() {
         <Row>
           <Col lg={12}>
           <Switch>
+              <Route path={"/"} exact component={Login}/>
+              <Route path={"/admin-login"} exact component={AdminLogin}/>
+              <Route path={"/trainer-login"} exact component={TrainerLogin}/>
+              <Route path={"/learner-login"} exact component={LearnerLogin}/>
               <Route path={MANAGER_URL+"/"} exact component={Welcome}/>
               <Route path={MANAGER_URL+"/registerTrainer"} exact component={Register}/>
               <Route path={MANAGER_URL+"/showTrainers"} exact component={ShowTrainers}/>
@@ -71,6 +85,9 @@ function App() {
               <Route path={MANAGER_URL+"/update-score-multiple"} exact component={UpdateScoreMultiple}/>
               <Route path={MANAGER_URL+"/viewCourseOfferings"} exact component={ViewCourseOfferings}/>
               <Route path={MANAGER_URL+"/viewScoreAndStatus"} exact component={ScoreAndStatus}/>
+              <Route path={"/view-details-manager"} exact component={AdminDetails}/>
+              <Route path={"/view-details-trainer"} exact component={TrainerDetails}/>
+              <Route path={"/view-details-learner"} exact component={LearnerDetails}/>
           </Switch>
           </Col>
         </Row>

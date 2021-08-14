@@ -33,6 +33,7 @@ import com.psl.entities.Course;
 
 import com.psl.entities.CourseOffering;
 import com.psl.entities.Learner;
+import com.psl.entities.Manager;
 import com.psl.entities.TeacherCourseMapping;
 import com.psl.entities.Trainer;
 import com.psl.utils.ExcelFields;
@@ -195,6 +196,10 @@ public class LearnerService {
 	}
 
 
+	public Learner login(String email, String password) {
+		Learner learner = dao.findByEmailAndPassword(email, password);
+		return learner;
+	}
 
 
 }

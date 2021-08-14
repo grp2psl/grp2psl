@@ -245,4 +245,13 @@ public class ManagerController {
 		LOGGER.info(logPrefix+"GET /findLearnersByTcId/{id} called to find learners by TcID");
 		return offeringService.findLearnersByTcId(tcId);
 	}	
+	
+	@GetMapping("/login")
+	public ResponseEntity<Manager> login(@RequestParam String email, @RequestParam String password){
+		Manager result = service.login(email, password);
+		if(result == null) {
+			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);	
+		}
+		return new ResponseEntity<>(result, HttpStatus.OK);	
+	}
 }

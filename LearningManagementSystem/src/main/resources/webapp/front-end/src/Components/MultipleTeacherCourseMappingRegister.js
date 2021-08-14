@@ -32,6 +32,12 @@ class MultipleTeacherCourseMappingRegister extends React.Component{
         this.assignTrainers = this.assignTrainers.bind(this);
     }
     
+	componentWillMount(){
+        if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+            alert("User not logged in!");
+            return this.props.history.push("/");
+        }
+   }
     async download(){
 		this.setState({
 			msg:"Downloading..Please Wait"

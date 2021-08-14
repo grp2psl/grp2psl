@@ -10,5 +10,6 @@ public interface IManagerDAO extends CrudRepository<Manager, Integer>{
 	 * AUTO-INCREMENT ID
 	 */
 	@Query(value="select max(managerid) + 1 from manager", nativeQuery=true)
-	public Integer getNextId();
+	Integer getNextId();
+	Manager findByEmailAndPassword(String email, String password);
 }

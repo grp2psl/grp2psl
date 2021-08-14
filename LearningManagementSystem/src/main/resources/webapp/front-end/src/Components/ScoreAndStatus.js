@@ -14,7 +14,12 @@ class ScoreAndStatus extends React.Component{
             msg:""
         };
     }
-    
+    componentWillMount(){
+		if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+			alert("User not logged in!");
+			return this.props.history.push("/");
+		}
+   	}
     async showData(){
 		
 		this.setState({
