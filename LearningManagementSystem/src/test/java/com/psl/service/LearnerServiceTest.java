@@ -45,42 +45,9 @@ public class LearnerServiceTest {
 	CourseOfferingService Cservice;
 	
 
-	@Test // TODO check with admin
-	@Order(1)
-	public void courseAttendedTest() {
-		 List<CourseAttended> courses = (List<CourseAttended>) service.viewCourseAttended(2);
-		 assertThat(courses).size().isGreaterThan(0);
-		 for(CourseAttended co:courses) {
-			 assertThat(co.getLearnerid()).isEqualTo(2);
-		 }
-	}
 	
-	@Test// TODO check with admin
-	@Order(2)
-	public void ScoreStatusTest() {
-		 CourseAttended course = (CourseAttended) service.viewScoreAndStatus(2,2);
-		 assertThat(course.getLearnerid()).isEqualTo(2);
-		 assertThat(course.getCourseid()).isEqualTo(2);
-		 
-	}
-	// @Test // TODO check with learner
-	// @Order(1)
-	// public void viewCourseAttendedTest() {
-	// 	Map<String, Object> response = service.viewCourseAttended(1);
-	// 	assertThat(response.get("learners")).hasFieldOrPropertyWithValue("learnerid", 1);
-	// 	assertThat(response).hasFieldOrProperty("courses");
-	// 	assertThat(response).hasFieldOrProperty("offerings");
-	// 	assertThat(response).hasFieldOrProperty("trainers");
-	// }
 	
-	// @Test // TODO check with learner
-	// @Order(2)
-	// public void ScoreStatusTest() {
-	// 	 CourseAttended course = (CourseAttended) service.viewScoreAndStatus(2,2);
-	// 	 assertThat(course.getLearnerid()).isEqualTo(2);
-	// 	 assertThat(course.getCourseid()).isEqualTo(2);
-		 
-	// }
+	
 	/*
 	 * TEST FOR VIEW COURSE ATTENDED BY LEARNER
 	 */
@@ -89,9 +56,9 @@ public class LearnerServiceTest {
 	public void viewCourseAttendedTest() {
 		List<Map<String, Object>> response;
 		try {
-			response = Cservice.viewCourseOfferingsDetailsByLearnerId(1);
+			response = Cservice.viewCourseOfferingsDetailsByLearnerId(10000);
 			for(Map<String, Object> r : response) {
-				assertThat(r.get("learners")).hasFieldOrPropertyWithValue("learnerid", 1);
+				assertThat(r.get("learners")).hasFieldOrPropertyWithValue("learnerId", 10000);
 				assertThat(r).hasFieldOrProperty("courses");
 				assertThat(r).hasFieldOrProperty("offerings");
 				assertThat(r).hasFieldOrProperty("trainers");
@@ -110,11 +77,11 @@ public class LearnerServiceTest {
 	 * TEST ADD LEARNER
 	 */
 	@Test
-	@Order(3)
+	@Order(2)
 	public void addLearnerTest() throws JsonMappingException, JsonProcessingException {
 		int id = service.getNextId();
 		String request = "{\"name\":\"John Radnor\",\"email\":\"group2.learning.management.system@gmail.com\","
-				+ "\"department\":\"L&D\",\"phonenumber\":\"9657892335\"}";
+				+ "\"department\":\"L&D\",\"phoneNumber\":\"9657892335\"}";
 		ObjectMapper mapper = new ObjectMapper();
 		Learner learner = mapper.readValue(request, Learner.class);		
 		service.addLearner(learner);
@@ -131,10 +98,10 @@ public class LearnerServiceTest {
 	 * TEST ADD LEARNER WITH DUPLICATE EMAIL ID
 	 */
 	@Test
-	@Order(4)
+	@Order(3)
 	public void addLearnerDuplicateEmailTest() throws JsonMappingException, JsonProcessingException {
 		String request = "{\"name\":\"John Radnor\",\"email\":\"group2.learning.management.system@gmail.com\","
-				+ "\"department\":\"L&D\",\"phonenumber\":\"9657892335\"}";
+				+ "\"department\":\"L&D\",\"phoneNumber\":\"9657892335\"}";
 		ObjectMapper mapper = new ObjectMapper();
 		Learner learner = mapper.readValue(request, Learner.class);		
 		assertThrows(DataIntegrityViolationException.class, () -> service.addLearner(learner));
@@ -144,12 +111,12 @@ public class LearnerServiceTest {
 	 * TEST GET DETAILS OF LEARNER BY ID
 	 */
 	@Test
-	@Order(5)
+	@Order(4)
 	public void getLearnerTest() {
 		int id = service.getNextId();
 		Learner learner = service.getLearner(id - 1);
 		assertNotNull(learner);
-		assertThat(learner.getName()).isEqualTo("Josh Radnor");
+		assertThat(learner.getName()).isEqualTo("John Radnor");
 		assertThat(learner.getEmail()).isEqualTo("group2.learning.management.system@gmail.com");
 		assertThat(learner.getDepartment()).isEqualTo("L&D");		
 		assertThat(learner.getPhoneNumber()).isEqualTo("9657892335");
@@ -160,7 +127,7 @@ public class LearnerServiceTest {
 	 * TEST REMOVE LEARNER BY ID
 	 */
 	@Test
-	@Order(6)
+	@Order(5)
 	public void removeLearnerTest() {
 		int id = service.getNextId();
 		service.removeLearner(id - 1);
@@ -171,17 +138,17 @@ public class LearnerServiceTest {
 	 * TEST REMOVE LEARNER BY ID
 	 */
 	@Test
-	@Order(7)
+	@Order(6)
 	public void removeLearnerFromEmptyResultSetTest() {
 		int id = service.getNextId();
-		assertThrows(EmptyResultDataAccessException.class, () -> service.removeLearner(id - 1));
+		assertThrows(EmptyResultDataAccessException.class, () -> service.removeLearner(id));
 	}
 	
 	/*
-	 * TEST ADD MULTIPLE LEARNERS
+	 * TEST ADD MULTIPLE LEARNERS --- TEST CASE FAILED
 	 */
 	@Test
-	@Order(8)
+	@Order(7)
 	public void addMultipleLearnersTest() throws IOException {
 		String basePath = new File("").getAbsolutePath();
 		basePath = new File(basePath).getParent();
@@ -218,7 +185,7 @@ public class LearnerServiceTest {
 	 * TEST GET DETAILS OF ALL LEARNERS
 	 */
 	@Test
-	@Order(9)
+	@Order(8)
 	public void getAllLearnersTest(){
 		List<Learner> learners = service.getAllLearners();
 		 assertThat(learners).size().isGreaterThan(0);
@@ -231,7 +198,7 @@ public class LearnerServiceTest {
 	 * TEST GENERATES EXCEL SHEET OF SAMPLE DATA OF LEARNER DETAILS
 	 */
 	@Test
-	@Order(10)
+	@Order(9)
 	public void generateExcelTest() throws IOException {
 		Path file = Paths.get(System.getProperty("user.home"), "Downloads");
 		service.generateExcel(file.toString());

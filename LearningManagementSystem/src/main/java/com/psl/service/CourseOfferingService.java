@@ -81,7 +81,7 @@ public class CourseOfferingService {
 	public void enrollLearner(CourseOffering offering) throws ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
 		Integer maxId = dao.getMaxId();
-		maxId = maxId==null ? 0 : maxId;
+		maxId = maxId==null ? 1 : maxId;
 		offering.setCourseOfferingId(++maxId);
 		System.out.println(offering.getStatus());
         dao.save(updateCourseOfferingStatus(offering));
@@ -95,7 +95,7 @@ public class CourseOfferingService {
 	 */
 	public void enrollMultipleLearners(MultipartFile csvFilePath) throws IOException, ParseException {
 		Integer maxId = dao.getMaxId();
-		maxId = maxId==null ? 0 : maxId;
+		maxId = maxId==null ? 1 : maxId;
 		XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
 	    XSSFSheet worksheet = workbook.getSheetAt(0);
 	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");

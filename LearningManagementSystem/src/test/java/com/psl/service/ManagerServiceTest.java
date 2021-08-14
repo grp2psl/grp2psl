@@ -31,7 +31,7 @@ public class ManagerServiceTest {
 	public void addManagerTest() throws JsonMappingException, JsonProcessingException {
 		int id = service.getNextId();
 		String request = "{\"name\":\"John Radnor\",\"email\":\"group2.learning.management.system@gmail.com\","
-				+ "\"password\":\"admin123\",\"phonenumber\":\"9657892335\"}";
+				+ "\"password\":\"admin123\",\"phoneNumber\":\"9657892335\"}";
 		ObjectMapper mapper = new ObjectMapper();
 		Manager manager = mapper.readValue(request, Manager.class);		
 		service.addManager(manager);
@@ -50,7 +50,7 @@ public class ManagerServiceTest {
 	@Order(2)
 	public void addManagerDuplicateEmailTest() throws JsonMappingException, JsonProcessingException {
 		String request = "{\"name\":\"John Radnor\",\"email\":\"group2.learning.management.system@gmail.com\","
-				+ "\"password\":\"admin123\",\"phonenumber\":\"9657892335\"}";
+				+ "\"password\":\"admin123\",\"phoneNumber\":\"9657892335\"}";
 		ObjectMapper mapper = new ObjectMapper();
 		Manager manager = mapper.readValue(request, Manager.class);		
 		assertThrows(DataIntegrityViolationException.class, () -> service.addManager(manager));

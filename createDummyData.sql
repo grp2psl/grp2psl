@@ -1,30 +1,63 @@
-/*Following queries create dummy data, Running learningMgmtDDL file is prerequisite for running this file. */
+/*
+-- Query: SELECT * FROM learningmgmtdb.course
+LIMIT 0, 1000
 
-use learningMgmtDB;
+-- Date: 2021-08-14 10:53
+*/
+INSERT INTO `` (`courseid`,`coursename`,`prerequisite`,`syllabus`,`duration`) VALUES (1,'Java','Java Basics','https://www.javatpoint.com/spring-tutorial','4 day');
+INSERT INTO `` (`courseid`,`coursename`,`prerequisite`,`syllabus`,`duration`) VALUES (2,'Python','Data Structures','https://docs.python.org/3/tutorial/','2 days');
+INSERT INTO `` (`courseid`,`coursename`,`prerequisite`,`syllabus`,`duration`) VALUES (3,'C++','Basic programming','OOPs concepts','8 hr');
 
-INSERT INTO learner (learnerid, name, department, phonenumber, email, password) VALUES 
-(1, 'Adams', 'Marketing', 2084748755, 'adams@gmail.com', 'adamspass'),
-(2, 'Baker', 'Finance', 2165462308, 'bakers@gmail.com', 'bakerspass'),
-(3, 'Clark', 'IT', 2015625120, 'clark@gmail.com', 'clarkpass'),
-(4, 'Davis', 'Marketing', 2099645369, 'davis@gmail.com', 'davispass'),
-(5, 'Evans', 'Finance', 2169359933, 'evans@gmail.com', 'evanspass'),
-(6, 'Frank', 'IT', 2249156251, 'frank@gmail.com', 'frankpass'),
-(7, 'Ghosh', 'Marketing', 2132978767, 'ghosh@gmail.com', 'ghoshpass'),
-(8, 'Hills', 'Finance', 6195269471, 'hills@gmail.com', 'hillspass'),
-(9, 'Irwin', 'IT', 5076097206, 'irwin@gmail.com', 'irwinpass'),
-(10, 'Jones', 'IT', 2765521246, 'jones@gmail.com', 'jonespass');
+/*
+-- Query: SELECT * FROM learningmgmtdb.learner
+LIMIT 0, 1000
 
-INSERT INTO trainer (trainerid, name, department, phonenumber, email, password) VALUES 
-(1, 'Klein', 'HR', 2189714300, 'klein@gmail.com', 'kleinpass'),
-(2, 'Lopez', 'HR', 2096124483, 'lopez@gmail.com', 'lopezpass');
+-- Date: 2021-08-14 10:54
+*/
+INSERT INTO `` (`learnerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (10000,'Abhishek','HR','9696565636','abhi@gmail.com','Abhishek10000@2562');
+INSERT INTO `` (`learnerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (10001,'Pradnya','Sales','8585454525','pradnya@gmail.com','Pradnya10001@8063');
+INSERT INTO `` (`learnerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (10002,'Ted Mosby','HR','9876543210','vaishnavipatil10march@gmail.com','Ted10002@5525');
+INSERT INTO `` (`learnerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (10003,'Sheldon Cooper','L&D','9876543210','vaishnavi10march2000@gmail.com','Sheldon10003@3533');
 
-INSERT INTO manager (managerid, name, phonenumber, email, password)
-VALUES (1, 'Zafar', 2189714300, 'zafar@gmail.com', 'zafarpass');
 
-INSERT INTO course (courseid, coursename, prerequisite, syllabus, duration) VALUES 
-(1, 'Introduction to OOPs', 'Basic Programming', 'Principles of OOPs, Classes and Objects, Constructors and Destructors, Polymorphism, Program development using Inheritance, Exception Handling', '12 hr'),
-(2, 'Finance 101', 'Basic Mathematics', 'Accounting, Financial Analysis, Corporate Finance', '8 days');
+/*
+-- Query: SELECT * FROM learningmgmtdb.trainer
+LIMIT 0, 1000
 
-INSERT INTO TeacherCourseMapping(tcid, trainerid, courseid) VALUES 
-(1, 1, 2),
-(2, 2, 1);
+-- Date: 2021-08-14 10:55
+*/
+INSERT INTO `` (`trainerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (20000,'John','IT','3656562585','john@gmail.com','John20000@6495');
+INSERT INTO `` (`trainerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (20001,'Jill','HR','3656562563','jill@gmail.com','Jill20001@3196');
+INSERT INTO `` (`trainerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (20002,'Firstname Lastname','DepartmentName','9876543210','something@email.com','Firstname20002@7307');
+
+/*
+-- Query: SELECT * FROM learningmgmtdb.manager
+LIMIT 0, 1000
+
+-- Date: 2021-08-14 10:54
+*/
+INSERT INTO `` (`managerid`,`name`,`phonenumber`,`email`,`password`) VALUES (30000,'John Radnor','9657892335','group2.learning.management.system@gmail.com','manager123');
+
+/*
+-- Query: SELECT * FROM learningmgmtdb.teachercoursemapping
+LIMIT 0, 1000
+
+-- Date: 2021-08-14 10:54
+*/
+INSERT INTO `` (`trainerid`,`courseid`,`tcid`) VALUES (20000,1,0);
+INSERT INTO `` (`trainerid`,`courseid`,`tcid`) VALUES (20001,2,1);
+INSERT INTO `` (`trainerid`,`courseid`,`tcid`) VALUES (20000,2,2);
+
+/*
+-- Query: SELECT * FROM learningmgmtdb.courseoffering
+LIMIT 0, 1000
+
+-- Date: 2021-08-14 10:54
+*/
+INSERT INTO `` (`feedback`,`ratings`,`startdate`,`enddate`,`learnerid`,`tcid`,`status`,`percentage`,`courseofferingid`) VALUES (NULL,0,'2021-08-14','2021-08-18',10000,0,'PASS,FEEDBACK_PENDING',80.00,1);
+INSERT INTO `` (`feedback`,`ratings`,`startdate`,`enddate`,`learnerid`,`tcid`,`status`,`percentage`,`courseofferingid`) VALUES (NULL,0,'2021-08-14','2021-08-18',10001,1,'PASS,FEEDBACK_PENDING',89.00,2);
+INSERT INTO `` (`feedback`,`ratings`,`startdate`,`enddate`,`learnerid`,`tcid`,`status`,`percentage`,`courseofferingid`) VALUES (NULL,0,'2021-09-01','2021-09-05',10002,1,'IN_PROGRESS',0.00,3);
+INSERT INTO `` (`feedback`,`ratings`,`startdate`,`enddate`,`learnerid`,`tcid`,`status`,`percentage`,`courseofferingid`) VALUES (NULL,0,'2021-09-01','2021-09-05',10002,1,'IN_PROGRESS',0.00,4);
+
+
+

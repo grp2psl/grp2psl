@@ -1,8 +1,10 @@
 package com.psl.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -21,7 +23,7 @@ public class CourseServiceTest {
 	
 	@Test
 	@Order(1)
-	public void testListProducts() {
+	public void testListCourses() {
 	    List<Course> courses = (List<Course>) service.findAll();
 	    assertThat(courses).size().isGreaterThan(0);
 	}
@@ -29,11 +31,11 @@ public class CourseServiceTest {
 	@Test
 	@Order(2)
 	public void testAddCourse() {
-		Course c=new Course(369,"C++","Basic programming","OOPs concepts","8 hr");
+		Course c=new Course(3,"C++","Basic programming","OOPs concepts","8 hr");
 	    service.addCourse(c);
 	     
-	    Course course=service.getCourse(369);
-	    assertThat(course.getCourseId()).isEqualTo(369);
+	    Course course=service.getCourse(3);
+	    assertThat(course.getCourseId()).isEqualTo(3);
 	    
 	}
 	
@@ -48,5 +50,7 @@ public class CourseServiceTest {
 	    assertThat(course.getCourseId()).isEqualTo(2);
 	    
 	}
+	
+	
 	
 }
