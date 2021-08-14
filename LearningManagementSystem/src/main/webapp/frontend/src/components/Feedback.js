@@ -23,7 +23,8 @@ export default class Feedback extends Component{
 		event.preventDefault();
 						
 		try{
-			console.log(this.state.ratings)           
+			console.log(this.state.ratings) 
+			console.log(this.state.feedback) 			          
 		const  response = await axios.put("http://localhost:8080/LearningManagementSystem/feedback/" + this.props.location.state.id, {feedback:this.state.feedback, ratings:this.state.ratings});
 		} catch(error) {
 			alert(error.response.data);
@@ -74,13 +75,15 @@ export default class Feedback extends Component{
 					<Form.Row>
 						<Form.Group controlId = "formGridRatings">
 							<Form.Label>Ratings</Form.Label>							
-							<NumericInput 
+							<Form.Control 
 								min={0} 
 								max={5} 
 								step = {1}
-								onValueChange={this.ratingChange}
+								onChange={this.ratingChange}
 								value={this.state.ratings}
-								name = "ratings"/>
+								name = "ratings"
+								className = "form-control"
+								/>
 						</Form.Group>
 					</Form.Row>
 				</Card.Body>
