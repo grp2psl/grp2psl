@@ -44,4 +44,6 @@ public interface ITrainerDAO extends CrudRepository<Trainer, Integer>{
 	@Query(value="update trainer set department = ?1, phonenumber = ?2 where trainerid = ?3", nativeQuery=true)
 	void updateEntry(@Param("department") String department, 
 			@Param("phoneNumber") String phoneNumber, @Param("id") int id);
+	
+	Trainer findByEmailAndPassword(String email, String password);
 }

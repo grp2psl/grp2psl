@@ -53,7 +53,7 @@ class AdminLogin extends React.Component{
                 this.props.history.push(MANAGER_URL+"/");
         	}	
 		} catch(error) {
-			alert(error.response.data);
+			alert("Login failed");
 		}
         this.setState(this.initialState);
     }

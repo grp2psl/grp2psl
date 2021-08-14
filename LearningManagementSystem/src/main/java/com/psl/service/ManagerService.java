@@ -42,7 +42,7 @@ public class ManagerService {
 	}
 	
 	public Manager login(String email, String password) {
-		Manager manager = dao.findByEmail(email);
+		Manager manager = dao.findByEmailAndPassword(email, password);
 		return manager;
 	}
 }

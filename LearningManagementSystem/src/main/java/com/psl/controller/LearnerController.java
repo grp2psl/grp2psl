@@ -132,4 +132,12 @@ public class LearnerController {
 		System.out.println(file);
 	}
 
+	@GetMapping("/login")
+	public ResponseEntity<Learner> login(@RequestParam String email, @RequestParam String password){
+		Learner result = service.login(email, password);
+		if(result == null) {
+			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);	
+		}
+		return new ResponseEntity<>(result, HttpStatus.OK);	
+	}
 }

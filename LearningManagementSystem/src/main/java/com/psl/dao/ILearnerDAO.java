@@ -58,5 +58,5 @@ public interface ILearnerDAO extends CrudRepository<Learner,Integer>{
 			@Param("phoneNumber") String phoneNumber, @Param("id") int id);
 	
 
-	Learner findByEmail(String email);
+	Learner findByEmailAndPassword(String email, String password);
 }

@@ -143,5 +143,13 @@ public class TrainerController {
 		service.generateExcel(file.toString());
 		System.out.println(file);
 	}
-	
+
+	@GetMapping("/login")
+	public ResponseEntity<Trainer> login(@RequestParam String email, @RequestParam String password){
+		Trainer result = service.login(email, password);
+		if(result == null) {
+			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);	
+		}
+		return new ResponseEntity<>(result, HttpStatus.OK);	
+	}
 }

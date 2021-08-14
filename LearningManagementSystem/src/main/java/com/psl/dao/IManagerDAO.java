@@ -11,5 +11,5 @@ public interface IManagerDAO extends CrudRepository<Manager, Integer>{
 	 */
 	@Query(value="select max(managerid) + 1 from manager", nativeQuery=true)
 	Integer getNextId();
-	Manager findByEmail(String email);
+	Manager findByEmailAndPassword(String email, String password);
 }

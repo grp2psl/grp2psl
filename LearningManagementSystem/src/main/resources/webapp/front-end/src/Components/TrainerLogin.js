@@ -45,14 +45,13 @@ class TrainerLogin extends React.Component{
 		try{
 			const response = await axios.get(DATABASE_URL+"/trainers/login?email="+this.state.email+"&password="+this.state.password);
 			if(response.data != null){
-	        	alert("Logged in successfully");
 	            console.log(response.data);
                 localStorage.setItem('loggedin', true);
                 localStorage.setItem('userId', response.data.trainerId);
                 localStorage.setItem('user', 'trainer');
         	}	
 		} catch(error) {
-			alert(error.response.data);
+			alert("Login failed");
 		}
         this.setState(this.initialState);
     }
@@ -65,7 +64,7 @@ class TrainerLogin extends React.Component{
                 		<Row xs={1} md={3} className="g-4 mb-4">
                             <Col></Col>
 						    <Col>
-                            <Form id="registerId" onSubmit={this.loginAdmin}> 
+                            <Form id="registerId" onSubmit={this.loginTrainer}> 
 						      <Card className="bg-light" style={cardStyle}>
 						        <Card.Body>
 						            <Card.Title>Trainer Login</Card.Title>

@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.psl.dao.ICourseOfferingDAO;
 import com.psl.dao.ITeacherCourseMappingDAO;
 import com.psl.dao.ITrainerDAO;
+import com.psl.entities.Learner;
 import com.psl.entities.TeacherCourseMapping;
 import com.psl.entities.Trainer;
 import com.psl.utils.ExcelFields;
@@ -154,5 +155,10 @@ public class TrainerService {
 		Integer id = dao.getNextId();
 		id = (id==null ? 20000 : id);
 		return id;
+	}
+
+	public Trainer login(String email, String password) {
+		Trainer trainer = dao.findByEmailAndPassword(email, password);
+		return trainer;
 	}
 }
