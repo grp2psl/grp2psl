@@ -47,17 +47,17 @@ public class CourseOfferingServiceTest {
 	@Test
 	@Order(1)
 	/*
-	 * TEST ENROLL LEARNER
+	 * TEST ENROLL LEARNER 
 	 */
 	public void enrollLearnerTest() throws ParseException, JsonProcessingException, JsonMappingException{
 		int id = service.getMaxId(); //implicit testing of getMaxId()
-		String request = "{\"learnerid\":12,\"tcid\":1,\"startdate\":\"2021-09-01\",\"enddate\":\"2021-09-05\"}";
+		String request = "{\"learnerId\":10001,\"tcId\":0,\"startDate\":\"2021-09-01\",\"endDate\":\"2021-09-05\"}";
 		ObjectMapper mapper = new ObjectMapper();
 		CourseOffering offering = mapper.readValue(request, CourseOffering.class);
 		service.enrollLearner(offering);
 		CourseOffering result = service.getCourseOffering(service.getMaxId()); //implicit testing of getCourseOffering(int id)
-		assertThat(result.getLearnerId()).isEqualTo(12);
-		assertThat(result.getTcId()).isEqualTo(1);
+		assertThat(result.getLearnerId()).isEqualTo(10001);
+		assertThat(result.getTcId()).isEqualTo(0);
 		assertThat(result.getCourseOfferingId()).isEqualTo(id+1);
 	}
 	
@@ -69,7 +69,7 @@ public class CourseOfferingServiceTest {
 	public void updateTestScoreTest() {
 		service.updateTestScore(service.getMaxId(), 67);
 		CourseOffering result = service.getCourseOffering(service.getMaxId());
-		assertThat(result.getLearnerId()).isEqualTo(12);
+		assertThat(result.getLearnerId()).isEqualTo(10001);
 		assertThat(result.getPercentage()).isEqualTo(67);
 		assertThat(result.getFeedback()).isEqualTo(null);
 		assertThat(result.getStatus()).isEqualTo("FAIL,FEEDBACK_PENDING"); //implicit testing of updateCourseOfferingStatus(CourseOffering offering)
@@ -100,7 +100,7 @@ public class CourseOfferingServiceTest {
 	@Test
 	@Order(5)
 	/*
-	 * TEST ENROLL MULTIPLE LEARNERS
+	 * TEST ENROLL MULTIPLE LEARNERS ----UNIT TEST FAILED
 	 */
 	public void enrollMultipleLearnersTest() throws IOException, ParseException {
 		int id = service.getMaxId();
@@ -119,7 +119,7 @@ public class CourseOfferingServiceTest {
 	@Test
 	@Order(6)
 	/*
-	 * TEST UPDATE TEST SCORE OF MULTIPLE LEARNERS
+	 * TEST UPDATE TEST SCORE OF MULTIPLE LEARNERS 
 	 */
 	public void updateMultipleTestScoresTest() throws IOException, ParseException {
 		Path path = Paths.get("update-score.xlsx");
@@ -145,8 +145,8 @@ public class CourseOfferingServiceTest {
 	 * TEST VIEW DETAILS OF TRAINER BY ID
 	 */
 	public void viewTrainerDetailsTest() {
-		Map<String, Object> response = service.viewTrainerDetails(1);
-		assertThat(response.get("trainerDetails")).hasFieldOrPropertyWithValue("trainerid", 1);
+		Map<String, Object> response = service.viewTrainerDetails(20000);
+		assertThat(response.get("trainerDetails")).hasFieldOrPropertyWithValue("trainerId", 20000);
 		assertThat(response).hasFieldOrProperty("courses");
 		assertThat(response).hasFieldOrProperty("offerings");
 	}
@@ -157,8 +157,8 @@ public class CourseOfferingServiceTest {
 	 * TEST VIEW DETAILS OF COURSE BY TRAINER ID
 	 */
 	public void viewCourseDetailsByTrainerIdTest() {
-		Map<String, Object> response = service.viewCourseDetailsByTrainerId(1, 2);
-		assertThat(response.get("courseDetails")).hasFieldOrPropertyWithValue("courseid", 2);
+		Map<String, Object> response = service.viewCourseDetailsByTrainerId(20000, 1);
+		assertThat(response.get("courseDetails")).hasFieldOrPropertyWithValue("courseId", 1);
 		assertThat(response).hasFieldOrProperty("avgRating");
 		assertThat(response).hasFieldOrProperty("offerings");
 	}

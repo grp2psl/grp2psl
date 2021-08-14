@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -55,6 +57,9 @@ public class CourseOfferingService {
 	
 	@Autowired
 	private TeacherCourseMappingService tcService;
+
+	public static final Logger LOGGER = LoggerFactory.getLogger(CourseOfferingService.class);
+	private final String logPrefix = "Course Offering Service - ";
 	
 	/*
 	 * ENROLL LEARNER
@@ -69,6 +74,7 @@ public class CourseOfferingService {
 
 	//Function to allow Learner to given feedback on given course Offering
 	public CourseOffering AddFeedback(int learnerId, int tcId, String feedback) {
+		LOGGER.info(logPrefix+"Adding feedback - "+feedback+" for Trainer-course mapping with ID - "+tcId+" by learner with ID - "+learnerId);
 		CourseOffering co = dao.findByTcIdAndLearnerId(tcId, learnerId);
 		co.setFeedback(feedback);
 		return dao.save(co);
@@ -76,26 +82,29 @@ public class CourseOfferingService {
 	
 	//Lists all Course Offerings of given learner which is identified by learnerId 
 	public List<CourseOffering> getCourseOfferings(int learnerId) {
+		LOGGER.info(logPrefix+"Returning list of all course offerings of the learner with ID - "+learnerId);
 		return dao.findByLearnerId(learnerId);
 	}
 	public void enrollLearner(CourseOffering offering) throws ParseException {
+		LOGGER.info(logPrefix+"Enrolling a learner with ID - "+offering.getLearnerId()+" to Trainer-Course mapping with ID - "+offering.getTcId());
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
 		Integer maxId = dao.getMaxId();
-		maxId = maxId==null ? 0 : maxId;
+		maxId = maxId==null ? 1 : maxId;
 		offering.setCourseOfferingId(++maxId);
 		System.out.println(offering.getStatus());
         dao.save(updateCourseOfferingStatus(offering));
         Learner learner = learnerService.getLearner(offering.getLearnerId());
         Course course = tcService.getCourse(offering.getTcId());
-        emailService.sendEmail("group2.learning.management.system@gmail.com", learner.getEmail(), "Hi " + learner.getName() +", \nYou have been enrolled to the Course - "+course.getCourseName()+".\nDuration of the course is - "+course.getDuration()+" hours, starting from "+formatter.format(offering.getStartDate()), "Learner enrolled to "+course.getCourseName()+" successfully - learning management portal");
+        emailService.sendEmail("group2.learning.management.system@gmail.com", learner.getEmail(), "Hi " + learner.getName() +", \nYou have been enrolled to the Course - "+course.getCourseName()+".\nDuration of the course is - "+course.getDuration()+" hours, starting from "+formatter.format(offering.getStartDate()), "Learner enrolled to "+course.getCourseName()+" successfully - learning management portal");		
 	}
 	
 	/*
 	 * ENROLL MULTIPLE LEARNERS
 	 */
 	public void enrollMultipleLearners(MultipartFile csvFilePath) throws IOException, ParseException {
+		LOGGER.info(logPrefix+"Enrolling multiple learners using file - "+csvFilePath);
 		Integer maxId = dao.getMaxId();
-		maxId = maxId==null ? 0 : maxId;
+		maxId = maxId==null ? 1 : maxId;
 		XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
 	    XSSFSheet worksheet = workbook.getSheetAt(0);
 	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
@@ -121,6 +130,7 @@ public class CourseOfferingService {
 	 * STATUS CAN BE - IN_PROGRESS, FAILFEEDBACK_PENDING, PASSFEEDBACK_PENDING, FAILFEEDBACK_GIVEN, COMPLETED
 	 */
 	public CourseOffering updateCourseOfferingStatus(CourseOffering offering) {
+		LOGGER.info(logPrefix+"Updating Course Offering Status for ID - "+offering.getCourseOfferingId());
 		double percentage = offering.getPercentage();
 		String feedback = offering.getFeedback();
 		String status = offering.getStatus();
@@ -142,6 +152,7 @@ public class CourseOfferingService {
 	 * UPDATE TEST SCORE OF AN INDIVIDUAL
 	 */
 	public void updateTestScore(int id, double percentage) {
+		LOGGER.info(logPrefix+"Updating Test Score Percentage - "+percentage+" for offering with ID - "+id);
 		CourseOffering offering = dao.findById(id).get();
 		offering.setPercentage(percentage);
 		dao.save(updateCourseOfferingStatus(offering));
@@ -151,6 +162,7 @@ public class CourseOfferingService {
 	 * UPDATE TEST SCORE OF MULTIPLE LEARNERS
 	 */
 	public void updateMultipleTestScores(MultipartFile csvFilePath) throws IOException, ParseException {
+		LOGGER.info(logPrefix+"Updating multiple test scores using file - "+csvFilePath);
 		XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());
 	    XSSFSheet worksheet = workbook.getSheetAt(0);
 	    
@@ -167,6 +179,7 @@ public class CourseOfferingService {
 	 * GENERATES EXCEL SHEET OF SAMPLE DATA FOR ENROLMENT
 	 */
 	public void generateExcelForEnrolment(String path) throws IOException {
+		LOGGER.info(logPrefix+"Generating excel format for multiple learner enrolment");
 		ExcelHelper helper = new ExcelHelper();
 		
 		List<ExcelFields> fields = new ArrayList<>();
@@ -183,6 +196,7 @@ public class CourseOfferingService {
 	 * GENERATES EXCEL SHEET OF SAMPLE DATA FOR TEST SCORE UPDATE 
 	 */
 	public void generateExcelForScoreUpdate(String path) throws IOException {
+		LOGGER.info(logPrefix+"Generating excel format for updating multiple test scores");
 		ExcelHelper helper = new ExcelHelper();
 		
 		List<ExcelFields> fields = new ArrayList<>();
@@ -196,6 +210,7 @@ public class CourseOfferingService {
 	 * VIEW COURSE OFFERING
 	 */
 	public List<CourseOffering> viewCourseOfferings(){
+		LOGGER.info(logPrefix+"Returning list of all course offerings");
 		return (List<CourseOffering>) dao.findAll();
 	}
 	
@@ -203,6 +218,7 @@ public class CourseOfferingService {
 	 * GET MAX ID OF COURSE OFFERING TABLE
 	 */
 	public int getMaxId() {
+		LOGGER.info(logPrefix+"Getting max(id) of course offering");
 		return dao.getMaxId();
 	}
 	
@@ -210,6 +226,7 @@ public class CourseOfferingService {
 	 * GET COURSE OFFERING BY ID
 	 */
 	public CourseOffering getCourseOffering(int id) {
+		LOGGER.info(logPrefix+"Returning course offering with ID - "+id);
 		return dao.findById(id).get();
 	}
 	
@@ -217,6 +234,7 @@ public class CourseOfferingService {
 	 * REMOVE COURSE OFFERING
 	 */
 	public void removeCourseOffering(int id) {
+		LOGGER.info(logPrefix+"Deleting course offering with ID - "+id);
 		dao.deleteById(id);
 	}
 	
@@ -224,6 +242,7 @@ public class CourseOfferingService {
 	 * VIEW DETAILS OF TRAINER BY ID
 	 */
 	public Map<String, Object> viewTrainerDetails(int id) {
+		LOGGER.info(logPrefix+"Returning details of a trainer with ID - "+id+" with courses offered");
 		Map<String, Object> response = new HashMap<>();
 		Map<Integer, List<CourseOffering>> offerings = new HashMap<>();
 		Trainer trainer = trainerService.getTrainer(id);
@@ -244,6 +263,7 @@ public class CourseOfferingService {
 	 * VIEW DETAILS OF COURSE BY TRAINER ID
 	 */
 	public Map<String, Object> viewCourseDetailsByTrainerId(int id, int course_id) {
+		LOGGER.info(logPrefix+"Returning details of a course with ID - "+course_id+" with feedback and ratings for trainer with ID - "+id);
 		Map<String, Object> response = new HashMap<>();
 		double avgRating;
 		Course course = courseService.getCourse(course_id);
@@ -261,6 +281,7 @@ public class CourseOfferingService {
 	}
 	
 	public int findCourseOfferingIdByTcIdAndLearnerId(int tcId, int learnerId) {
+		LOGGER.info(logPrefix+"Returning course offering id for Trainer-Course mapping with ID - "+tcId+" and learner with ID - "+learnerId);
 		return dao.findByTcIdAndLearnerId(tcId, learnerId).getCourseOfferingId();
 	}
 
@@ -268,6 +289,7 @@ public class CourseOfferingService {
 	 * VIEW DETAILS OF COURSE OFFERINGS
 	 */	
 	public List<Map<String, Object>> viewCourseOfferingsDetails() throws ParseException {
+		LOGGER.info(logPrefix+"Returning details of all Course Offerings");
 		List<Map<String, Object>> response = new ArrayList<Map<String,Object>>();
 		Map<String, Object> element;
 		List<CourseOffering> courseOfferingList = viewCourseOfferings();
@@ -286,6 +308,7 @@ public class CourseOfferingService {
 	 * VIEW DETAILS OF COURSE OFFERINGS BY LEARNER ID
 	 */	
 	public List<Map<String, Object>> viewCourseOfferingsDetailsByLearnerId(int learnerid) throws ParseException {
+		LOGGER.info(logPrefix+"Returning details of Course Offerings for learner with ID - "+learnerid);
 		List<Map<String, Object>> response = new ArrayList<Map<String,Object>>();
 		Map<String, Object> element;
 		List<CourseOffering> courseOfferingList = viewCourseOfferings();
@@ -306,6 +329,7 @@ public class CourseOfferingService {
 	 * FIND TEACHER-COURSE MAPPINGS BY LEARNER ID
 	 */	
 	public List<TeacherCourseMapping> findTeacherCourseMappingsByLearnerId(int learnerId) {
+		LOGGER.info(logPrefix+"Returning trainer-course mappings for learner with ID - "+learnerId);
 		List<CourseOffering> courseOfferingList = dao.findByLearnerId(learnerId);
 		List<TeacherCourseMapping> list = new ArrayList<>();
 		for(CourseOffering co : courseOfferingList) {
@@ -318,6 +342,7 @@ public class CourseOfferingService {
 	 * FIND LEARNERS BY TCID
 	 */	
 	public List<Learner> findLearnersByTcId(int tcId) {
+		LOGGER.info(logPrefix+"Returning Learners for Trainer-Course mapping with TcId - "+tcId);
 		List<CourseOffering> courseOfferingList = dao.findByTcId(tcId);
 		List<Learner> learners = new ArrayList<>();
 		for(CourseOffering co : courseOfferingList) {

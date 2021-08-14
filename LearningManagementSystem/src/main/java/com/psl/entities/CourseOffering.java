@@ -94,7 +94,7 @@ public class CourseOffering {
 	 * It can't be null.
 	 * By default it can be initialized with some negative value.
 	 */
-	@NotNull(message = "percentage field can't be null")	
+	//@NotNull(message = "percentage field can't be null")	
 	private double percentage;
 	
 	/*

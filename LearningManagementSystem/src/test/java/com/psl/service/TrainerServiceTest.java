@@ -46,7 +46,7 @@ public class TrainerServiceTest {
 	public void addTrainerTest() throws JsonMappingException, JsonProcessingException {
 		int id = service.getNextId();
 		String request = "{\"name\":\"John Radnor\",\"email\":\"group2.learning.management.system@gmail.com\","
-				+ "\"department\":\"L&D\",\"phonenumber\":\"9657892335\"}";
+				+ "\"department\":\"L&D\",\"phoneNumber\":\"9657892335\"}";
 		ObjectMapper mapper = new ObjectMapper();
 		Trainer trainer = mapper.readValue(request, Trainer.class);		
 		service.addTrainer(trainer);
@@ -66,7 +66,7 @@ public class TrainerServiceTest {
 	@Order(2)
 	public void addTrainerDuplicateEmailTest() throws JsonMappingException, JsonProcessingException {
 		String request = "{\"name\":\"John Radnor\",\"email\":\"group2.learning.management.system@gmail.com\","
-				+ "\"department\":\"L&D\",\"phonenumber\":\"9657892335\"}";
+				+ "\"department\":\"L&D\",\"phoneNumber\":\"9657892335\"}";
 		ObjectMapper mapper = new ObjectMapper();
 		Trainer trainer = mapper.readValue(request, Trainer.class);		
 		assertThrows(DataIntegrityViolationException.class, () -> service.addTrainer(trainer));
@@ -95,8 +95,8 @@ public class TrainerServiceTest {
 	@Order(4)
 	public void removeTrainerTest() {
 		int id = service.getNextId();
-		service.removeTrainer(id - 1);
-		assertThrows(NoSuchElementException.class, () -> service.getTrainer(id));
+		service.removeTrainer(id -1 );
+		assertThrows(NoSuchElementException.class, () -> service.getTrainer(id -1 ));
 	}
 	
 	/*
@@ -106,7 +106,7 @@ public class TrainerServiceTest {
 	@Order(5)
 	public void removeTrainerFromEmptyResultSetTest() {
 		int id = service.getNextId();
-		assertThrows(EmptyResultDataAccessException.class, () -> service.removeTrainer(id - 1));
+		assertThrows(EmptyResultDataAccessException.class, () -> service.removeTrainer(id));
 	}
 	
 	/*

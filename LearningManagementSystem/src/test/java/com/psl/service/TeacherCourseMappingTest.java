@@ -40,10 +40,10 @@ public class TeacherCourseMappingTest {
 	@Test
 	@Order(1)
 	public void addTeacherCourseMappingTest() {
-		TeacherCourseMapping c=new TeacherCourseMapping(4,2,6);
+		TeacherCourseMapping c=new TeacherCourseMapping(20000,2,1);
 	    service.addTeacherCourseMapping(c);
 	     
-	    TeacherCourseMapping tcmapping=service.getByTrainerIdAndCourseId(2,2);
+	    TeacherCourseMapping tcmapping=service.getByTrainerIdAndCourseId(20000,2);
 	    assertThat(tcmapping.getCourseId()).isEqualTo(2);
 	    
 	}
