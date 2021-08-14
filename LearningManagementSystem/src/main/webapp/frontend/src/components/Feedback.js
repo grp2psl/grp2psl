@@ -3,7 +3,7 @@ import {Card, Form, Button} from 'react-bootstrap';
 import MyToast from './MyToast';
 import axios from 'axios';
 import Slider from 'react-rangeslider';
-import NumericInput from 'react-numeric-input';
+//import NumericInput from 'react-numeric-input';
 
 
 
@@ -21,11 +21,17 @@ export default class Feedback extends Component{
 	
 	async sendFeedback(event){
 		event.preventDefault();
-						
+		const re = /^[0-9\b]+$/;
+		
 		try{
-			console.log(this.state.ratings) 
-			console.log(this.state.feedback) 			          
-		const  response = await axios.put("http://localhost:8080/LearningManagementSystem/feedback/" + this.props.location.state.id, {feedback:this.state.feedback, ratings:this.state.ratings});
+			//console.log(this.state.ratings) 
+			//console.log(this.state.feedback) 
+			if (re.test(this.state.ratings)) {
+				const response = await axios.put("http://localhost:8080/LearningManagementSystem/feedback/" + this.props.location.state.id, {feedback:this.state.feedback, ratings:this.state.ratings});
+			}
+			else {
+				const response = await axios.put("http://localhost:8080/LearningManagementSystem/feedback/" + this.props.location.state.id, {feedback:this.state.feedback, ratings:0});
+			}
 		} catch(error) {
 			alert(error.response.data);
 		}
