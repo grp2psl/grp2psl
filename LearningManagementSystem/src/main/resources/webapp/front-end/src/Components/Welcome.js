@@ -16,6 +16,12 @@ const buttonStyle={
 };
 
 class Welcome extends React.Component{
+	componentWillMount(){
+         if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+			 alert("User not logged in!");
+			 return this.props.history.push("/");
+		 }
+    }
 	render(){
         return(
 			<div className="mt-5">

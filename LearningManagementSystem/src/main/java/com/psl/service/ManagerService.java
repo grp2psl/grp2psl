@@ -40,4 +40,9 @@ public class ManagerService {
 		id = (id==null ? 30000 : id);
 		return id;
 	}
+	
+	public Manager login(String email, String password) {
+		Manager manager = dao.findByEmail(email);
+		return manager;
+	}
 }

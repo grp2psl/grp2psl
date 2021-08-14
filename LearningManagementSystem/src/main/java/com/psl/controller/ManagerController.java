@@ -218,4 +218,13 @@ public class ManagerController {
 	public List<Learner> findLearnersByTcId(@PathVariable("id") int tcId) throws ParseException{
 		return offeringService.findLearnersByTcId(tcId);
 	}	
+	
+	@GetMapping("/login")
+	public ResponseEntity<Manager> login(@RequestParam String email, @RequestParam String password){
+		Manager result = service.login(email, password);
+		if(result == null) {
+			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);	
+		}
+		return new ResponseEntity<>(result, HttpStatus.OK);	
+	}
 }

@@ -25,7 +25,13 @@ class EditCourseDetails extends React.Component{
         duration: this.props.location.state.course.duration,
         msg:""
       };
-
+      
+	componentWillMount(){
+        if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+            alert("User not logged in!");
+            return this.props.history.push("/");
+        }
+   }
     resetForm = () => {
         this.setState(() => this.initialState);
     };

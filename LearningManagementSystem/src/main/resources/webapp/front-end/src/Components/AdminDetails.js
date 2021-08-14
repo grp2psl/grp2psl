@@ -7,25 +7,48 @@ import {
     faSave,
     faUndo
   } from "@fortawesome/free-solid-svg-icons";
-import { DATABASE_URL, LEARNER_URL } from '../constants';
+import { DATABASE_URL, MANAGER_URL } from '../constants';
+import { matchPath } from 'react-router-dom';
 
-class EditLearnerDetails extends React.Component{
+class AdminDetails extends React.Component{
     constructor(props){
         super(props);
         this.state = this.initialState;
-        this.register = this.register.bind(this);
+        this.update = this.update.bind(this);
         this.formChange = this.formChange.bind(this);
     }
 
     initialState = {
-        id: this.props.location.state.learner.learnerId,
-        name: this.props.location.state.learner.name,
-        department: this.props.location.state.learner.department,
-        phonenumber: this.props.location.state.learner.phoneNumber,
-        email: this.props.location.state.learner.email,
+        id: localStorage.getItem('userId'),
+        name: '',
+        phonenumber: '',
+        email: '',
         msg:""
-      };
+    };
     
+    async showData(){
+		this.setState({
+			msg:"Processing.. Please Wait"
+		});
+		try{
+			const response = await axios.get(DATABASE_URL+MANAGER_URL+"/"+this.state.id);
+			if(response.data != null) {
+				this.setState({
+                    name: response.data.name,
+                    phonenumber: response.data.phonenumber,
+                    email: response.data.email
+				});	
+			}	
+		} catch(error) {
+			alert(error);
+		}
+        this.setState({
+			msg: ""
+		})
+    }
+    componentDidMount(){
+        this.showData();        
+    }
 	componentWillMount(){
         if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
             alert("User not logged in!");
@@ -45,23 +68,22 @@ class EditLearnerDetails extends React.Component{
         return true;
     }
 
-    async register(event){
+    async update(event){
 		event.preventDefault();
-		const learner = {
-            learnerId: this.state.id,
+		const manager = {
+            managerId: this.state.id,
             name: this.state.name,
-            department: this.state.department,
             phoneNumber: this.state.phonenumber,
             email: this.state.email
         }
-        if(this.validateForm(learner.phoneNumber) === true){
+        if(this.validateForm(manager.phoneNumber) === true){
             this.setState({
                 msg:"Processing..\nPlease Wait"
             });
             try{
-                const response = await axios.put(DATABASE_URL+LEARNER_URL+"/update", learner);
+                const response = await axios.put(DATABASE_URL+MANAGER_URL+"/update", manager);
                 if(response.data != null){
-                    alert("Learner updated successfully");
+                    alert("Admin updated successfully");
                     console.log(response.data);
                 }	
             } catch(error) {
@@ -80,12 +102,22 @@ class EditLearnerDetails extends React.Component{
         return(
 			<div className="mt-5">
             <Card className={"border border-dark bg-dark text-white"}>
-                <Card.Header>Register Learner</Card.Header>
+                <Card.Header>Admin Details</Card.Header>
                 <h3 className="text-white mt-2">{this.state.msg}</h3>
-                <Form onSubmit={this.register} onReset={this.resetForm} id="registerId" >
+                <Form onSubmit={this.update} onReset={this.resetForm} id="registerId" >
                 <Card.Body>
                     <Container>
                         <Row>
+                            <Col>
+                            <Form.Group className="mb-3" controlId="name">
+                                <Form.Label>ID</Form.Label>
+                                <Form.Control required autoComplete="off"
+                                    type="test" 
+                                    value={this.state.id}
+                                    disabled={true}
+                                    name="id" />
+                            </Form.Group>
+                            </Col>
                             <Col>
                             <Form.Group className="mb-3" controlId="name">
                                 <Form.Label>Name</Form.Label>
@@ -95,16 +127,6 @@ class EditLearnerDetails extends React.Component{
                                     disabled={true}
                                     name="name"
                                     placeholder="Enter name" />
-                            </Form.Group>
-
-                            <Form.Group className="mb-3" controlId="department">
-                                <Form.Label>Department</Form.Label>
-                                <Form.Control 
-                                    type="text" autoComplete="off" 
-                                    value={this.state.department}
-                                    onChange={this.formChange}
-                                    name="department"
-                                    placeholder="Enter department" />
                             </Form.Group>
                             </Col>
                             <Col>
@@ -150,4 +172,4 @@ class EditLearnerDetails extends React.Component{
     }
 }
 
-export default EditLearnerDetails;
+export default AdminDetails;

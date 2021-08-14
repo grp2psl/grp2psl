@@ -18,7 +18,12 @@ class ViewCourseOfferings extends React.Component{
             msg:""
         };
     }
-    
+    componentWillMount(){
+		if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+			alert("User not logged in!");
+			return this.props.history.push("/");
+		}
+   	}
     showLearnersCourse(id){
         console.log(id);
         this.props.history.push({

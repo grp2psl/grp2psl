@@ -15,13 +15,20 @@ const buttonStyle={
 };
 
 class RegisterTrainers extends React.Component{
-		registerTrainer = () => {
-			this.props.history.push(MANAGER_URL+"/registerTrainer");
-		}
+	registerTrainer = () => {
+		this.props.history.push(MANAGER_URL+"/registerTrainer");
+	}
 		
-		registerMultipleTrainers = () => {
-			this.props.history.push(MANAGER_URL+"/registerMultipleTrainers");
+	registerMultipleTrainers = () => {
+		this.props.history.push(MANAGER_URL+"/registerMultipleTrainers");
+	}
+	
+	componentWillMount(){
+		if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+			alert("User not logged in!");
+			return this.props.history.push("/");
 		}
+   	}
 	
     render(){
         return(

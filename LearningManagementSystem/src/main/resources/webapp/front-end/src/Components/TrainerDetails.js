@@ -7,27 +7,52 @@ import {
     faSave,
     faUndo
   } from "@fortawesome/free-solid-svg-icons";
-import { DATABASE_URL, LEARNER_URL } from '../constants';
+import { DATABASE_URL, TRAINER_URL } from '../constants';
+import { matchPath } from 'react-router-dom';
 
-class EditLearnerDetails extends React.Component{
+class TrainerDetails extends React.Component{
     constructor(props){
         super(props);
         this.state = this.initialState;
-        this.register = this.register.bind(this);
+        this.update = this.update.bind(this);
         this.formChange = this.formChange.bind(this);
     }
 
     initialState = {
-        id: this.props.location.state.learner.learnerId,
-        name: this.props.location.state.learner.name,
-        department: this.props.location.state.learner.department,
-        phonenumber: this.props.location.state.learner.phoneNumber,
-        email: this.props.location.state.learner.email,
+        id: localStorage.getItem('userId'),
+        name: '',
+        department: '',
+        phonenumber: '',
+        email: '',
         msg:""
-      };
+    };
     
+    async showData(){
+		this.setState({
+			msg:"Processing.. Please Wait"
+		});
+		try{
+			const response = await axios.get(DATABASE_URL+TRAINER_URL+"/"+this.state.id);
+			if(response.data != null) {
+				this.setState({
+                    name: response.data.name,
+                    department: response.data.department,
+                    phonenumber: response.data.phonenumber,
+                    email: response.data.email
+				});	
+			}	
+		} catch(error) {
+			alert(error);
+		}
+        this.setState({
+			msg: ""
+		})
+    }
+    componentDidMount(){
+        this.showData();        
+    }
 	componentWillMount(){
-        if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+        if(localStorage.getItem('user') != 'trainer' || localStorage.getItem('loggedin') === false){
             alert("User not logged in!");
             return this.props.history.push("/");
         }
@@ -45,23 +70,23 @@ class EditLearnerDetails extends React.Component{
         return true;
     }
 
-    async register(event){
+    async update(event){
 		event.preventDefault();
-		const learner = {
-            learnerId: this.state.id,
+		const trainer = {
+            trainerId: this.state.id,
             name: this.state.name,
             department: this.state.department,
             phoneNumber: this.state.phonenumber,
             email: this.state.email
         }
-        if(this.validateForm(learner.phoneNumber) === true){
+        if(this.validateForm(trainer.phoneNumber) === true){
             this.setState({
                 msg:"Processing..\nPlease Wait"
             });
             try{
-                const response = await axios.put(DATABASE_URL+LEARNER_URL+"/update", learner);
+                const response = await axios.put(DATABASE_URL+TRAINER_URL+"/update", trainer);
                 if(response.data != null){
-                    alert("Learner updated successfully");
+                    alert("Trainer updated successfully");
                     console.log(response.data);
                 }	
             } catch(error) {
@@ -80,12 +105,22 @@ class EditLearnerDetails extends React.Component{
         return(
 			<div className="mt-5">
             <Card className={"border border-dark bg-dark text-white"}>
-                <Card.Header>Register Learner</Card.Header>
+                <Card.Header>Trainer Details</Card.Header>
                 <h3 className="text-white mt-2">{this.state.msg}</h3>
-                <Form onSubmit={this.register} onReset={this.resetForm} id="registerId" >
+                <Form onSubmit={this.update} onReset={this.resetForm} id="registerId" >
                 <Card.Body>
                     <Container>
                         <Row>
+                            <Col>
+                            <Form.Group className="mb-3" controlId="name">
+                                <Form.Label>ID</Form.Label>
+                                <Form.Control required autoComplete="off"
+                                    type="test" 
+                                    value={this.state.id}
+                                    disabled={true}
+                                    name="id" />
+                            </Form.Group>                            
+                            </Col>
                             <Col>
                             <Form.Group className="mb-3" controlId="name">
                                 <Form.Label>Name</Form.Label>
@@ -150,4 +185,4 @@ class EditLearnerDetails extends React.Component{
     }
 }
 
-export default EditLearnerDetails;
+export default TrainerDetails;

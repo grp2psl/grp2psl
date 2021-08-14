@@ -32,8 +32,13 @@ class UpdateScoreIndividual extends React.Component{
         tcid: 0,
         percentage: 0,
         msg:""
-      };
-
+    };
+    componentWillMount(){
+		if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+			alert("User not logged in!");
+			return this.props.history.push("/");
+		}
+   	}
 	async componentDidMount() {
         this.setState({
 			msg:"Processing.. Please Wait"

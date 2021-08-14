@@ -17,14 +17,19 @@ const buttonStyle={
 const MANAGER_URL = process.env.REACT_APP_MANAGER_URL;
 
 class UpdateScore extends React.Component{
-		updateScore = () => {
-			this.props.history.push(MANAGER_URL+"/update-score");
-		}
+	updateScore = () => {
+		this.props.history.push(MANAGER_URL+"/update-score");
+	}
 		
-		updateScoreMultiple = () => {
-			this.props.history.push(MANAGER_URL+"/update-score-multiple");
+	updateScoreMultiple = () => {
+		this.props.history.push(MANAGER_URL+"/update-score-multiple");
+	}
+	componentWillMount(){
+		if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+			alert("User not logged in!");
+			return this.props.history.push("/");
 		}
-	
+   	}
     render(){
         return(
 			<div className="mt-5">

@@ -26,7 +26,13 @@ class EnrollLearner extends React.Component{
         enddate: "",
         msg:""
       };
-
+      
+	componentWillMount(){
+        if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+            alert("User not logged in!");
+            return this.props.history.push("/");
+        }
+   }
 	async componentDidMount() {
         this.setState({
 			msg:"Processing.. Please Wait"

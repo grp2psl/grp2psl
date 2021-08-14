@@ -8,26 +8,51 @@ import {
     faUndo
   } from "@fortawesome/free-solid-svg-icons";
 import { DATABASE_URL, LEARNER_URL } from '../constants';
+import { matchPath } from 'react-router-dom';
 
-class EditLearnerDetails extends React.Component{
+class LearnerDetails extends React.Component{
     constructor(props){
         super(props);
         this.state = this.initialState;
-        this.register = this.register.bind(this);
+        this.update = this.update.bind(this);
         this.formChange = this.formChange.bind(this);
     }
 
     initialState = {
-        id: this.props.location.state.learner.learnerId,
-        name: this.props.location.state.learner.name,
-        department: this.props.location.state.learner.department,
-        phonenumber: this.props.location.state.learner.phoneNumber,
-        email: this.props.location.state.learner.email,
+        id: localStorage.getItem('userId'),
+        name: '',
+        department: '',
+        phonenumber: '',
+        email: '',
         msg:""
-      };
+    };
     
+    async showData(){
+		this.setState({
+			msg:"Processing.. Please Wait"
+		});
+		try{
+			const response = await axios.get(DATABASE_URL+LEARNER_URL+"/"+this.state.id);
+			if(response.data != null) {
+				this.setState({
+                    name: response.data.name,
+                    department: response.data.department,
+                    phonenumber: response.data.phonenumber,
+                    email: response.data.email
+				});	
+			}	
+		} catch(error) {
+			alert(error);
+		}
+        this.setState({
+			msg: ""
+		})
+    }
+    componentDidMount(){
+        this.showData();        
+    }
 	componentWillMount(){
-        if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+        if(localStorage.getItem('user') != 'learner' || localStorage.getItem('loggedin') === false){
             alert("User not logged in!");
             return this.props.history.push("/");
         }
@@ -45,7 +70,7 @@ class EditLearnerDetails extends React.Component{
         return true;
     }
 
-    async register(event){
+    async update(event){
 		event.preventDefault();
 		const learner = {
             learnerId: this.state.id,
@@ -80,12 +105,22 @@ class EditLearnerDetails extends React.Component{
         return(
 			<div className="mt-5">
             <Card className={"border border-dark bg-dark text-white"}>
-                <Card.Header>Register Learner</Card.Header>
+                <Card.Header>Learner Details</Card.Header>
                 <h3 className="text-white mt-2">{this.state.msg}</h3>
-                <Form onSubmit={this.register} onReset={this.resetForm} id="registerId" >
+                <Form onSubmit={this.update} onReset={this.resetForm} id="registerId" >
                 <Card.Body>
                     <Container>
                         <Row>
+                            <Col>
+                            <Form.Group className="mb-3" controlId="name">
+                                <Form.Label>ID</Form.Label>
+                                <Form.Control required autoComplete="off"
+                                    type="test" 
+                                    value={this.state.id}
+                                    disabled={true}
+                                    name="id" />
+                            </Form.Group>                            
+                            </Col>
                             <Col>
                             <Form.Group className="mb-3" controlId="name">
                                 <Form.Label>Name</Form.Label>
@@ -150,4 +185,4 @@ class EditLearnerDetails extends React.Component{
     }
 }
 
-export default EditLearnerDetails;
+export default LearnerDetails;

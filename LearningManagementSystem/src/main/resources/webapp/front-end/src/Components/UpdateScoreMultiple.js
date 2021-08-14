@@ -32,7 +32,12 @@ class UpdateScoreMultiple extends React.Component{
         this.download = this.download.bind(this);
         this.registerLearners = this.registerLearners.bind(this);
     }
-    
+    componentWillMount(){
+		if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+			alert("User not logged in!");
+			return this.props.history.push("/");
+		}
+   	}
     async download(){
 		this.setState({
 			msg:"Downloading..Please Wait"
