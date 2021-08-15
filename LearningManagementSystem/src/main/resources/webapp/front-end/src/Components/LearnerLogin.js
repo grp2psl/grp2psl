@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Container, Row, Col, Card, Button, Form} from 'react-bootstrap';
 import axios from 'axios';
-import {DATABASE_URL} from '../constants';
+import {DATABASE_URL, LEARNER_USERNAME, LEARNER_PASSWORD} from '../constants';
 
 const cardStyle={
 	height: '300px',
@@ -43,7 +43,12 @@ class LearnerLogin extends React.Component{
 			msg:"Processing..\nPlease Wait"
 		});
 		try{
-			const response = await axios.get(DATABASE_URL+"/learners/login?email="+this.state.email+"&password="+this.state.password);
+			const response = await axios.get(DATABASE_URL+"/learners/login?email="+this.state.email+"&password="+this.state.password, {
+                auth: {
+                username: LEARNER_USERNAME,
+                password: LEARNER_PASSWORD
+              }
+            });
 			alert("Tried login")
             if(response.data != null){
 	        	alert("Logged in successfully");

@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faTrash
   } from "@fortawesome/free-solid-svg-icons";
-import {DATABASE_URL,MANAGER_URL} from '../constants'
+import {DATABASE_URL,MANAGER_URL, ADMIN_USERNAME, ADMIN_PASSWORD} from '../constants'
 
 class ViewCourseOfferings extends React.Component{
 	
@@ -51,7 +51,12 @@ class ViewCourseOfferings extends React.Component{
 			msg:"Processing.. Please Wait"
 		});
 		try{
-			const response = await axios.get(DATABASE_URL+MANAGER_URL+"/viewCourseOfferingsDetails");
+			const response = await axios.get(DATABASE_URL+MANAGER_URL+"/viewCourseOfferingsDetails", {
+                auth: {
+                username: ADMIN_USERNAME,
+                password: ADMIN_PASSWORD
+              }
+            });
 			if(response.data != null) {
 				this.setState({
                     courseOfferings: response.data                 
@@ -71,7 +76,12 @@ class ViewCourseOfferings extends React.Component{
             show: true
 		});
 		try{
-            const response = await axios.delete(DATABASE_URL+MANAGER_URL+"/course-offering/"+id);
+            const response = await axios.delete(DATABASE_URL+MANAGER_URL+"/course-offering/"+id, {
+                auth: {
+                username: ADMIN_USERNAME,
+                password: ADMIN_PASSWORD
+              }
+            });
             console.log(response);
 		} catch(error) {
 			alert(error);
