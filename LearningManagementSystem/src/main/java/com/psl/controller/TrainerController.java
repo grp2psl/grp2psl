@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,6 +54,7 @@ public class TrainerController {
 	/*
 	 * GET DETAILS OF TRAINER BY ID
 	 */
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINER')")
 	@GetMapping("/{id}")
 	public Trainer getTrainer(@PathVariable int id) {
 		LOGGER.info(logPrefix+"GET /{id} called to get details of a trainer by ID");
@@ -62,6 +64,7 @@ public class TrainerController {
 	/*
 	 * GET DETAILS OF ALL TRAINERS
 	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/")
 	public List<Trainer> getAllTrainers(){
 		LOGGER.info(logPrefix+"GET / called to get details of all trainers");
@@ -71,6 +74,7 @@ public class TrainerController {
 	/*
 	 * REGISTER TRAINER
 	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/register")
 	public ResponseEntity<String> addTrainer(@RequestBody Trainer trainer) {
 		LOGGER.info(logPrefix+"POST /register called to add a trainer");
@@ -90,6 +94,7 @@ public class TrainerController {
 	/*
 	 * REGISTER MULTIPLE TRAINERS BY UPLOADING EXCEL FILE
 	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/register-multiple")
 	public ResponseEntity<String> addMultipleTrainers(@RequestParam("file") MultipartFile csvFilePath ) throws IOException {
 		LOGGER.info(logPrefix+"POST /register-multiple called to add multiple trainers");
@@ -109,6 +114,7 @@ public class TrainerController {
 	/*
 	 * DELETE TRAINER BY ID
 	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping("/{id}")
 	public void removeTrainer(@PathVariable int id) {
 		LOGGER.info(logPrefix+"DELETE /{id} called to delete a trainer by ID");
@@ -118,12 +124,14 @@ public class TrainerController {
 	/*
 	 * UPDATE TRAINER BY ID
 	 */
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINER')")
 	@PutMapping("/update")
 	public void updateTrainer(@RequestBody Trainer trainer) {
 		LOGGER.info(logPrefix+"PUT /update called to update details of a trainer");
 		service.updateTrainer(trainer);
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINER')")
 	@GetMapping("/{id}/coursestaughtbytrainer")
 	public List<TeacherCoursesTaught> findCoursesTaughtByTrainer(@PathVariable int id) {
 
@@ -140,11 +148,13 @@ public class TrainerController {
 		}
 		return tct;
 	}
-	
+
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINER')")
 	public float getFeedbackRatings(int tcid){		
 		return service.getFeedbackResults(tcid);
 	}
-	
+
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINER')")
 	@GetMapping("/{id}/{tcid}")
 	public RatingAndComment getFeedbackResults(@PathVariable int id, @PathVariable int tcid){
 		LOGGER.info(logPrefix+"GET /{id}/{tcid} called to get feedback results");
@@ -156,6 +166,7 @@ public class TrainerController {
 	/*
 	 * DOWNLOAD FORMAT OF EXCEL SHEET FOR UPLOADING MULTIPLE TRAINERS
 	 */
+	@PreAuthorize("permitAll")
 	@GetMapping("/generate-excel")
 	public void downloadFileFromLocal() throws IOException {
 		LOGGER.info(logPrefix+"GET /generate-excel called to download excel format for uploading multiple trainers");
@@ -164,6 +175,7 @@ public class TrainerController {
 		System.out.println(file);
 	}
 
+	@PreAuthorize("hasRole('ROLE_TRAINER')")
 	@GetMapping("/login")
 	public ResponseEntity<Trainer> login(@RequestParam String email, @RequestParam String password){
 		Trainer result = service.login(email, password);

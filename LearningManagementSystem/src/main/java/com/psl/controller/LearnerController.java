@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,6 +55,7 @@ public class LearnerController {
 	 * It gets learner details with given learnerId.
 	 * GET DETAILS OF LEARNER BY ID
 	 */	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_LEARNER')")
 	@GetMapping("/{id}")
 	public Learner getLearner(@PathVariable int id) {
 		LOGGER.info(logPrefix+"GET /{id} called to get details of a learner by ID");
@@ -63,6 +65,7 @@ public class LearnerController {
 	/*
 	 * GET DETAILS OF ALL LEARNERS
 	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/")
 	public List<Learner> getAllLearners(){
 		LOGGER.info(logPrefix+"GET / called to view all learners");
@@ -74,6 +77,7 @@ public class LearnerController {
 	 * It registers a new Learner using addLearner function
 	 * REGISTER LEARNER
 	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/register")
 	public ResponseEntity<String> addLearner(@RequestBody Learner learner) {
 		LOGGER.info(logPrefix+"POST /register called to add a new learner");
@@ -93,6 +97,7 @@ public class LearnerController {
 	/*
 	 * REGISTER MULTIPLE LEARNERS BY UPLOADING EXCEL FILE
 	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/register-multiple")
 	public ResponseEntity<String> addMultipleLearners(@RequestParam("file") MultipartFile csvFilePath ) throws IOException {
 		LOGGER.info(logPrefix+"POST /register-multiple called to add multiple learners");
@@ -114,6 +119,7 @@ public class LearnerController {
 	 * Where id is learner Id.
 	 * It updates credentials of Learner with given id.
 	 */
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_LEARNER')")
 	@PutMapping("/update/{id}")
 	public void updateLearner(@PathVariable int id, @RequestBody Map<String, String> credentials) {
 		LOGGER.info(logPrefix+"PUT /update/{id} called to update details of a learner by ID");
@@ -124,6 +130,7 @@ public class LearnerController {
 	/*
 	 * DELETE LEARNER BY ID
 	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping("/{id}")
 	public void removeLearner(@PathVariable int id) {
 		LOGGER.info(logPrefix+"DELETE /{id} called to delete a learner by ID");
@@ -133,16 +140,17 @@ public class LearnerController {
 	/*
 	 * UPDATE LEARNER BY ID
 	 */
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_LEARNER')")
 	@PutMapping("/update")
 	public void updateLearner(@RequestBody Learner learner) {
 		LOGGER.info(logPrefix+"PUT /update called to update details of a learner by ID");
 		service.updateLearner(learner);
-		// TODO check with learner
 	}
 	
 	/*
 	 * DOWNLOAD FORMAT OF EXCEL SHEET FOR UPLOADING MULTIPLE LEARNERS
 	 */
+	@PreAuthorize("permitAll")
 	@GetMapping("/generate-excel")
 	public void downloadFileFromLocal() throws IOException {
 		LOGGER.info(logPrefix+"GET /generate-excel called to download excel format for multiple learner registration");
@@ -151,6 +159,7 @@ public class LearnerController {
 		System.out.println(file);
 	}
 
+	@PreAuthorize("hasRole('ROLE_LEARNER')")
 	@GetMapping("/login")
 	public ResponseEntity<Learner> login(@RequestParam String email, @RequestParam String password){
 		Learner result = service.login(email, password);
