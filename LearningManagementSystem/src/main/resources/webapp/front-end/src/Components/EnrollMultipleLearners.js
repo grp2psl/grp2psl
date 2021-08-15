@@ -7,7 +7,7 @@ import {
     faDownload,
     faUpload
   } from "@fortawesome/free-solid-svg-icons";
-import { DATABASE_URL, MANAGER_URL } from '../constants';
+import { DATABASE_URL, MANAGER_URL, ADMIN_USERNAME, ADMIN_PASSWORD } from '../constants';
 
 const cardStyle={
 	height: '250px',
@@ -44,7 +44,12 @@ class EnrollMultipleLearners extends React.Component{
 			msg:"Downloading..Please Wait"
 		});
 		try{
-			const response = await axios.get(DATABASE_URL+MANAGER_URL+"/generate-excel-enrolment");
+			const response = await axios.get(DATABASE_URL+MANAGER_URL+"/generate-excel-enrolment", {
+                auth: {
+                  username: ADMIN_USERNAME,
+                  password: ADMIN_PASSWORD
+                }
+              });
 			if(response.data != null) {
 				this.setState({
                     msg: "Downloading completed. Check your Downloads folder"
@@ -79,14 +84,15 @@ class EnrollMultipleLearners extends React.Component{
             );
         
             console.log(this.state.file);
-            const config = {
-                headers: {
-                    'content-type': 'multipart/form-data'
-                }
-            }
 
             try{
-                const response = await axios.post(DATABASE_URL+MANAGER_URL+"/enroll-learners", formData, config);
+                const response = await axios.post(DATABASE_URL+MANAGER_URL+"/enroll-learners", formData, {
+                    auth: {
+                    username: ADMIN_USERNAME,
+                    password: ADMIN_PASSWORD
+                  },
+                  'content-type': 'multipart/form-data'
+                });
                 console.log(response)
                 if(response.data != null){
                     alert("Learners enrolled successfully");

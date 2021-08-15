@@ -7,7 +7,7 @@ import {
     faDownload,
     faUpload
   } from "@fortawesome/free-solid-svg-icons";
-import {DATABASE_URL, MANAGER_URL} from '../constants'
+import {DATABASE_URL, MANAGER_URL, ADMIN_USERNAME, ADMIN_PASSWORD} from '../constants'
 
 const cardStyle={
 	height: '250px',
@@ -43,7 +43,12 @@ class UpdateScoreMultiple extends React.Component{
 			msg:"Downloading..Please Wait"
 		});
 		try{
-			const response = await axios.get(DATABASE_URL+MANAGER_URL+"/generate-excel-score-update");
+			const response = await axios.get(DATABASE_URL+MANAGER_URL+"/generate-excel-score-update", {
+                auth: {
+                username: ADMIN_USERNAME,
+                password: ADMIN_PASSWORD
+              }
+            });
 			if(response.data != null) {
 				this.setState({
                     msg: "Downloading completed. Check your Downloads folder.."
@@ -78,14 +83,15 @@ class UpdateScoreMultiple extends React.Component{
             );
         
             console.log(this.state.file);
-            const config = {
-                headers: {
-                    'content-type': 'multipart/form-data'
-                }
-            }
 
             try{
-                const response = await axios.put(DATABASE_URL+MANAGER_URL+"/update-test-scores", formData, config);
+                const response = await axios.put(DATABASE_URL+MANAGER_URL+"/update-test-scores", formData, {
+                    auth: {
+                    username: ADMIN_USERNAME,
+                    password: ADMIN_PASSWORD
+                  },
+                  'content-type': 'multipart/form-data'
+                });
                 console.log(response)
                 if(response.data != null){
                     alert("Scores updated successfully");

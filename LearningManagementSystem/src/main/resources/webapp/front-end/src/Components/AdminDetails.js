@@ -7,7 +7,7 @@ import {
     faSave,
     faUndo
   } from "@fortawesome/free-solid-svg-icons";
-import { DATABASE_URL, MANAGER_URL } from '../constants';
+import { DATABASE_URL, MANAGER_URL, ADMIN_USERNAME, ADMIN_PASSWORD } from '../constants';
 import { matchPath } from 'react-router-dom';
 
 class AdminDetails extends React.Component{
@@ -31,7 +31,12 @@ class AdminDetails extends React.Component{
 			msg:"Processing.. Please Wait"
 		});
 		try{
-			const response = await axios.get(DATABASE_URL+MANAGER_URL+"/"+this.state.id);
+			const response = await axios.get(DATABASE_URL+MANAGER_URL+"/"+this.state.id, {
+                auth: {
+                  username: ADMIN_USERNAME,
+                  password: ADMIN_PASSWORD
+                }
+              });
 			if(response.data != null) {
 				this.setState({
                     name: response.data.name,
@@ -81,7 +86,12 @@ class AdminDetails extends React.Component{
                 msg:"Processing..\nPlease Wait"
             });
             try{
-                const response = await axios.put(DATABASE_URL+MANAGER_URL+"/update", manager);
+                const response = await axios.put(DATABASE_URL+MANAGER_URL+"/update", manager, {
+                    auth: {
+                      username: ADMIN_USERNAME,
+                      password: ADMIN_PASSWORD
+                    }
+                  });
                 if(response.data != null){
                     alert("Admin updated successfully");
                     console.log(response.data);
@@ -129,6 +139,8 @@ class AdminDetails extends React.Component{
                                     placeholder="Enter name" />
                             </Form.Group>
                             </Col>
+                        </Row>
+                        <Row>
                             <Col>
                             <Form.Group className="mb-3" controlId="phoneNumber">
                                 <Form.Label>Phone Number</Form.Label>
@@ -139,6 +151,8 @@ class AdminDetails extends React.Component{
                                     name="phonenumber"
                                     placeholder="Enter phone number" />
                             </Form.Group>
+                            </Col>
+                            <Col>
 
                             <Form.Group className="mb-3" controlId="email">
                                 <Form.Label>Email</Form.Label>

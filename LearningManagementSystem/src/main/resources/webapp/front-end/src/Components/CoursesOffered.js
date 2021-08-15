@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
 import axios from 'axios';
-import {DATABASE_URL, MANAGER_URL} from '../constants';
+import {DATABASE_URL, MANAGER_URL, ADMIN_USERNAME, ADMIN_PASSWORD} from '../constants';
 
 class CoursesOffered extends React.Component{
 	
@@ -30,7 +30,12 @@ class CoursesOffered extends React.Component{
 		});
 		const id = this.props.location.state.id;
 		try{
-			const response = await axios.get(DATABASE_URL+MANAGER_URL+"/trainer/"+id);
+			const response = await axios.get(DATABASE_URL+MANAGER_URL+"/trainer/"+id, {
+                auth: {
+                  username: ADMIN_USERNAME,
+                  password: ADMIN_PASSWORD
+                }
+              });
 			if(response.data != null) {
 				this.setState({
                     trainerDetails: response.data.trainerDetails,

@@ -8,7 +8,7 @@ import {
     faUndo,
     faEye
   } from "@fortawesome/free-solid-svg-icons";
-import {DATABASE_URL, MANAGER_URL, TCMAPPING_URL} from '../constants';
+import {DATABASE_URL, MANAGER_URL, TCMAPPING_URL, ADMIN_USERNAME, ADMIN_PASSWORD} from '../constants';
 
 const buttonStyle={
     position: 'absolute',
@@ -44,9 +44,12 @@ class UpdateScoreIndividual extends React.Component{
 			msg:"Processing.. Please Wait"
 		});
 		try {
-			// let learnersList = await axios.get("http://localhost:8080/LearningManagementSystem/learners/")
-            // this.state.learners = learnersList.data;
-            let tcMappings = await axios.get(DATABASE_URL+TCMAPPING_URL+"/trainer-course-names")
+            let tcMappings = await axios.get(DATABASE_URL+TCMAPPING_URL+"/trainer-course-names", {
+                auth: {
+                username: ADMIN_USERNAME,
+                password: ADMIN_PASSWORD
+              }
+            })
 			this.state.tcMappings = tcMappings.data;
 		} catch(error) {
 			alert(error);
@@ -61,7 +64,12 @@ class UpdateScoreIndividual extends React.Component{
 			msg:"Processing.. Please Wait"
 		});
 		try {
-			let learnersList = await axios.get(DATABASE_URL+MANAGER_URL+"/findLearnersByTcId/"+id)
+			let learnersList = await axios.get(DATABASE_URL+MANAGER_URL+"/findLearnersByTcId/"+id, {
+                auth: {
+                username: ADMIN_USERNAME,
+                password: ADMIN_PASSWORD
+              }
+            })
 			this.state.learners = learnersList.data;
             
 		} catch(error) {
@@ -89,7 +97,12 @@ class UpdateScoreIndividual extends React.Component{
 			msg:"Processing.. Please Wait"
 		});
 		try{
-            const response = await axios.put(DATABASE_URL+MANAGER_URL+"/update-test-score?tcId="+this.state.tcid+"&learnerId="+this.state.learnerid+"&percentage="+this.state.percentage);
+            const response = await axios.put(DATABASE_URL+MANAGER_URL+"/update-test-score?tcId="+this.state.tcid+"&learnerId="+this.state.learnerid+"&percentage="+this.state.percentage, {}, {
+                auth: {
+                username: ADMIN_USERNAME,
+                password: ADMIN_PASSWORD
+              }
+            });
 			
             if(response.data != null){
 	        	alert("Score updated successfully");

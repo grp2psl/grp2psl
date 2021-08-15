@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Container, Row, Col, Card, Button, Form} from 'react-bootstrap';
 import axios from 'axios';
-import {DATABASE_URL} from '../constants';
+import {DATABASE_URL, TRAINER_USERNAME, TRAINER_PASSWORD, MANAGER_URL} from '../constants';
 
 const cardStyle={
 	height: '300px',
@@ -43,8 +43,14 @@ class TrainerLogin extends React.Component{
 			msg:"Processing..\nPlease Wait"
 		});
 		try{
-			const response = await axios.get(DATABASE_URL+"/trainers/login?email="+this.state.email+"&password="+this.state.password);
+			const response = await axios.get(DATABASE_URL+"/trainers/login?email="+this.state.email+"&password="+this.state.password, {
+                auth: {
+                username: TRAINER_USERNAME,
+                password: TRAINER_PASSWORD
+              }
+            });
 			if(response.data != null){
+	        	alert("Logged in successfully");
 	            console.log(response.data);
                 localStorage.setItem('loggedin', true);
                 localStorage.setItem('userId', response.data.trainerId);

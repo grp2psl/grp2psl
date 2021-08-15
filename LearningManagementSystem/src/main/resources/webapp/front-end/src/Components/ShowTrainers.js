@@ -7,7 +7,7 @@ import {
     faEdit,
     faTrash
   } from "@fortawesome/free-solid-svg-icons";
-import { DATABASE_URL, TRAINER_URL, MANAGER_URL } from '../constants';
+import { DATABASE_URL, TRAINER_URL, MANAGER_URL, ADMIN_USERNAME, ADMIN_PASSWORD } from '../constants';
 
 class ShowTrainers extends React.Component{
     constructor(props){
@@ -28,7 +28,12 @@ class ShowTrainers extends React.Component{
 			msg:"Processing.. Please Wait"
 		});
 		try{
-			const response = await axios.get(DATABASE_URL+TRAINER_URL+"/");
+			const response = await axios.get(DATABASE_URL+TRAINER_URL+"/", {
+                auth: {
+                username: ADMIN_USERNAME,
+                password: ADMIN_PASSWORD
+              }
+            });
 			if(response.data != null) {
 				this.setState({
 					trainers: response.data
@@ -48,7 +53,12 @@ class ShowTrainers extends React.Component{
             show: true
 		});
 		try{
-            const response = await axios.delete(DATABASE_URL+TRAINER_URL+"/"+id);
+            const response = await axios.delete(DATABASE_URL+TRAINER_URL+"/"+id, {
+                auth: {
+                username: ADMIN_USERNAME,
+                password: ADMIN_PASSWORD
+              }
+            });
             console.log(response);
 		} catch(error) {
 			alert(error);

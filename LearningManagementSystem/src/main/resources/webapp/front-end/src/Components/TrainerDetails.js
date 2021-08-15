@@ -7,7 +7,7 @@ import {
     faSave,
     faUndo
   } from "@fortawesome/free-solid-svg-icons";
-import { DATABASE_URL, TRAINER_URL } from '../constants';
+import { DATABASE_URL, TRAINER_URL, TRAINER_USERNAME, TRAINER_PASSWORD } from '../constants';
 import { matchPath } from 'react-router-dom';
 
 class TrainerDetails extends React.Component{
@@ -32,7 +32,12 @@ class TrainerDetails extends React.Component{
 			msg:"Processing.. Please Wait"
 		});
 		try{
-			const response = await axios.get(DATABASE_URL+TRAINER_URL+"/"+this.state.id);
+			const response = await axios.get(DATABASE_URL+TRAINER_URL+"/"+this.state.id, {
+                auth: {
+                username: TRAINER_USERNAME,
+                password: TRAINER_PASSWORD
+              }
+            });
 			if(response.data != null) {
 				this.setState({
                     name: response.data.name,
@@ -84,7 +89,12 @@ class TrainerDetails extends React.Component{
                 msg:"Processing..\nPlease Wait"
             });
             try{
-                const response = await axios.put(DATABASE_URL+TRAINER_URL+"/update", trainer);
+                const response = await axios.put(DATABASE_URL+TRAINER_URL+"/update", trainer, {
+                    auth: {
+                    username: TRAINER_USERNAME,
+                    password: TRAINER_PASSWORD
+                  }
+                });
                 if(response.data != null){
                     alert("Trainer updated successfully");
                     console.log(response.data);
