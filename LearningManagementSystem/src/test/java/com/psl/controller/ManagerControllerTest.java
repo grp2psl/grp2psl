@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.psl.security.RESTAuthenticationEntryPoint;
 import com.psl.service.CourseOfferingService;
 import com.psl.service.ManagerService;
 
@@ -38,6 +39,9 @@ public class ManagerControllerTest {
 	
 	@MockBean
 	CourseOfferingService offeringService;
+	
+	@MockBean
+	RESTAuthenticationEntryPoint authenticationEntryPoint;
 	
 	/*
 	 * TEST GET MANAGER BY ID

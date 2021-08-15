@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.psl.entities.Trainer;
+import com.psl.security.RESTAuthenticationEntryPoint;
 import com.psl.service.TrainerService;
 
 @WebMvcTest(TrainerController.class)
@@ -30,6 +31,8 @@ public class TrainerControllerTest {
 	MockMvc mvc;
 	@MockBean
 	TrainerService service;
+	@MockBean
+	RESTAuthenticationEntryPoint authenticationEntryPoint;
 
 	/*
 	 * TEST GET DETAILS OF TRAINER BY ID

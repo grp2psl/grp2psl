@@ -18,6 +18,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.psl.security.RESTAuthenticationEntryPoint;
 import com.psl.service.TeacherCourseMappingService;
 
 @WebMvcTest(TeacherCourseMappingController.class)
@@ -28,6 +29,9 @@ public class TeacherCourseMappingControllerTest {
 	
 	@MockBean
 	TeacherCourseMappingService service;
+
+	@MockBean
+	RESTAuthenticationEntryPoint authenticationEntryPoint;
 	
 	/*
 	 * TEST ADDING TEACHER-COURSE MAPPING DETAILS

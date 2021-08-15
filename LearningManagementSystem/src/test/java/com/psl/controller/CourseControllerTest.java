@@ -13,6 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.psl.security.RESTAuthenticationEntryPoint;
 import com.psl.service.CourseService;
 
 @WebMvcTest(CourseController.class)
@@ -23,6 +24,9 @@ public class CourseControllerTest {
 	
 	@MockBean
 	CourseService service;
+
+	@MockBean
+	RESTAuthenticationEntryPoint authenticationEntryPoint;
 	
 	/*
 	 * TEST VIEW ALL COURSES AVAILABLE

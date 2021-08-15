@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.psl.entities.Learner;
+import com.psl.security.RESTAuthenticationEntryPoint;
 import com.psl.service.LearnerService;
 
 @WebMvcTest(LearnerController.class)
@@ -30,6 +31,8 @@ public class LearnerControllerTest {
 	MockMvc mvc;
 	@MockBean
 	LearnerService service;
+	@MockBean
+	RESTAuthenticationEntryPoint authenticationEntryPoint;
 
 	/*
 	 * TEST GET DETAILS OF LEARNER BY ID
