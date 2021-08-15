@@ -27,16 +27,17 @@ class TrainerLogin extends React.Component{
     initialState = {
         email: "",
         password: "",
-        msg:""
+        msg:"",
+        trainer:[]
     };
 
-    
+
     formChange(event){
         this.setState({
             [event.target.name]:event.target.value
         });
     }
-    
+
     async loginTrainer(event){
 		event.preventDefault();
         this.setState({
@@ -52,10 +53,15 @@ class TrainerLogin extends React.Component{
 			if(response.data != null){
 	        	alert("Logged in successfully");
 	            console.log(response.data);
+                this.state.trainer = response.data;
                 localStorage.setItem('loggedin', true);
                 localStorage.setItem('userId', response.data.trainerId);
                 localStorage.setItem('user', 'trainer');
-        	}	
+			 this.props.history.push({
+	               pathname: MANAGER_URL+'/viewcoursestrainer',
+	               state: { detail: this.state.trainer.trainerId }
+	           });
+        	}
 		} catch(error) {
 			alert("Login failed");
 		}
@@ -70,15 +76,15 @@ class TrainerLogin extends React.Component{
                 		<Row xs={1} md={3} className="g-4 mb-4">
                             <Col></Col>
 						    <Col>
-                            <Form id="registerId" onSubmit={this.loginTrainer}> 
+                            <Form id="registerId" onSubmit={this.loginTrainer}>
 						      <Card className="bg-light" style={cardStyle}>
 						        <Card.Body>
 						            <Card.Title>Trainer Login</Card.Title>
-                                                                           
+
                                         <Form.Group className="mb-3" controlId="email">
                                             <Form.Label>Email ID</Form.Label>
                                             <Form.Control required autoComplete="off"
-                                                type="email" 
+                                                type="email"
                                                 value={this.state.email}
                                                 onChange={this.formChange}
                                                 name="email"
@@ -87,13 +93,13 @@ class TrainerLogin extends React.Component{
                                         <Form.Group className="mb-3" controlId="password">
                                             <Form.Label>Password</Form.Label>
                                             <Form.Control required autoComplete="off"
-                                                type="password" 
+                                                type="password"
                                                 value={this.state.password}
                                                 onChange={this.formChange}
                                                 name="password"
                                                 placeholder="Enter password" />
                                         </Form.Group>
-                                    
+
 						        </Card.Body>
                                 <Card.Footer>
                                     <Button variant="success" type="submit" style={buttonStyle}>
@@ -102,10 +108,10 @@ class TrainerLogin extends React.Component{
                                 </Card.Footer>
 						      </Card>
                             </Form>
-						    </Col>  
+						    </Col>
                             <Col></Col>
 						</Row>
-						
+
                 </Container>
             </div>);
     }

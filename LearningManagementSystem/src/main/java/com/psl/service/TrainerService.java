@@ -133,14 +133,17 @@ public class TrainerService {
 		return mappingDAO.findCoursesTaughtByTrainer(id);
 	}
 
-	public float getFeedbackResults(int tcid) {
+	public Float getFeedbackResults(int tcid) {
 		LOGGER.info(logPrefix+"Returning feedback results for Trainer-Course Mapping with ID - "+tcid);
 		return offeringDAO.getFeedbackResults(tcid);
 	}
 
 	public List<Float> findAllCoursesTaughtRatings(int id){
 		LOGGER.info(logPrefix+"Returning list of ratings for trainer with ID - "+id);
-		return offeringDAO.findAllCoursesTaughtRatings(id);
+		List<Float> l = offeringDAO.findAllCoursesTaughtRatings(id);
+		System.out.println("printing l: ");
+		System.out.println(l);
+		return l;
 	}
 
 	public List<String> findCommentsForACourse(int tcid){

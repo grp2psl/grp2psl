@@ -24,6 +24,8 @@ import ShowLearners from './Components/ShowLearners';
 import EditTrainerDetails from './Components/EditTrainerDetails';
 import EditLearnerDetails from './Components/EditLearnerDetails';
 import EditCourseDetails from './Components/EditCourseDetails';
+import ViewParticularCourse from './Components/ViewParticularCourse';
+import ViewCoursesTrainer from './Components/ViewCoursesTrainer';
 import UpdateScore from './Components/UpdateScore';
 import UpdateScoreIndividual from './Components/UpdateScoreIndividual';
 import UpdateScoreMultiple from './Components/UpdateScoreMultiple';
@@ -34,10 +36,11 @@ import MultipleTeacherCourseMappingRegister from './Components/MultipleTeacherCo
 import TeacherCourseMappingsRegister from './Components/TeacherCourseMappingsRegister';
 import Login from './Components/Login';
 import AdminLogin from './Components/AdminLogin';
-import LearnerLogin from './Components/LearnerLogin'; 
+import LearnerLogin from './Components/LearnerLogin';
 import TrainerLogin from './Components/TrainerLogin';
 import AdminDetails from './Components/AdminDetails';
 import TrainerDetails from './Components/TrainerDetails';
+import TrainerFeedbackview from './Components/TrainerFeedbackview';
 import LearnerDetails from './Components/LearnerDetails';
 import {MANAGER_URL} from './constants';
 import { useHistory } from "react-router-dom";
@@ -65,6 +68,9 @@ function App() {
               <Route path={MANAGER_URL+"/TeacherCourseMappingRegister"} exact component={TeacherCourseMappingRegister}/>
               <Route path={MANAGER_URL+"/ShowCourseAttended"} exact component={CourseAttended}/>
               <Route path={MANAGER_URL+"/registerLearner"} exact component={RegisterLearner}/>
+              <Route path={MANAGER_URL+"/viewcoursestrainer"} exact component={ViewCoursesTrainer}/>
+              <Route path={MANAGER_URL+"/viewparticularcourse"} exact component={ViewParticularCourse}/>
+              <Route path={MANAGER_URL+"/TrainerFeedbackview"} exact component={TrainerFeedbackview}/>
               <Route path={MANAGER_URL+"/showLearners"} exact component={ShowLearners}/>
               <Route path={MANAGER_URL+"/registerTrainers"} exact component={RegisterTrainers}/>
               <Route path={MANAGER_URL+"/registerMultipleTrainers"} exact component={RegisterMultipleTrainers}/>

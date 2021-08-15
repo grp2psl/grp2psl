@@ -31,10 +31,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.psl.entities.Course;
 import com.psl.entities.RatingAndComment;
 import com.psl.entities.TeacherCourseMapping;
 import com.psl.entities.TeacherCoursesTaught;
 import com.psl.entities.Trainer;
+import com.psl.service.CourseService;
 import com.psl.service.TrainerService;
 
 /*Annotation to enable LearnerController to act as a RestController 
@@ -47,6 +49,10 @@ import com.psl.service.TrainerService;
 public class TrainerController {
 	@Autowired
 	private TrainerService service;
+	
+	@Autowired
+	private CourseService cs;
+
 	
 	public static final Logger LOGGER = LoggerFactory.getLogger(TrainerController.class);
 	private final String logPrefix = "Trainer Controller - ";
@@ -139,19 +145,37 @@ public class TrainerController {
 	 * Fetch Courses taught by trainer and feedback ratings merged and stored into TeacherCoursesTaught
 	*/
 		LOGGER.info(logPrefix+"GET /{id}/coursestaughtbytrainer called to get courses taught by trainer and respective feedbacks and ratings");
+//		List<TeacherCourseMapping> l = service.findCoursesTaughtByTrainer(id);
+//		List<TeacherCoursesTaught> tct = new ArrayList<>();
+//		for (TeacherCourseMapping t: l) {
+//			float ratings = getFeedbackRatings(t.getTcId());
+//			TeacherCoursesTaught taught = new TeacherCoursesTaught(t.getTrainerId(), t.getCourseId(), t.getTcId(), ratings); 
+//			tct.add(taught);
+//		}
+//		return tct;
+		// TODO daksh
 		List<TeacherCourseMapping> l = service.findCoursesTaughtByTrainer(id);
 		List<TeacherCoursesTaught> tct = new ArrayList<>();
 		for (TeacherCourseMapping t: l) {
-			float ratings = getFeedbackRatings(t.getTcId());
-			TeacherCoursesTaught taught = new TeacherCoursesTaught(t.getTrainerId(), t.getCourseId(), t.getTcId(), ratings); 
+			Float ratings = getFeedbackRatings(t.getTcId());
+//			if(ratings == null) ratings = 0f;
+//			Float ratings = (1f);
+			TeacherCoursesTaught taught = new TeacherCoursesTaught(t.getTrainerId(), t.getCourseId(), t.getTcId(), ratings, cs.getCourse(t.getCourseId())); 
+			System.out.println(taught);
+//			Course c = cs.getCourse(t.getCourseId());
+			System.out.println("inside 1");
 			tct.add(taught);
+			System.out.println("inside 2");
 		}
+		System.out.println(tct);
 		return tct;
 	}
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINER')")
-	public float getFeedbackRatings(int tcid){		
-		return service.getFeedbackResults(tcid);
+	public Float getFeedbackRatings(int tcid){
+		Float ratings = service.getFeedbackResults(tcid);
+		if(ratings == null) return 0f;
+		else return ratings;
 	}
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINER')")
@@ -159,8 +183,10 @@ public class TrainerController {
 	public RatingAndComment getFeedbackResults(@PathVariable int id, @PathVariable int tcid){
 		LOGGER.info(logPrefix+"GET /{id}/{tcid} called to get feedback results");
 		List<String> comments = service.findCommentsForACourse(tcid);
-		float rating = getFeedbackRatings(tcid);
+		System.out.println(comments);
+		Float rating = getFeedbackRatings(tcid);
 		RatingAndComment rac = new RatingAndComment(rating, comments);
+		System.out.println(rac);
 		return rac;
 	}
 	/*
@@ -183,5 +209,15 @@ public class TrainerController {
 			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);	
 		}
 		return new ResponseEntity<>(result, HttpStatus.OK);	
+	}
+	
+	@Autowired
+	private CourseService sr;
+	
+	@PreAuthorize("hasAnyRole('ROLE_TRAINER', 'ROLE_ADMIN', 'ROLE_LEARNER')")
+	@GetMapping("/course/{courseId}")
+	public Course getCourse(@PathVariable int courseId) {
+		LOGGER.info(logPrefix+"GET /{courseId} called view details of a course by ID");
+		return sr.getCourse(courseId);
 	}
 }

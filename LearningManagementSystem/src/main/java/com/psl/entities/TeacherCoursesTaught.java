@@ -16,12 +16,19 @@ public class TeacherCoursesTaught {
 	private int trainerId;
 	private int courseId;
 	private int tcId;
-	private float rating;
+	private Float rating;
+	private Course course;
 	
-	public float getRating() {
+	public Course getCourse() {
+		return course;
+	}
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+	public Float getRating() {
 		return rating;
 	}
-	public void setRating(float rating) {
+	public void setRating(Float rating) {
 		this.rating = rating;
 	}
 	public int getTrainerId() {
@@ -45,15 +52,17 @@ public class TeacherCoursesTaught {
 	
 	@Override
 	public String toString() {
-		return "TeacherCourseMapping [trainerId=" + trainerId + ", courseId=" + courseId + ", tcId=" + tcId + "]";
+		return "TeacherCoursesTaught [trainerId=" + trainerId + ", courseId=" + courseId + ", tcId=" + tcId
+				+ ", rating=" + rating + ", course=" + course + "]";
 	}
 	
-	public TeacherCoursesTaught(int trainerId, int courseId, int tcId, float rating) {
+	public TeacherCoursesTaught(int trainerId, int courseId, int tcId, Float rating, Course course) {
 		super();
 		this.trainerId = trainerId;
 		this.courseId = courseId;
 		this.tcId = tcId;
 		this.rating = rating;
+		this.course = course;
 	}
 	
 	public TeacherCoursesTaught() {
