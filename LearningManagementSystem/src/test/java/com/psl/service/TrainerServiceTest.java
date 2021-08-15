@@ -2,6 +2,7 @@ package com.psl.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -173,4 +174,35 @@ public class TrainerServiceTest {
 		assertTrue(readFile.exists());
 		assertThat(readFile.length()).isGreaterThan(0);
 	}
+	
+
+	/*
+	 * TEST TRAINER LOGIN PASS
+	 */
+	@Test
+	@Order(9)
+	public void loginPassTest() {
+		int id = service.getNextId();
+		Trainer trainer = service.getTrainer(id - 1);
+		Trainer result  = service.login(trainer.getEmail(), trainer.getPassword());
+		assertNotNull(result);
+		assertThat(result.getName()).isEqualTo(trainer.getName());
+		assertThat(result.getEmail()).isEqualTo(trainer.getEmail());
+		assertThat(result.getPhoneNumber()).isEqualTo(trainer.getPhoneNumber());
+		assertThat(result.getPassword()).isEqualTo(trainer.getPassword());		
+	}
+
+	/*
+	 * TEST TRAINER LOGIN FAIL
+	 */
+	@Test
+	@Order(10)
+	public void loginFailTest() {
+		int id = service.getNextId();
+		Trainer trainer = service.getTrainer(id - 1);
+		Trainer result  = service.login(trainer.getEmail(), trainer.getPassword() + "abcd");
+		assertNull(result);
+	}
+	
+
 }

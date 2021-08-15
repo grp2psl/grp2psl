@@ -2,6 +2,7 @@ package com.psl.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Order;
@@ -87,6 +88,30 @@ public class ManagerServiceTest {
 		assertThat(manager.getEmail()).isEqualTo("group2.learning.management.system@gmail.com");
 		assertThat(manager.getPhoneNumber()).isEqualTo("9657892335");
 		assertThat(manager.getPassword()).isEqualTo("manager123");
+	}
+	
+	/*
+	 * TEST MANAGER LOGIN
+	 */
+	@Test
+	@Order(5)
+	public void loginPassTest() {
+		Manager manager = service.login("group2.learning.management.system@gmail.com", "manager123");
+		assertNotNull(manager);
+		assertThat(manager.getName()).isEqualTo("John Radnor");
+		assertThat(manager.getEmail()).isEqualTo("group2.learning.management.system@gmail.com");
+		assertThat(manager.getPhoneNumber()).isEqualTo("9657892335");
+		assertThat(manager.getPassword()).isEqualTo("manager123");		
+	}
+
+	/*
+	 * TEST MANAGER LOGIN
+	 */
+	@Test
+	@Order(6)
+	public void loginFailTest() {
+		Manager manager = service.login("group2.learning.management.system@gmail.com", "manager");
+		assertNull(manager);
 	}
 
 }

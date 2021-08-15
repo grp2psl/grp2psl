@@ -2,6 +2,7 @@ package com.psl.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -34,7 +35,6 @@ import com.psl.entities.Learner;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.psl.entities.CourseAttended;
 
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
@@ -44,10 +44,6 @@ public class LearnerServiceTest {
 	
 	@Autowired
 	CourseOfferingService Cservice;
-	
-
-	
-	
 	
 	/*
 	 * TEST FOR VIEW COURSE ATTENDED BY LEARNER
@@ -67,11 +63,9 @@ public class LearnerServiceTest {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}		
 		
-		
-	}
-	
+	}	
 
 
 	/*
@@ -95,11 +89,41 @@ public class LearnerServiceTest {
 		assertNotNull(createdLearner.getPassword());
 	}
 	
+
+	/*
+	 * TEST LEARNER LOGIN PASS
+	 */
+	@Test
+	@Order(3)
+	public void loginPassTest() {
+		int id = service.getNextId();
+		Learner learner = service.getLearner(id - 1);
+		Learner result  = service.login(learner.getEmail(), learner.getPassword());
+		assertNotNull(result);
+		assertThat(result.getName()).isEqualTo(learner.getName());
+		assertThat(result.getEmail()).isEqualTo(learner.getEmail());
+		assertThat(result.getPhoneNumber()).isEqualTo(learner.getPhoneNumber());
+		assertThat(result.getPassword()).isEqualTo(learner.getPassword());		
+	}
+
+	/*
+	 * TEST LEARNER LOGIN FAIL
+	 */
+	@Test
+	@Order(4)
+	public void loginFailTest() {
+		int id = service.getNextId();
+		Learner learner = service.getLearner(id - 1);
+		Learner result  = service.login(learner.getEmail(), learner.getPassword() + "abcd");
+		assertNull(result);
+	}
+	
+	
 	/*
 	 * TEST ADD LEARNER WITH DUPLICATE EMAIL ID
 	 */
 	@Test
-	@Order(3)
+	@Order(5)
 	public void addLearnerDuplicateEmailTest() throws JsonMappingException, JsonProcessingException {
 		String request = "{\"name\":\"John Radnor\",\"email\":\"group2.learning.management.system@gmail.com\","
 				+ "\"department\":\"L&D\",\"phoneNumber\":\"9657892335\"}";
@@ -112,7 +136,7 @@ public class LearnerServiceTest {
 	 * TEST GET DETAILS OF LEARNER BY ID
 	 */
 	@Test
-	@Order(4)
+	@Order(6)
 	public void getLearnerTest() {
 		int id = service.getNextId();
 		Learner learner = service.getLearner(id - 1);
@@ -128,7 +152,7 @@ public class LearnerServiceTest {
 	 * TEST REMOVE LEARNER BY ID
 	 */
 	@Test
-	@Order(5)
+	@Order(7)
 	public void removeLearnerTest() {
 		int id = service.getNextId();
 		service.removeLearner(id - 1);
@@ -139,7 +163,7 @@ public class LearnerServiceTest {
 	 * TEST REMOVE LEARNER BY ID
 	 */
 	@Test
-	@Order(6)
+	@Order(8)
 	public void removeLearnerFromEmptyResultSetTest() {
 		int id = service.getNextId();
 		assertThrows(EmptyResultDataAccessException.class, () -> service.removeLearner(id));
@@ -149,7 +173,7 @@ public class LearnerServiceTest {
 	 * TEST ADD MULTIPLE LEARNERS 
 	 */
 	@Test
-	@Order(7)
+	@Order(9)
 	public void addMultipleLearnersTest() throws IOException {
 		String basePath = new File("").getAbsolutePath();
 		basePath = new File(basePath).getParent();
@@ -187,7 +211,7 @@ public class LearnerServiceTest {
 	 * TEST GET DETAILS OF ALL LEARNERS
 	 */
 	@Test
-	@Order(8)
+	@Order(10)
 	public void getAllLearnersTest(){
 		List<Learner> learners = service.getAllLearners();
 		 assertThat(learners).size().isGreaterThan(0);
@@ -200,7 +224,7 @@ public class LearnerServiceTest {
 	 * TEST GENERATES EXCEL SHEET OF SAMPLE DATA OF LEARNER DETAILS
 	 */
 	@Test
-	@Order(9)
+	@Order(11)
 	public void generateExcelTest() throws IOException {
 		Path file = Paths.get(System.getProperty("user.home"), "Downloads");
 		service.generateExcel(file.toString());
@@ -210,5 +234,6 @@ public class LearnerServiceTest {
 		assertTrue(readFile.exists());
 		assertThat(readFile.length()).isGreaterThan(0);
 	}
+	
 		
 }
