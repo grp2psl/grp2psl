@@ -100,7 +100,7 @@ public class CourseOfferingServiceTest {
 	@Test
 	@Order(5)
 	/*
-	 * TEST ENROLL MULTIPLE LEARNERS ----UNIT TEST FAILED
+	 * TEST ENROLL MULTIPLE LEARNERS 
 	 */
 	public void enrollMultipleLearnersTest() throws IOException, ParseException {
 		int id = service.getMaxId();

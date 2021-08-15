@@ -13,6 +13,7 @@ import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -100,11 +101,11 @@ public class LearnerService {
 
 	    for(int i=1;i<worksheet.getPhysicalNumberOfRows() ;i++) {
 	        Learner learner = new Learner();
-
+	        DataFormatter formatter = new DataFormatter();
 	        XSSFRow row = worksheet.getRow(i);
 	        learner.setName(row.getCell(0).getStringCellValue());
 	        learner.setDepartment(row.getCell(1).getStringCellValue());
-	        learner.setPhoneNumber(row.getCell(2).getStringCellValue());
+	        learner.setPhoneNumber(formatter.formatCellValue(row.getCell(2)));
 	        learner.setEmail(row.getCell(3).getStringCellValue());
 	        addLearner(learner);
 		}

@@ -5,7 +5,7 @@ LIMIT 0, 1000
 -- Date: 2021-08-14 10:53
 */
 INSERT INTO course(`courseid`,`coursename`,`prerequisite`,`syllabus`,`duration`) VALUES (1,'Java','Java Basics','https://www.javatpoint.com/spring-tutorial','4 day');
-INSERT INTO course(`courseid`,`coursename`,`prerequisite`,`syllabus`,`duration`) VALUES (2,'Python','Data Structures','https://docs.python.org/3/tutorial/','2 days');
+INSERT INTO course (`courseid`,`coursename`,`prerequisite`,`syllabus`,`duration`) VALUES (2,'Python','Data Structures','https://docs.python.org/3/tutorial/','2 days');
 INSERT INTO course(`courseid`,`coursename`,`prerequisite`,`syllabus`,`duration`) VALUES (3,'C++','Basic programming','OOPs concepts','8 hr');
 
 /*
@@ -18,10 +18,8 @@ INSERT INTO learner(`learnerid`,`name`,`department`,`phonenumber`,`email`,`passw
 INSERT INTO learner(`learnerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (10001,'Pradnya','Sales','8585454525','pradnya@gmail.com','Pradnya10001@8063');
 INSERT INTO learner(`learnerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (10002,'Ted Mosby','HR','9876543210','vaishnavipatil10march@gmail.com','Ted10002@5525');
 INSERT INTO learner(`learnerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (10003,'Sheldon Cooper','L&D','9876543210','vaishnavi10march2000@gmail.com','Sheldon10003@3533');
-INSERT INTO learner(`learnerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (10004,'Atul Kulkarni','L&D','9872343210','atulkulkarni@email.com','atul@kulkarni12');
-INSERT INTO learner(`learnerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (10005,'Amogh Patil','HR','9442343210','amoghpatil@email.com','amogh@patil62');
-INSERT INTO learner(`learnerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (10006,'Dinesh Chopada','IT','9442222340','dineshchopada@email.com','dinesh@chopada45');
-INSERT INTO learner(`learnerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (10007,'Priya Sharma','IT','9443212340','priyasharma@email.com','priya@sharma32');
+INSERT INTO learner (`learnerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES(10006,'John','Marketing','9696454525','john@gmail.com','John10006@6565');
+
 
 
 /*
@@ -32,7 +30,7 @@ LIMIT 0, 1000
 */
 INSERT INTO trainer(`trainerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (20000,'John','IT','3656562585','john@gmail.com','John20000@6495');
 INSERT INTO trainer(`trainerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (20001,'Jill','HR','3656562563','jill@gmail.com','Jill20001@3196');
-INSERT INTO trainer(`trainerid`,`name`,`department`,`phonenumber`,`email`,`password`) VALUES (20002,'Firstname Lastname','DepartmentName','9876543210','something@email.com','Firstname20002@7307');
+
 
 /*
 -- Query: SELECT * FROM learningmgmtdb.manager

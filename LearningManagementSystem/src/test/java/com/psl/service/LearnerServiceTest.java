@@ -24,6 +24,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -145,7 +146,7 @@ public class LearnerServiceTest {
 	}
 	
 	/*
-	 * TEST ADD MULTIPLE LEARNERS --- TEST CASE FAILED
+	 * TEST ADD MULTIPLE LEARNERS 
 	 */
 	@Test
 	@Order(7)
@@ -171,10 +172,11 @@ public class LearnerServiceTest {
 	    for(int i=1;i<worksheet.getPhysicalNumberOfRows() ;i++) {
 	        Learner learner = service.getLearner(id++);	        
 	        assertNotNull(learner);	
+	        DataFormatter formatter = new DataFormatter();
 	        XSSFRow row = worksheet.getRow(i);
 	        assertThat(learner.getName()).isEqualTo(row.getCell(0).getStringCellValue());
 	        assertThat(learner.getDepartment()).isEqualTo(row.getCell(1).getStringCellValue());
-	        assertThat(learner.getPhoneNumber()).isEqualTo(row.getCell(2).getStringCellValue());
+	        assertThat(learner.getPhoneNumber()).isEqualTo(formatter.formatCellValue(row.getCell(2)));
 	        assertThat(learner.getEmail()).isEqualTo(row.getCell(3).getStringCellValue());
 	        assertNotNull(learner.getPassword());
 	    }
