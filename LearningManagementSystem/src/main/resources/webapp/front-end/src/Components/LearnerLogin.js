@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Container, Row, Col, Card, Button, Form} from 'react-bootstrap';
 import axios from 'axios';
-import {DATABASE_URL, LEARNER_USERNAME, LEARNER_PASSWORD} from '../constants';
+import {DATABASE_URL, LEARNER_USERNAME, LEARNER_PASSWORD, LEARNER_URL} from '../constants';
 
 const cardStyle={
 	height: '300px',
@@ -56,6 +56,10 @@ class LearnerLogin extends React.Component{
                 localStorage.setItem('loggedin', true);
                 localStorage.setItem('userId', response.data.learnerId);
                 localStorage.setItem('user', 'learner');
+				this.props.history.push({
+		            pathname: LEARNER_URL+"/",
+		            state: { learnerid: response.data.learnerId }
+		        });
         	}	
 		} catch(error) {
 			alert("Login failed");

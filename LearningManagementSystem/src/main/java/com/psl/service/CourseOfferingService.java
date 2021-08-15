@@ -73,6 +73,13 @@ public class CourseOfferingService {
 	}
 
 	//Function to allow Learner to given feedback on given course Offering
+	public CourseOffering AddFeedbackCourseOfferingId(int courseOfferingId, String feedback, int rating) {
+		CourseOffering co = dao.findById(courseOfferingId).get();
+		co.setFeedback(feedback);
+		co.setRatings(rating);
+		return dao.save(co);
+	}
+
 	public CourseOffering AddFeedback(int learnerId, int tcId, String feedback) {
 		LOGGER.info(logPrefix+"Adding feedback - "+feedback+" for Trainer-course mapping with ID - "+tcId+" by learner with ID - "+learnerId);
 		CourseOffering co = dao.findByTcIdAndLearnerId(tcId, learnerId);
@@ -85,6 +92,7 @@ public class CourseOfferingService {
 		LOGGER.info(logPrefix+"Returning list of all course offerings of the learner with ID - "+learnerId);
 		return dao.findByLearnerId(learnerId);
 	}
+
 	public void enrollLearner(CourseOffering offering) throws ParseException {
 		LOGGER.info(logPrefix+"Enrolling a learner with ID - "+offering.getLearnerId()+" to Trainer-Course mapping with ID - "+offering.getTcId());
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");

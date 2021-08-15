@@ -5,6 +5,7 @@
 // This shows that course is declared in com.psl.entities package
 package com.psl.entities;
 
+import java.io.Serializable;
 //Necessary imports for entity declaration
 import java.util.Date;
 
@@ -28,7 +29,12 @@ import javax.validation.constraints.Size;
 //Name of the MySql table in which CourseOffering Entity records are stored
 @Table(name = "courseoffering")
 //Definition of CourseOffering Entity
-public class CourseOffering {
+public class CourseOffering{
+	
+	@Id
+	@NotNull(message = "Course Offering id field can't be null")
+	@Column(name = "courseofferingid")
+	private int CourseOfferingId;
 	
 	/*
 	 * feedback attribute stores feedback of course offering in a string format 
@@ -66,10 +72,6 @@ public class CourseOffering {
 	@Column(name = "learnerid")
 	@NotNull(message = "learnerId field can't be null")
 	private int learnerId;
-	
-	@Id
-	@Column(name="courseofferingid")
-	private int courseOfferingId;
 
 	/*
 	 * It is part of the composite key. 
@@ -108,10 +110,10 @@ public class CourseOffering {
 	}
 	
 	public int getCourseOfferingId() {
-		return courseOfferingId;
+		return CourseOfferingId;
 	}
 	public void setCourseOfferingId(int courseofferingid) {
-		this.courseOfferingId = courseofferingid;
+		this.CourseOfferingId = courseofferingid;
 	}
 	public int getRatings() {
 		return ratings;
@@ -155,10 +157,11 @@ public class CourseOffering {
 	public void setPercentage(double percentage) {
 		this.percentage = percentage;
 	}
+	
 	//Parameterized Constructor
 	public CourseOffering(int courseofferingid, String feedback, int ratings, Date startdate, Date enddate,
 			int learnerid, int tcid, String status, double percentage) {
-		this.courseOfferingId = courseofferingid;
+		this.CourseOfferingId = courseofferingid;
 		this.feedback = feedback;
 		this.ratings = ratings;
 		this.startDate = startdate;
@@ -168,7 +171,6 @@ public class CourseOffering {
 		this.status = status;
 		this.percentage = percentage;
 	}
-	
 	//Default Constructor
 	public CourseOffering() {
 	}
@@ -193,13 +195,13 @@ public class CourseOffering {
 				learnerId == Co.getLearnerId() &&
 				tcId == Co.getTcId() &&
 				(( status == null && Co.getStatus() == null ) ||status.equals(Co.getStatus()))&&
-				percentage == Co.getPercentage();
+				percentage == Co.getPercentage() &&
+				CourseOfferingId == Co.getCourseOfferingId();
 	}
 	
-	//Overrides toString function to change output of print function
 	@Override
 	public String toString() {
-		return "Courseoffering [courseofferingid=" + courseOfferingId + ", feedback=" + feedback + ", ratings="
+		return "Courseoffering [courseofferingid=" + CourseOfferingId + ", feedback=" + feedback + ", ratings="
 				+ ratings + ", startdate=" + startDate + ", enddate=" + endDate + ", learnerid=" + learnerId + ", tcid="
 				+ tcId + ", status=" + status + ", percentage=" + percentage + "]";
 	}	

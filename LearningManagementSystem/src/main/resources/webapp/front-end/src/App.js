@@ -42,8 +42,13 @@ import AdminDetails from './Components/AdminDetails';
 import TrainerDetails from './Components/TrainerDetails';
 import TrainerFeedbackview from './Components/TrainerFeedbackview';
 import LearnerDetails from './Components/LearnerDetails';
-import {MANAGER_URL} from './constants';
+import {MANAGER_URL, LEARNER_URL} from './constants';
 import { useHistory } from "react-router-dom";
+import NavigationBarLearner from './Components/NavigationBarLearner';
+import CourseOfferingListing from './Components/CourseOfferingListing';
+import Feedback from './Components/Feedback'
+import WelcomeLearner from './Components/WelcomeLearner'
+import Credentials from './Components/Credentials'
 
 function App() {
   const history = useHistory();
@@ -94,6 +99,10 @@ function App() {
               <Route path={"/view-details-manager"} exact component={AdminDetails}/>
               <Route path={"/view-details-trainer"} exact component={TrainerDetails}/>
               <Route path={"/view-details-learner"} exact component={LearnerDetails}/>
+              <Route path = {LEARNER_URL+"/CourseOfferingListing"} component = {CourseOfferingListing}/>
+    		  <Route path = {LEARNER_URL+"/Feedback"} component = {Feedback}/>
+    		  <Route path = {LEARNER_URL+"/Credentials"} exact component = {Credentials}/>
+    		  <Route path = {LEARNER_URL+"/"} exact component = {WelcomeLearner}/>
           </Switch>
           </Col>
         </Row>

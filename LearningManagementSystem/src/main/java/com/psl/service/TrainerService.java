@@ -1,9 +1,5 @@
 package com.psl.service;
 
-/*
- * Declaration of Trainer Service which completes various requests on trainer class
- */
-
 import java.util.List;
 
 import java.io.IOException;

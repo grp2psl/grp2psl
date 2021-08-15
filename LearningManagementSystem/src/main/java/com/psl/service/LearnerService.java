@@ -154,10 +154,15 @@ public class LearnerService {
 	}
 
 	//Function which updates credentials of a learner with given learnerId.
+	public Learner updateLearnerPassword(int id, String password) {
+		Learner l = dao.findById(id).get();
+	    l.setPassword(password);
+	    return dao.save(l);
+	}
+	
 	public Learner updateLearner(int id, String email, String password) {
 		LOGGER.info(logPrefix+"Updating credentials of a learner with ID - "+id+" to email - "+email+" and password - "+password);
 	    Learner l = dao.findById(id).get();
-	    l.setEmail(email);
 	    l.setPassword(password);
 	    return dao.save(l);
 	}

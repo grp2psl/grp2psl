@@ -1,5 +1,6 @@
 package com.psl.controller;
 
+
 /*
  * Defines TrainerController which handles various url requests 
  * related to Learner.
@@ -7,6 +8,7 @@ package com.psl.controller;
 
 
 import java.util.ArrayList;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -38,10 +40,6 @@ import com.psl.entities.TeacherCoursesTaught;
 import com.psl.entities.Trainer;
 import com.psl.service.CourseService;
 import com.psl.service.TrainerService;
-
-/*Annotation to enable LearnerController to act as a RestController 
- * Which handles all requests on url's having "/trainers" prefix
- */
 
 @RestController
 @RequestMapping("/trainers")

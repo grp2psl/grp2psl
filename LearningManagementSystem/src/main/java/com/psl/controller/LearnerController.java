@@ -9,11 +9,12 @@ import java.nio.file.Paths;
 import java.util.List;
 
 //Importing required imports for Learner Controller Definition.
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,7 +39,8 @@ import com.psl.service.LearnerService;
 
 @RestController
 @RequestMapping("/learners")
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
+//Definition of the class
 public class LearnerController {
 	
 	//Autowiring with LearnerService
@@ -119,6 +120,12 @@ public class LearnerController {
 	 * Where id is learner Id.
 	 * It updates credentials of Learner with given id.
 	 */
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_LEARNER')")
+	@PutMapping("/updatelearner/{id}")
+	public void updateLearner(@PathVariable int id, @RequestBody Learner newLearner) {
+		service.updateLearnerPassword(id, newLearner.getPassword());
+	}
+	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_LEARNER')")
 	@PutMapping("/update/{id}")
 	public void updateLearner(@PathVariable int id, @RequestBody Map<String, String> credentials) {

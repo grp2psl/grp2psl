@@ -106,6 +106,7 @@ alter table courseoffering
 add primary key(courseofferingid),
 add foreign key(learnerid) references learner(learnerid) on DELETE CASCADE,
 add foreign key(tcid) references TeacherCourseMapping(tcid) on DELETE CASCADE,
+
 modify learnerid int not null,
 modify tcid int not null;
 
