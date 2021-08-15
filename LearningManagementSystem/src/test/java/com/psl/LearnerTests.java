@@ -4,6 +4,7 @@
 package com.psl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+//import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -17,6 +18,8 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -67,7 +70,7 @@ class LearnerTests {
 	public void testAddLearner() {		
 		Learner l = new Learner(12, "Shiva", "3454654342", "Mathematics", "shiva2@gmail.com", "shivapass");
 		when(dao.save(l)).thenReturn(l);
-		assertEquals(l,service.addLearner(l));
+		assertEquals(l,service.getLearner(l.getLearnerId()));
 	}
 
 	//Tests retrieval of learner
@@ -115,8 +118,8 @@ class LearnerTests {
 		//when(dao2.findByTcIdAndLearnerId(c1.getTcId(), c1.getLearnerId())).thenReturn(c1);
 		when(dao2.findById(c1.getTcId())).thenReturn(Optional.of(c1));
 		when(dao2.save(c1)).thenReturn(c1);
-		assertEquals(service2.AddFeedback(1, feedback, rating).getFeedback(), feedback);
-		assertEquals(service2.AddFeedback(1, feedback, rating).getRatings(), rating);		
+		assertEquals(service2.AddFeedbackCourseOfferingId(1, feedback, rating).getFeedback(), feedback);
+		assertEquals(service2.AddFeedbackCourseOfferingId(1, feedback, rating).getRatings(), rating);		
 	}
 	
 	//Testing change credentials operation
@@ -137,7 +140,7 @@ class LearnerTests {
 		when(dao.save(l)).thenReturn(l);
 		l.setPassword("new password");
 		
-		assertEquals(service.updateLearner(12, password), l);
+		assertEquals(service.updateLearnerPassword(12, password), l);
 	}
 	
 	//Testing the delete operation
@@ -151,7 +154,7 @@ class LearnerTests {
 		l.setEmail("rag@gmail.com");
 		l.setPassword("RajPass");
 		
-		service.deleterLearner(l.getLearnerId());
+		service.deleteLearner(l.getLearnerId());
 	    verify(dao, times(1)).deleteById(l.getLearnerId());
 	}
 	

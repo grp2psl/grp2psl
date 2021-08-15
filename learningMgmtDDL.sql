@@ -71,8 +71,8 @@ create table TeacherCourseMapping(
     courseid int,
     tcid int,
     primary key (tcid),
-    foreign key(trainerid) references trainer(trainerid),
-    foreign key(courseid) references course(courseid)
+    foreign key(trainerid) references trainer(trainerid) on DELETE CASCADE,
+    foreign key(courseid) references course(courseid) on DELETE CASCADE
 );
 
 /*Create table to store course offering details*/
@@ -86,8 +86,8 @@ create table courseoffering(
     status varchar(20),
     percentage int check (percentage >= 0 AND percentage <= 100),
     primary key(tcid, learnerid),
-    foreign key(learnerid) references learner(learnerid),
-    foreign key(tcid) references TeacherCourseMapping(tcid)
+    foreign key(learnerid) references learner(learnerid) on DELETE CASCADE,
+    foreign key(tcid) references TeacherCourseMapping(tcid) on DELETE CASCADE
 );
 
 ALTER TABLE manager ADD CONSTRAINT unique_constraint UNIQUE(email);
@@ -104,8 +104,9 @@ alter table courseoffering drop primary key;
 
 alter table courseoffering 
 add primary key(courseofferingid),
-add foreign key(learnerid) references learner(learnerid),
-add foreign key(tcid) references TeacherCourseMapping(tcid),
+add foreign key(learnerid) references learner(learnerid) on DELETE CASCADE,
+add foreign key(tcid) references TeacherCourseMapping(tcid) on DELETE CASCADE,
+
 modify learnerid int not null,
 modify tcid int not null;
 

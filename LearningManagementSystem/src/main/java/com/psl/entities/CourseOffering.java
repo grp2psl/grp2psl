@@ -5,13 +5,13 @@
 // This shows that course is declared in com.psl.entities package
 package com.psl.entities;
 
+import java.io.Serializable;
 //Necessary imports for entity declaration
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-//import javax.persistence.IdClass;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -29,7 +29,7 @@ import javax.validation.constraints.Size;
 //Name of the MySql table in which CourseOffering Entity records are stored
 @Table(name = "courseoffering")
 //Definition of CourseOffering Entity
-public class CourseOffering {
+public class CourseOffering{
 	
 	@Id
 	@NotNull(message = "Course Offering id field can't be null")
@@ -72,7 +72,7 @@ public class CourseOffering {
 	@Column(name = "learnerid")
 	@NotNull(message = "learnerId field can't be null")
 	private int learnerId;
-	
+
 	/*
 	 * It is part of the composite key. 
 	 * Maps given courseOffering with learners.
@@ -96,9 +96,9 @@ public class CourseOffering {
 	 * It can't be null.
 	 * By default it can be initialized with some negative value.
 	 */
-	@NotNull(message = "percentage field can't be null")	
-	private int percentage;
-		
+	//@NotNull(message = "percentage field can't be null")	
+	private double percentage;
+	
 	/*
 	 * Public getter and setter methods of all attributes
 	 */
@@ -107,6 +107,13 @@ public class CourseOffering {
 	}
 	public void setFeedback(String feedback) {
 		this.feedback = feedback;
+	}
+	
+	public int getCourseOfferingId() {
+		return CourseOfferingId;
+	}
+	public void setCourseOfferingId(int courseofferingid) {
+		this.CourseOfferingId = courseofferingid;
 	}
 	public int getRatings() {
 		return ratings;
@@ -117,26 +124,26 @@ public class CourseOffering {
 	public Date getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setStartDate(Date startdate) {
+		this.startDate = startdate;
 	}
 	public Date getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setEndDate(Date enddate) {
+		this.endDate = enddate;
 	}
 	public int getLearnerId() {
 		return learnerId;
 	}
-	public void setLearnerId(int learnerId) {
-		this.learnerId = learnerId;
+	public void setLearnerId(int learnerid) {
+		this.learnerId = learnerid;
 	}
 	public int getTcId() {
 		return tcId;
 	}
-	public void setTcId(int tcId) {
-		this.tcId = tcId;
+	public void setTcId(int tcid) {
+		this.tcId = tcid;
 	}
 	public String getStatus() {
 		return status;
@@ -144,30 +151,23 @@ public class CourseOffering {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public int getPercentage() {
+	public double getPercentage() {
 		return percentage;
 	}
-	public void setPercentage(int percentage) {
+	public void setPercentage(double percentage) {
 		this.percentage = percentage;
-	}
-	public int getCourseOfferingId() {
-		return CourseOfferingId;
-	}
-	public void setCourseOfferingId(int courseOfferingId) {
-		CourseOfferingId = courseOfferingId;
 	}
 	
 	//Parameterized Constructor
-	public CourseOffering(int courseOfferingId, String feedback, int ratings, Date startDate, Date endDate,
-			int learnerId, int tcId, String status, int percentage) {
-		super();
-		this.CourseOfferingId = courseOfferingId;
+	public CourseOffering(int courseofferingid, String feedback, int ratings, Date startdate, Date enddate,
+			int learnerid, int tcid, String status, double percentage) {
+		this.CourseOfferingId = courseofferingid;
 		this.feedback = feedback;
 		this.ratings = ratings;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.learnerId = learnerId;
-		this.tcId = tcId;
+		this.startDate = startdate;
+		this.endDate = enddate;
+		this.learnerId = learnerid;
+		this.tcId = tcid;
 		this.status = status;
 		this.percentage = percentage;
 	}
@@ -201,8 +201,8 @@ public class CourseOffering {
 	
 	@Override
 	public String toString() {
-		return "CourseOffering [CourseOfferingId=" + CourseOfferingId + ", feedback=" + feedback + ", ratings="
-				+ ratings + ", startDate=" + startDate + ", endDate=" + endDate + ", learnerId=" + learnerId + ", tcId="
+		return "Courseoffering [courseofferingid=" + CourseOfferingId + ", feedback=" + feedback + ", ratings="
+				+ ratings + ", startdate=" + startDate + ", enddate=" + endDate + ", learnerid=" + learnerId + ", tcid="
 				+ tcId + ", status=" + status + ", percentage=" + percentage + "]";
-	}
+	}	
 }

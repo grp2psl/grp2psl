@@ -1,0 +1,56 @@
+package com.psl.service;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.psl.entities.Course;
+
+@SpringBootTest
+@TestMethodOrder(OrderAnnotation.class)
+public class CourseServiceTest {
+	@Autowired
+	CourseService service;
+	
+	@Test
+	@Order(1)
+	public void testListCourses() {
+	    List<Course> courses = (List<Course>) service.findAll();
+	    assertThat(courses).size().isGreaterThan(0);
+	}
+	
+	@Test
+	@Order(2)
+	public void testAddCourse() {
+		Course c=new Course(3,"C++","Basic programming","OOPs concepts","8 hr");
+	    service.addCourse(c);
+	     
+	    Course course=service.getCourse(3);
+	    assertThat(course.getCourseId()).isEqualTo(3);
+	    
+	}
+	
+
+	/*
+	 * TEST FOR GET COURSE BY COURSEID
+	 */
+	@Test
+	@Order(3)
+	public void testGetCourse() {
+	    Course course=service.getCourse(2);
+	    assertThat(course.getCourseId()).isEqualTo(2);
+	    
+	}
+	
+	
+	
+}

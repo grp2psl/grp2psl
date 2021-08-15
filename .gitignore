@@ -1,3 +1,7 @@
 .DS_Store
+/.metadata/
 .vscode
 .metadata
+/**/node_modules/
+/LearningManagementSystem/src/main/resources/webapp/front-end/package-lock.json
+/LearningManagementSystem/package-lock.json

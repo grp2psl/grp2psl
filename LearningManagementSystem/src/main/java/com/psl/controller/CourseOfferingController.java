@@ -7,7 +7,10 @@ package com.psl.controller;
 //Importing required imports for CourseOfferingController Definition.
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,15 +30,25 @@ public class CourseOfferingController {
 	//Autowiring with CourseOfferingService
 	@Autowired
 	private CourseOfferingService service;
+
+	public static final Logger LOGGER = LoggerFactory.getLogger(CourseOfferingController.class);
+	private final String logPrefix = "Course Offering Controller - ";
 	
 	/*
 	 * This part handles put requests from url's ending with /feedback/{learnerid}/{tcid} pattern
 	 * It adds feedback of given course offering (identified with tcid) by given learner (identified with learnerid)
 	 */
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_LEARNER')")
 	@PutMapping("/feedback/{courseOfferingId}")
 	public void sendfeedback(@PathVariable int courseOfferingId ,@RequestBody CourseOffering CO) {
 		System.out.println(CO);
-		service.AddFeedback(courseOfferingId, CO.getFeedback(), CO.getRatings());
+		service.AddFeedbackCourseOfferingId(courseOfferingId, CO.getFeedback(), CO.getRatings());
+	}
+	
+	@PutMapping("/feedback/{learnerid}/{tcid}")
+	public void sendfeedback(@PathVariable int learnerid, @PathVariable int tcid ,@RequestBody String feedBack) {
+		LOGGER.info(logPrefix+"PUT /feedback/{learnerid}/{tcid} called to add a course offering feeback given by learner");
+		service.AddFeedback(learnerid, tcid, feedBack);
 	}
 	
 	/*
@@ -44,6 +57,7 @@ public class CourseOfferingController {
 	 */
 	@GetMapping("/Offering/{learnerid}")
 	public List<CourseOffering> getOfferings(@PathVariable int learnerid){
+		LOGGER.info(logPrefix+"GET /Offering/{learnerid} called to view offerings by learner ID");
 		return service.getCourseOfferings(learnerid);
 	}
 	
