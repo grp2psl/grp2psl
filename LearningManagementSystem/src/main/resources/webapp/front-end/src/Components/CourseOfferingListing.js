@@ -75,6 +75,14 @@ export default class CourseOfferingListing extends Component{
 										<td>{offering.feedback}</td>
 										<td> 
 											<ButtonGroup>
+												<Button
+                                            		size="sm"
+                                            		variant="outline-primary"
+                                            		onClick={() => this.props.history.push({
+                                                	pathname: LEARNER_URL+"/CourseDetails", 
+                                                	state: {tcId: offering.tcId}
+                                            		})}
+                                        		>Show Details</Button>
 												 <Button
                                             		size="sm"
                                             		variant="outline-primary"

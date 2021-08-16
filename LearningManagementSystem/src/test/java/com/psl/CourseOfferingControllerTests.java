@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.psl.security.RESTAuthenticationEntryPoint;
 //import com.psl.controller.CourseOfferingController;
 import com.psl.service.LearnerService;
 
@@ -22,6 +23,9 @@ public class CourseOfferingControllerTests {
 	
 	@Autowired
 	MockMvc mvc;
+	
+	@MockBean
+	RESTAuthenticationEntryPoint authenticationEntryPoint;
 	
 	@MockBean
 	private LearnerService service;

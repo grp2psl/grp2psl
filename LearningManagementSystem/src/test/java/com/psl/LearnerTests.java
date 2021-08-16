@@ -23,6 +23,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
@@ -36,10 +38,12 @@ import com.psl.service.CourseOfferingService;
 import com.psl.service.LearnerService;
 
 @ComponentScan(basePackages = "com.psl")
-@DataJpaTest
+//@DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @TestMethodOrder(OrderAnnotation.class)
 //@ExtendWith(SpringExtension.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 class LearnerTests {
 
 	@Test
@@ -70,6 +74,7 @@ class LearnerTests {
 	public void testAddLearner() {		
 		Learner l = new Learner(12, "Shiva", "3454654342", "Mathematics", "shiva2@gmail.com", "shivapass");
 		when(dao.save(l)).thenReturn(l);
+		when(dao.findById(l.getLearnerId())).thenReturn(Optional.of(l));
 		assertEquals(l,service.getLearner(l.getLearnerId()));
 	}
 

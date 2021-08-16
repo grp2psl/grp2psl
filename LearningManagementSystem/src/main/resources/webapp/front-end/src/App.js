@@ -49,6 +49,7 @@ import CourseOfferingListing from './Components/CourseOfferingListing';
 import Feedback from './Components/Feedback'
 import WelcomeLearner from './Components/WelcomeLearner'
 import Credentials from './Components/Credentials'
+import CourseDetails from './Components/CourseDetails'
 
 function App() {
   const history = useHistory();
@@ -102,6 +103,7 @@ function App() {
               <Route path = {LEARNER_URL+"/CourseOfferingListing"} component = {CourseOfferingListing}/>
     		  <Route path = {LEARNER_URL+"/Feedback"} component = {Feedback}/>
     		  <Route path = {LEARNER_URL+"/Credentials"} exact component = {Credentials}/>
+    		  <Route path = {LEARNER_URL+"/CourseDetails"} exact component = {CourseDetails}/>
     		  <Route path = {LEARNER_URL+"/"} exact component = {WelcomeLearner}/>
           </Switch>
           </Col>

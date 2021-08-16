@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.psl.service.CourseOfferingService;
+import com.psl.entities.Course;
 import com.psl.entities.CourseOffering;
 
 /*Annotation to enable CourseOfferingController to act as a RestController
@@ -64,5 +65,9 @@ public class CourseOfferingController {
 	@GetMapping("/GetOffering/{courseOfferingId}")
 	public CourseOffering getOffering(@PathVariable int courseOfferingId) {
 		return service.getCourseOffering(courseOfferingId);
+	}
+	@GetMapping("/GetCourseDetails/{tcId}")
+	public Course getCourseDetails(@PathVariable int tcId){
+		return service.viewCourseDetailsBytcId(tcId);
 	}
 }

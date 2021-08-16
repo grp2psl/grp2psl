@@ -332,7 +332,17 @@ public class CourseOfferingService {
 		}
 		return response;
 	}
-
+	
+	/*
+	 * VIEW COURSE ID, COURSE NAME AND COURSE SYLLABUS BY TCID
+	 */
+	public Course viewCourseDetailsBytcId(int tcId){
+		LOGGER.info(logPrefix+"Returning details of Course for course offering with tcID - "+tcId);
+		Course c = tcService.getCourse(tcId);
+		return c;
+	}
+	
+	
 	/*
 	 * FIND TEACHER-COURSE MAPPINGS BY LEARNER ID
 	 */	
