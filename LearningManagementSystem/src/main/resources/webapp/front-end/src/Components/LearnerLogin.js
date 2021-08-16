@@ -49,7 +49,6 @@ class LearnerLogin extends React.Component{
                 password: LEARNER_PASSWORD
               }
             });
-			alert("Tried login")
             if(response.data != null){
 	        	alert("Logged in successfully");
 	            console.log(response.data);

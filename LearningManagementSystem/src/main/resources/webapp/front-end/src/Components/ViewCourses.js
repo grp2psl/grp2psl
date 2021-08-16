@@ -54,7 +54,7 @@ class ViewCourses extends React.Component{
             show: true
 		});
 		try{
-            const response = await axios.delete(DATABASE_URL+COURSE_URL+"/course/delete/"+id, {
+            const response = await axios.delete(DATABASE_URL+COURSE_URL+"/delete/"+id, {
                 auth: {
                 username: ADMIN_USERNAME,
                 password: ADMIN_PASSWORD

@@ -113,7 +113,7 @@ class ViewCoursesTrainer extends React.Component{
                                                                            },
                                                                        })
                                                                    }}
-                                                               >View Score and Status</Button>
+                                                               >View Details</Button>
                                                                </ButtonGroup>
                                                            </td>
                                     </tr>
