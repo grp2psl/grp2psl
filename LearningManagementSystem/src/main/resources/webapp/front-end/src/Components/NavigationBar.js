@@ -37,7 +37,7 @@ class NavigationBar extends React.Component{
 			<div>
                 <Navbar bg="dark" variant="dark">
 					<Container>
-    				<Link to={MANAGER_URL+"/"} className='navbar-brand'>
+    				<Link to={"/home"} className='navbar-brand'>
                     <img
                         src={book}
                         width="35"
@@ -47,14 +47,14 @@ class NavigationBar extends React.Component{
                         Learning Manager
                     </Link>
                     <Nav>
-                        <Link to={MANAGER_URL+"/"} className='nav-link'>
+                        <Link to={"/home"} className='nav-link'>
                             <Button
                                 size="md"
                                 variant="outline-success"
                             >
                             <FontAwesomeIcon icon={faHome} />
                             </Button>{" "}</Link>
-                        <Link to={"/view-details-"+localStorage.getItem('user')} className='nav-link'>
+                        <Link to={"/view-details"} className='nav-link'>
                             <Button
                                 size="md"
                                 variant="outline-primary"
@@ -65,7 +65,6 @@ class NavigationBar extends React.Component{
                             <Button
                                 size="md"
                                 variant="outline-danger"
-                                // style={buttonStyle}
                                 onClick={() => this.logout()}
                             >
                             <FontAwesomeIcon icon={faSignOutAlt} />

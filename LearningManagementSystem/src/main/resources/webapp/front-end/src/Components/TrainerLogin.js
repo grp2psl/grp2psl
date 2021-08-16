@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Container, Row, Col, Card, Button, Form} from 'react-bootstrap';
 import axios from 'axios';
-import {DATABASE_URL, TRAINER_URL, TRAINER_USERNAME, TRAINER_PASSWORD, MANAGER_URL} from '../constants';
+import {DATABASE_URL, TRAINER_URL, TRAINER_USERNAME, TRAINER_PASSWORD} from '../constants';
 
 const cardStyle={
 	height: '300px',
@@ -52,16 +52,15 @@ class TrainerLogin extends React.Component{
               }
             });
 			if(response.data != null){
-	        	alert("Logged in successfully");
 	            console.log(response.data);
                 this.state.trainer = response.data;
                 localStorage.setItem('loggedin', true);
                 localStorage.setItem('userId', response.data.trainerId);
                 localStorage.setItem('user', 'trainer');
-			 this.props.history.push({
-	               pathname: MANAGER_URL+'/viewcoursestrainer',
-	               state: { detail: this.state.trainer.trainerId }
+			    this.props.history.push({
+	               pathname: TRAINER_URL+'/'
 	           });
+               alert("Logged in successfully");
         	}
 		} catch(error) {
 			alert("Login failed");

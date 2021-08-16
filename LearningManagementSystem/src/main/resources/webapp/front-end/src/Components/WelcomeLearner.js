@@ -18,6 +18,8 @@ export default class Welcome extends React.Component{
 	componentWillMount(){
          if(localStorage.getItem('user') != 'learner' || localStorage.getItem('loggedin') === false){
 			 alert("User not logged in!");
+			 console.log(localStorage.getItem('user'))
+			 console.log(localStorage.getItem('loggedin'))
 			 return this.props.history.push("/");
 		 }
     }

@@ -8,7 +8,6 @@ import {
     faUndo
   } from "@fortawesome/free-solid-svg-icons";
 import { DATABASE_URL, MANAGER_URL, ADMIN_USERNAME, ADMIN_PASSWORD } from '../constants';
-import { matchPath } from 'react-router-dom';
 
 class AdminDetails extends React.Component{
     constructor(props){
@@ -40,7 +39,7 @@ class AdminDetails extends React.Component{
 			if(response.data != null) {
 				this.setState({
                     name: response.data.name,
-                    phonenumber: response.data.phonenumber,
+                    phonenumber: response.data.phoneNumber,
                     email: response.data.email
 				});	
 			}	

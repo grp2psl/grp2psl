@@ -50,8 +50,8 @@ class LearnerLogin extends React.Component{
               }
             });
             if(response.data != null){
-	        	alert("Logged in successfully");
 	            console.log(response.data);
+	        	alert("Logged in successfully");
                 localStorage.setItem('loggedin', true);
                 localStorage.setItem('userId', response.data.learnerId);
                 localStorage.setItem('user', 'learner');

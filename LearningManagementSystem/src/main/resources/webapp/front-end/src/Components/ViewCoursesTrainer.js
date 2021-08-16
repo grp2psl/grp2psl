@@ -2,14 +2,8 @@ import React from 'react';
 
 import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
 import axios from 'axios';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faEdit,
-    faTrash
-  } from "@fortawesome/free-solid-svg-icons";
-// import  { Redirect } from 'react-router-dom';
 import ReactStars from 'react-stars';
-import {MANAGER_URL, TRAINER_USERNAME, TRAINER_PASSWORD} from '../constants';
+import {TRAINER_URL, TRAINER_USERNAME, TRAINER_PASSWORD} from '../constants';
 
 class ViewCoursesTrainer extends React.Component{
     constructor(props){
@@ -27,8 +21,7 @@ class ViewCoursesTrainer extends React.Component{
 			msg:"Processing.. Please Wait"
 		});
 		try{
-      let id = this.props.location.state.detail;
-      // let id=localStorage.getItem('userId');
+      let id = localStorage.getItem('userId');
 
       let url = "http://localhost:8080/LearningManagementSystem/trainers/"+ id +"/coursestaughtbytrainer";
 			const response = await axios.get(url, {
@@ -91,9 +84,9 @@ class ViewCoursesTrainer extends React.Component{
                                                     variant="outline-primary"
                                                     onClick={()=>{
                                                         this.props.history.push({
-                                                            pathname: MANAGER_URL+"/TrainerFeedbackview",
+                                                            pathname: TRAINER_URL+"/TrainerFeedbackview",
                                                             state: {
-                                                                id: this.props.location.state.detail,
+                                                                id: localStorage.getItem('userId'),
                                                                 tcid: course.tcId
                                                             },
                                                         })
@@ -107,7 +100,7 @@ class ViewCoursesTrainer extends React.Component{
                                                                    variant="outline-primary"
                                                                    onClick={()=>{
                                                                        this.props.history.push({
-                                                                           pathname: MANAGER_URL+"/viewparticularcourse",
+                                                                           pathname: TRAINER_URL+"/viewparticularcourse",
                                                                            state: {
                                                                                courseId: course.courseId,
                                                                            },
@@ -129,15 +122,3 @@ class ViewCoursesTrainer extends React.Component{
 }
 
 export default ViewCoursesTrainer;
-
-// <th>Prerequisite</th>
-// <th>Syllabus</th>
-// <th>Duration</th>
-
-
-
-
-// <td>{course.coursename}</td>
-// <td>{course.prerequisite}</td>
-// <td>{<a target='_blank' href={course.syllabus}>Click here to see syllabus</a>}</td>
-// <td>{course.duration}</td>

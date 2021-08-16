@@ -42,7 +42,7 @@ import AdminDetails from './Components/AdminDetails';
 import TrainerDetails from './Components/TrainerDetails';
 import TrainerFeedbackview from './Components/TrainerFeedbackview';
 import LearnerDetails from './Components/LearnerDetails';
-import {MANAGER_URL, LEARNER_URL} from './constants';
+import {MANAGER_URL, LEARNER_URL, TRAINER_URL} from './constants';
 import { useHistory } from "react-router-dom";
 import NavigationBarLearner from './Components/NavigationBarLearner';
 import CourseOfferingListing from './Components/CourseOfferingListing';
@@ -50,6 +50,9 @@ import Feedback from './Components/Feedback'
 import WelcomeLearner from './Components/WelcomeLearner'
 import Credentials from './Components/Credentials'
 import CourseDetails from './Components/CourseDetails'
+
+import Home from './Components/Home'
+import ViewDetails from './Components/ViewDetails'
 
 function App() {
   const history = useHistory();
@@ -63,9 +66,11 @@ function App() {
           <Col lg={12}>
           <Switch>
               <Route path={"/"} exact component={Login}/>
+              <Route path={"/home"} exact component={Home}/>
               <Route path={"/admin-login"} exact component={AdminLogin}/>
               <Route path={"/trainer-login"} exact component={TrainerLogin}/>
               <Route path={"/learner-login"} exact component={LearnerLogin}/>
+              <Route path={"/view-details"} exact component={ViewDetails}/>
               <Route path={MANAGER_URL+"/"} exact component={Welcome}/>
               <Route path={MANAGER_URL+"/registerTrainer"} exact component={Register}/>
               <Route path={MANAGER_URL+"/showTrainers"} exact component={ShowTrainers}/>
@@ -74,9 +79,9 @@ function App() {
               <Route path={MANAGER_URL+"/TeacherCourseMappingRegister"} exact component={TeacherCourseMappingRegister}/>
               <Route path={MANAGER_URL+"/ShowCourseAttended"} exact component={CourseAttended}/>
               <Route path={MANAGER_URL+"/registerLearner"} exact component={RegisterLearner}/>
-              <Route path={MANAGER_URL+"/viewcoursestrainer"} exact component={ViewCoursesTrainer}/>
-              <Route path={MANAGER_URL+"/viewparticularcourse"} exact component={ViewParticularCourse}/>
-              <Route path={MANAGER_URL+"/TrainerFeedbackview"} exact component={TrainerFeedbackview}/>
+              <Route path={TRAINER_URL+"/"} exact component={ViewCoursesTrainer}/>
+              <Route path={TRAINER_URL+"/viewparticularcourse"} exact component={ViewParticularCourse}/>
+              <Route path={TRAINER_URL+"/TrainerFeedbackview"} exact component={TrainerFeedbackview}/>
               <Route path={MANAGER_URL+"/showLearners"} exact component={ShowLearners}/>
               <Route path={MANAGER_URL+"/registerTrainers"} exact component={RegisterTrainers}/>
               <Route path={MANAGER_URL+"/registerMultipleTrainers"} exact component={RegisterMultipleTrainers}/>
@@ -97,9 +102,9 @@ function App() {
               <Route path={MANAGER_URL+"/update-score-multiple"} exact component={UpdateScoreMultiple}/>
               <Route path={MANAGER_URL+"/viewCourseOfferings"} exact component={ViewCourseOfferings}/>
               <Route path={MANAGER_URL+"/viewScoreAndStatus"} exact component={ScoreAndStatus}/>
-              <Route path={"/view-details-manager"} exact component={AdminDetails}/>
-              <Route path={"/view-details-trainer"} exact component={TrainerDetails}/>
-              <Route path={"/view-details-learner"} exact component={LearnerDetails}/>
+              <Route path={MANAGER_URL+"/view-details-manager"} exact component={AdminDetails}/>
+              <Route path={TRAINER_URL+"/view-details-trainer"} exact component={TrainerDetails}/>
+              <Route path={LEARNER_URL+"/view-details-learner"} exact component={LearnerDetails}/>
               <Route path = {LEARNER_URL+"/CourseOfferingListing"} component = {CourseOfferingListing}/>
     		  <Route path = {LEARNER_URL+"/Feedback"} component = {Feedback}/>
     		  <Route path = {LEARNER_URL+"/Credentials"} exact component = {Credentials}/>

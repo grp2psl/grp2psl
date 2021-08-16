@@ -50,12 +50,15 @@ class AdminLogin extends React.Component{
                 }
               });
 			if(response.data != null){
-	        	alert("Logged in successfully");
 	            console.log(response.data);
                 localStorage.setItem('loggedin', true);
                 localStorage.setItem('userId', response.data.managerId);
                 localStorage.setItem('user', 'manager');
                 this.props.history.push(MANAGER_URL+"/");
+	        	alert("Logged in successfully");
+                console.log(localStorage.getItem('user'))
+                console.log(localStorage.getItem('userId'))
+                console.log(localStorage.getItem('loggedin'))
         	}	
 		} catch(error) {
 			alert("Login failed");

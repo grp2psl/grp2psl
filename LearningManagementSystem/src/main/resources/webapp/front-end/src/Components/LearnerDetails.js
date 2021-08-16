@@ -8,7 +8,6 @@ import {
     faUndo
   } from "@fortawesome/free-solid-svg-icons";
 import { DATABASE_URL, LEARNER_URL, LEARNER_USERNAME, LEARNER_PASSWORD } from '../constants';
-import { matchPath } from 'react-router-dom';
 
 class LearnerDetails extends React.Component{
     constructor(props){
@@ -42,7 +41,7 @@ class LearnerDetails extends React.Component{
 				this.setState({
                     name: response.data.name,
                     department: response.data.department,
-                    phonenumber: response.data.phonenumber,
+                    phonenumber: response.data.phoneNumber,
                     email: response.data.email
 				});	
 			}	

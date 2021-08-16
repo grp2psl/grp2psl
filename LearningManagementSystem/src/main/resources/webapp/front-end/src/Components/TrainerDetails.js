@@ -42,7 +42,7 @@ class TrainerDetails extends React.Component{
 				this.setState({
                     name: response.data.name,
                     department: response.data.department,
-                    phonenumber: response.data.phonenumber,
+                    phonenumber: response.data.phoneNumber,
                     email: response.data.email
 				});	
 			}	
@@ -59,6 +59,7 @@ class TrainerDetails extends React.Component{
 	componentWillMount(){
         if(localStorage.getItem('user') != 'trainer' || localStorage.getItem('loggedin') === false){
             alert("User not logged in!");
+            console.log(localStorage.getItem('user'))
             return this.props.history.push("/");
         }
    }
