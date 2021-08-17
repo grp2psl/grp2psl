@@ -275,4 +275,16 @@ public class ManagerControllerTest {
 		this.mvc.perform(get("/managers/findLearnersByTcId/"+1))
 		.andExpect(status().isOk());
 	}
+
+	/*
+	 * TEST MANAGER LOGIN
+	 */
+	@Test
+	public void loginTest() throws Exception {
+		this.mvc.perform(get("/managers/findLearnersByTcId/"+1)
+				.param("email", "admin@email.com")
+				.param("password", "admin@123")
+				.contentType(MediaType.APPLICATION_JSON))
+		.andExpect(status().isOk());
+	}
 }

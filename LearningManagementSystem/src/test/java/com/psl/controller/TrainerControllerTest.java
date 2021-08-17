@@ -138,5 +138,16 @@ public class TrainerControllerTest {
 				.andExpect(status().isOk());
 	}
 
+	/*
+	 * TEST TRAINER LOGIN
+	 */
+	@Test
+	public void loginTest() throws Exception {
+		this.mvc.perform(get("/trainers/findLearnersByTcId/"+1)
+				.param("email", "trainer@email.com")
+				.param("password", "trainer@123")
+				.contentType(MediaType.APPLICATION_JSON))
+		.andExpect(status().isOk());
+	}
 
 }
