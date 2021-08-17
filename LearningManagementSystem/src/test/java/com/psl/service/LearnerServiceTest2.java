@@ -123,8 +123,8 @@ class LearnerServiceTest2 {
 		//when(dao2.findByTcIdAndLearnerId(c1.getTcId(), c1.getLearnerId())).thenReturn(c1);
 		when(dao2.findById(c1.getTcId())).thenReturn(Optional.of(c1));
 		when(dao2.save(c1)).thenReturn(c1);
-		assertEquals(service2.AddFeedbackCourseOfferingId(1, feedback, rating).getFeedback(), feedback);
-		assertEquals(service2.AddFeedbackCourseOfferingId(1, feedback, rating).getRatings(), rating);		
+		assertEquals(service2.addFeedbackCourseOfferingId(1, feedback, rating).getFeedback(), feedback);
+		assertEquals(service2.addFeedbackCourseOfferingId(1, feedback, rating).getRatings(), rating);		
 	}
 	
 	//Testing change credentials operation
