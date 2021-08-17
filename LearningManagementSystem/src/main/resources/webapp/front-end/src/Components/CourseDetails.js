@@ -4,7 +4,7 @@ import axios from 'axios';
 import {BrowserRouter as useParams, Link} from 'react-router-dom';
 import MyToast from './MyToast';
 import ReactStars from 'react-stars';
-import {LEARNER_USERNAME, LEARNER_PASSWORD, LEARNER_URL } from '../constants';
+import { LEARNER_URL } from '../constants';
 
 export default class CourseDetails extends Component{
 	
@@ -15,10 +15,10 @@ export default class CourseDetails extends Component{
 	}
 	
 	componentDidMount(){
-		axios.get("http://localhost:8080/LearningManagementSystem/GetCourseDetails/" + this.props.location.state.tcId, {
+		axios.get("http://localhost:8080/LearningManagementSystem/learners/GetCourseDetails/" + this.props.location.state.tcId, {
 			auth: {
-              username: LEARNER_USERNAME,
-              password: LEARNER_PASSWORD
+                username: localStorage.getItem("username"),
+                password: localStorage.getItem("password")
             }}
 		).then(
 			response => response.data

@@ -8,7 +8,6 @@ import {
   faTrash
 } from "@fortawesome/free-solid-svg-icons";
 // import  { Redirect } from 'react-router-dom';
-import {TRAINER_USERNAME, TRAINER_PASSWORD} from '../constants';
 
 class TrainerFeedbackview extends React.Component{
   constructor(props){
@@ -30,8 +29,8 @@ class TrainerFeedbackview extends React.Component{
       let fburl = "http://localhost:8080/LearningManagementSystem/trainers/" + id + "/" +tcid;
       let fbres = await axios.get(fburl, {
         auth: {
-          username: TRAINER_USERNAME,
-          password: TRAINER_PASSWORD
+          username: localStorage.getItem("username"),
+          password: localStorage.getItem("password")
         }
       });
       // data[i]['feedback'] = fbres.data;

@@ -7,7 +7,7 @@ import {
     faSave,
     faUndo
   } from "@fortawesome/free-solid-svg-icons";
-import { COURSE_URL, DATABASE_URL, ADMIN_USERNAME, ADMIN_PASSWORD } from '../constants';
+import { COURSE_URL, DATABASE_URL, MANAGER_URL } from '../constants';
 
 class EditCourseDetails extends React.Component{
     constructor(props){
@@ -49,10 +49,10 @@ class EditCourseDetails extends React.Component{
         }
      
             try{
-                const response = await axios.put(DATABASE_URL+COURSE_URL+"/update", course, {
+                const response = await axios.put(DATABASE_URL+MANAGER_URL+COURSE_URL+"/update", course, {
                     auth: {
-                      username: ADMIN_USERNAME,
-                      password: ADMIN_PASSWORD
+                        username: localStorage.getItem("username"),
+                        password: localStorage.getItem("password")
                     }
                   });
                 if(response.data != null){

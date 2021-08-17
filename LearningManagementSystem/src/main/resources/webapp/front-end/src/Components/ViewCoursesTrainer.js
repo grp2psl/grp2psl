@@ -3,7 +3,7 @@ import React from 'react';
 import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
 import axios from 'axios';
 import ReactStars from 'react-stars';
-import {TRAINER_URL, TRAINER_USERNAME, TRAINER_PASSWORD} from '../constants';
+import {TRAINER_URL} from '../constants';
 
 class ViewCoursesTrainer extends React.Component{
     constructor(props){
@@ -26,8 +26,8 @@ class ViewCoursesTrainer extends React.Component{
       let url = "http://localhost:8080/LearningManagementSystem/trainers/"+ id +"/coursestaughtbytrainer";
 			const response = await axios.get(url, {
           auth: {
-          username: TRAINER_USERNAME,
-          password: TRAINER_PASSWORD
+            username: localStorage.getItem("username"),
+            password: localStorage.getItem("password")
         }
       });
 			if(response.data != null) {

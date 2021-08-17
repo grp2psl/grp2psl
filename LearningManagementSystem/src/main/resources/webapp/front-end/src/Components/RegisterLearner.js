@@ -7,7 +7,7 @@ import {
     faSave,
     faUndo
   } from "@fortawesome/free-solid-svg-icons";
-import { DATABASE_URL, LEARNER_URL, ADMIN_USERNAME, ADMIN_PASSWORD } from '../constants';  
+import { DATABASE_URL, LEARNER_URL, MANAGER_URL } from '../constants';  
 
 class RegisterLearner extends React.Component{
     constructor(props){
@@ -56,10 +56,10 @@ class RegisterLearner extends React.Component{
                 msg:"Processing..\nPlease Wait"
             });
             try{
-                const response = await axios.post(DATABASE_URL+LEARNER_URL+"/register", learner, {
+                const response = await axios.post(DATABASE_URL+MANAGER_URL+LEARNER_URL+"/register", learner, {
                     auth: {
-                    username: ADMIN_USERNAME,
-                    password: ADMIN_PASSWORD
+                        username: localStorage.getItem("username"),
+                        password: localStorage.getItem("password")
                   }
                 });
                 if(response.data != null){

@@ -7,7 +7,7 @@ import {
     faSave,
     faUndo
   } from "@fortawesome/free-solid-svg-icons";
-import { DATABASE_URL, TRAINER_URL, TRAINER_USERNAME, TRAINER_PASSWORD } from '../constants';
+import { DATABASE_URL, TRAINER_URL } from '../constants';
 import { matchPath } from 'react-router-dom';
 
 class TrainerDetails extends React.Component{
@@ -34,8 +34,8 @@ class TrainerDetails extends React.Component{
 		try{
 			const response = await axios.get(DATABASE_URL+TRAINER_URL+"/"+this.state.id, {
                 auth: {
-                username: TRAINER_USERNAME,
-                password: TRAINER_PASSWORD
+                    username: localStorage.getItem("username"),
+                    password: localStorage.getItem("password")
               }
             });
 			if(response.data != null) {
@@ -92,8 +92,8 @@ class TrainerDetails extends React.Component{
             try{
                 const response = await axios.put(DATABASE_URL+TRAINER_URL+"/update", trainer, {
                     auth: {
-                    username: TRAINER_USERNAME,
-                    password: TRAINER_PASSWORD
+                        username: localStorage.getItem("username"),
+                        password: localStorage.getItem("password")
                   }
                 });
                 if(response.data != null){

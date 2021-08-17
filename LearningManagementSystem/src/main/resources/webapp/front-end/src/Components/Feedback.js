@@ -2,9 +2,6 @@ import React, {Component} from 'react';
 import {Card, Form, Button} from 'react-bootstrap';
 import MyToast from './MyToast';
 import axios from 'axios';
-import {LEARNER_USERNAME, LEARNER_PASSWORD } from '../constants';
-
-
 
 
 export default class Feedback extends Component{
@@ -24,16 +21,22 @@ export default class Feedback extends Component{
 		
 		try{
 			if (re.test(this.state.ratings)) {
-				const response = await axios.put("http://localhost:8080/LearningManagementSystem/feedback/" + this.props.location.state.id, {feedback:this.state.feedback, ratings:this.state.ratings}, {auth: {
-                  username: LEARNER_USERNAME,
-                  password: LEARNER_PASSWORD
+				const response = await axios.put("http://localhost:8080/LearningManagementSystem/learners/feedback/" + this.props.location.state.id, {feedback:this.state.feedback, ratings:this.state.ratings}, {auth: {
+                  	username: localStorage.getItem("username"),
+                	password: localStorage.getItem("password")
                 }});
+				if(response != null){
+					alert("Feedback submitted successfully");
+				}
 			}
 			else {
-				const response = await axios.put("http://localhost:8080/LearningManagementSystem/feedback/" + this.props.location.state.id, {feedback:this.state.feedback, ratings:0}, {auth: {
-                  username: LEARNER_USERNAME,
-                  password: LEARNER_PASSWORD
+				const response = await axios.put("http://localhost:8080/LearningManagementSystem/learners/feedback/" + this.props.location.state.id, {feedback:this.state.feedback, ratings:0}, {auth: {
+                  	username: localStorage.getItem("username"),
+                	password: localStorage.getItem("password")
                 }});
+				if(response != null){
+					alert("Feedback submitted successfully");
+				}
 			}
 		} catch(error) {
 			alert(error.response.data);

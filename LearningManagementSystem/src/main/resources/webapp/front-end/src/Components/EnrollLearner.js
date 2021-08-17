@@ -7,7 +7,7 @@ import {
     faSave,
     faUndo
   } from "@fortawesome/free-solid-svg-icons";
-import { DATABASE_URL, LEARNER_URL, MANAGER_URL, TCMAPPING_URL, ADMIN_USERNAME, ADMIN_PASSWORD } from '../constants';
+import { DATABASE_URL, LEARNER_URL, MANAGER_URL, TCMAPPING_URL } from '../constants';
 
 class EnrollLearner extends React.Component{
     constructor(props){
@@ -38,17 +38,17 @@ class EnrollLearner extends React.Component{
 			msg:"Processing.. Please Wait"
 		});
 		try {
-			let learnersList = await axios.get(DATABASE_URL+LEARNER_URL+"/", {
+			let learnersList = await axios.get(DATABASE_URL+MANAGER_URL+LEARNER_URL+"/", {
                 auth: {
-                  username: ADMIN_USERNAME,
-                  password: ADMIN_PASSWORD
+                    username: localStorage.getItem("username"),
+                    password: localStorage.getItem("password")
                 }
               })
             this.state.learners = learnersList.data;
-            let tcMappings = await axios.get(DATABASE_URL+TCMAPPING_URL+"/trainer-course-names", {
+            let tcMappings = await axios.get(DATABASE_URL+MANAGER_URL+TCMAPPING_URL+"/trainer-course-names", {
                 auth: {
-                  username: ADMIN_USERNAME,
-                  password: ADMIN_PASSWORD
+                    username: localStorage.getItem("username"),
+                    password: localStorage.getItem("password")
                 }
               })
 			this.state.tcMappings = tcMappings.data;
@@ -84,8 +84,8 @@ class EnrollLearner extends React.Component{
 		try{
 			const response = await axios.post(DATABASE_URL+MANAGER_URL+"/enroll-learner", courseOffering, {
                 auth: {
-                  username: ADMIN_USERNAME,
-                  password: ADMIN_PASSWORD
+                    username: localStorage.getItem("username"),
+                    password: localStorage.getItem("password")
                 }
               });
 			if(response.data != null){

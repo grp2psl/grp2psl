@@ -7,7 +7,7 @@ import {
     faDownload,
     faUpload
   } from "@fortawesome/free-solid-svg-icons";
-import { DATABASE_URL, MANAGER_URL, ADMIN_USERNAME, ADMIN_PASSWORD } from '../constants';
+import { DATABASE_URL, MANAGER_URL } from '../constants';
 
 const cardStyle={
 	height: '250px',
@@ -46,8 +46,8 @@ class EnrollMultipleLearners extends React.Component{
 		try{
 			const response = await axios.get(DATABASE_URL+MANAGER_URL+"/generate-excel-enrolment", {
                 auth: {
-                  username: ADMIN_USERNAME,
-                  password: ADMIN_PASSWORD
+                  username: localStorage.getItem("username"),
+                  password: localStorage.getItem("password")
                 }
               });
 			if(response.data != null) {
@@ -88,8 +88,8 @@ class EnrollMultipleLearners extends React.Component{
             try{
                 const response = await axios.post(DATABASE_URL+MANAGER_URL+"/enroll-learners", formData, {
                     auth: {
-                    username: ADMIN_USERNAME,
-                    password: ADMIN_PASSWORD
+                      username: localStorage.getItem("username"),
+                      password: localStorage.getItem("password")
                   },
                   'content-type': 'multipart/form-data'
                 });

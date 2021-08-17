@@ -8,7 +8,7 @@ import {
     faUndo,
     faEye
   } from "@fortawesome/free-solid-svg-icons";
-import {DATABASE_URL, MANAGER_URL, TCMAPPING_URL, ADMIN_USERNAME, ADMIN_PASSWORD} from '../constants';
+import {DATABASE_URL, MANAGER_URL, TCMAPPING_URL} from '../constants';
 
 const buttonStyle={
     position: 'absolute',
@@ -44,10 +44,10 @@ class UpdateScoreIndividual extends React.Component{
 			msg:"Processing.. Please Wait"
 		});
 		try {
-            let tcMappings = await axios.get(DATABASE_URL+TCMAPPING_URL+"/trainer-course-names", {
+            let tcMappings = await axios.get(DATABASE_URL+MANAGER_URL+TCMAPPING_URL+"/trainer-course-names", {
                 auth: {
-                username: ADMIN_USERNAME,
-                password: ADMIN_PASSWORD
+                    username: localStorage.getItem("username"),
+                    password: localStorage.getItem("password")
               }
             })
 			this.state.tcMappings = tcMappings.data;
@@ -66,8 +66,8 @@ class UpdateScoreIndividual extends React.Component{
 		try {
 			let learnersList = await axios.get(DATABASE_URL+MANAGER_URL+"/findLearnersByTcId/"+id, {
                 auth: {
-                username: ADMIN_USERNAME,
-                password: ADMIN_PASSWORD
+                    username: localStorage.getItem("username"),
+                    password: localStorage.getItem("password")
               }
             })
 			this.state.learners = learnersList.data;
@@ -99,8 +99,8 @@ class UpdateScoreIndividual extends React.Component{
 		try{
             const response = await axios.put(DATABASE_URL+MANAGER_URL+"/update-test-score?tcId="+this.state.tcid+"&learnerId="+this.state.learnerid+"&percentage="+this.state.percentage, {}, {
                 auth: {
-                username: ADMIN_USERNAME,
-                password: ADMIN_PASSWORD
+                    username: localStorage.getItem("username"),
+                    password: localStorage.getItem("password")
               }
             });
 			

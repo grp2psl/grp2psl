@@ -3,7 +3,7 @@ import React from 'react';
 import {Card, Table, Row, Col} from 'react-bootstrap';
 import axios from 'axios';
 import ReactStars from 'react-stars';
-import {MANAGER_URL, DATABASE_URL, ADMIN_USERNAME, ADMIN_PASSWORD} from '../constants';
+import {MANAGER_URL, DATABASE_URL} from '../constants';
 
 class ViewFeedback extends React.Component{
 	
@@ -38,8 +38,8 @@ class ViewFeedback extends React.Component{
 		try{
 			const response = await axios.get(DATABASE_URL+MANAGER_URL+"/trainer/"+trainerId+"/course/"+courseId, {
                 auth: {
-                username: ADMIN_USERNAME,
-                password: ADMIN_PASSWORD
+                    username: localStorage.getItem("username"),
+                    password: localStorage.getItem("password")
               }
             });
 			if(response.data != null) {

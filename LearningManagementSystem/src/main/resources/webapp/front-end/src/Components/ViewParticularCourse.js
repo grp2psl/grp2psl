@@ -7,8 +7,6 @@ import {
     faEdit,
     faTrash
   } from "@fortawesome/free-solid-svg-icons";
-// import  { Redirect } from 'react-router-dom';
-import {TRAINER_USERNAME, TRAINER_PASSWORD} from '../constants';
 
 class ViewParticularCourse extends React.Component{
     constructor(props){
@@ -28,10 +26,11 @@ class ViewParticularCourse extends React.Component{
       // let id=localStorage.getItem('userId');
       let courseId = this.props.location.state.courseId;
       let url = "http://localhost:8080/LearningManagementSystem/trainers/course/"+ courseId;
+      console.log(url)
 			const response = await axios.get(url, {
           auth: {
-          username: TRAINER_USERNAME,
-          password: TRAINER_PASSWORD
+            username: localStorage.getItem("username"),
+            password: localStorage.getItem("password")
         }
       });
 			if(response.data != null) {
@@ -41,6 +40,8 @@ class ViewParticularCourse extends React.Component{
 			}
 		} catch(error) {
 			alert(error);
+            console.log(localStorage.getItem("username"))
+            console.log(localStorage.getItem("password"))
 		}
         this.setState({
 			msg: ""

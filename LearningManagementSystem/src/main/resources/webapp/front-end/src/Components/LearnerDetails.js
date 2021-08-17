@@ -7,7 +7,7 @@ import {
     faSave,
     faUndo
   } from "@fortawesome/free-solid-svg-icons";
-import { DATABASE_URL, LEARNER_URL, LEARNER_USERNAME, LEARNER_PASSWORD } from '../constants';
+import { DATABASE_URL, LEARNER_URL } from '../constants';
 
 class LearnerDetails extends React.Component{
     constructor(props){
@@ -33,8 +33,8 @@ class LearnerDetails extends React.Component{
 		try{
 			const response = await axios.get(DATABASE_URL+LEARNER_URL+"/"+this.state.id, {
                 auth: {
-                username: LEARNER_USERNAME,
-                password: LEARNER_PASSWORD
+                    username: localStorage.getItem("username"),
+                    password: localStorage.getItem("password")
               }
             });
 			if(response.data != null) {
@@ -90,8 +90,8 @@ class LearnerDetails extends React.Component{
             try{
                 const response = await axios.put(DATABASE_URL+LEARNER_URL+"/update", learner, {
                     auth: {
-                    username: LEARNER_USERNAME,
-                    password: LEARNER_PASSWORD
+                        username: localStorage.getItem("username"),
+                        password: localStorage.getItem("password")
                   }
                 });
                 if(response.data != null){

@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
 import axios from 'axios';
-import {DATABASE_URL, MANAGER_URL, ADMIN_USERNAME, ADMIN_PASSWORD } from '../constants';
+import {DATABASE_URL, MANAGER_URL } from '../constants';
 
 class CourseAttended extends React.Component{
 	
@@ -31,8 +31,8 @@ class CourseAttended extends React.Component{
 		try{
 			const response = await axios.get(DATABASE_URL+MANAGER_URL+"/course-attended/"+id, {
                 auth: {
-                  username: ADMIN_USERNAME,
-                  password: ADMIN_PASSWORD
+                    username: localStorage.getItem("username"),
+                    password: localStorage.getItem("password")
                 }
               });
 			if(response.data != null) {

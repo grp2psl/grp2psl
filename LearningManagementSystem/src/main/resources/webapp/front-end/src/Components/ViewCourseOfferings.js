@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faTrash
   } from "@fortawesome/free-solid-svg-icons";
-import {DATABASE_URL,MANAGER_URL, ADMIN_USERNAME, ADMIN_PASSWORD} from '../constants'
+import {DATABASE_URL,MANAGER_URL} from '../constants'
 
 class ViewCourseOfferings extends React.Component{
 	
@@ -53,8 +53,8 @@ class ViewCourseOfferings extends React.Component{
 		try{
 			const response = await axios.get(DATABASE_URL+MANAGER_URL+"/viewCourseOfferingsDetails", {
                 auth: {
-                username: ADMIN_USERNAME,
-                password: ADMIN_PASSWORD
+                    username: localStorage.getItem("username"),
+                    password: localStorage.getItem("password")
               }
             });
 			if(response.data != null) {
@@ -78,8 +78,8 @@ class ViewCourseOfferings extends React.Component{
 		try{
             const response = await axios.delete(DATABASE_URL+MANAGER_URL+"/course-offering/"+id, {
                 auth: {
-                username: ADMIN_USERNAME,
-                password: ADMIN_PASSWORD
+                    username: localStorage.getItem("username"),
+                    password: localStorage.getItem("password")
               }
             });
             console.log(response);

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Card, Form, Button} from 'react-bootstrap';
 import MyToast from './MyToast';
 import axios from 'axios';
-import {LEARNER_USERNAME, LEARNER_PASSWORD } from '../constants';
 
 export default class Credentials extends Component{
 	constructor(props){
@@ -19,9 +18,13 @@ export default class Credentials extends Component{
 		try{ 
 			const response = await axios.put("http://localhost:8080/LearningManagementSystem/learners/updatelearner/" + this.props.location.state.learnerid, {password:this.state.password}, 
 			{auth: {
-                  username: LEARNER_USERNAME,
-                  password: LEARNER_PASSWORD
+                username: localStorage.getItem("username"),
+                password: localStorage.getItem("password")
                 }});
+				if(response != null){
+					alert("Password updated successfully");
+					localStorage.setItem("password", this.state.password);
+				}
 		} catch(error) {
 			alert(error.response.data);
 		}

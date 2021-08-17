@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faSave
   } from "@fortawesome/free-solid-svg-icons";
-import {COURSE_URL, DATABASE_URL,TCMAPPING_URL,TRAINER_URL, ADMIN_USERNAME, ADMIN_PASSWORD} from '../constants';
+import {COURSE_URL, DATABASE_URL,TCMAPPING_URL,TRAINER_URL, MANAGER_URL} from '../constants';
 
 export default class TeacherCourseMappingRegister extends Component {
 
@@ -32,10 +32,10 @@ export default class TeacherCourseMappingRegister extends Component {
 		}
   }
  async getOptions() {
-    const trainerResponse = await axios.get(DATABASE_URL+TRAINER_URL+"/", {
+    const trainerResponse = await axios.get(DATABASE_URL+MANAGER_URL+TRAINER_URL+"/", {
       auth: {
-      username: ADMIN_USERNAME,
-      password: ADMIN_PASSWORD
+        username: localStorage.getItem("username"),
+        password: localStorage.getItem("password")
     }
   })
     const trainerData = trainerResponse.data
@@ -48,10 +48,10 @@ export default class TeacherCourseMappingRegister extends Component {
 
     this.setState({trainerList: tranierOptions})
     
-    const courseResponse = await axios.get(DATABASE_URL+COURSE_URL+"/allcourses", {
+    const courseResponse = await axios.get(DATABASE_URL+MANAGER_URL+COURSE_URL+"/allcourses", {
       auth: {
-      username: ADMIN_USERNAME,
-      password: ADMIN_PASSWORD
+        username: localStorage.getItem("username"),
+        password: localStorage.getItem("password")
     }
   })
     const courseData = courseResponse.data
@@ -86,10 +86,10 @@ export default class TeacherCourseMappingRegister extends Component {
         console.log(trainerCourseMapping)
         console.log(typeof(this.state.trainerId))
 	try{
-			const response = await axios.post(DATABASE_URL+TCMAPPING_URL+"/register", trainerCourseMapping, {
+			const response = await axios.post(DATABASE_URL+MANAGER_URL+TCMAPPING_URL+"/register", trainerCourseMapping, {
         auth: {
-        username: ADMIN_USERNAME,
-        password: ADMIN_PASSWORD
+          username: localStorage.getItem("username"),
+          password: localStorage.getItem("password")
       }
     });
 			if(response.data != null){

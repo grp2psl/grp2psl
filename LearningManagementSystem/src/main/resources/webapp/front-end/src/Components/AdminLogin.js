@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Container, Row, Col, Card, Button, Form} from 'react-bootstrap';
 import axios from 'axios';
-import {DATABASE_URL, MANAGER_URL, ADMIN_USERNAME, ADMIN_PASSWORD} from '../constants';
+import {DATABASE_URL, MANAGER_URL} from '../constants';
 
 const cardStyle={
 	height: '300px',
@@ -45,8 +45,8 @@ class AdminLogin extends React.Component{
 		try{
 			const response = await axios.get(DATABASE_URL+"/managers/login?email="+this.state.email+"&password="+this.state.password, {
                 auth: {
-                  username: ADMIN_USERNAME,
-                  password: ADMIN_PASSWORD
+                  username: this.state.email,
+                  password: this.state.password
                 }
               });
 			if(response.data != null){
@@ -54,6 +54,8 @@ class AdminLogin extends React.Component{
                 localStorage.setItem('loggedin', true);
                 localStorage.setItem('userId', response.data.managerId);
                 localStorage.setItem('user', 'manager');
+                localStorage.setItem('username', this.state.email);
+                localStorage.setItem('password', this.state.password);
                 this.props.history.push(MANAGER_URL+"/");
 	        	alert("Logged in successfully");
                 console.log(localStorage.getItem('user'))
