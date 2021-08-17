@@ -46,4 +46,5 @@ public interface ITrainerDAO extends CrudRepository<Trainer, Integer>{
 			@Param("phoneNumber") String phoneNumber, @Param("id") int id);
 	
 	Trainer findByEmailAndPassword(String email, String password);
+	Trainer findByEmail(String email);
 }
