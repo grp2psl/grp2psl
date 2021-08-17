@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Card, Form, Button} from 'react-bootstrap';
-import MyToast from './MyToast';
 import axios from 'axios';
 
 export default class Credentials extends Component{

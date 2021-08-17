@@ -16,15 +16,15 @@ const buttonStyle={
 
 class RegisterLearners extends React.Component{
 	registerLearner = () => {
-		this.props.history.push(MANAGER_URL+"/registerLearner");
+		this.props.history.push(MANAGER_URL+"/register-learner");
 	}
 		
 	registerMultipleLearners = () => {
-		this.props.history.push(MANAGER_URL+"/registerMultipleLearners");
+		this.props.history.push(MANAGER_URL+"/register-multiple-learners");
 	}
 	
 	componentWillMount(){
-		if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+		if(localStorage.getItem('user') !== 'manager' || localStorage.getItem('loggedin') === false){
 			alert("User not logged in!");
 			return this.props.history.push("/");
 		}

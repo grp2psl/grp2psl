@@ -33,7 +33,7 @@ class RegisterMultipleLearners extends React.Component{
     }
     
 	componentWillMount(){
-        if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+        if(localStorage.getItem('user') !== 'manager' || localStorage.getItem('loggedin') === false){
             alert("User not logged in!");
             return this.props.history.push("/");
         }
@@ -84,7 +84,7 @@ class RegisterMultipleLearners extends React.Component{
         
             console.log(this.state.file);
             
-            const basicAuth = 'Basic ' + btoa(localStorage.getItem("username") + ':' + localStorage.getItem("password"));
+            //const basicAuth = 'Basic ' + btoa(localStorage.getItem("username") + ':' + localStorage.getItem("password"));
 
             try{
                 const response = await axios.post(DATABASE_URL+MANAGER_URL+LEARNER_URL+"/register-multiple", formData, {

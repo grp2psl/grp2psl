@@ -43,8 +43,6 @@ import TrainerDetails from './Components/TrainerDetails';
 import TrainerFeedbackview from './Components/TrainerFeedbackview';
 import LearnerDetails from './Components/LearnerDetails';
 import {MANAGER_URL, LEARNER_URL, TRAINER_URL} from './constants';
-import { useHistory } from "react-router-dom";
-import NavigationBarLearner from './Components/NavigationBarLearner';
 import CourseOfferingListing from './Components/CourseOfferingListing';
 import Feedback from './Components/Feedback'
 import WelcomeLearner from './Components/WelcomeLearner'
@@ -55,11 +53,10 @@ import Home from './Components/Home'
 import ViewDetails from './Components/ViewDetails'
 
 function App() {
-  const history = useHistory();
 
   return (
     <div className="App">
-    <Router basename="/LearningManager">
+    <Router basename="/learning-manager">
       <NavigationBar/>
       <Container>
         <Row>
@@ -72,44 +69,44 @@ function App() {
               <Route path={"/learner-login"} exact component={LearnerLogin}/>
               <Route path={"/view-details"} exact component={ViewDetails}/>
               <Route path={MANAGER_URL+"/"} exact component={Welcome}/>
-              <Route path={MANAGER_URL+"/registerTrainer"} exact component={Register}/>
-              <Route path={MANAGER_URL+"/showTrainers"} exact component={ShowTrainers}/>
-              <Route path={MANAGER_URL+"/viewCourse"} exact component={ViewCourses}/>
-              <Route path={MANAGER_URL+"/registerCourse"} exact component={CourseRegister}/>
-              <Route path={MANAGER_URL+"/TeacherCourseMappingRegister"} exact component={TeacherCourseMappingRegister}/>
-              <Route path={MANAGER_URL+"/ShowCourseAttended"} exact component={CourseAttended}/>
-              <Route path={MANAGER_URL+"/registerLearner"} exact component={RegisterLearner}/>
-              <Route path={TRAINER_URL+"/"} exact component={ViewCoursesTrainer}/>
-              <Route path={TRAINER_URL+"/viewparticularcourse"} exact component={ViewParticularCourse}/>
-              <Route path={TRAINER_URL+"/TrainerFeedbackview"} exact component={TrainerFeedbackview}/>
-              <Route path={MANAGER_URL+"/showLearners"} exact component={ShowLearners}/>
-              <Route path={MANAGER_URL+"/registerTrainers"} exact component={RegisterTrainers}/>
-              <Route path={MANAGER_URL+"/registerMultipleTrainers"} exact component={RegisterMultipleTrainers}/>
-              <Route path={MANAGER_URL+"/registerLearners"} exact component={RegisterLearners}/>
-              <Route path={MANAGER_URL+"/registerMultipleLearners"} exact component={RegisterMultipleLearners}/>
-              <Route path={MANAGER_URL+"/editTrainerDetails"} exact component={EditTrainerDetails}/>
-              <Route path={MANAGER_URL+"/editLearnerDetails"} exact component={EditLearnerDetails}/>
-              <Route path={MANAGER_URL+"/editCourseDetails"} exact component={EditCourseDetails}/>
-              <Route path={MANAGER_URL+"/enrollLearners"} exact component={EnrollLearners}/>
-              <Route path={MANAGER_URL+"/enrollLearner"} exact component={EnrollLearner}/>
-              <Route path={MANAGER_URL+"/enrollMultipleLearners"} exact component={EnrollMultipleLearners}/>
-              <Route path={MANAGER_URL+"/viewCoursesOffered"} exact component={CoursesOffered} />
-              <Route path={MANAGER_URL+"/viewFeedback"} exact component={ViewFeedback} />
-              <Route path={MANAGER_URL+"/MultipleTeacherCourseMappingRegister"} exact component={MultipleTeacherCourseMappingRegister}/>
-              <Route path={MANAGER_URL+"/TeacherCourseMappingsRegister"} exact component={TeacherCourseMappingsRegister}/>
+              <Route path={MANAGER_URL+"/register-trainer"} exact component={Register}/>
+              <Route path={MANAGER_URL+"/trainers"} exact component={ShowTrainers}/>
+              <Route path={MANAGER_URL+"/courses"} exact component={ViewCourses}/>
+              <Route path={MANAGER_URL+"/register-course"} exact component={CourseRegister}/>
+              <Route path={MANAGER_URL+"/register-teacher-course-mapping"} exact component={TeacherCourseMappingRegister}/>
+              <Route path={MANAGER_URL+"/attended-courses"} exact component={CourseAttended}/>
+              <Route path={MANAGER_URL+"/register-learner"} exact component={RegisterLearner}/>
+              <Route path={MANAGER_URL+"/learners"} exact component={ShowLearners}/>
+              <Route path={MANAGER_URL+"/register-trainers"} exact component={RegisterTrainers}/>
+              <Route path={MANAGER_URL+"/register-multiple-trainers"} exact component={RegisterMultipleTrainers}/>
+              <Route path={MANAGER_URL+"/register-learners"} exact component={RegisterLearners}/>
+              <Route path={MANAGER_URL+"/register-multiple-learners"} exact component={RegisterMultipleLearners}/>
+              <Route path={MANAGER_URL+"/edit-trainer-details"} exact component={EditTrainerDetails}/>
+              <Route path={MANAGER_URL+"/edit-learner-details"} exact component={EditLearnerDetails}/>
+              <Route path={MANAGER_URL+"/edit-course-details"} exact component={EditCourseDetails}/>
+              <Route path={MANAGER_URL+"/enroll-learners"} exact component={EnrollLearners}/>
+              <Route path={MANAGER_URL+"/enroll-learner"} exact component={EnrollLearner}/>
+              <Route path={MANAGER_URL+"/enroll-multiple-learners"} exact component={EnrollMultipleLearners}/>
+              <Route path={MANAGER_URL+"/courses-offered"} exact component={CoursesOffered} />
+              <Route path={MANAGER_URL+"/feedback"} exact component={ViewFeedback} />
+              <Route path={MANAGER_URL+"/register-multiple-teacher-course-mappings"} exact component={MultipleTeacherCourseMappingRegister}/>
+              <Route path={MANAGER_URL+"/register-teacher-course-mappings"} exact component={TeacherCourseMappingsRegister}/>
 		          <Route path={MANAGER_URL+"/update-scores"} exact component={UpdateScore}/>
               <Route path={MANAGER_URL+"/update-score"} exact component={UpdateScoreIndividual}/>
-              <Route path={MANAGER_URL+"/update-score-multiple"} exact component={UpdateScoreMultiple}/>
-              <Route path={MANAGER_URL+"/viewCourseOfferings"} exact component={ViewCourseOfferings}/>
-              <Route path={MANAGER_URL+"/viewScoreAndStatus"} exact component={ScoreAndStatus}/>
-              <Route path={MANAGER_URL+"/view-details-manager"} exact component={AdminDetails}/>
-              <Route path={TRAINER_URL+"/view-details-trainer"} exact component={TrainerDetails}/>
-              <Route path={LEARNER_URL+"/view-details-learner"} exact component={LearnerDetails}/>
-              <Route path = {LEARNER_URL+"/CourseOfferingListing"} component = {CourseOfferingListing}/>
-    		  <Route path = {LEARNER_URL+"/Feedback"} component = {Feedback}/>
-    		  <Route path = {LEARNER_URL+"/Credentials"} exact component = {Credentials}/>
-    		  <Route path = {LEARNER_URL+"/CourseDetails"} exact component = {CourseDetails}/>
-    		  <Route path = {LEARNER_URL+"/"} exact component = {WelcomeLearner}/>
+              <Route path={MANAGER_URL+"/update-multiple-scores"} exact component={UpdateScoreMultiple}/>
+              <Route path={MANAGER_URL+"/course-offerings"} exact component={ViewCourseOfferings}/>
+              <Route path={MANAGER_URL+"/score-and-status"} exact component={ScoreAndStatus}/>
+              <Route path={MANAGER_URL+"/view-details"} exact component={AdminDetails}/>
+              <Route path={TRAINER_URL+"/"} exact component={ViewCoursesTrainer}/>
+              <Route path={TRAINER_URL+"/course"} exact component={ViewParticularCourse}/>
+              <Route path={TRAINER_URL+"/feedback"} exact component={TrainerFeedbackview}/>
+              <Route path={TRAINER_URL+"/view-details"} exact component={TrainerDetails}/>
+              <Route path={LEARNER_URL+"/view-details"} exact component={LearnerDetails}/>
+              <Route path={LEARNER_URL+"/course-offerings"} component = {CourseOfferingListing}/>
+              <Route path={LEARNER_URL+"/feedback"} component = {Feedback}/>
+              <Route path={LEARNER_URL+"/credentials"} exact component = {Credentials}/>
+              <Route path={LEARNER_URL+"/course-details"} exact component = {CourseDetails}/>
+              <Route path={LEARNER_URL+"/"} exact component = {WelcomeLearner}/>
           </Switch>
           </Col>
         </Row>

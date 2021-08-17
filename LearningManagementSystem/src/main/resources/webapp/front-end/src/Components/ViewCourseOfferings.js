@@ -19,7 +19,7 @@ class ViewCourseOfferings extends React.Component{
         };
     }
     componentWillMount(){
-		if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+		if(localStorage.getItem('user') !== 'manager' || localStorage.getItem('loggedin') === false){
 			alert("User not logged in!");
 			return this.props.history.push("/");
 		}
@@ -27,7 +27,7 @@ class ViewCourseOfferings extends React.Component{
     showLearnersCourse(id){
         console.log(id);
         this.props.history.push({
-            pathname: MANAGER_URL+'/ShowCourseAttended',
+            pathname: MANAGER_URL+'/attended-courses',
             state: { detail: id }
         });
     }
@@ -35,7 +35,7 @@ class ViewCourseOfferings extends React.Component{
     showTrainers(id){
         console.log(id);
         this.props.history.push({
-            pathname: MANAGER_URL+'/viewCoursesOffered',
+            pathname: MANAGER_URL+'/offered-courses',
             state: { id: id }
         });
     }

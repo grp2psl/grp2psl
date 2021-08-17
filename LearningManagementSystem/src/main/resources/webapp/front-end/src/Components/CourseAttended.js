@@ -16,7 +16,7 @@ class CourseAttended extends React.Component{
     }
     
 	componentWillMount(){
-        if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+        if(localStorage.getItem('user') !== 'manager' || localStorage.getItem('loggedin') === false){
             alert("User not logged in!");
             return this.props.history.push("/");
         }
@@ -96,7 +96,7 @@ class CourseAttended extends React.Component{
                                             variant="outline-primary"
                                             onClick={()=>{
                                                 this.props.history.push({
-                                                    pathname: MANAGER_URL+"/viewScoreAndStatus",
+                                                    pathname: MANAGER_URL+"/score-and-status",
                                                     state: {
                                                         courseId: course.courses.courseId,
                                                         learnerId: course.learners.learnerId

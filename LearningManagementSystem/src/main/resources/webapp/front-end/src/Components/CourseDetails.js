@@ -1,10 +1,6 @@
 import React, {Component} from 'react';
-import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
+import {Card, Table, Button} from 'react-bootstrap';
 import axios from 'axios';
-import {BrowserRouter as useParams, Link} from 'react-router-dom';
-import MyToast from './MyToast';
-import ReactStars from 'react-stars';
-import { LEARNER_URL } from '../constants';
 
 export default class CourseDetails extends Component{
 	

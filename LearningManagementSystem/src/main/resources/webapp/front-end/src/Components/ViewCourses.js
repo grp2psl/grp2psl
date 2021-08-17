@@ -18,7 +18,7 @@ class ViewCourses extends React.Component{
         };
     }
     componentWillMount(){
-		if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+		if(localStorage.getItem('user') !== 'manager' || localStorage.getItem('loggedin') === false){
 			alert("User not logged in!");
 			return this.props.history.push("/");
 		}
@@ -72,7 +72,7 @@ class ViewCourses extends React.Component{
     
      editDetails(course){
         this.props.history.push({
-            pathname: MANAGER_URL+'/editCourseDetails',
+            pathname: MANAGER_URL+'/edit-course-details',
             state: { course: course }
         });
      }

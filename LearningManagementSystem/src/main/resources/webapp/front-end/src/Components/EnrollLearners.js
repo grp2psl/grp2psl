@@ -17,7 +17,7 @@ const buttonStyle={
 class EnrollLearners extends React.Component{
 	
 	componentWillMount(){
-		if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+		if(localStorage.getItem('user') !== 'manager' || localStorage.getItem('loggedin') === false){
 			alert("User not logged in!");
 			return this.props.history.push("/");
 		}
@@ -35,7 +35,7 @@ class EnrollLearners extends React.Component{
 						            Enroll a learner to a course by filling in a form
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
-                                      this.props.history.push(MANAGER_URL+"/enrollLearner");
+                                      this.props.history.push(MANAGER_URL+"/enroll-learner");
                                   }}>Go</Button>
 						        </Card.Body>
 						      </Card>
@@ -48,7 +48,7 @@ class EnrollLearners extends React.Component{
 						            Enroll multiple learners by uploading an EXCEL file
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
-                                      this.props.history.push(MANAGER_URL+"/enrollMultipleLearners");
+                                      this.props.history.push(MANAGER_URL+"/enroll-multiple-learners");
                                   }}>Go</Button>
 						        </Card.Body>
 						      </Card>

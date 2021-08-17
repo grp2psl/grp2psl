@@ -18,7 +18,7 @@ class CoursesOffered extends React.Component{
     }
     
 	componentWillMount(){
-        if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+        if(localStorage.getItem('user') !== 'manager' || localStorage.getItem('loggedin') === false){
             alert("User not logged in!");
             return this.props.history.push("/");
         }
@@ -89,7 +89,7 @@ class CoursesOffered extends React.Component{
                                             variant="outline-primary"
                                             onClick={()=>{
                                                 this.props.history.push({
-                                                    pathname: MANAGER_URL+"/viewFeedback",
+                                                    pathname: MANAGER_URL+"/feedback",
                                                     state: {
                                                         courseId: course.courseId,
                                                         trainerId: this.state.trainerDetails.trainerId

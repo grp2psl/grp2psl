@@ -22,10 +22,10 @@ class UpdateScore extends React.Component{
 	}
 		
 	updateScoreMultiple = () => {
-		this.props.history.push(MANAGER_URL+"/update-score-multiple");
+		this.props.history.push(MANAGER_URL+"/update-multiple-scores");
 	}
 	componentWillMount(){
-		if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+		if(localStorage.getItem('user') !== 'manager' || localStorage.getItem('loggedin') === false){
 			alert("User not logged in!");
 			return this.props.history.push("/");
 		}

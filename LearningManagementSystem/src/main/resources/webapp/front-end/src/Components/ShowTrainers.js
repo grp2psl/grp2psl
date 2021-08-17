@@ -18,7 +18,7 @@ class ShowTrainers extends React.Component{
         };
     }
     componentWillMount(){
-		if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+		if(localStorage.getItem('user') !== 'manager' || localStorage.getItem('loggedin') === false){
 			alert("User not logged in!");
 			return this.props.history.push("/");
 		}
@@ -71,7 +71,7 @@ class ShowTrainers extends React.Component{
 
     editDetails(trainer){
         this.props.history.push({
-            pathname: MANAGER_URL+'/editTrainerDetails',
+            pathname: MANAGER_URL+'/edit-trainer-details',
             state: { trainer: trainer}
         });
     }
@@ -117,7 +117,7 @@ class ShowTrainers extends React.Component{
                                             size="sm"
                                             variant="outline-primary"
                                             onClick={() => this.props.history.push({
-                                                pathname: MANAGER_URL+"/viewCoursesOffered",
+                                                pathname: MANAGER_URL+"/offered-courses",
                                                 state: {id: trainer.trainerId}
                                             })}
                                         >Courses</Button>

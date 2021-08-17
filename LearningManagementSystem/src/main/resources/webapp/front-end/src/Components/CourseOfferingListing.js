@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Card, Table, ButtonGroup, Button} from 'react-bootstrap';
 import axios from 'axios';
-import {BrowserRouter as useParams, Link} from 'react-router-dom';
 import MyToast from './MyToast';
 import ReactStars from 'react-stars';
 import { LEARNER_URL } from '../constants';
@@ -79,7 +78,7 @@ export default class CourseOfferingListing extends Component{
                                             		size="sm"
                                             		variant="outline-primary"
                                             		onClick={() => this.props.history.push({
-                                                	pathname: LEARNER_URL+"/CourseDetails", 
+                                                	pathname: LEARNER_URL+"/course-details", 
                                                 	state: {tcId: offering.tcId}
                                             		})}
                                         		>Show Details</Button>
@@ -87,7 +86,7 @@ export default class CourseOfferingListing extends Component{
                                             		size="sm"
                                             		variant="outline-primary"
                                             		onClick={() => this.props.history.push({
-                                                	pathname: LEARNER_URL+"/Feedback", 
+                                                	pathname: LEARNER_URL+"/feedback", 
                                                 	state: {id: offering.courseOfferingId}
                                             		})}
                                         		>Edit Feedback</Button>
