@@ -140,7 +140,7 @@ class Welcome extends React.Component{
 						      </Card>
 						    </Col>
 						</Row>
-                		<Row xs={1} md={2} className="g-4 mb-4">
+                		<Row xs={1} md={3} className="g-4 mb-4">
 						    <Col>
 						      <Card className="bg-light" style={cardStyle}>
 						        <Card.Body>
@@ -163,6 +163,20 @@ class Welcome extends React.Component{
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
 										this.props.history.push(MANAGER_URL+"/viewCourseOfferings");
+									}}>Go</Button>
+						        </Card.Body>
+						      </Card>
+						    </Col>
+						    
+						    <Col>
+						      <Card className="bg-light" style={cardStyle}>
+						        <Card.Body>
+						          <Card.Title>Change Password</Card.Title>
+						          <Card.Text>
+						            Change Password of your account
+						          </Card.Text>
+						          <Button variant="primary" style={buttonStyle} onClick={() => {
+										this.props.history.push(MANAGER_URL+"/UpdateAdminPassword");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>

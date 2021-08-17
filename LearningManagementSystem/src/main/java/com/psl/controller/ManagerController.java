@@ -254,4 +254,26 @@ public class ManagerController {
 		}
 		return new ResponseEntity<>(result, HttpStatus.OK);	
 	}
+	
+	@GetMapping("/homepage")
+	public String sayHello(){
+		return "Hello World!";
+	}
+	
+	@PutMapping({"/updateadmin/{id}/currentPassword/{currentPassword}/newPassword/{newPassword}"})
+	public ResponseEntity<String> updateAdmin(@PathVariable int id, @PathVariable String currentPassword,@PathVariable String newPassword ) {
+		LOGGER.info(logPrefix+"PUT /updateadmin called to update admin password");
+		String pass=service.checkPassword(id);
+		System.out.println(pass);
+		if(pass.contentEquals(currentPassword)) {
+			service.updateAdminPassword(id, newPassword);
+			LOGGER.info("Password updated successfully");
+			return new ResponseEntity<>(" Password updated successfully", HttpStatus.OK);
+		}
+		else {
+			LOGGER.error("Enter correct current password");
+			return new ResponseEntity<>("Incorrect Password", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
 }

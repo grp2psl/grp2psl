@@ -88,5 +88,16 @@ public class ManagerServiceTest {
 		assertThat(manager.getPhoneNumber()).isEqualTo("9657892335");
 		assertThat(manager.getPassword()).isEqualTo("manager123");
 	}
+	
+	@Test
+	@Order(5)
+	public void checkPasswordTest() {
+		int id=service.getNextId()-1;
+		String newPassword="Abhi@123";
+		service.updateAdminPassword(id, newPassword);
+		String pass=service.checkPassword(id);
+		assertThat(pass).isEqualTo(newPassword);
+		
+	}
 
 }

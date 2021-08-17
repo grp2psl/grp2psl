@@ -60,7 +60,8 @@ class TrainerLogin extends React.Component{
                 localStorage.setItem('username', this.state.email);
                 localStorage.setItem('password', this.state.password);
 			    this.props.history.push({
-	               pathname: TRAINER_URL+'/'
+	               pathname: TRAINER_URL+'/',
+	                state: { trainerid: response.data.trainerId }
 	           });
                alert("Logged in successfully");
         	}

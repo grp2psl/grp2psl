@@ -210,5 +210,16 @@ public class LearnerServiceTest {
 		assertTrue(readFile.exists());
 		assertThat(readFile.length()).isGreaterThan(0);
 	}
+	
+	@Test
+	@Order(10)
+	public void checkPasswordTest() {
+		int id=service.getNextId()-1;
+		String newPassword="Abhi@123";
+		service.updateLearnerPassword(id, newPassword);
+		String pass=service.checkPassword(id);
+		assertThat(pass).isEqualTo(newPassword);
+		
+	}
 		
 }

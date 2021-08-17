@@ -173,4 +173,15 @@ public class TrainerServiceTest {
 		assertTrue(readFile.exists());
 		assertThat(readFile.length()).isGreaterThan(0);
 	}
+	
+	@Test
+	@Order(9)
+	public void checkPasswordTest() {
+		int id=service.getNextId()-1;
+		String newPassword="Abhi@123";
+		service.updateTrainerPassword(id, newPassword);
+		String pass=service.checkPassword(id);
+		assertThat(pass).isEqualTo(newPassword);
+		
+	}
 }

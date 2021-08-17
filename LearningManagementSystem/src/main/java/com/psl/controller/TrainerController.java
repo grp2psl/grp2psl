@@ -196,4 +196,24 @@ public class TrainerController {
 		return new ResponseEntity<>(result, HttpStatus.OK);	
 	}
 	
+	@PutMapping({"/trainers/updatetrainer/{id}/currentPassword/{currentPassword}/newPassword/{newPassword}"})
+	public ResponseEntity<String> updateTrainer(@PathVariable int id, @PathVariable String currentPassword,@PathVariable String newPassword ) {
+		LOGGER.info(logPrefix+"PUT /updatetrainer called to update trainer password");
+		System.out.println(newPassword);
+		System.out.println(currentPassword);
+		
+		String pass=service.checkPassword(id);
+		System.out.println(pass);
+		if(pass.contentEquals(currentPassword)) {
+			service.updateTrainerPassword(id, newPassword);
+			LOGGER.info("Password updated successfully");
+			return new ResponseEntity<>(" Password updated successfully", HttpStatus.OK);
+		}
+		else {
+			LOGGER.error("Enter correct current password");
+			return new ResponseEntity<>("Incorrect Password", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
 }

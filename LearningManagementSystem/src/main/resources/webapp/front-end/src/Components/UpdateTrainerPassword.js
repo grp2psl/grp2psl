@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import {Card, Form, Button} from 'react-bootstrap';
 import MyToast from './MyToast';
 import axios from 'axios';
-import {DATABASE_URL, MANAGER_URL,LEARNER_URL} from '../constants';
+import {DATABASE_URL, TRAINER_URL} from '../constants';
 
-export default class Credentials extends Component{
+export default class UpdateTrainerPassword extends Component{
 	constructor(props){
 		super(props);
 		this.state = {currentPassword:'',newpassword:'',confirmpassword:''};
@@ -17,18 +17,31 @@ export default class Credentials extends Component{
 		event.preventDefault();
 		
 		try{ 
-			const response = await axios.put(DATABASE_URL+LEARNER_URL+"/updatelearner/" + localStorage.getItem("userId")+"/currentPassword/"+this.state.currentPassword+"/newPassword/"+this.state.newpassword, 
+			console.log(this.state.newpassword)
+			console.log(this.state.currentPassword)
+			console.log(localStorage.getItem("username"))
+			console.log(localStorage.getItem("password"))
+			if(this.state.newpassword===this.state.confirmpassword){
+				const response = await axios.put(DATABASE_URL+TRAINER_URL+"/updatetrainer/" + localStorage.getItem("userId")+"/currentPassword/"+this.state.currentPassword+"/newPassword/"+this.state.newpassword, 
 			{},{auth: {
                 username: localStorage.getItem("username"),
                 password: localStorage.getItem("password")
                 }});
+                console.log(response)
 				if(response != null){
 					alert("Password updated successfully");
 					localStorage.setItem("password", this.state.newpassword);
 				}
-		} catch(error) {
+				}
+			else{
+				alert("Check confirm password");
+			}	
+				}
+		 catch(error) {
 			alert(error.response);
 		}
+			
+			
 	};
 	
 	passwordChange(event){

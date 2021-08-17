@@ -22,6 +22,7 @@ import com.psl.dao.ICourseOfferingDAO;
 import com.psl.dao.ITeacherCourseMappingDAO;
 import com.psl.dao.ITrainerDAO;
 import com.psl.entities.Learner;
+import com.psl.entities.Manager;
 import com.psl.entities.TeacherCourseMapping;
 import com.psl.entities.Trainer;
 import com.psl.utils.ExcelFields;
@@ -177,4 +178,17 @@ public class TrainerService {
 		Trainer trainer = dao.findByEmailAndPassword(email, password);
 		return trainer;
 	}
+	
+	public String checkPassword(int id) {
+		Trainer trainer = dao.findById(id).get();
+		return trainer.getPassword();
+	}
+	
+	//Function which updates credentials of a manager with given learnerId.
+		public Trainer updateTrainerPassword(int id, String password) {
+			Trainer t = dao.findById(id).get();
+		    t.setPassword(password);
+		    return dao.save(t);
+		}
+	
 }

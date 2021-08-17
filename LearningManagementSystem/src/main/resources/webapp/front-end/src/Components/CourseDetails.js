@@ -57,7 +57,7 @@ export default class CourseDetails extends Component{
 									<tr>
 										<td>{this.state.course.courseId}</td>
 										<td>{this.state.course.courseName}</td>
-										<td>{this.state.course.syllabus}</td>
+										<td>{<a target='_blank' href={this.state.course.syllabus}>Click here to see syllabus</a>}</td>
 									</tr>			
 							}							
 						</tbody>

@@ -25,7 +25,6 @@ import EditTrainerDetails from './Components/EditTrainerDetails';
 import EditLearnerDetails from './Components/EditLearnerDetails';
 import EditCourseDetails from './Components/EditCourseDetails';
 import ViewParticularCourse from './Components/ViewParticularCourse';
-import ViewCoursesTrainer from './Components/ViewCoursesTrainer';
 import UpdateScore from './Components/UpdateScore';
 import UpdateScoreIndividual from './Components/UpdateScoreIndividual';
 import UpdateScoreMultiple from './Components/UpdateScoreMultiple';
@@ -48,8 +47,13 @@ import NavigationBarLearner from './Components/NavigationBarLearner';
 import CourseOfferingListing from './Components/CourseOfferingListing';
 import Feedback from './Components/Feedback'
 import WelcomeLearner from './Components/WelcomeLearner'
+import WelcomeTrainer from './Components/WelcomeTrainer'
 import Credentials from './Components/Credentials'
+import UpdateAdminPassword from './Components/UpdateAdminPassword'
+import UpdateTrainerPassword from './Components/UpdateTrainerPassword'
 import CourseDetails from './Components/CourseDetails'
+import ViewCoursesTrainer from './Components/ViewCoursesTrainer'
+
 
 import Home from './Components/Home'
 import ViewDetails from './Components/ViewDetails'
@@ -79,7 +83,7 @@ function App() {
               <Route path={MANAGER_URL+"/TeacherCourseMappingRegister"} exact component={TeacherCourseMappingRegister}/>
               <Route path={MANAGER_URL+"/ShowCourseAttended"} exact component={CourseAttended}/>
               <Route path={MANAGER_URL+"/registerLearner"} exact component={RegisterLearner}/>
-              <Route path={TRAINER_URL+"/"} exact component={ViewCoursesTrainer}/>
+              <Route path={TRAINER_URL+"/"} exact component={WelcomeTrainer}/>
               <Route path={TRAINER_URL+"/viewparticularcourse"} exact component={ViewParticularCourse}/>
               <Route path={TRAINER_URL+"/TrainerFeedbackview"} exact component={TrainerFeedbackview}/>
               <Route path={MANAGER_URL+"/showLearners"} exact component={ShowLearners}/>
@@ -97,7 +101,7 @@ function App() {
               <Route path={MANAGER_URL+"/viewFeedback"} exact component={ViewFeedback} />
               <Route path={MANAGER_URL+"/MultipleTeacherCourseMappingRegister"} exact component={MultipleTeacherCourseMappingRegister}/>
               <Route path={MANAGER_URL+"/TeacherCourseMappingsRegister"} exact component={TeacherCourseMappingsRegister}/>
-		          <Route path={MANAGER_URL+"/update-scores"} exact component={UpdateScore}/>
+		      <Route path={MANAGER_URL+"/update-scores"} exact component={UpdateScore}/>
               <Route path={MANAGER_URL+"/update-score"} exact component={UpdateScoreIndividual}/>
               <Route path={MANAGER_URL+"/update-score-multiple"} exact component={UpdateScoreMultiple}/>
               <Route path={MANAGER_URL+"/viewCourseOfferings"} exact component={ViewCourseOfferings}/>
@@ -108,6 +112,9 @@ function App() {
               <Route path = {LEARNER_URL+"/CourseOfferingListing"} component = {CourseOfferingListing}/>
     		  <Route path = {LEARNER_URL+"/Feedback"} component = {Feedback}/>
     		  <Route path = {LEARNER_URL+"/Credentials"} exact component = {Credentials}/>
+    		  <Route path = {MANAGER_URL+"/UpdateAdminPassword"} exact component = {UpdateAdminPassword}/>
+    		  <Route path = {TRAINER_URL+"/UpdateTrainerPassword"} exact component = {UpdateTrainerPassword}/>
+    		  <Route path={TRAINER_URL+"/ViewCoursesTrainer"} exact component={ViewCoursesTrainer}/>
     		  <Route path = {LEARNER_URL+"/CourseDetails"} exact component = {CourseDetails}/>
     		  <Route path = {LEARNER_URL+"/"} exact component = {WelcomeLearner}/>
           </Switch>

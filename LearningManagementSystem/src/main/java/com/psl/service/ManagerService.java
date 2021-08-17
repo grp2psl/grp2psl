@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.psl.dao.IManagerDAO;
+import com.psl.entities.Learner;
 import com.psl.entities.Manager;
 
 @Service("managerService")
@@ -54,4 +55,16 @@ public class ManagerService {
 		Manager manager = dao.findByEmailAndPassword(email, password);
 		return manager;
 	}
+	
+	public String checkPassword(int id) {
+		Manager manager = dao.findById(id).get();
+		return manager.getPassword();
+	}
+	
+	//Function which updates credentials of a manager with given learnerId.
+		public Manager updateAdminPassword(int id, String password) {
+			Manager m = dao.findById(id).get();
+		    m.setPassword(password);
+		    return dao.save(m);
+		}
 }

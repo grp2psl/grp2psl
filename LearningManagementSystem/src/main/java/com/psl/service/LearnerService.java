@@ -160,6 +160,11 @@ public class LearnerService {
 	    return dao.save(l);
 	}
 	
+	public String checkPassword(int id) {
+		Learner learner = dao.findById(id).get();
+		return learner.getPassword();
+	}
+	
 	public Learner updateLearner(int id, String email, String password) {
 		LOGGER.info(logPrefix+"Updating credentials of a learner with ID - "+id+" to email - "+email+" and password - "+password);
 	    Learner l = dao.findById(id).get();

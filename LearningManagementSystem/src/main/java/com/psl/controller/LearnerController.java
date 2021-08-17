@@ -115,9 +115,23 @@ public class LearnerController {
 	 * Where id is learner Id.
 	 * It updates credentials of Learner with given id.
 	 */
-	@PutMapping({"/learners/updatelearner/{id}", "/managers/learners/updatelearner/{id}"})
-	public void updateLearner(@PathVariable int id, @RequestBody Learner newLearner) {
-		service.updateLearnerPassword(id, newLearner.getPassword());
+	@PutMapping({"/learners/updatelearner/{id}/currentPassword/{currentPassword}/newPassword/{newPassword}", "/managers/learners/updatelearner/{id}/currentPassword/{currentPassword}/newPassword/{newPassword}"})
+	public ResponseEntity<String> updateLearner(@PathVariable int id,  @PathVariable String currentPassword,@PathVariable String newPassword) {
+		LOGGER.info(logPrefix+"PUT /updateadmin called to update admin password");
+		System.out.println(newPassword);
+		System.out.println(currentPassword);
+		
+		String pass=service.checkPassword(id);
+		System.out.println(pass);
+		if(pass.contentEquals(currentPassword)) {
+			service.updateLearnerPassword(id, newPassword);
+			LOGGER.info("Password updated successfully");
+			return new ResponseEntity<>(" Password updated successfully", HttpStatus.OK);
+		}
+		else {
+			LOGGER.error("Enter correct current password");
+			return new ResponseEntity<>("Incorrect Password", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	@PutMapping({"/learners/update/{id}", "/managers/learners/update/{id}"})
