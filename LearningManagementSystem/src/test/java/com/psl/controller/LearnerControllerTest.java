@@ -18,11 +18,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.psl.entities.Learner;
+import com.psl.security.AdminUserDetails;
+import com.psl.security.LearnerUserDetails;
 import com.psl.security.RESTAuthenticationEntryPoint;
+import com.psl.security.TrainerUserDetails;
 import com.psl.service.LearnerService;
 
 @WebMvcTest(LearnerController.class)
@@ -33,6 +37,14 @@ public class LearnerControllerTest {
 	LearnerService service;
 	@MockBean
 	RESTAuthenticationEntryPoint authenticationEntryPoint;
+	@MockBean
+	BCryptPasswordEncoder bCryptPasswordEncoder;	
+	@MockBean
+	AdminUserDetails adminUserDetails;
+	@MockBean
+	LearnerUserDetails learnerUserDetails;	
+	@MockBean
+	TrainerUserDetails trainerUserDetails;
 
 	/*
 	 * TEST GET DETAILS OF LEARNER BY ID
@@ -64,7 +76,7 @@ public class LearnerControllerTest {
 	public void addLearnerTest() throws Exception {
 		String request = "{\"name\":\"John Radnor\",\"email\":\"krishna@email.com\","
 				+ "\"department\":\"HR\",\"phonenumber\":\"9876543212\"}";
-		this.mvc.perform(post("/learners/register")
+		this.mvc.perform(post("/managers/learners/register")
 				.contentType(MediaType.APPLICATION_JSON).content(request))
 				.andExpect(status().isOk());
 	}
@@ -84,7 +96,7 @@ public class LearnerControllerTest {
 		content = Files.readAllBytes(path);
 		MultipartFile file = new MockMultipartFile(name,
 		                     originalFileName, contentType, content);
-		this.mvc.perform(multipart("/learners/register-multiple").file((MockMultipartFile) file))
+		this.mvc.perform(multipart("/managers/learners/register-multiple").file((MockMultipartFile) file))
 	      .andExpect(status().isOk());		
 	}
 	
@@ -94,7 +106,7 @@ public class LearnerControllerTest {
 	@Test
 	public void removeLearnerTest() throws Exception {
 		int id = service.getNextId() - 1;
-		this.mvc.perform(delete("/learners/"+id)
+		this.mvc.perform(delete("/managers/learners/"+id)
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 	}
@@ -106,7 +118,7 @@ public class LearnerControllerTest {
 	public void updateLearnerTest() throws Exception {
 		String request = "{\"name\":\"John Radnor\",\"email\":\"krishna@email.com\","
 				+ "\"department\":\"HR\",\"phonenumber\":\"9876543212\"}";
-		this.mvc.perform(put("/learners/update")
+		this.mvc.perform(put("/managers/learners/update")
 				.contentType(MediaType.APPLICATION_JSON).content(request))
 				.andExpect(status().isOk());
 	}
@@ -116,7 +128,7 @@ public class LearnerControllerTest {
 	 */
 	@Test
 	public void downloadFileFromLocalTest() throws Exception {
-		this.mvc.perform(get("/learners/generate-excel")
+		this.mvc.perform(get("/managers/learners/generate-excel")
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 	}

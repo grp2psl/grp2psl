@@ -18,13 +18,17 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.psl.security.AdminUserDetails;
+import com.psl.security.LearnerUserDetails;
 import com.psl.security.RESTAuthenticationEntryPoint;
+import com.psl.security.TrainerUserDetails;
 import com.psl.service.CourseOfferingService;
 import com.psl.service.ManagerService;
 
@@ -42,6 +46,18 @@ public class ManagerControllerTest {
 	
 	@MockBean
 	RESTAuthenticationEntryPoint authenticationEntryPoint;
+	
+	@MockBean
+	BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@MockBean
+	AdminUserDetails adminUserDetails;
+
+	@MockBean
+	LearnerUserDetails learnerUserDetails;
+	
+	@MockBean
+	TrainerUserDetails trainerUserDetails;
 	
 	/*
 	 * TEST GET MANAGER BY ID

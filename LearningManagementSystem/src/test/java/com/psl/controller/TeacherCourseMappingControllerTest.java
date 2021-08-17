@@ -15,10 +15,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.psl.security.AdminUserDetails;
+import com.psl.security.LearnerUserDetails;
 import com.psl.security.RESTAuthenticationEntryPoint;
+import com.psl.security.TrainerUserDetails;
 import com.psl.service.TeacherCourseMappingService;
 
 @WebMvcTest(TeacherCourseMappingController.class)
@@ -32,6 +36,18 @@ public class TeacherCourseMappingControllerTest {
 
 	@MockBean
 	RESTAuthenticationEntryPoint authenticationEntryPoint;
+
+	@MockBean
+	BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@MockBean
+	AdminUserDetails adminUserDetails;
+
+	@MockBean
+	LearnerUserDetails learnerUserDetails;
+	
+	@MockBean
+	TrainerUserDetails trainerUserDetails;
 	
 	/*
 	 * TEST ADDING TEACHER-COURSE MAPPING DETAILS
@@ -39,7 +55,7 @@ public class TeacherCourseMappingControllerTest {
 	@Test
 	public void addTeacherCourseMappingTest() throws Exception {
 		String request = "{\"tcid\":4,\"trainerid\":2,\"courseid\":1}";
-		this.mvc.perform(post("/teacherCourseMapping/register")
+		this.mvc.perform(post("/managers/teacherCourseMapping/register")
 				.contentType(MediaType.APPLICATION_JSON).content(request))
 		.andExpect(status().isOk());
 	}
@@ -57,7 +73,7 @@ public class TeacherCourseMappingControllerTest {
 		content = Files.readAllBytes(path);
 		MultipartFile file = new MockMultipartFile(name,
 		                     originalFileName, contentType, content);
-		this.mvc.perform(multipart("/teacherCourseMapping/register-multiple").file((MockMultipartFile) file))
+		this.mvc.perform(multipart("/managers/teacherCourseMapping/register-multiple").file((MockMultipartFile) file))
 	    .andExpect(status().isOk());
 	}
 	
@@ -66,7 +82,7 @@ public class TeacherCourseMappingControllerTest {
 	 */
 	@Test
 	public void downloadFileFromLocalTest() throws Exception {
-		this.mvc.perform(get("/teacherCourseMapping/generate-excel"))
+		this.mvc.perform(get("/managers/teacherCourseMapping/generate-excel"))
 		.andExpect(status().isOk());
 	}
 	
@@ -75,7 +91,7 @@ public class TeacherCourseMappingControllerTest {
 	 */
 	@Test
 	public void getCourseDetailsByCourseIdAndLearnerIdTest() throws Exception {
-		this.mvc.perform(get("/teacherCourseMapping/learner/"+1+"/course/"+2))
+		this.mvc.perform(get("/managers/teacherCourseMapping/learner/"+1+"/course/"+2))
 		.andExpect(status().isOk());
 	}
 	
@@ -84,7 +100,7 @@ public class TeacherCourseMappingControllerTest {
 	 */
 	@Test
 	public void getAllTrainerCourseNamesTest() throws Exception {
-		this.mvc.perform(get("/teacherCourseMapping/trainer-course-names"))
+		this.mvc.perform(get("/managers/teacherCourseMapping/trainer-course-names"))
 		.andExpect(status().isOk());
 	}
 }

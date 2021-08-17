@@ -18,11 +18,16 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.psl.entities.Trainer;
+import com.psl.security.AdminUserDetails;
+import com.psl.security.LearnerUserDetails;
 import com.psl.security.RESTAuthenticationEntryPoint;
+import com.psl.security.TrainerUserDetails;
+import com.psl.service.CourseService;
 import com.psl.service.TrainerService;
 
 @WebMvcTest(TrainerController.class)
@@ -32,7 +37,18 @@ public class TrainerControllerTest {
 	@MockBean
 	TrainerService service;
 	@MockBean
-	RESTAuthenticationEntryPoint authenticationEntryPoint;
+	CourseService courseService;
+	@MockBean
+	RESTAuthenticationEntryPoint authenticationEntryPoint;	
+	@MockBean
+	BCryptPasswordEncoder bCryptPasswordEncoder;	
+	@MockBean
+	AdminUserDetails adminUserDetails;
+	@MockBean
+	LearnerUserDetails learnerUserDetails;
+	@MockBean
+	TrainerUserDetails trainerUserDetails;
+	
 
 	/*
 	 * TEST GET DETAILS OF TRAINER BY ID
@@ -64,7 +80,7 @@ public class TrainerControllerTest {
 	public void addTrainerTest() throws Exception {
 		String request = "{\"name\":\"John Radnor\",\"email\":\"krishna@email.com\","
 				+ "\"department\":\"HR\",\"phonenumber\":\"9876543212\"}";
-		this.mvc.perform(post("/trainers/register")
+		this.mvc.perform(post("/managers/trainers/register")
 				.contentType(MediaType.APPLICATION_JSON).content(request))
 				.andExpect(status().isOk());
 	}
@@ -84,7 +100,7 @@ public class TrainerControllerTest {
 		content = Files.readAllBytes(path);
 		MultipartFile file = new MockMultipartFile(name,
 		                     originalFileName, contentType, content);
-		this.mvc.perform(multipart("/trainers/register-multiple").file((MockMultipartFile) file))
+		this.mvc.perform(multipart("/managers/trainers/register-multiple").file((MockMultipartFile) file))
 	      .andExpect(status().isOk());
 		
 	}
@@ -95,7 +111,7 @@ public class TrainerControllerTest {
 	@Test
 	public void removeTrainerTest() throws Exception {
 		int id = service.getNextId() - 1;
-		this.mvc.perform(delete("/trainers/"+id)
+		this.mvc.perform(delete("/managers/trainers/"+id)
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 	}
@@ -107,7 +123,7 @@ public class TrainerControllerTest {
 	public void updateTrainerTest() throws Exception {
 		String request = "{\"name\":\"John Radnor\",\"email\":\"krishna@email.com\","
 				+ "\"department\":\"HR\",\"phonenumber\":\"9876543212\"}";
-		this.mvc.perform(put("/trainers/update")
+		this.mvc.perform(put("/managers/trainers/update")
 				.contentType(MediaType.APPLICATION_JSON).content(request))
 				.andExpect(status().isOk());
 	}
@@ -117,7 +133,7 @@ public class TrainerControllerTest {
 	 */
 	@Test
 	public void downloadFileFromLocalTest() throws Exception {
-		this.mvc.perform(get("/trainers/generate-excel")
+		this.mvc.perform(get("/managers/trainers/generate-excel")
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 	}
