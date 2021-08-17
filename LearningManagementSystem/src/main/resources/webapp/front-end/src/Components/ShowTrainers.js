@@ -40,7 +40,7 @@ class ShowTrainers extends React.Component{
 				});	
 			}	
 		} catch(error) {
-			alert(error);
+			alert("Operation failed!");
 		}
         this.setState({
 			msg: ""
@@ -61,7 +61,7 @@ class ShowTrainers extends React.Component{
             });
             console.log(response);
 		} catch(error) {
-			alert(error);
+			alert("Operation failed!");
 		}
         this.setState({
 			msg: ""

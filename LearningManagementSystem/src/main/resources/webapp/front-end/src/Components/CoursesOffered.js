@@ -42,6 +42,7 @@ class CoursesOffered extends React.Component{
                     courses: response.data.courses,
                     offerings: response.data.offerings                    
                 });	
+                console.log(this.state.offerings)
 			}	
 		} catch(error) {
 			alert(error);
@@ -66,6 +67,7 @@ class CoursesOffered extends React.Component{
                     <Table striped bordered hover variant="dark">
                         <thead>
                             <tr>
+                                <th>TCID</th>
                                 <th>Course ID</th>
                                 <th>Course Name</th>
                                 <th>Number of Learners Enrolled</th>
@@ -79,6 +81,11 @@ class CoursesOffered extends React.Component{
                                 ) : (
                                 this.state.courses.map((course) => (
                                     <tr key={course.courseId}>
+                                        {this.state.offerings[course.courseId].length > 0 ? (
+                                            <td>{this.state.offerings[course.courseId][0].tcId}</td>
+                                        ) : (
+                                            <td>-</td>
+                                        )}                                    
                                     <td>{course.courseId}</td>
                                     <td>{course.courseName}</td>
                                     <td>{this.state.offerings[course.courseId].length}</td>

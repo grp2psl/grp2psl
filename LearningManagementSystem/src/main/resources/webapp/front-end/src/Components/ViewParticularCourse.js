@@ -34,7 +34,7 @@ class ViewParticularCourse extends React.Component{
 				});
 			}
 		} catch(error) {
-			alert(error);
+			alert("Operation failed!");
             console.log(localStorage.getItem("username"))
             console.log(localStorage.getItem("password"))
 		}

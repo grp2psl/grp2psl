@@ -52,7 +52,7 @@ class UpdateScoreIndividual extends React.Component{
             })
 			this.state.tcMappings = tcMappings.data;
 		} catch(error) {
-			alert(error);
+			alert("Operation failed!");
         }
         this.setState({
             msg: ""
@@ -73,7 +73,7 @@ class UpdateScoreIndividual extends React.Component{
 			this.state.learners = learnersList.data;
             
 		} catch(error) {
-			alert(error);
+			alert("Operation failed!");
         }
         this.setState({
             msg: ""

@@ -87,7 +87,7 @@ function App() {
               <Route path={MANAGER_URL+"/enroll-learners"} exact component={EnrollLearners}/>
               <Route path={MANAGER_URL+"/enroll-learner"} exact component={EnrollLearner}/>
               <Route path={MANAGER_URL+"/enroll-multiple-learners"} exact component={EnrollMultipleLearners}/>
-              <Route path={MANAGER_URL+"/courses-offered"} exact component={CoursesOffered} />
+              <Route path={MANAGER_URL+"/offered-courses"} exact component={CoursesOffered} />
               <Route path={MANAGER_URL+"/feedback"} exact component={ViewFeedback} />
               <Route path={MANAGER_URL+"/register-multiple-teacher-course-mappings"} exact component={MultipleTeacherCourseMappingRegister}/>
               <Route path={MANAGER_URL+"/register-teacher-course-mappings"} exact component={TeacherCourseMappingsRegister}/>
@@ -98,7 +98,7 @@ function App() {
               <Route path={MANAGER_URL+"/score-and-status"} exact component={ScoreAndStatus}/>
               <Route path={MANAGER_URL+"/view-details"} exact component={AdminDetails}/>
               <Route path={TRAINER_URL+"/"} exact component={ViewCoursesTrainer}/>
-              <Route path={TRAINER_URL+"/course"} exact component={ViewParticularCourse}/>
+              <Route path={TRAINER_URL+"/view-course"} exact component={ViewParticularCourse}/>
               <Route path={TRAINER_URL+"/feedback"} exact component={TrainerFeedbackview}/>
               <Route path={TRAINER_URL+"/view-details"} exact component={TrainerDetails}/>
               <Route path={LEARNER_URL+"/view-details"} exact component={LearnerDetails}/>

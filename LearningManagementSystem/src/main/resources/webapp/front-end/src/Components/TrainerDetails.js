@@ -46,7 +46,7 @@ class TrainerDetails extends React.Component{
 				});	
 			}	
 		} catch(error) {
-			alert(error);
+			alert("Operation failed!");
 		}
         this.setState({
 			msg: ""
@@ -100,7 +100,7 @@ class TrainerDetails extends React.Component{
                     console.log(response.data);
                 }	
             } catch(error) {
-                alert(error);
+                alert("Operation failed!");
             }
         }
     }
