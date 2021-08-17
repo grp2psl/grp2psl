@@ -97,7 +97,7 @@ export default class TeacherCourseMappingRegister extends Component {
 	            console.log(response.data);
         	}	
 		} catch(error) {
-			alert(error);
+			alert("Operation failed!");
 		}
     
   }

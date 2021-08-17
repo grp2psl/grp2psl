@@ -40,7 +40,7 @@ class ShowTrainers extends React.Component{
 				});	
 			}	
 		} catch(error) {
-			alert(error);
+			alert("Operation failed!");
 		}
         this.setState({
 			msg: ""
@@ -61,7 +61,7 @@ class ShowTrainers extends React.Component{
             });
             console.log(response);
 		} catch(error) {
-			alert(error);
+			alert("Operation failed!");
 		}
         this.setState({
 			msg: ""
@@ -117,7 +117,7 @@ class ShowTrainers extends React.Component{
                                             size="sm"
                                             variant="outline-primary"
                                             onClick={() => this.props.history.push({
-                                                pathname: MANAGER_URL+"/courses-offered",
+                                                pathname: MANAGER_URL+"/offered-courses",
                                                 state: {id: trainer.trainerId}
                                             })}
                                         >Courses</Button>

@@ -50,7 +50,7 @@ class ViewFeedback extends React.Component{
                 });	
 			}	
 		} catch(error) {
-			alert(error);
+			alert("Operation failed!");
 		}
         this.setState({
 			msg: ""

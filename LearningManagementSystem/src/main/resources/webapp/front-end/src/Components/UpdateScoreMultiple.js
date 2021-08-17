@@ -98,7 +98,7 @@ class UpdateScoreMultiple extends React.Component{
                     console.log(response.data);
                 }	
             } catch(error) {
-                alert(error.response.data);     
+                alert("Operation failed!");   
             }
             this.setState({
                 msg: "",

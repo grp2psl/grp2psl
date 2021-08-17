@@ -70,7 +70,7 @@ class RegisterLearner extends React.Component{
                 if(error.response != null){
                     alert(error.response.data);
                 }
-                alert(error);
+                alert("Operation failed!");
             }
             this.setState(this.initialState);
         }

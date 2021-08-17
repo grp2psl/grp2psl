@@ -42,7 +42,7 @@ class TrainerFeedbackview extends React.Component{
       console.log(this.state.comments);
       console.log(this.state.ratings);
     } catch(error) {
-      alert(error);
+			alert("Operation failed!");
     }
     this.setState({
       msg: ""
