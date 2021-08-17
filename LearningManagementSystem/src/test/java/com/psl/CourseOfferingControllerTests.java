@@ -10,9 +10,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.psl.security.AdminUserDetails;
+import com.psl.security.LearnerUserDetails;
 import com.psl.security.RESTAuthenticationEntryPoint;
+import com.psl.security.TrainerUserDetails;
 //import com.psl.controller.CourseOfferingController;
 import com.psl.service.LearnerService;
 
@@ -26,6 +30,18 @@ public class CourseOfferingControllerTests {
 	
 	@MockBean
 	RESTAuthenticationEntryPoint authenticationEntryPoint;
+
+	@MockBean
+	BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@MockBean
+	AdminUserDetails adminUserDetails;
+
+	@MockBean
+	LearnerUserDetails learnerUserDetails;
+	
+	@MockBean
+	TrainerUserDetails trainerUserDetails;
 	
 	@MockBean
 	private LearnerService service;
@@ -33,14 +49,14 @@ public class CourseOfferingControllerTests {
 	// Test getting a specific course offering
 	@Test
 	public void getSpecificOfferingTest() throws Exception {
-		this.mvc.perform(get("/GetOffering/"+1))
+		this.mvc.perform(get("/learners/GetOffering/"+1))
 		.andExpect(status().isOk());
 	}
 	
 	// Test getting all course offerings of a specific learner
 	@Test
 	public void getAllOfferingsTest() throws Exception {
-		this.mvc.perform(get("/Offering/"+1))
+		this.mvc.perform(get("/learners/Offering/"+1))
 		.andExpect(status().isOk());
 	}
 	
@@ -48,7 +64,7 @@ public class CourseOfferingControllerTests {
 	@Test
 	public void sendFeedbackTest() throws Exception {
 		String courseOffering = "{\"feedback\":\"good course\",\"ratings\":3}";
-		this.mvc.perform(put("/feedback/"+1).contentType(MediaType.APPLICATION_JSON).content(courseOffering))
+		this.mvc.perform(put("/learners/feedback/"+1).contentType(MediaType.APPLICATION_JSON).content(courseOffering))
 		.andExpect(status().isOk());
 	}
 }
