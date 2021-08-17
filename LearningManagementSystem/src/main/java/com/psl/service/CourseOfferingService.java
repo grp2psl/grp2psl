@@ -77,6 +77,7 @@ public class CourseOfferingService {
 		CourseOffering co = dao.findById(courseOfferingId).get();
 		co.setFeedback(feedback);
 		co.setRatings(rating);
+		co = updateCourseOfferingStatus(co);
 		return dao.save(co);
 	}
 
