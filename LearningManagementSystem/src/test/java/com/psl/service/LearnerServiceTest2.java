@@ -32,8 +32,6 @@ import com.psl.dao.ICourseOfferingDAO;
 import com.psl.dao.ILearnerDAO;
 import com.psl.entities.CourseOffering;
 import com.psl.entities.Learner;
-import com.psl.service.CourseOfferingService;
-import com.psl.service.LearnerService;
 
 @ComponentScan(basePackages = "com.psl")
 //@DataJpaTest

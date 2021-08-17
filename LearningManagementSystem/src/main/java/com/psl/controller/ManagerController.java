@@ -183,7 +183,6 @@ public class ManagerController {
 		try {
 			cAttended= offeringService.viewCourseOfferingsDetailsByLearnerId(id);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			LOGGER.error(e.getMessage());
 			e.printStackTrace();
 		}

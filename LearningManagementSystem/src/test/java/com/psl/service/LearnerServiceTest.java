@@ -64,7 +64,6 @@ public class LearnerServiceTest {
 				assertThat(r).hasFieldOrProperty("trainers");
 			}
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

@@ -31,6 +31,10 @@ public class TrainerService {
 	private ITrainerDAO dao;
 	@Autowired
 	private EmailSenderService service;
+	@Autowired
+	private ITeacherCourseMappingDAO mappingDAO;
+	@Autowired
+	private ICourseOfferingDAO offeringDAO;
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(TrainerService.class);
 	private final String logPrefix = "Trainer Service - ";
@@ -81,12 +85,6 @@ public class TrainerService {
 		}
 	}
 
-	@Autowired
-	private ITeacherCourseMappingDAO mappingDAO;
-
-	@Autowired
-	private ICourseOfferingDAO offeringDAO;
-
 	/*
 	 * GENERATES EXCEL SHEET OF SAMPLE DATA OF TRAINER DETAILS
 	 */
@@ -122,7 +120,7 @@ public class TrainerService {
 	public List<TeacherCourseMapping> findCoursesTaughtByTrainer(int id){
 		LOGGER.info(logPrefix+"Returning List of Trainer-Course Mappings for trainer with ID - "+id);
 		List<TeacherCourseMapping> l = mappingDAO.findCoursesTaughtByTrainer(id);
-		System.out.println(l.size()); // Awlays returing zero
+		System.out.println(l.size());
 		System.out.println("Trainer Query id: " + id + " ==>");
 		return mappingDAO.findCoursesTaughtByTrainer(id);
 	}

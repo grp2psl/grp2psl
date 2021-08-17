@@ -44,8 +44,7 @@ public class CourseService {
 	 */
 	public Course getCourse(int id) {
 		LOGGER.info(logPrefix+"Returning details of a course with ID - "+id);
-//		return dao.findById(id).get();
-		return dao.findByCourseId(id); //TODO daksh
+		return dao.findByCourseId(id);
 	}
 	
 	/*

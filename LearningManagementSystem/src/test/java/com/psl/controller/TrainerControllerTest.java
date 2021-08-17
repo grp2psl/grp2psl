@@ -127,6 +127,24 @@ public class TrainerControllerTest {
 				.contentType(MediaType.APPLICATION_JSON).content(request))
 				.andExpect(status().isOk());
 	}
+	
+	/*
+	 * TEST VIEW ALL COURSES TAUGHT BY A TRAINER
+	 */
+	@Test
+	public void findCoursesTaughtByTrainerTest() throws Exception {
+		this.mvc.perform(get("/trainers/" + 1 + "/coursestaughtbytrainer"))
+		.andExpect(status().isOk());
+	}
+	
+	/*
+	 * TEST VIEW RATINGS AND COMMENTS BY LEARNS TO COURSES TAUGHT BY A TRAINER
+	 */
+	@Test
+	public void getFeedbackResultsTest() throws Exception {
+		this.mvc.perform(get("/trainers/1/1"))
+		.andExpect(status().isOk());
+	}
 
 	/*
 	 * TEST DOWNLOAD FORMAT OF EXCEL SHEET FOR UPLOADING MULTIPLE TRAINERS
