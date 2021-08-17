@@ -4,7 +4,6 @@ import java.util.List;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import org.slf4j.Logger;
@@ -21,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.psl.dao.ICourseOfferingDAO;
 import com.psl.dao.ITeacherCourseMappingDAO;
 import com.psl.dao.ITrainerDAO;
-import com.psl.entities.Learner;
 import com.psl.entities.TeacherCourseMapping;
 import com.psl.entities.Trainer;
 import com.psl.utils.ExcelFields;
