@@ -26,3 +26,12 @@ Run this file to create dummy data.
 ```bash
 source createDummyData.sql
 ```
+
+Steps to start the project.
+- Go to the LearningManagementSystem/src/main/java/com/psl directory and run LearningManagementSystemApplication.java as a java app.
+- Navigate to LearningManagementSystem/src/main/resources/webapp/front-end and run
+```bash
+npm run start
+```
+to run the npm server.
+- go to localhost:3000 in your web browser
