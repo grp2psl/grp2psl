@@ -73,7 +73,7 @@ public class CourseOfferingService {
 	}
 
 	//Function to allow Learner to given feedback on given course Offering
-	public CourseOffering AddFeedbackCourseOfferingId(int courseOfferingId, String feedback, int rating) {
+	public CourseOffering addFeedbackCourseOfferingId(int courseOfferingId, String feedback, int rating) {
 		CourseOffering co = dao.findById(courseOfferingId).get();
 		co.setFeedback(feedback);
 		co.setRatings(rating);
@@ -81,7 +81,7 @@ public class CourseOfferingService {
 		return dao.save(co);
 	}
 
-	public CourseOffering AddFeedback(int learnerId, int tcId, String feedback) {
+	public CourseOffering addFeedback(int learnerId, int tcId, String feedback) {
 		LOGGER.info(logPrefix+"Adding feedback - "+feedback+" for Trainer-course mapping with ID - "+tcId+" by learner with ID - "+learnerId);
 		CourseOffering co = dao.findByTcIdAndLearnerId(tcId, learnerId);
 		co.setFeedback(feedback);
