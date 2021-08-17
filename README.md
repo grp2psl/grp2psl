@@ -6,6 +6,7 @@ Employee Learning Management System
 
 - MySQL 8
 - Spring Boot
+- React
 
 ## Process
 
