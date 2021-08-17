@@ -38,7 +38,6 @@ import com.psl.service.LearnerService;
  */
 
 @RestController
-@RequestMapping("/learners")
 @CrossOrigin(origins = "http://localhost:3000")
 //Definition of the class
 public class LearnerController {
@@ -56,8 +55,7 @@ public class LearnerController {
 	 * It gets learner details with given learnerId.
 	 * GET DETAILS OF LEARNER BY ID
 	 */	
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_LEARNER')")
-	@GetMapping("/{id}")
+	@GetMapping({"/learners/{id}", "/managers/learners/{id}"})
 	public Learner getLearner(@PathVariable int id) {
 		LOGGER.info(logPrefix+"GET /{id} called to get details of a learner by ID");
 		return service.getLearner(id);
@@ -66,8 +64,7 @@ public class LearnerController {
 	/*
 	 * GET DETAILS OF ALL LEARNERS
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping("/")
+	@GetMapping("/managers/learners/")
 	public List<Learner> getAllLearners(){
 		LOGGER.info(logPrefix+"GET / called to view all learners");
 		return service.getAllLearners();
@@ -78,8 +75,7 @@ public class LearnerController {
 	 * It registers a new Learner using addLearner function
 	 * REGISTER LEARNER
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@PostMapping("/register")
+	@PostMapping("/managers/learners/register")
 	public ResponseEntity<String> addLearner(@RequestBody Learner learner) {
 		LOGGER.info(logPrefix+"POST /register called to add a new learner");
 		try {
@@ -98,8 +94,7 @@ public class LearnerController {
 	/*
 	 * REGISTER MULTIPLE LEARNERS BY UPLOADING EXCEL FILE
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@PostMapping("/register-multiple")
+	@PostMapping("/managers/learners/register-multiple")
 	public ResponseEntity<String> addMultipleLearners(@RequestParam("file") MultipartFile csvFilePath ) throws IOException {
 		LOGGER.info(logPrefix+"POST /register-multiple called to add multiple learners");
 		try {
@@ -120,25 +115,21 @@ public class LearnerController {
 	 * Where id is learner Id.
 	 * It updates credentials of Learner with given id.
 	 */
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_LEARNER')")
-	@PutMapping("/updatelearner/{id}")
+	@PutMapping({"/learners/updatelearner/{id}", "/managers/learners/updatelearner/{id}"})
 	public void updateLearner(@PathVariable int id, @RequestBody Learner newLearner) {
 		service.updateLearnerPassword(id, newLearner.getPassword());
 	}
 	
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_LEARNER')")
-	@PutMapping("/update/{id}")
+	@PutMapping({"/learners/update/{id}", "/managers/learners/update/{id}"})
 	public void updateLearner(@PathVariable int id, @RequestBody Map<String, String> credentials) {
 		LOGGER.info(logPrefix+"PUT /update/{id} called to update details of a learner by ID");
 		service.updateLearner(id, credentials.get("email"), credentials.get("password"));
-		// TODO check with Admin
 	}
 	
 	/*
 	 * DELETE LEARNER BY ID
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/managers/learners/{id}")
 	public void removeLearner(@PathVariable int id) {
 		LOGGER.info(logPrefix+"DELETE /{id} called to delete a learner by ID");
 		service.removeLearner(id);
@@ -147,8 +138,7 @@ public class LearnerController {
 	/*
 	 * UPDATE LEARNER BY ID
 	 */
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_LEARNER')")
-	@PutMapping("/update")
+	@PutMapping({"/learners/update", "/managers/learners/update"})
 	public void updateLearner(@RequestBody Learner learner) {
 		LOGGER.info(logPrefix+"PUT /update called to update details of a learner by ID");
 		service.updateLearner(learner);
@@ -157,8 +147,7 @@ public class LearnerController {
 	/*
 	 * DOWNLOAD FORMAT OF EXCEL SHEET FOR UPLOADING MULTIPLE LEARNERS
 	 */
-	@PreAuthorize("permitAll")
-	@GetMapping("/generate-excel")
+	@GetMapping("/managers/learners/generate-excel")
 	public void downloadFileFromLocal() throws IOException {
 		LOGGER.info(logPrefix+"GET /generate-excel called to download excel format for multiple learner registration");
 		Path file = Paths.get(System.getProperty("user.home"), "Downloads");
@@ -166,8 +155,7 @@ public class LearnerController {
 		System.out.println(file);
 	}
 
-	@PreAuthorize("hasRole('ROLE_LEARNER')")
-	@GetMapping("/login")
+	@GetMapping("/learners/login")
 	public ResponseEntity<Learner> login(@RequestParam String email, @RequestParam String password){
 		Learner result = service.login(email, password);
 		if(result == null) {

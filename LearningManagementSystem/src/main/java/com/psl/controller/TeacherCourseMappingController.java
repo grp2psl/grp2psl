@@ -23,7 +23,7 @@ import com.psl.entities.TeacherCourseMapping;
 import com.psl.service.TeacherCourseMappingService;
 
 @RestController
-@RequestMapping("/teacherCourseMapping")
+@RequestMapping("/managers/teacherCourseMapping")
 @CrossOrigin(origins="http://localhost:3000")
 public class TeacherCourseMappingController {
 	

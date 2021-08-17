@@ -39,14 +39,13 @@ public class CourseOfferingController {
 	 * This part handles put requests from url's ending with /feedback/{learnerid}/{tcid} pattern
 	 * It adds feedback of given course offering (identified with tcid) by given learner (identified with learnerid)
 	 */
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_LEARNER')")
-	@PutMapping("/feedback/{courseOfferingId}")
+	@PutMapping("/learners/feedback/{courseOfferingId}")
 	public void sendfeedback(@PathVariable int courseOfferingId ,@RequestBody CourseOffering CO) {
 		System.out.println(CO);
 		service.AddFeedbackCourseOfferingId(courseOfferingId, CO.getFeedback(), CO.getRatings());
 	}
 	
-	@PutMapping("/feedback/{learnerid}/{tcid}")
+	@PutMapping("/learners/feedback/{learnerid}/{tcid}")
 	public void sendfeedback(@PathVariable int learnerid, @PathVariable int tcid ,@RequestBody String feedBack) {
 		LOGGER.info(logPrefix+"PUT /feedback/{learnerid}/{tcid} called to add a course offering feeback given by learner");
 		service.AddFeedback(learnerid, tcid, feedBack);
@@ -56,17 +55,17 @@ public class CourseOfferingController {
 	 * This part handles get requests from url's ending with /Offering/{learnerid} pattern
 	 * It retrieves List of Offerings of given learner
 	 */
-	@GetMapping("/Offering/{learnerid}")
+	@GetMapping("/learners/Offering/{learnerid}")
 	public List<CourseOffering> getOfferings(@PathVariable int learnerid){
 		LOGGER.info(logPrefix+"GET /Offering/{learnerid} called to view offerings by learner ID");
 		return service.getCourseOfferings(learnerid);
 	}
 	
-	@GetMapping("/GetOffering/{courseOfferingId}")
+	@GetMapping("/learners/GetOffering/{courseOfferingId}")
 	public CourseOffering getOffering(@PathVariable int courseOfferingId) {
 		return service.getCourseOffering(courseOfferingId);
 	}
-	@GetMapping("/GetCourseDetails/{tcId}")
+	@GetMapping("/learners/GetCourseDetails/{tcId}")
 	public Course getCourseDetails(@PathVariable int tcId){
 		return service.viewCourseDetailsBytcId(tcId);
 	}

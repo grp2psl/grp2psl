@@ -20,7 +20,6 @@ import com.psl.entities.Course;
 import com.psl.service.CourseService;
 
 @RestController
-@RequestMapping("/course")
 @CrossOrigin(origins="http://localhost:3000")
 public class CourseController {
 	@Autowired
@@ -32,7 +31,7 @@ public class CourseController {
 	/*
 	 *VIEW ALL COURSES AVAILABLE
 	 */
-	@GetMapping("/allcourses")
+	@GetMapping({"/managers/course/allcourses","/learners/course/allcourses", "/trainers/course/allcourses"})
     public List<Course> getCourse () {
 		LOGGER.info(logPrefix+"GET /allcourses called to view all courses");
 		return service.findAll();
@@ -41,8 +40,7 @@ public class CourseController {
 	/*
 	 *VIEW A COURSE BY COURSEID
 	 */
-	@PreAuthorize("hasAnyRole('ROLE_TRAINER', 'ROLE_ADMIN', 'ROLE_LEARNER')")
-	@GetMapping("/{courseId}")
+	@GetMapping({"/managers/course/{courseId}", "/learners/course/{courseId}", "/trainers/course/{courseId}"})
 	public Course getCourse(@PathVariable int courseId) {
 		LOGGER.info(logPrefix+"GET /{courseId} called view details of a course by ID");
 		return service.getCourse(courseId);
@@ -51,7 +49,7 @@ public class CourseController {
 	/*
 	 *ADDING A COURSE DETAILS
 	 */
-	@PostMapping("/addcourse")
+	@PostMapping("/managers/course/addcourse")
 	public Course addCourse(@RequestBody Course course) {
 		LOGGER.info(logPrefix+"POST /addcourse called to add a course");
 		return service.addCourse(course);
@@ -60,7 +58,7 @@ public class CourseController {
 	/*
 	 * DELETE COURSE BY ID
 	 */
-	@DeleteMapping("/delete/{courseid}")
+	@DeleteMapping("/managers/course/delete/{courseid}")
 	public void removeCourse(@PathVariable int courseid) {
 		LOGGER.info(logPrefix+"DELETE /delete/{courseid} called to delete a course by ID");
 		service.removeCourse(courseid);
@@ -69,7 +67,7 @@ public class CourseController {
 	/*
 	 * UPDATE COURSE BY ID
 	 */
-	@PutMapping("/update")
+	@PutMapping("/managers/course/update")
 	public void updateCourse(@RequestBody Course course) {
 		LOGGER.info(logPrefix+"PUT /update called to update details of a course by ID");
 		service.updateCourse(course);

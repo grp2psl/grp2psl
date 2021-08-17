@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,7 +41,6 @@ import com.psl.service.CourseService;
 import com.psl.service.TrainerService;
 
 @RestController
-@RequestMapping("/trainers")
 @CrossOrigin(origins="http://localhost:3000")
 public class TrainerController {
 	@Autowired
@@ -58,8 +56,7 @@ public class TrainerController {
 	/*
 	 * GET DETAILS OF TRAINER BY ID
 	 */
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINER')")
-	@GetMapping("/{id}")
+	@GetMapping({"/trainers/{id}", "/managers/trainers/{id}"})
 	public Trainer getTrainer(@PathVariable int id) {
 		LOGGER.info(logPrefix+"GET /{id} called to get details of a trainer by ID");
 		return service.getTrainer(id);
@@ -68,8 +65,7 @@ public class TrainerController {
 	/*
 	 * GET DETAILS OF ALL TRAINERS
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping("/")
+	@GetMapping("/managers/trainers/")
 	public List<Trainer> getAllTrainers(){
 		LOGGER.info(logPrefix+"GET / called to get details of all trainers");
 		return service.getAllTrainers();
@@ -78,8 +74,7 @@ public class TrainerController {
 	/*
 	 * REGISTER TRAINER
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@PostMapping("/register")
+	@PostMapping("/managers/trainers/register")
 	public ResponseEntity<String> addTrainer(@RequestBody Trainer trainer) {
 		LOGGER.info(logPrefix+"POST /register called to add a trainer");
 		try {
@@ -98,8 +93,7 @@ public class TrainerController {
 	/*
 	 * REGISTER MULTIPLE TRAINERS BY UPLOADING EXCEL FILE
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@PostMapping("/register-multiple")
+	@PostMapping("/managers/trainers/register-multiple")
 	public ResponseEntity<String> addMultipleTrainers(@RequestParam("file") MultipartFile csvFilePath ) throws IOException {
 		LOGGER.info(logPrefix+"POST /register-multiple called to add multiple trainers");
 		try {
@@ -118,8 +112,7 @@ public class TrainerController {
 	/*
 	 * DELETE TRAINER BY ID
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/managers/trainers/{id}")
 	public void removeTrainer(@PathVariable int id) {
 		LOGGER.info(logPrefix+"DELETE /{id} called to delete a trainer by ID");
 		service.removeTrainer(id);
@@ -128,15 +121,13 @@ public class TrainerController {
 	/*
 	 * UPDATE TRAINER BY ID
 	 */
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINER')")
-	@PutMapping("/update")
+	@PutMapping({"/trainers/update", "/managers/trainers/update"})
 	public void updateTrainer(@RequestBody Trainer trainer) {
 		LOGGER.info(logPrefix+"PUT /update called to update details of a trainer");
 		service.updateTrainer(trainer);
 	}
 
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINER')")
-	@GetMapping("/{id}/coursestaughtbytrainer")
+	@GetMapping("/trainers/{id}/coursestaughtbytrainer")
 	public List<TeacherCoursesTaught> findCoursesTaughtByTrainer(@PathVariable int id) {
 
 	/*
@@ -169,15 +160,13 @@ public class TrainerController {
 		return tct;
 	}
 
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINER')")
 	public Float getFeedbackRatings(int tcid){
 		Float ratings = service.getFeedbackResults(tcid);
 		if(ratings == null) return 0f;
 		else return ratings;
 	}
 
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINER')")
-	@GetMapping("/{id}/{tcid}")
+	@GetMapping("/trainers/{id}/{tcid}")
 	public RatingAndComment getFeedbackResults(@PathVariable int id, @PathVariable int tcid){
 		LOGGER.info(logPrefix+"GET /{id}/{tcid} called to get feedback results");
 		List<String> comments = service.findCommentsForACourse(tcid);
@@ -190,8 +179,7 @@ public class TrainerController {
 	/*
 	 * DOWNLOAD FORMAT OF EXCEL SHEET FOR UPLOADING MULTIPLE TRAINERS
 	 */
-	@PreAuthorize("permitAll")
-	@GetMapping("/generate-excel")
+	@GetMapping("/managers/trainers/generate-excel")
 	public void downloadFileFromLocal() throws IOException {
 		LOGGER.info(logPrefix+"GET /generate-excel called to download excel format for uploading multiple trainers");
 		Path file = Paths.get(System.getProperty("user.home"), "Downloads");
@@ -199,8 +187,7 @@ public class TrainerController {
 		System.out.println(file);
 	}
 
-	@PreAuthorize("hasRole('ROLE_TRAINER')")
-	@GetMapping("/login")
+	@GetMapping("/trainers/login")
 	public ResponseEntity<Trainer> login(@RequestParam String email, @RequestParam String password){
 		Trainer result = service.login(email, password);
 		if(result == null) {
@@ -209,13 +196,4 @@ public class TrainerController {
 		return new ResponseEntity<>(result, HttpStatus.OK);	
 	}
 	
-	@Autowired
-	private CourseService sr;
-	
-	@PreAuthorize("hasAnyRole('ROLE_TRAINER', 'ROLE_ADMIN', 'ROLE_LEARNER')")
-	@GetMapping("/course/{courseId}")
-	public Course getCourse(@PathVariable int courseId) {
-		LOGGER.info(logPrefix+"GET /{courseId} called view details of a course by ID");
-		return sr.getCourse(courseId);
-	}
 }
