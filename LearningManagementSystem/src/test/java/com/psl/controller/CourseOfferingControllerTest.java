@@ -1,4 +1,4 @@
-package com.psl;
+package com.psl.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -23,7 +23,7 @@ import com.psl.service.LearnerService;
 //@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CourseOfferingControllerTests {
+public class CourseOfferingControllerTest {
 	
 	@Autowired
 	MockMvc mvc;

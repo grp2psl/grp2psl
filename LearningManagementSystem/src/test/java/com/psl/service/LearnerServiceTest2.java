@@ -1,7 +1,7 @@
 /*
  * Contains tests for learner and courseoffering entities
  */
-package com.psl;
+package com.psl.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 //import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -44,7 +44,7 @@ import com.psl.service.LearnerService;
 //@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class LearnerTests {
+class LearnerServiceTest2 {
 
 	@Test
 	void contextLoads() {
