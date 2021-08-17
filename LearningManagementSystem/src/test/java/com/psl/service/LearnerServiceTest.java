@@ -34,7 +34,6 @@ import com.psl.entities.Learner;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.psl.entities.CourseAttended;
 
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
@@ -65,7 +64,6 @@ public class LearnerServiceTest {
 				assertThat(r).hasFieldOrProperty("trainers");
 			}
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

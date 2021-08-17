@@ -67,20 +67,20 @@ class ShowLearners extends React.Component{
     
     showCourse(id){
        this.props.history.push({
-           pathname: MANAGER_URL+'/ShowCourseAttended',
+           pathname: MANAGER_URL+'/attended-courses',
            state: { detail: id }
        });
     }
     
     editDetails(learner){
         this.props.history.push({
-            pathname: MANAGER_URL+'/editLearnerDetails',
+            pathname: MANAGER_URL+'/edit-learner-details',
             state: { learner: learner }
         });
      }
     
     componentWillMount(){
-		if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+		if(localStorage.getItem('user') !== 'manager' || localStorage.getItem('loggedin') === false){
 			alert("User not logged in!");
 			return this.props.history.push("/");
 		}

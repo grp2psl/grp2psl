@@ -8,7 +8,6 @@ import {
     faUndo
   } from "@fortawesome/free-solid-svg-icons";
 import { DATABASE_URL, TRAINER_URL } from '../constants';
-import { matchPath } from 'react-router-dom';
 
 class TrainerDetails extends React.Component{
     constructor(props){
@@ -57,7 +56,7 @@ class TrainerDetails extends React.Component{
         this.showData();        
     }
 	componentWillMount(){
-        if(localStorage.getItem('user') != 'trainer' || localStorage.getItem('loggedin') === false){
+        if(localStorage.getItem('user') !== 'trainer' || localStorage.getItem('loggedin') === false){
             alert("User not logged in!");
             console.log(localStorage.getItem('user'))
             return this.props.history.push("/");

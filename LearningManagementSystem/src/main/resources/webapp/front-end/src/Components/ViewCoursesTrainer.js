@@ -84,7 +84,7 @@ class ViewCoursesTrainer extends React.Component{
                                                     variant="outline-primary"
                                                     onClick={()=>{
                                                         this.props.history.push({
-                                                            pathname: TRAINER_URL+"/TrainerFeedbackview",
+                                                            pathname: TRAINER_URL+"/feedback",
                                                             state: {
                                                                 id: localStorage.getItem('userId'),
                                                                 tcid: course.tcId
@@ -100,7 +100,7 @@ class ViewCoursesTrainer extends React.Component{
                                                                    variant="outline-primary"
                                                                    onClick={()=>{
                                                                        this.props.history.push({
-                                                                           pathname: TRAINER_URL+"/viewparticularcourse",
+                                                                           pathname: TRAINER_URL+"/course",
                                                                            state: {
                                                                                courseId: course.courseId,
                                                                            },

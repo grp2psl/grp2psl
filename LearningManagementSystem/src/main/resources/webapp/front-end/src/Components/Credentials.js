@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Card, Form, Button} from 'react-bootstrap';
-import MyToast from './MyToast';
 import axios from 'axios';
 import {DATABASE_URL, MANAGER_URL,LEARNER_URL} from '../constants';
 

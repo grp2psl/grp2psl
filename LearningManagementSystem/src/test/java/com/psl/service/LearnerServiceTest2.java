@@ -1,7 +1,7 @@
 /*
  * Contains tests for learner and courseoffering entities
  */
-package com.psl;
+package com.psl.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 //import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,10 +19,8 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -34,8 +32,6 @@ import com.psl.dao.ICourseOfferingDAO;
 import com.psl.dao.ILearnerDAO;
 import com.psl.entities.CourseOffering;
 import com.psl.entities.Learner;
-import com.psl.service.CourseOfferingService;
-import com.psl.service.LearnerService;
 
 @ComponentScan(basePackages = "com.psl")
 //@DataJpaTest
@@ -44,7 +40,7 @@ import com.psl.service.LearnerService;
 //@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class LearnerTests {
+class LearnerServiceTest2 {
 
 	@Test
 	void contextLoads() {
@@ -123,8 +119,8 @@ class LearnerTests {
 		//when(dao2.findByTcIdAndLearnerId(c1.getTcId(), c1.getLearnerId())).thenReturn(c1);
 		when(dao2.findById(c1.getTcId())).thenReturn(Optional.of(c1));
 		when(dao2.save(c1)).thenReturn(c1);
-		assertEquals(service2.AddFeedbackCourseOfferingId(1, feedback, rating).getFeedback(), feedback);
-		assertEquals(service2.AddFeedbackCourseOfferingId(1, feedback, rating).getRatings(), rating);		
+		assertEquals(service2.addFeedbackCourseOfferingId(1, feedback, rating).getFeedback(), feedback);
+		assertEquals(service2.addFeedbackCourseOfferingId(1, feedback, rating).getRatings(), rating);		
 	}
 	
 	//Testing change credentials operation

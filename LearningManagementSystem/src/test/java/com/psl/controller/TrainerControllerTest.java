@@ -127,6 +127,24 @@ public class TrainerControllerTest {
 				.contentType(MediaType.APPLICATION_JSON).content(request))
 				.andExpect(status().isOk());
 	}
+	
+	/*
+	 * TEST VIEW ALL COURSES TAUGHT BY A TRAINER
+	 */
+	@Test
+	public void findCoursesTaughtByTrainerTest() throws Exception {
+		this.mvc.perform(get("/trainers/" + 1 + "/coursestaughtbytrainer"))
+		.andExpect(status().isOk());
+	}
+	
+	/*
+	 * TEST VIEW RATINGS AND COMMENTS BY LEARNS TO COURSES TAUGHT BY A TRAINER
+	 */
+	@Test
+	public void getFeedbackResultsTest() throws Exception {
+		this.mvc.perform(get("/trainers/1/1"))
+		.andExpect(status().isOk());
+	}
 
 	/*
 	 * TEST DOWNLOAD FORMAT OF EXCEL SHEET FOR UPLOADING MULTIPLE TRAINERS
@@ -138,5 +156,16 @@ public class TrainerControllerTest {
 				.andExpect(status().isOk());
 	}
 
+	/*
+	 * TEST TRAINER LOGIN
+	 */
+	@Test
+	public void loginTest() throws Exception {
+		this.mvc.perform(get("/trainers/findLearnersByTcId/"+1)
+				.param("email", "trainer@email.com")
+				.param("password", "trainer@123")
+				.contentType(MediaType.APPLICATION_JSON))
+		.andExpect(status().isOk());
+	}
 
 }

@@ -10,7 +10,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,13 +41,13 @@ public class CourseOfferingController {
 	@PutMapping("/learners/feedback/{courseOfferingId}")
 	public void sendfeedback(@PathVariable int courseOfferingId ,@RequestBody CourseOffering CO) {
 		System.out.println(CO);
-		service.AddFeedbackCourseOfferingId(courseOfferingId, CO.getFeedback(), CO.getRatings());
+		service.addFeedbackCourseOfferingId(courseOfferingId, CO.getFeedback(), CO.getRatings());
 	}
 	
 	@PutMapping("/learners/feedback/{learnerid}/{tcid}")
 	public void sendfeedback(@PathVariable int learnerid, @PathVariable int tcid ,@RequestBody String feedBack) {
 		LOGGER.info(logPrefix+"PUT /feedback/{learnerid}/{tcid} called to add a course offering feeback given by learner");
-		service.AddFeedback(learnerid, tcid, feedBack);
+		service.addFeedback(learnerid, tcid, feedBack);
 	}
 	
 	/*

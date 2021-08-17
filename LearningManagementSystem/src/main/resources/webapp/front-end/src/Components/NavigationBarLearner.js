@@ -9,9 +9,9 @@ export default class NavigationBarLearner extends React.Component{
     <Container>
     <Link className = "navbar-brand" to = {LEARNER_URL+"/"}> Learning System </Link>
     <Nav className="me-auto">
-    	<Link className = "nav-link" to ={LEARNER_URL+"/CourseOfferingListing"}>Course Offerings</Link>
-      	<Link className = "nav-link" to = {LEARNER_URL+"/Feedback"}>Submit Feedback</Link>
-      	<Link className = "nav-link" to = {LEARNER_URL+"/Credentials"}>Change Credentials</Link>      	
+    	<Link className = "nav-link" to ={LEARNER_URL+"/course-offerings"}>Course Offerings</Link>
+      	<Link className = "nav-link" to = {LEARNER_URL+"/feedback"}>Submit Feedback</Link>
+      	<Link className = "nav-link" to = {LEARNER_URL+"/credentials"}>Change Credentials</Link>      	
     </Nav>
     </Container>
   </Navbar>);

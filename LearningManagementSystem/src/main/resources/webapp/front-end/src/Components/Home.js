@@ -36,7 +36,7 @@ class Home extends React.Component{
             return(
                 <div>
                 {
-                this.props.history.push(TRAINER_URL+"/")
+                this.props.history.push(TRAINER_URL+"/welcometrainer")
                 }
                 </div>
             );

@@ -3,16 +3,13 @@ import React from 'react';
 import { TRAINER_URL, MANAGER_URL, LEARNER_URL } from '../constants';
 
 class ViewDetails extends React.Component{
-    constructor(props){
-        super(props);
-    }
     
 	render(){
         if(localStorage.getItem('user') === 'manager'){
             return(
                 <div>
                 {
-                this.props.history.push(MANAGER_URL+"/view-details-manager")
+                this.props.history.push(MANAGER_URL+"/view-details")
                 }
                 </div>
             );
@@ -21,7 +18,7 @@ class ViewDetails extends React.Component{
             return(
                 <div>
                 {
-                this.props.history.push(TRAINER_URL+"/view-details-trainer")
+                this.props.history.push(TRAINER_URL+"/view-details")
                 }
                 </div>
             );
@@ -30,7 +27,7 @@ class ViewDetails extends React.Component{
             return(
                 <div>
                 {
-                this.props.history.push(LEARNER_URL+"/view-details-learner")
+                this.props.history.push(LEARNER_URL+"/view-details")
                 }
                 </div>
             );       

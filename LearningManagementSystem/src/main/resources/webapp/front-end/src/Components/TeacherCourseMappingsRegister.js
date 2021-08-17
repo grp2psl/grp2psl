@@ -17,14 +17,14 @@ const MANAGER_URL = process.env.REACT_APP_MANAGER_URL;
 
 class TeacherCourseMappingsRegister extends React.Component{
 	assignTrainer = () => {
-		this.props.history.push(MANAGER_URL+"/TeacherCourseMappingRegister");
+		this.props.history.push(MANAGER_URL+"/register-teacher-course-mapping");
 	}
 		
 	assignMultipleTrainers = () => {
-		this.props.history.push(MANAGER_URL+"/MultipleTeacherCourseMappingRegister");
+		this.props.history.push(MANAGER_URL+"/register-multiple-teacher-course-mappings");
 	}
 	componentWillMount(){
-		if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+		if(localStorage.getItem('user') !== 'manager' || localStorage.getItem('loggedin') === false){
 			alert("User not logged in!");
 			return this.props.history.push("/");
 		}

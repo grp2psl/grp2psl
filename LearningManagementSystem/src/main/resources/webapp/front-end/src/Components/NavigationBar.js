@@ -8,19 +8,8 @@ import {
     faHome,
     faUser,
     faSignOutAlt
-  } from "@fortawesome/free-solid-svg-icons"; 
-import {MANAGER_URL} from '../constants';
+  } from "@fortawesome/free-solid-svg-icons";
 
-const buttonStyle={
-    fontSize: "1rem",
-    borderRadius: "0.25rem",
-    display: "inline-block",
-    fontWeight: "400",
-    marginTop: "8.3px",
-    marginLeft: "7px",
-    width: "38px",
-    height: "37.5px"
-};
 class NavigationBar extends React.Component{
     constructor(props){
         super(props);
@@ -31,6 +20,12 @@ class NavigationBar extends React.Component{
         localStorage.setItem('userId', '');
         localStorage.setItem('user', '');
         alert("Logged out successfully!");
+    }
+    disableUse() {
+        if(window.location.pathname === '/learning-manager/' || window.location.pathname === '/learning-manager/home' || window.location.pathname === '/learning-manager/admin-login' || window.location.pathname === '/learning-manager/trainer-login' || window.location.pathname === '/learning-manager/learner-login') {
+            return true;
+        } 
+        return false;
     }
     render(){
         return(
@@ -54,15 +49,25 @@ class NavigationBar extends React.Component{
                             >
                             <FontAwesomeIcon icon={faHome} />
                             </Button>{" "}</Link>
-                        <Link to={"/view-details"} className='nav-link'>
+                        <Link to={"/view-details"} onClick={(e) => {
+                            if(this.disableUse()) {
+                                e.preventDefault();
+                            }
+                        }} className='nav-link'>
                             <Button
+                                disabled={this.disableUse()}
                                 size="md"
                                 variant="outline-primary"
                             >
                             <FontAwesomeIcon icon={faUser} />
                             </Button>{" "}</Link>
-                        <Link to={"/"} className='nav-link'>
+                        <Link to={"/"} onClick={(e) => {
+                            if(this.disableUse()) {
+                                e.preventDefault();
+                            }
+                        }} className='nav-link'>
                             <Button
+                                disabled={this.disableUse()}
                                 size="md"
                                 variant="outline-danger"
                                 onClick={() => this.logout()}

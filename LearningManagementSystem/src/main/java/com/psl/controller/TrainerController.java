@@ -26,13 +26,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.psl.entities.Course;
 import com.psl.entities.RatingAndComment;
 import com.psl.entities.TeacherCourseMapping;
 import com.psl.entities.TeacherCoursesTaught;
@@ -127,31 +125,18 @@ public class TrainerController {
 		service.updateTrainer(trainer);
 	}
 
-	@GetMapping("/trainers/{id}/coursestaughtbytrainer")
-	public List<TeacherCoursesTaught> findCoursesTaughtByTrainer(@PathVariable int id) {
-
 	/*
 	 * Fetch Courses taught by trainer and feedback ratings merged and stored into TeacherCoursesTaught
 	*/
+	@GetMapping("/trainers/{id}/coursestaughtbytrainer")
+	public List<TeacherCoursesTaught> findCoursesTaughtByTrainer(@PathVariable int id) {
 		LOGGER.info(logPrefix+"GET /{id}/coursestaughtbytrainer called to get courses taught by trainer and respective feedbacks and ratings");
-//		List<TeacherCourseMapping> l = service.findCoursesTaughtByTrainer(id);
-//		List<TeacherCoursesTaught> tct = new ArrayList<>();
-//		for (TeacherCourseMapping t: l) {
-//			float ratings = getFeedbackRatings(t.getTcId());
-//			TeacherCoursesTaught taught = new TeacherCoursesTaught(t.getTrainerId(), t.getCourseId(), t.getTcId(), ratings); 
-//			tct.add(taught);
-//		}
-//		return tct;
-		// TODO daksh
 		List<TeacherCourseMapping> l = service.findCoursesTaughtByTrainer(id);
 		List<TeacherCoursesTaught> tct = new ArrayList<>();
 		for (TeacherCourseMapping t: l) {
 			Float ratings = getFeedbackRatings(t.getTcId());
-//			if(ratings == null) ratings = 0f;
-//			Float ratings = (1f);
 			TeacherCoursesTaught taught = new TeacherCoursesTaught(t.getTrainerId(), t.getCourseId(), t.getTcId(), ratings, cs.getCourse(t.getCourseId())); 
 			System.out.println(taught);
-//			Course c = cs.getCourse(t.getCourseId());
 			System.out.println("inside 1");
 			tct.add(taught);
 			System.out.println("inside 2");

@@ -6,9 +6,7 @@ package com.psl.service;
 //Required imports for the service declaration
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import org.slf4j.Logger;
@@ -23,19 +21,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-
-import com.psl.dao.ICourseDAO;
-import com.psl.dao.ICourseOfferingDAO;
 import com.psl.dao.ILearnerDAO;
-import com.psl.dao.ITeacherCourseMappingDAO;
-import com.psl.dao.ITrainerDAO;
-import com.psl.entities.Course;
 
-import com.psl.entities.CourseOffering;
 import com.psl.entities.Learner;
-import com.psl.entities.Manager;
-import com.psl.entities.TeacherCourseMapping;
-import com.psl.entities.Trainer;
 import com.psl.utils.ExcelFields;
 import com.psl.utils.ExcelHelper;
 
@@ -50,18 +38,6 @@ public class LearnerService {
 
 	@Autowired
 	private EmailSenderService service;
-
-	@Autowired
-	private ICourseOfferingDAO COdao;
-
-	@Autowired
-	private ICourseDAO Coursedao;
-
-	@Autowired
-	private ITrainerDAO Tdao;
-
-	@Autowired
-	private ITeacherCourseMappingDAO TCdao;
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(LearnerService.class);
 	private final String logPrefix = "Learner Service - ";

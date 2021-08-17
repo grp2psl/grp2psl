@@ -5,7 +5,6 @@
 // This shows that course is declared in com.psl.entities package
 package com.psl.entities;
 
-import java.io.Serializable;
 //Necessary imports for entity declaration
 import java.util.Date;
 

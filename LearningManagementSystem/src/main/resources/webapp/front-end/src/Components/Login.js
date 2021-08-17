@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Container, Row, Col, Card, Button, Form} from 'react-bootstrap';
+import {Container, Row, Col, Card, Button} from 'react-bootstrap';
 
 const cardStyle={
 	height: '200px',

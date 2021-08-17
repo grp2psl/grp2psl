@@ -17,7 +17,7 @@ const buttonStyle={
 
 class Welcome extends React.Component{
 	componentWillMount(){
-         if(localStorage.getItem('user') != 'manager' || localStorage.getItem('loggedin') === false){
+         if(localStorage.getItem('user') !== 'manager' || localStorage.getItem('loggedin') === false){
 			 alert("User not logged in!");
 			 return this.props.history.push("/");
 		 }
@@ -35,7 +35,7 @@ class Welcome extends React.Component{
 						            Register a course   
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push(MANAGER_URL+"/registerCourse");
+										this.props.history.push(MANAGER_URL+"/register-course");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>
@@ -48,7 +48,7 @@ class Welcome extends React.Component{
 						            View all the courses
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push(MANAGER_URL+"/viewCourse");
+										this.props.history.push(MANAGER_URL+"/courses");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>
@@ -63,7 +63,7 @@ class Welcome extends React.Component{
 						            Register learner(s)
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push(MANAGER_URL+"/registerLearners");
+										this.props.history.push(MANAGER_URL+"/register-learners");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>
@@ -76,7 +76,7 @@ class Welcome extends React.Component{
 						            View learners and their course details
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push(MANAGER_URL+"/showLearners");
+										this.props.history.push(MANAGER_URL+"/learners");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>
@@ -89,7 +89,7 @@ class Welcome extends React.Component{
 						            Enroll learner(s) to a course
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push(MANAGER_URL+"/enrollLearners");
+										this.props.history.push(MANAGER_URL+"/enroll-learners");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>
@@ -104,7 +104,7 @@ class Welcome extends React.Component{
 						            Register trainer(s)
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push(MANAGER_URL+"/registerTrainers");
+										this.props.history.push(MANAGER_URL+"/register-trainers");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>
@@ -118,7 +118,7 @@ class Welcome extends React.Component{
 						            View trainers and their course details
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push(MANAGER_URL+"/showTrainers");
+										this.props.history.push(MANAGER_URL+"/trainers");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>
@@ -133,7 +133,7 @@ class Welcome extends React.Component{
 						            Register a trainer to course   
 						          </Card.Text>
 						           <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push(MANAGER_URL+"/TeacherCourseMappingsRegister");
+										this.props.history.push(MANAGER_URL+"/register-teacher-course-mappings");
 									}}>Go</Button>
 
 						        </Card.Body>
@@ -162,7 +162,7 @@ class Welcome extends React.Component{
 						            View all the course offerings
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={() => {
-										this.props.history.push(MANAGER_URL+"/viewCourseOfferings");
+										this.props.history.push(MANAGER_URL+"/course-offerings");
 									}}>Go</Button>
 						        </Card.Body>
 						      </Card>

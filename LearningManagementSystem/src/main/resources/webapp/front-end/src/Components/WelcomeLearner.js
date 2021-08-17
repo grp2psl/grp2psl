@@ -16,16 +16,12 @@ const buttonStyle={
 
 export default class Welcome extends React.Component{
 	componentWillMount(){
-         if(localStorage.getItem('user') != 'learner' || localStorage.getItem('loggedin') === false){
+         if(localStorage.getItem('user') !== 'learner' || localStorage.getItem('loggedin') === false){
 			 alert("User not logged in!");
 			 console.log(localStorage.getItem('user'))
 			 console.log(localStorage.getItem('loggedin'))
 			 return this.props.history.push("/");
 		 }
-    }
-    
-    constructor(props){
-        super(props);
     }
 	
 	render(){
@@ -42,10 +38,8 @@ export default class Welcome extends React.Component{
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={()=>{
                                                 this.props.history.push({
-                                                    pathname: LEARNER_URL+"/Credentials",
-                                                    state: {
-                                                        learnerid: this.props.location.state.learnerid
-                                                    },
+                                                    pathname: LEARNER_URL+"/credentials",
+                                                   
                                                 })
                                             }}>Go</Button>
 						        </Card.Body>
@@ -60,7 +54,7 @@ export default class Welcome extends React.Component{
 						          </Card.Text>
 						          <Button variant="primary" style={buttonStyle} onClick={()=>{
                                             this.props.history.push({
-                                                pathname: LEARNER_URL+"/CourseOfferingListing",
+                                                pathname: LEARNER_URL+"/course-offerings",
                                                 state: {
                                                     learnerid: this.props.location.state.learnerid
                                                 },

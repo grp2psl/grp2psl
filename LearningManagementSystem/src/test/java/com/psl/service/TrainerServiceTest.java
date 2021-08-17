@@ -30,6 +30,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.psl.dao.ICourseOfferingDAO;
+import com.psl.dao.ITeacherCourseMappingDAO;
+import com.psl.entities.TeacherCourseMapping;
 import com.psl.entities.Trainer;
 
 @SpringBootTest
@@ -37,6 +40,10 @@ import com.psl.entities.Trainer;
 public class TrainerServiceTest {
 	@Autowired
 	private TrainerService service;
+	@Autowired
+	private ITeacherCourseMappingDAO mappingDAO;
+	@Autowired
+	private ICourseOfferingDAO offeringDAO;
 	
 	/*
 	 * TEST ADD TRAINER
@@ -174,6 +181,7 @@ public class TrainerServiceTest {
 		assertThat(readFile.length()).isGreaterThan(0);
 	}
 	
+
 	@Test
 	@Order(9)
 	public void checkPasswordTest() {
@@ -182,6 +190,30 @@ public class TrainerServiceTest {
 		service.updateTrainerPassword(id, newPassword);
 		String pass=service.checkPassword(id);
 		assertThat(pass).isEqualTo(newPassword);
-		
+	}
+
+	/*
+	 * TEST FIND COURSES TAUGHT BY TRAINER
+	 */
+	@Test
+	@Order(10)
+	public void findCoursesTaughtByTrainerTest() throws Exception{
+		List<TeacherCourseMapping> t = mappingDAO.findCoursesTaughtByTrainer(20000);
+		assertNotNull(t);
+		assertThat(t).size().isGreaterThan(0);
+		for(TeacherCourseMapping trainer: t) {
+			assertNotNull(trainer);
+		}
+	}
+	
+	/*
+	 * TEST FIND RATINGS OF COURSES TAUGHT BY TRAINER
+	 */
+	@Test
+	@Order(11)
+	public void findAllCoursesTaughtRatings() throws Exception{
+		List<Float> t = offeringDAO.findAllCoursesTaughtRatings(20000);
+		assertNotNull(t);
+
 	}
 }
