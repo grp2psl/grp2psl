@@ -35,3 +35,13 @@ npm run start
 ```
 to run the npm server.
 - go to localhost:3000 in your web browser
+
+![login page](https://github.com/grp2psl/grp2psl/blob/0b2cc7df30149a5a25e62102ed09131d06d72a5f/login%20.png)
+
+Click on the role you want to login as and you will redirected to the appropriate page.
+
+Get the login credentials from https://github.com/grp2psl/grp2psl/blob/0b2cc7df30149a5a25e62102ed09131d06d72a5f/createDummyData.sql
+
+![login credentials](https://github.com/grp2psl/grp2psl/blob/ea691626e33b0485c7258973c6f427b361f70585/credentials.png)
+
+Login and enjoy the Learning Management System :-)
