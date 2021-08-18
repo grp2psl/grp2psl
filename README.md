@@ -2,34 +2,6 @@
 
 Employee Learning Management System
 
-## Prerequisites
-
-- MySQL 8
-- Spring Boot
-
-## Process
-
-1. Import the DDL file present on the main branch into MySQL. To do this, open Command Prompt / Terminal, navigate to where the LearningMgmtDDL.sql file is located, run the command 
-
-```bash
-mysql -u root -p
-```
-
-to load up the MySQL command line utility, then enter root password ,finally run the command 
-
-```bash
-source LearningMgmtDDL.sql
-```
-
-Run this file to create dummy data.
-```bash
-source createDummyData.sql
-```
-
-
-
-Employee Learning Management System
-
 ## Features
 
 - Admin
@@ -56,6 +28,35 @@ Employee Learning Management System
 
     An employee, no matter what role they may have, can view their account details and change their account password at any point of time.
 
+
+
+## Prerequisites
+
+- MySQL 8
+- Spring Boot
+- React
+
+## Process
+
+1. Import the DDL file present on the main branch into MySQL. To do this, open Command Prompt / Terminal, navigate to where the LearningMgmtDDL.sql file is located, run the command 
+
+```bash
+mysql -u root -p
+```
+
+to load up the MySQL command line utility, then enter root password ,finally run the command 
+
+```bash
+source LearningMgmtDDL.sql
+```
+
+Run this file to create dummy data.
+```bash
+source createDummyData.sql
+```
+
+
+
 ## Prerequisites
 
 - MySQL 8
@@ -63,7 +64,6 @@ Employee Learning Management System
 
 Steps to start the project.
 - Go to the LearningManagementSystem/src/main/java/com/psl directory and run LearningManagementSystemApplication.java as a java app.
-- Navigate to LearningManagementSystem/src/main/resources/webapp/front-end and run
 - Navigate to LearningManagementSystem/src/main/resources/webapp/front-end and run following command to install all dependencies
 ```bash
 npm install
