@@ -1,5 +1,3 @@
-# Group 2 Mini Project
-
 Employee Learning Management System
 
 ## Features
@@ -28,39 +26,24 @@ Employee Learning Management System
 
     An employee, no matter what role they may have, can view their account details and change their account password at any point of time.
 
-
-
 ## Prerequisites
 
 - MySQL 8
 - Spring Boot
 - React
-
 ## Process
-
 1. Import the DDL file present on the main branch into MySQL. To do this, open Command Prompt / Terminal, navigate to where the LearningMgmtDDL.sql file is located, run the command 
-
 ```bash
 mysql -u root -p
 ```
-
 to load up the MySQL command line utility, then enter root password ,finally run the command 
-
 ```bash
 source LearningMgmtDDL.sql
 ```
-
 Run this file to create dummy data.
 ```bash
 source createDummyData.sql
 ```
-
-
-
-## Prerequisites
-
-- MySQL 8
- source createDummyData.sql
 
 Steps to start the project.
 - Go to the LearningManagementSystem/src/main/java/com/psl directory and run LearningManagementSystemApplication.java as a java app.
@@ -72,7 +55,11 @@ npm install
 ```bash
 npm run start
 ```
-Get the login credentials from https://github.com/grp2psl/grp2psl/blob/0b2cc7df3
+to run the npm server.
+- go to localhost:3000 in your web browser
+![login page](https://github.com/grp2psl/grp2psl/blob/0b2cc7df30149a5a25e62102ed09131d06d72a5f/login%20.png)
+Click on the role you want to login as and you will redirected to the appropriate page.
+Get the login credentials from https://github.com/grp2psl/grp2psl/blob/0b2cc7df30149a5a25e62102ed09131d06d72a5f/createDummyData.sql
 
 ![login credentials](https://github.com/grp2psl/grp2psl/blob/ea691626e33b0485c7258973c6f427b361f70585/credentials.png)
 
@@ -81,3 +68,5 @@ API Documentation Link -
 ```bash
 http://localhost:8080/LearningManagementSystem/ui-apidoc.html
 ```
+
+Login and enjoy the Learning Management System :-)
