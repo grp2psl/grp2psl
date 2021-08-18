@@ -13,7 +13,7 @@ export default class CourseOfferingListing extends Component{
 	}
 	
 	componentDidMount(){
-		axios.get("http://localhost:8080/LearningManagementSystem/learners/Offering/" + this.props.location.state.learnerid, {
+		axios.get("http://localhost:8080/LearningManagementSystem/learners/Offering/" + localStorage.getItem("userId"), {
 			auth: {
                 username: localStorage.getItem("username"),
                 password: localStorage.getItem("password")

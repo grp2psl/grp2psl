@@ -55,9 +55,7 @@ export default class Welcome extends React.Component{
 						          <Button variant="primary" style={buttonStyle} onClick={()=>{
                                             this.props.history.push({
                                                 pathname: LEARNER_URL+"/course-offerings",
-                                                state: {
-                                                    learnerid: this.props.location.state.learnerid
-                                                },
+                                                
                                             })
                                         }}>Go</Button>
 						        </Card.Body>
