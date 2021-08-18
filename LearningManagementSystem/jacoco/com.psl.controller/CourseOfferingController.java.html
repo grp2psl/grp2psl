@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CourseOfferingController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">LearningManagementSystem</a> &gt; <a href="index.source.html" class="el_package">com.psl.controller</a> &gt; <span class="el_source">CourseOfferingController.java</span></div><h1>CourseOfferingController.java</h1><pre class="source lang-java linenums">/*
+ * Defines CourseOfferingController which handles various url requests 
+ * related to CourseOffering.
+ */
+package com.psl.controller;
+
+//Importing required imports for CourseOfferingController Definition.
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.psl.service.CourseOfferingService;
+import com.psl.entities.Course;
+import com.psl.entities.CourseOffering;
+
+/*Annotation to enable CourseOfferingController to act as a RestController
+ */
+@RestController
+@CrossOrigin(origins = &quot;http://localhost:3000&quot;)
+<span class="fc" id="L28">public class CourseOfferingController {</span>
+
+	//Autowiring with CourseOfferingService
+	@Autowired
+	private CourseOfferingService service;
+
+<span class="fc" id="L34">	public static final Logger LOGGER = LoggerFactory.getLogger(CourseOfferingController.class);</span>
+<span class="fc" id="L35">	private final String logPrefix = &quot;Course Offering Controller - &quot;;</span>
+	
+	/*
+	 * This part handles put requests from url's ending with /feedback/{learnerid}/{tcid} pattern
+	 * It adds feedback of given course offering (identified with tcid) by given learner (identified with learnerid)
+	 */
+	@PutMapping(&quot;/learners/feedback/{courseOfferingId}&quot;)
+	public void sendfeedback(@PathVariable int courseOfferingId ,@RequestBody CourseOffering CO) {
+<span class="nc" id="L43">		System.out.println(CO);</span>
+<span class="nc" id="L44">		service.addFeedbackCourseOfferingId(courseOfferingId, CO.getFeedback(), CO.getRatings());</span>
+<span class="nc" id="L45">	}</span>
+	
+	@PutMapping(&quot;/learners/feedback/{learnerid}/{tcid}&quot;)
+	public void sendfeedback(@PathVariable int learnerid, @PathVariable int tcid ,@RequestBody String feedBack) {
+<span class="nc" id="L49">		LOGGER.info(logPrefix+&quot;PUT /feedback/{learnerid}/{tcid} called to add a course offering feeback given by learner&quot;);</span>
+<span class="nc" id="L50">		service.addFeedback(learnerid, tcid, feedBack);</span>
+<span class="nc" id="L51">	}</span>
+	
+	/*
+	 * This part handles get requests from url's ending with /Offering/{learnerid} pattern
+	 * It retrieves List of Offerings of given learner
+	 */
+	@GetMapping(&quot;/learners/Offering/{learnerid}&quot;)
+	public List&lt;CourseOffering&gt; getOfferings(@PathVariable int learnerid){
+<span class="nc" id="L59">		LOGGER.info(logPrefix+&quot;GET /Offering/{learnerid} called to view offerings by learner ID&quot;);</span>
+<span class="nc" id="L60">		return service.getCourseOfferings(learnerid);</span>
+	}
+	
+	@GetMapping(&quot;/learners/GetOffering/{courseOfferingId}&quot;)
+	public CourseOffering getOffering(@PathVariable int courseOfferingId) {
+<span class="nc" id="L65">		return service.getCourseOffering(courseOfferingId);</span>
+	}
+	@GetMapping(&quot;/learners/GetCourseDetails/{tcId}&quot;)
+	public Course getCourseDetails(@PathVariable int tcId){
+<span class="nc" id="L69">		return service.viewCourseDetailsBytcId(tcId);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

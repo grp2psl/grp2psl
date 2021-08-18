@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CourseController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">LearningManagementSystem</a> &gt; <a href="index.source.html" class="el_package">com.psl.controller</a> &gt; <span class="el_source">CourseController.java</span></div><h1>CourseController.java</h1><pre class="source lang-java linenums">package com.psl.controller;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.psl.entities.Course;
+import com.psl.service.CourseService;
+
+@RestController
+@CrossOrigin(origins=&quot;http://localhost:3000&quot;)
+<span class="fc" id="L22">public class CourseController {</span>
+	@Autowired
+	private CourseService service;
+	
+<span class="fc" id="L26">	public static final Logger LOGGER = LoggerFactory.getLogger(CourseController.class);</span>
+<span class="fc" id="L27">	private final String logPrefix = &quot;Course Controller - &quot;;</span>
+
+	/*
+	 *VIEW ALL COURSES AVAILABLE
+	 */
+	@GetMapping({&quot;/managers/course/allcourses&quot;,&quot;/learners/course/allcourses&quot;, &quot;/trainers/course/allcourses&quot;})
+    public List&lt;Course&gt; getCourse () {
+<span class="nc" id="L34">		LOGGER.info(logPrefix+&quot;GET /allcourses called to view all courses&quot;);</span>
+<span class="nc" id="L35">		return service.findAll();</span>
+    }
+	
+	/*
+	 *VIEW A COURSE BY COURSEID
+	 */
+	@GetMapping({&quot;/managers/course/{courseId}&quot;, &quot;/learners/course/{courseId}&quot;, &quot;/trainers/course/{courseId}&quot;})
+	public Course getCourse(@PathVariable int courseId) {
+<span class="nc" id="L43">		LOGGER.info(logPrefix+&quot;GET /{courseId} called view details of a course by ID&quot;);</span>
+<span class="nc" id="L44">		return service.getCourse(courseId);</span>
+	}
+	
+	/*
+	 *ADDING A COURSE DETAILS
+	 */
+	@PostMapping(&quot;/managers/course/addcourse&quot;)
+	public Course addCourse(@RequestBody Course course) {
+<span class="nc" id="L52">		LOGGER.info(logPrefix+&quot;POST /addcourse called to add a course&quot;);</span>
+<span class="nc" id="L53">		return service.addCourse(course);</span>
+	}
+	
+	/*
+	 * DELETE COURSE BY ID
+	 */
+	@DeleteMapping(&quot;/managers/course/delete/{courseid}&quot;)
+	public void removeCourse(@PathVariable int courseid) {
+<span class="nc" id="L61">		LOGGER.info(logPrefix+&quot;DELETE /delete/{courseid} called to delete a course by ID&quot;);</span>
+<span class="nc" id="L62">		service.removeCourse(courseid);</span>
+<span class="nc" id="L63">	}</span>
+
+	/*
+	 * UPDATE COURSE BY ID
+	 */
+	@PutMapping(&quot;/managers/course/update&quot;)
+	public void updateCourse(@RequestBody Course course) {
+<span class="nc" id="L70">		LOGGER.info(logPrefix+&quot;PUT /update called to update details of a course by ID&quot;);</span>
+<span class="nc" id="L71">		service.updateCourse(course);</span>
+<span class="nc" id="L72">	}</span>
+	
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

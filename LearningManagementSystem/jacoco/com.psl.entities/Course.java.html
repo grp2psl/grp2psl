@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Course.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">LearningManagementSystem</a> &gt; <a href="index.source.html" class="el_package">com.psl.entities</a> &gt; <span class="el_source">Course.java</span></div><h1>Course.java</h1><pre class="source lang-java linenums">/*
+ * Entity declaration of Course
+ */
+
+// This shows that course is declared in com.psl.entities package
+package com.psl.entities;
+
+//Necessary imports for entity declaration
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+/*
+ * Course class stores course details in attribute
+ * courseId is the primary key of course class
+ * Other attributes are courseName, prerequisite, syllabus and duration.
+ * Getter, setter and constructors both with and without parameters are declared.
+ * toString method is overridden to display instance of the class appropriately. 
+ */
+
+//Annotation to recognize Course as an Entity
+@Entity
+//Name of the MySql table in which Course Entity records are stored
+@Table(name = &quot;course&quot;)
+//Definition of Course Entity
+public class Course {
+	/*courseId attribute is the primary key. 
+	 *stored in courseid column in the table.
+	 *Compulsory for courseId to be non-empty.
+	 *Minimun value is 1 because it can not be 0 or negative.  
+	*/
+	@NotNull(message = &quot;courseId field can't be empty&quot;)
+	@Id
+	@Column(name=&quot;courseid&quot;)
+	@Min(value = 1, message = &quot;courseId field should be non zero&quot;)
+	private int courseId;
+	
+	/*
+	 * courseName attribute stores name of course in a string format 
+	 * with maximum limit on length of the string as 100.
+	 */
+	@Size(max = 100, message = &quot;Length of courseName can't be more than 100 characheters!&quot;)
+	@Column(name=&quot;coursename&quot;)
+	private String courseName;
+	
+	/*
+	 * prerequisite attribute stores prerquisites of the course in a string format 
+	 * with maximum limit on length of the string as 300.
+	 */
+	@Size(max = 300, message = &quot;Length of prerequisite can't be more than 300 characheters!&quot;)	
+	private String prerequisite;
+	
+	/*
+	 * syllabus attribute stores syllabus of the course in a string format 
+	 * with maximum limit on length of the string as 300.
+	 */
+	@Size(max = 300, message = &quot;Length of syllabus can't be more than 300 characheters!&quot;)		
+	private String syllabus;
+	
+	/*
+	 * duration stores the time required to complete the course in string format
+	 */
+	private String duration;
+	
+	
+	/*
+	 * Public getter and setter methods of all attributes
+	 */
+	public int getCourseId() {
+<span class="fc" id="L74">		return courseId;</span>
+	}
+	public void setCourseId(int courseId) {
+<span class="fc" id="L77">		this.courseId = courseId;</span>
+<span class="fc" id="L78">	}</span>
+	public String getCourseName() {
+<span class="fc" id="L80">		return courseName;</span>
+	}
+	public void setCourseName(String courseName) {
+<span class="nc" id="L83">		this.courseName = courseName;</span>
+<span class="nc" id="L84">	}</span>
+	public String getPrerequisite() {
+<span class="nc" id="L86">		return prerequisite;</span>
+	}
+	public void setPrerequisite(String prerequisite) {
+<span class="nc" id="L89">		this.prerequisite = prerequisite;</span>
+<span class="nc" id="L90">	}</span>
+	public String getSyllabus() {
+<span class="nc" id="L92">		return syllabus;</span>
+	}
+	public void setSyllabus(String syllabus) {
+<span class="nc" id="L95">		this.syllabus = syllabus;</span>
+<span class="nc" id="L96">	}</span>
+	public String getDuration() {
+<span class="fc" id="L98">		return duration;</span>
+	}
+	public void setDuration(String duration) {
+<span class="nc" id="L101">		this.duration = duration;</span>
+<span class="nc" id="L102">	}</span>
+		
+	//Overrides toString function to change output of print function
+	@Override
+	public String toString() {
+<span class="fc" id="L107">		return &quot;Course [courseId=&quot; + courseId + &quot;, courseName=&quot; + courseName + &quot;, prerequisite=&quot; + prerequisite</span>
+				+ &quot;, syllabus=&quot; + syllabus + &quot;, duration=&quot; + duration + &quot;]&quot;;
+	}
+
+	//Parameterized Constructor
+<span class="fc" id="L112">	public Course(int courseId, String courseName, String prerequisite, String syllabus, String duration) {</span>
+<span class="fc" id="L113">		this.courseId = courseId;</span>
+<span class="fc" id="L114">		this.courseName = courseName;</span>
+<span class="fc" id="L115">		this.prerequisite = prerequisite;</span>
+<span class="fc" id="L116">		this.syllabus = syllabus;</span>
+<span class="fc" id="L117">		this.duration = duration;</span>
+<span class="fc" id="L118">	}</span>
+	
+	//Default Constructor
+<span class="fc" id="L121">	public Course() {</span>
+<span class="fc" id="L122">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ManagerService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">LearningManagementSystem</a> &gt; <a href="index.source.html" class="el_package">com.psl.service</a> &gt; <span class="el_source">ManagerService.java</span></div><h1>ManagerService.java</h1><pre class="source lang-java linenums">package com.psl.service;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.psl.dao.IManagerDAO;
+import com.psl.entities.Learner;
+import com.psl.entities.Manager;
+
+@Service(&quot;managerService&quot;)
+<span class="fc" id="L13">public class ManagerService {</span>
+	@Autowired
+	private IManagerDAO dao;
+
+<span class="fc" id="L17">	public static final Logger LOGGER = LoggerFactory.getLogger(ManagerService.class);</span>
+<span class="fc" id="L18">	private final String logPrefix = &quot;Manager Service - &quot;;</span>
+	
+	/*
+	 * ADD MANAGER
+	 */
+	public void addManager(Manager m) {
+<span class="fc" id="L24">		LOGGER.info(logPrefix+&quot;Adding a manager - &quot;+m);</span>
+<span class="fc" id="L25">		Integer id = dao.getNextId();</span>
+<span class="pc bpc" id="L26" title="1 of 2 branches missed.">		id = (id==null ? 30000 : id);</span>
+<span class="fc" id="L27">		m.setManagerId(id);</span>
+<span class="fc" id="L28">		dao.save(m);</span>
+<span class="fc" id="L29">	}</span>
+	
+	/*
+	 * GET DETAILS OF MANAGER BY ID
+	 */
+	public Manager getManager(int id) {
+<span class="fc" id="L35">		LOGGER.info(logPrefix+&quot;Returning details of a manager with ID - &quot;+id);</span>
+<span class="fc" id="L36">		return dao.findById(id).get();</span>
+	}
+	
+	/*
+	 * UPDATE MANAGER DETAILS
+	 */
+	public void updateManager(Manager manager) {
+<span class="fc" id="L43">		LOGGER.info(logPrefix+&quot;Updating details of a manager to - &quot;+manager);</span>
+<span class="fc" id="L44">		dao.save(manager);</span>
+<span class="fc" id="L45">	}</span>
+
+	public int getNextId() {
+<span class="fc" id="L48">		LOGGER.info(logPrefix+&quot;Getting next ID of manager&quot;);</span>
+<span class="fc" id="L49">		Integer id = dao.getNextId();</span>
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">		id = (id==null ? 30000 : id);</span>
+<span class="fc" id="L51">		return id;</span>
+	}
+	
+	public Manager login(String email, String password) {
+<span class="nc" id="L55">		Manager manager = dao.findByEmailAndPassword(email, password);</span>
+<span class="nc" id="L56">		return manager;</span>
+	}
+	
+	public String checkPassword(int id) {
+<span class="fc" id="L60">		Manager manager = dao.findById(id).get();</span>
+<span class="fc" id="L61">		return manager.getPassword();</span>
+	}
+	
+	//Function which updates credentials of a manager with given learnerId.
+		public Manager updateAdminPassword(int id, String password) {
+<span class="fc" id="L66">			Manager m = dao.findById(id).get();</span>
+<span class="fc" id="L67">		    m.setPassword(password);</span>
+<span class="fc" id="L68">		    return dao.save(m);</span>
+		}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

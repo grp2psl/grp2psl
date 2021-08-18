@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Learner.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">LearningManagementSystem</a> &gt; <a href="index.source.html" class="el_package">com.psl.entities</a> &gt; <span class="el_source">Learner.java</span></div><h1>Learner.java</h1><pre class="source lang-java linenums">/*
+ * Entity declaration of Learner 
+ */
+
+// This shows that learner is declared in com.psl.entities package
+package com.psl.entities;
+
+// Necessary imports for entity declaration
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+/*
+ * This entity represents an employee who can take part in various courses
+ * in the Learning Management System.
+ * Learner is identified by a unique and non-null integer learnerId.
+ * A Learner record contains various attributes other than learnerId 
+ * which are name, phoneNumber, department, email and password.
+ * Getter, setter and constructors both with and without parameters are declared.
+ * toString method is overridden to display instance of the class appropriately.    
+ * */
+
+//Annotation to recognize learner as an Entity
+@Entity
+//Name of the MySql table in which Learner Entity records are stored
+@Table(name = &quot;learner&quot;)
+//Definition of Learner Entity which inherits the user class
+public class Learner extends User {
+	
+	/*learnerId attribute is the primary key. 
+	 *stored in learnerid column in the table.
+	 *Compulsory for learnerId to be non-empty.
+	 *Minimun value is 1 because it can not be 0 or negative.  
+	*/
+	@Id
+	@Column(name = &quot;learnerid&quot;)
+	@NotNull(message = &quot;LearnerId field can't be empty&quot;)
+	@Min(value = 1, message = &quot;LearnerId field should be non zerp&quot;)
+	private int learnerId;
+	
+	
+	/*
+	 * Name attribute stores name of learner in a string format 
+	 * with maximum limit on length of the string at 50.
+	 */
+	@NotNull(message = &quot;Name field can't be empty&quot;)
+	@Size(max = 50, message = &quot;Length of name can't be more than 50 characheters!&quot;)
+	private String name;
+	
+	/*
+	 * phoneNumber attribute stores contact number of the learner in string format
+	 * Attribute stored in phonenumber column of the table
+	 */
+	@Size(max = 15, message = &quot;Length of phoneNumber can't be more than 15 characheters!&quot;)	
+	@Column(name = &quot;phonenumber&quot;)
+	private String phoneNumber;
+	
+	/*
+	 * department attribute stores department name of the learner in string format 
+	 * Maximum permitted length of the string is 50 characters
+	 */
+	@Size(max = 50, message = &quot;Length of department can't be more than 50 characheters!&quot;)
+	private String department;
+	
+	/*
+	 * Stores email id of learner 
+	 * It must be unique and of 50 characters at max
+	 * It is compulsory because required during login
+	 */
+	@Size(max = 50, message = &quot;Length of email can't be more than 50 characheters!&quot;)
+	@NotNull(message = &quot;email field can't be empty&quot;)
+	@Email
+	private String email;
+	
+	/*
+	 * Stores password of the learner in 25 characters at max
+	 * It is compulsory because required during login
+	 */
+	@Size(max = 25, message = &quot;Length of password can't be more than 25 characheters!&quot;)
+	@NotNull(message = &quot;password field can't be empty&quot;)
+	private String password;
+	
+	/*
+	 * Public getter and setter methods of all attributes
+	 */
+	public int getLearnerId() {
+<span class="fc" id="L92">		return learnerId;</span>
+	}
+	public void setLearnerId(int learnerId) {
+<span class="fc" id="L95">		this.learnerId = learnerId;</span>
+<span class="fc" id="L96">	}</span>
+	public String getName() {
+<span class="fc" id="L98">		return name;</span>
+	}
+	public void setName(String name) {
+<span class="fc" id="L101">		this.name = name;</span>
+<span class="fc" id="L102">	}</span>
+	public String getPhoneNumber() {
+<span class="fc" id="L104">		return phoneNumber;</span>
+	}
+	public void setPhoneNumber(String phoneNumber) {
+<span class="fc" id="L107">		this.phoneNumber = phoneNumber;</span>
+<span class="fc" id="L108">	}</span>
+	public String getDepartment() {
+<span class="fc" id="L110">		return department;</span>
+	}
+	public void setDepartment(String department) {
+<span class="fc" id="L113">		this.department = department;</span>
+<span class="fc" id="L114">	}</span>
+	public String getEmail() {
+<span class="fc" id="L116">		return email;</span>
+	}
+	public void setEmail(String email) {
+<span class="fc" id="L119">		this.email = email;</span>
+<span class="fc" id="L120">	}</span>
+	public String getPassword() {
+<span class="fc" id="L122">		return password;</span>
+	}
+	public void setPassword(String password) {
+<span class="fc" id="L125">		this.password = password;</span>
+<span class="fc" id="L126">	}</span>
+	
+	//Overrides toString function to change output of print function
+	@Override
+	public String toString() {
+<span class="fc" id="L131">		return &quot;Learner [learnerId=&quot; + learnerId + &quot;, name=&quot; + name + &quot;, phoneNumber=&quot; + phoneNumber + &quot;, department=&quot;</span>
+				+ department + &quot;, email=&quot; + email + &quot;, password=&quot; + password + &quot;]&quot;;
+	}
+	
+	//Parameterized Constructor
+	public Learner(int learnerId, String name, String phoneNumber, String department, String email, String password) {
+<span class="fc" id="L137">		super();</span>
+<span class="fc" id="L138">		this.learnerId = learnerId;</span>
+<span class="fc" id="L139">		this.name = name;</span>
+<span class="fc" id="L140">		this.phoneNumber = phoneNumber;</span>
+<span class="fc" id="L141">		this.department = department;</span>
+<span class="fc" id="L142">		this.email = email;</span>
+<span class="fc" id="L143">		this.password = password;</span>
+<span class="fc" id="L144">	}</span>
+	
+	//Default Constructor
+	public Learner() {
+<span class="fc" id="L148">		super();</span>
+<span class="fc" id="L149">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TrainerService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">LearningManagementSystem</a> &gt; <a href="index.source.html" class="el_package">com.psl.service</a> &gt; <span class="el_source">TrainerService.java</span></div><h1>TrainerService.java</h1><pre class="source lang-java linenums">package com.psl.service;
+
+import java.util.List;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.psl.dao.ICourseOfferingDAO;
+import com.psl.dao.ITeacherCourseMappingDAO;
+import com.psl.dao.ITrainerDAO;
+
+
+
+import com.psl.entities.TeacherCourseMapping;
+import com.psl.entities.Trainer;
+import com.psl.utils.ExcelFields;
+import com.psl.utils.ExcelHelper;
+
+@Service(&quot;trainerService&quot;)
+<span class="fc" id="L32">public class TrainerService {</span>
+	@Autowired
+	private ITrainerDAO dao;
+	@Autowired
+	private EmailSenderService service;
+	@Autowired
+	private ITeacherCourseMappingDAO mappingDAO;
+	@Autowired
+	private ICourseOfferingDAO offeringDAO;
+
+<span class="fc" id="L42">	public static final Logger LOGGER = LoggerFactory.getLogger(TrainerService.class);</span>
+<span class="fc" id="L43">	private final String logPrefix = &quot;Trainer Service - &quot;;</span>
+
+	/*
+	 * ADD TRAINER
+	 */
+	public void addTrainer(Trainer trainer) {
+<span class="fc" id="L49">		LOGGER.info(logPrefix+&quot;Adding a trainer - &quot;+trainer);</span>
+<span class="fc" id="L50">		Integer id = dao.getNextId();</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">		id = (id==null ? 20000 : id);</span>
+<span class="fc" id="L52">		Random rand = new Random();</span>
+<span class="fc" id="L53">        String firstname = trainer.getName();</span>
+		try {
+<span class="fc" id="L55">			firstname = firstname.substring(0, trainer.getName().indexOf(&quot; &quot;));</span>
+<span class="nc" id="L56">		}catch(StringIndexOutOfBoundsException e) {</span>
+<span class="nc" id="L57">			e.printStackTrace();</span>
+<span class="fc" id="L58">		}</span>
+<span class="fc" id="L59">		String password = firstname+id+&quot;@&quot;+rand.nextInt(9999);</span>
+<span class="fc" id="L60">		trainer.setTrainerId(id);</span>
+<span class="fc" id="L61">		trainer.setPassword(password);</span>
+		try {
+<span class="fc" id="L63">			dao.saveNewEntry(trainer.getTrainerId(), trainer.getName(), trainer.getDepartment(), trainer.getPhoneNumber(), trainer.getEmail(), trainer.getPassword());</span>
+<span class="fc" id="L64">			service.sendEmail(&quot;group2.learning.management.system@gmail.com&quot;, trainer.getEmail(), &quot;Hi &quot; + firstname +&quot;, \nYour password is &quot;+password+&quot;\nChange your password once you are logged in.&quot;, &quot;Trainer registered successfully - learning management portal&quot;);</span>
+<span class="fc" id="L65">		}catch(DataIntegrityViolationException e) {</span>
+<span class="fc" id="L66">			throw new DataIntegrityViolationException(&quot;Duplicate email ID found for trainer with email ID: &quot;+trainer.getEmail());</span>
+<span class="fc" id="L67">		}</span>
+<span class="fc" id="L68">	}</span>
+
+	/*
+	 * ADD MULTIPLE TRAINERS
+	 */
+	public void addMultipleTrainers(MultipartFile csvFilePath) throws IOException {
+<span class="fc" id="L74">		LOGGER.info(logPrefix+&quot;Adding multiple trainers using file - &quot;+csvFilePath);</span>
+<span class="fc" id="L75">	    XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());</span>
+<span class="fc" id="L76">	    XSSFSheet worksheet = workbook.getSheetAt(0);</span>
+
+<span class="fc bfc" id="L78" title="All 2 branches covered.">	    for(int i=1;i&lt;worksheet.getPhysicalNumberOfRows() ;i++) {</span>
+<span class="fc" id="L79">	        Trainer trainer = new Trainer();</span>
+
+<span class="fc" id="L81">	        XSSFRow row = worksheet.getRow(i);</span>
+<span class="fc" id="L82">	        trainer.setName(row.getCell(0).getStringCellValue());</span>
+<span class="fc" id="L83">	        trainer.setDepartment(row.getCell(1).getStringCellValue());</span>
+<span class="fc" id="L84">	        trainer.setPhoneNumber(row.getCell(2).getStringCellValue());</span>
+<span class="fc" id="L85">	        trainer.setEmail(row.getCell(3).getStringCellValue());</span>
+<span class="fc" id="L86">	        addTrainer(trainer);</span>
+
+		}
+<span class="fc" id="L89">	}</span>
+
+	/*
+	 * GENERATES EXCEL SHEET OF SAMPLE DATA OF TRAINER DETAILS
+	 */
+	public void generateExcel(String path) throws IOException {
+<span class="fc" id="L95">		LOGGER.info(logPrefix+&quot;Generating excel format for adding multiple trainers&quot;);</span>
+<span class="fc" id="L96">		ExcelHelper helper = new ExcelHelper();</span>
+
+<span class="fc" id="L98">		List&lt;ExcelFields&gt; fields = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L99">		fields.add(new ExcelFields(&quot;Name&quot;, &quot;Firstname Lastname&quot;, XSSFCell.CELL_TYPE_STRING));</span>
+<span class="fc" id="L100">		fields.add(new ExcelFields(&quot;Department&quot;, &quot;DepartmentName&quot;, XSSFCell.CELL_TYPE_STRING));</span>
+<span class="fc" id="L101">		fields.add(new ExcelFields(&quot;Phone Number&quot;, &quot;9876543210&quot;, XSSFCell.CELL_TYPE_STRING));</span>
+<span class="fc" id="L102">		fields.add(new ExcelFields(&quot;Email&quot;, &quot;something@email.com&quot;, XSSFCell.CELL_TYPE_STRING));</span>
+
+<span class="fc" id="L104">		helper.generateExcel(path, &quot;trainers.xlsx&quot;, &quot;Sample Data&quot;, fields);</span>
+<span class="fc" id="L105">	}</span>
+
+	/*
+	 * GET DETAILS OF ALL TRAINERS
+	 */
+	public List&lt;Trainer&gt; getAllTrainers(){
+<span class="fc" id="L111">		LOGGER.info(logPrefix+&quot;Returning list of all the trainers&quot;);</span>
+<span class="fc" id="L112">		return dao.findAll();</span>
+	}
+
+	/*
+	 * GET DETAILS OF TRAINER
+	 */
+	public Trainer getTrainer(int id) {
+<span class="fc" id="L119">		LOGGER.info(logPrefix+&quot;Returning details of trainer with ID - &quot;+id);</span>
+<span class="fc" id="L120">		return dao.findById(id).get();</span>
+	}
+
+	public List&lt;TeacherCourseMapping&gt; findCoursesTaughtByTrainer(int id){
+<span class="nc" id="L124">		LOGGER.info(logPrefix+&quot;Returning List of Trainer-Course Mappings for trainer with ID - &quot;+id);</span>
+<span class="nc" id="L125">		List&lt;TeacherCourseMapping&gt; l = mappingDAO.findCoursesTaughtByTrainer(id);</span>
+<span class="nc" id="L126">		System.out.println(l.size());</span>
+<span class="nc" id="L127">		System.out.println(&quot;Trainer Query id: &quot; + id + &quot; ==&gt;&quot;);</span>
+<span class="nc" id="L128">		return mappingDAO.findCoursesTaughtByTrainer(id);</span>
+	}
+
+	public Float getFeedbackResults(int tcid) {
+<span class="nc" id="L132">		LOGGER.info(logPrefix+&quot;Returning feedback results for Trainer-Course Mapping with ID - &quot;+tcid);</span>
+<span class="nc" id="L133">		return offeringDAO.getFeedbackResults(tcid);</span>
+	}
+
+	public List&lt;Float&gt; findAllCoursesTaughtRatings(int id){
+<span class="nc" id="L137">		LOGGER.info(logPrefix+&quot;Returning list of ratings for trainer with ID - &quot;+id);</span>
+<span class="nc" id="L138">		List&lt;Float&gt; l = offeringDAO.findAllCoursesTaughtRatings(id);</span>
+<span class="nc" id="L139">		System.out.println(&quot;printing l: &quot;);</span>
+<span class="nc" id="L140">		System.out.println(l);</span>
+<span class="nc" id="L141">		return l;</span>
+	}
+
+	public List&lt;String&gt; findCommentsForACourse(int tcid){
+<span class="nc" id="L145">		LOGGER.info(logPrefix+&quot;Returning lsit of feedbacks for a Trainer-Course Mapping with ID - &quot;+tcid);</span>
+<span class="nc" id="L146">		return offeringDAO.findCommentsForACourse(tcid);</span>
+	}
+
+	/*
+	 * REMOVE TRAINER BY ID
+	 */
+	public void removeTrainer(int id) {
+<span class="fc" id="L153">		LOGGER.info(logPrefix+&quot;Deleting a trainer with ID - &quot;+id);</span>
+<span class="fc" id="L154">		dao.deleteById(id);</span>
+<span class="fc" id="L155">	}</span>
+
+	/*
+	 * Update TRAINER BY ID
+	 */
+	public void updateTrainer(Trainer trainer) {
+<span class="nc" id="L161">		LOGGER.info(logPrefix+&quot;Updating details of a trainer to - &quot;+trainer);</span>
+<span class="nc" id="L162">		dao.updateEntry(trainer.getDepartment(), trainer.getPhoneNumber(), trainer.getTrainerId());</span>
+<span class="nc" id="L163">	}</span>
+
+	/*
+	 * GET MAX ID OF TRAINER TABLE
+	 */
+	public int getNextId() {
+<span class="fc" id="L169">		LOGGER.info(logPrefix+&quot;Getting next ID of trainer&quot;);</span>
+<span class="fc" id="L170">		Integer id = dao.getNextId();</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">		id = (id==null ? 20000 : id);</span>
+<span class="fc" id="L172">		return id;</span>
+	}
+
+	public Trainer login(String email, String password) {
+<span class="nc" id="L176">		Trainer trainer = dao.findByEmailAndPassword(email, password);</span>
+<span class="nc" id="L177">		return trainer;</span>
+	}
+	
+	public String checkPassword(int id) {
+<span class="fc" id="L181">		Trainer trainer = dao.findById(id).get();</span>
+<span class="fc" id="L182">		return trainer.getPassword();</span>
+	}
+	
+	//Function which updates credentials of a manager with given learnerId.
+		public Trainer updateTrainerPassword(int id, String password) {
+<span class="fc" id="L187">			Trainer t = dao.findById(id).get();</span>
+<span class="fc" id="L188">		    t.setPassword(password);</span>
+<span class="fc" id="L189">		    return dao.save(t);</span>
+		}
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CourseOfferingService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">LearningManagementSystem</a> &gt; <a href="index.source.html" class="el_package">com.psl.service</a> &gt; <span class="el_source">CourseOfferingService.java</span></div><h1>CourseOfferingService.java</h1><pre class="source lang-java linenums">package com.psl.service;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.psl.dao.ICourseOfferingDAO;
+import com.psl.entities.Course;
+import com.psl.entities.CourseOffering;
+import com.psl.entities.CourseOfferingStatus;
+import com.psl.entities.Learner;
+import com.psl.entities.TeacherCourseMapping;
+import com.psl.entities.Trainer;
+import com.psl.utils.ExcelFields;
+import com.psl.utils.ExcelHelper;
+/*
+ * Declaration of Course Offering Service which completes various requests on CourseOffering class.
+ */
+//Required imports for the service declaration.
+
+
+
+//This annotation enables use of this class as a service named courseOfferingService.
+
+
+@Service(&quot;courseOfferingService&quot;)
+<span class="fc" id="L41">public class CourseOfferingService {</span>
+
+	@Autowired
+	private ICourseOfferingDAO dao;
+	
+	@Autowired
+	private LearnerService learnerService;
+	
+	@Autowired
+	private TrainerService trainerService;
+	
+	@Autowired
+	private CourseService courseService;
+	
+	@Autowired
+	private EmailSenderService emailService;
+	
+	@Autowired
+	private TeacherCourseMappingService tcService;
+
+<span class="fc" id="L61">	public static final Logger LOGGER = LoggerFactory.getLogger(CourseOfferingService.class);</span>
+<span class="fc" id="L62">	private final String logPrefix = &quot;Course Offering Service - &quot;;</span>
+	
+	/*
+	 * ENROLL LEARNER
+	 */
+	public ICourseOfferingDAO getDao() {
+<span class="nc" id="L68">		return dao;</span>
+	}
+
+	public void setDao(ICourseOfferingDAO dao) {
+<span class="nc" id="L72">		this.dao = dao;</span>
+<span class="nc" id="L73">	}</span>
+
+	//Function to allow Learner to given feedback on given course Offering
+	public CourseOffering addFeedbackCourseOfferingId(int courseOfferingId, String feedback, int rating) {
+<span class="nc" id="L77">		CourseOffering co = dao.findById(courseOfferingId).get();</span>
+<span class="nc" id="L78">		co.setFeedback(feedback);</span>
+<span class="nc" id="L79">		co.setRatings(rating);</span>
+<span class="nc" id="L80">		co = updateCourseOfferingStatus(co);</span>
+<span class="nc" id="L81">		return dao.save(co);</span>
+	}
+
+	public CourseOffering addFeedback(int learnerId, int tcId, String feedback) {
+<span class="nc" id="L85">		LOGGER.info(logPrefix+&quot;Adding feedback - &quot;+feedback+&quot; for Trainer-course mapping with ID - &quot;+tcId+&quot; by learner with ID - &quot;+learnerId);</span>
+<span class="nc" id="L86">		CourseOffering co = dao.findByTcIdAndLearnerId(tcId, learnerId);</span>
+<span class="nc" id="L87">		co.setFeedback(feedback);</span>
+<span class="nc" id="L88">		return dao.save(co);</span>
+	}
+	
+	//Lists all Course Offerings of given learner which is identified by learnerId 
+	public List&lt;CourseOffering&gt; getCourseOfferings(int learnerId) {
+<span class="nc" id="L93">		LOGGER.info(logPrefix+&quot;Returning list of all course offerings of the learner with ID - &quot;+learnerId);</span>
+<span class="nc" id="L94">		return dao.findByLearnerId(learnerId);</span>
+	}
+
+	public void enrollLearner(CourseOffering offering) throws ParseException {
+<span class="fc" id="L98">		LOGGER.info(logPrefix+&quot;Enrolling a learner with ID - &quot;+offering.getLearnerId()+&quot; to Trainer-Course mapping with ID - &quot;+offering.getTcId());</span>
+<span class="fc" id="L99">		SimpleDateFormat formatter = new SimpleDateFormat(&quot;yyyy-mm-dd&quot;);</span>
+<span class="fc" id="L100">		Integer maxId = dao.getMaxId();</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		maxId = maxId==null ? 1 : maxId;</span>
+<span class="fc" id="L102">		offering.setCourseOfferingId(++maxId);</span>
+<span class="fc" id="L103">		System.out.println(offering.getStatus());</span>
+<span class="fc" id="L104">        dao.save(updateCourseOfferingStatus(offering));</span>
+<span class="fc" id="L105">        Learner learner = learnerService.getLearner(offering.getLearnerId());</span>
+<span class="fc" id="L106">        Course course = tcService.getCourse(offering.getTcId());</span>
+<span class="fc" id="L107">        emailService.sendEmail(&quot;group2.learning.management.system@gmail.com&quot;, learner.getEmail(), &quot;Hi &quot; + learner.getName() +&quot;, \nYou have been enrolled to the Course - &quot;+course.getCourseName()+&quot;.\nDuration of the course is - &quot;+course.getDuration()+&quot; hours, starting from &quot;+formatter.format(offering.getStartDate()), &quot;Learner enrolled to &quot;+course.getCourseName()+&quot; successfully - learning management portal&quot;);		</span>
+<span class="fc" id="L108">	}</span>
+	
+	/*
+	 * ENROLL MULTIPLE LEARNERS
+	 */
+	public void enrollMultipleLearners(MultipartFile csvFilePath) throws IOException, ParseException {
+<span class="nc" id="L114">		LOGGER.info(logPrefix+&quot;Enrolling multiple learners using file - &quot;+csvFilePath);</span>
+<span class="nc" id="L115">		Integer maxId = dao.getMaxId();</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		maxId = maxId==null ? 1 : maxId;</span>
+<span class="nc" id="L117">		XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());</span>
+<span class="nc" id="L118">	    XSSFSheet worksheet = workbook.getSheetAt(0);</span>
+<span class="nc" id="L119">	    SimpleDateFormat formatter = new SimpleDateFormat(&quot;yyyy-mm-dd&quot;);</span>
+	    
+<span class="nc bnc" id="L121" title="All 2 branches missed.">	    for(int i=1;i&lt;worksheet.getPhysicalNumberOfRows() ;i++) {</span>
+<span class="nc" id="L122">	        CourseOffering offering = new CourseOffering();</span>
+<span class="nc" id="L123">	        XSSFRow row = worksheet.getRow(i);</span>
+<span class="nc" id="L124">	        offering.setCourseOfferingId(++maxId);</span>
+<span class="nc" id="L125">	        offering.setStartDate(formatter.parse(row.getCell(2).getStringCellValue()));</span>
+<span class="nc" id="L126">	        offering.setEndDate(formatter.parse(row.getCell(3).getStringCellValue()));</span>
+<span class="nc" id="L127">	        offering.setLearnerId((int)row.getCell(0).getNumericCellValue());</span>
+<span class="nc" id="L128">	        offering.setTcId((int)row.getCell(1).getNumericCellValue());</span>
+<span class="nc" id="L129">	        Learner learner = learnerService.getLearner(offering.getLearnerId());</span>
+<span class="nc" id="L130">	        Course course = tcService.getCourse(offering.getTcId());</span>
+<span class="nc" id="L131">	        dao.save(updateCourseOfferingStatus(offering));</span>
+<span class="nc" id="L132">	        emailService.sendEmail(&quot;group2.learning.management.system@gmail.com&quot;, learner.getEmail(), &quot;Hi &quot; + learner.getName() +&quot;, \nYou have been enrolled to the Course - &quot;+course.getCourseName()+&quot;.\nDuration of the course is - &quot;+course.getDuration()+&quot; hours, starting from &quot;+formatter.format(offering.getStartDate()), &quot;Learner enrolled to &quot;+course.getCourseName()+&quot; successfully - learning management portal&quot;);</span>
+		}
+				
+<span class="nc" id="L135">	}</span>
+	
+	/*
+	 * UPDATE STATUS OF COURSE OFFERING
+	 * STATUS CAN BE - IN_PROGRESS, FAILFEEDBACK_PENDING, PASSFEEDBACK_PENDING, FAILFEEDBACK_GIVEN, COMPLETED
+	 */
+	public CourseOffering updateCourseOfferingStatus(CourseOffering offering) {
+<span class="fc" id="L142">		LOGGER.info(logPrefix+&quot;Updating Course Offering Status for ID - &quot;+offering.getCourseOfferingId());</span>
+<span class="fc" id="L143">		double percentage = offering.getPercentage();</span>
+<span class="fc" id="L144">		String feedback = offering.getFeedback();</span>
+<span class="fc" id="L145">		String status = offering.getStatus();</span>
+<span class="pc bpc" id="L146" title="1 of 4 branches missed.">		if(percentage == 0.0 &amp;&amp; status == null) {</span>
+<span class="fc" id="L147">			offering.setStatus(CourseOfferingStatus.IN_PROGRESS.name());</span>
+<span class="pc bpc" id="L148" title="1 of 4 branches missed.">		} else if((percentage &lt; 70.0) &amp;&amp; feedback == null) {</span>
+<span class="fc" id="L149">			offering.setStatus(CourseOfferingStatus.FAIL.name()+&quot;,&quot;+CourseOfferingStatus.FEEDBACK_PENDING.name());</span>
+<span class="pc bpc" id="L150" title="2 of 4 branches missed.">		} else if((percentage &gt;= 70.0) &amp;&amp; feedback == null) {</span>
+<span class="fc" id="L151">			offering.setStatus(CourseOfferingStatus.PASS.name()+&quot;,&quot;+CourseOfferingStatus.FEEDBACK_PENDING.name());</span>
+<span class="nc bnc" id="L152" title="All 4 branches missed.">		} else if((percentage &lt; 70.0) &amp;&amp; feedback != null) {</span>
+<span class="nc" id="L153">			offering.setStatus(CourseOfferingStatus.FAIL.name()+&quot;,&quot;+CourseOfferingStatus.FEEDBACK_GIVEN.name());</span>
+		} else {
+<span class="nc" id="L155">			offering.setStatus(CourseOfferingStatus.COMPLETED.name());</span>
+		}
+<span class="fc" id="L157">		return offering;</span>
+	}
+	
+	/*
+	 * UPDATE TEST SCORE OF AN INDIVIDUAL
+	 */
+	public void updateTestScore(int id, double percentage) {
+<span class="fc" id="L164">		LOGGER.info(logPrefix+&quot;Updating Test Score Percentage - &quot;+percentage+&quot; for offering with ID - &quot;+id);</span>
+<span class="fc" id="L165">		CourseOffering offering = dao.findById(id).get();</span>
+<span class="fc" id="L166">		offering.setPercentage(percentage);</span>
+<span class="fc" id="L167">		dao.save(updateCourseOfferingStatus(offering));</span>
+<span class="fc" id="L168">	}</span>
+	
+	/*
+	 * UPDATE TEST SCORE OF MULTIPLE LEARNERS
+	 */
+	public void updateMultipleTestScores(MultipartFile csvFilePath) throws IOException, ParseException {
+<span class="fc" id="L174">		LOGGER.info(logPrefix+&quot;Updating multiple test scores using file - &quot;+csvFilePath);</span>
+<span class="fc" id="L175">		XSSFWorkbook workbook = new XSSFWorkbook(csvFilePath.getInputStream());</span>
+<span class="fc" id="L176">	    XSSFSheet worksheet = workbook.getSheetAt(0);</span>
+	    
+<span class="fc bfc" id="L178" title="All 2 branches covered.">	    for(int i=1;i&lt;worksheet.getPhysicalNumberOfRows() ;i++) {</span>
+<span class="fc" id="L179">	        XSSFRow row = worksheet.getRow(i);</span>
+<span class="fc" id="L180">			CourseOffering offering = dao.findById((int)row.getCell(0).getNumericCellValue()).get();</span>
+<span class="fc" id="L181">			offering.setPercentage((double)row.getCell(1).getNumericCellValue());</span>
+<span class="fc" id="L182">			dao.save(updateCourseOfferingStatus(offering));</span>
+		}		
+		
+<span class="fc" id="L185">	}</span>
+	
+	/*
+	 * GENERATES EXCEL SHEET OF SAMPLE DATA FOR ENROLMENT
+	 */
+	public void generateExcelForEnrolment(String path) throws IOException {
+<span class="fc" id="L191">		LOGGER.info(logPrefix+&quot;Generating excel format for multiple learner enrolment&quot;);</span>
+<span class="fc" id="L192">		ExcelHelper helper = new ExcelHelper();</span>
+		
+<span class="fc" id="L194">		List&lt;ExcelFields&gt; fields = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L195">		fields.add(new ExcelFields(&quot;Learner ID&quot;, &quot;1&quot;, XSSFCell.CELL_TYPE_NUMERIC));</span>
+<span class="fc" id="L196">		fields.add(new ExcelFields(&quot;TCID&quot;, &quot;2&quot;, XSSFCell.CELL_TYPE_NUMERIC));</span>
+<span class="fc" id="L197">		fields.add(new ExcelFields(&quot;Start Date&quot;, &quot;YYYY-MM-DD&quot;, XSSFCell.CELL_TYPE_STRING));</span>
+<span class="fc" id="L198">		fields.add(new ExcelFields(&quot;End Date&quot;, &quot;YYYY-MM-DD&quot;, XSSFCell.CELL_TYPE_STRING));</span>
+		
+<span class="fc" id="L200">		helper.generateExcel(path, &quot;enrollLearners.xlsx&quot;, &quot;Sample Data&quot;, fields);</span>
+		
+<span class="fc" id="L202">	}</span>
+
+	/*
+	 * GENERATES EXCEL SHEET OF SAMPLE DATA FOR TEST SCORE UPDATE 
+	 */
+	public void generateExcelForScoreUpdate(String path) throws IOException {
+<span class="fc" id="L208">		LOGGER.info(logPrefix+&quot;Generating excel format for updating multiple test scores&quot;);</span>
+<span class="fc" id="L209">		ExcelHelper helper = new ExcelHelper();</span>
+		
+<span class="fc" id="L211">		List&lt;ExcelFields&gt; fields = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L212">		fields.add(new ExcelFields(&quot;Course Offering ID&quot;, &quot;1&quot;, XSSFCell.CELL_TYPE_NUMERIC));</span>
+<span class="fc" id="L213">		fields.add(new ExcelFields(&quot;Percentage&quot;, &quot;70&quot;, XSSFCell.CELL_TYPE_NUMERIC));</span>
+		
+<span class="fc" id="L215">		helper.generateExcel(path, &quot;updateScores.xlsx&quot;, &quot;Sample Data&quot;, fields);</span>
+<span class="fc" id="L216">	}</span>
+
+	/*
+	 * VIEW COURSE OFFERING
+	 */
+	public List&lt;CourseOffering&gt; viewCourseOfferings(){
+<span class="fc" id="L222">		LOGGER.info(logPrefix+&quot;Returning list of all course offerings&quot;);</span>
+<span class="fc" id="L223">		return (List&lt;CourseOffering&gt;) dao.findAll();</span>
+	}
+	
+	/*
+	 * GET MAX ID OF COURSE OFFERING TABLE
+	 */
+	public int getMaxId() {
+<span class="fc" id="L230">		LOGGER.info(logPrefix+&quot;Getting max(id) of course offering&quot;);</span>
+<span class="fc" id="L231">		return dao.getMaxId();</span>
+	}
+	
+	/*
+	 * GET COURSE OFFERING BY ID
+	 */
+	public CourseOffering getCourseOffering(int id) {
+<span class="fc" id="L238">		LOGGER.info(logPrefix+&quot;Returning course offering with ID - &quot;+id);</span>
+<span class="fc" id="L239">		return dao.findById(id).get();</span>
+	}
+	
+	/*
+	 * REMOVE COURSE OFFERING
+	 */
+	public void removeCourseOffering(int id) {
+<span class="fc" id="L246">		LOGGER.info(logPrefix+&quot;Deleting course offering with ID - &quot;+id);</span>
+<span class="fc" id="L247">		dao.deleteById(id);</span>
+<span class="fc" id="L248">	}</span>
+	
+	/*
+	 * VIEW DETAILS OF TRAINER BY ID
+	 */
+	public Map&lt;String, Object&gt; viewTrainerDetails(int id) {
+<span class="fc" id="L254">		LOGGER.info(logPrefix+&quot;Returning details of a trainer with ID - &quot;+id+&quot; with courses offered&quot;);</span>
+<span class="fc" id="L255">		Map&lt;String, Object&gt; response = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L256">		Map&lt;Integer, List&lt;CourseOffering&gt;&gt; offerings = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L257">		Trainer trainer = trainerService.getTrainer(id);</span>
+<span class="fc" id="L258">		List&lt;Course&gt; courses = tcService.getCoursesByTrainerId(id);</span>
+<span class="fc" id="L259">		List&lt;TeacherCourseMapping&gt; tcMappings = tcService.getByTrainerId(id); </span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">		for(TeacherCourseMapping tc: tcMappings) {</span>
+<span class="fc" id="L261">			List&lt;CourseOffering&gt; co = dao.findByTcId(tc.getTcId());</span>
+<span class="fc" id="L262">			Course course = tcService.getCourse(tc.getTcId());</span>
+<span class="fc" id="L263">			offerings.put(course.getCourseId(), co);</span>
+<span class="fc" id="L264">		}</span>
+<span class="fc" id="L265">		response.put(&quot;trainerDetails&quot;, trainer);</span>
+<span class="fc" id="L266">		response.put(&quot;courses&quot;, courses);</span>
+<span class="fc" id="L267">		response.put(&quot;offerings&quot;, offerings);</span>
+<span class="fc" id="L268">		return response;</span>
+	}
+	
+	/*
+	 * VIEW DETAILS OF COURSE BY TRAINER ID
+	 */
+	public Map&lt;String, Object&gt; viewCourseDetailsByTrainerId(int id, int course_id) {
+<span class="fc" id="L275">		LOGGER.info(logPrefix+&quot;Returning details of a course with ID - &quot;+course_id+&quot; with feedback and ratings for trainer with ID - &quot;+id);</span>
+<span class="fc" id="L276">		Map&lt;String, Object&gt; response = new HashMap&lt;&gt;();</span>
+		double avgRating;
+<span class="fc" id="L278">		Course course = courseService.getCourse(course_id);</span>
+<span class="fc" id="L279">		TeacherCourseMapping tc = tcService.getByTrainerIdAndCourseId(id, course_id);</span>
+<span class="fc" id="L280">		int sum = 0;</span>
+<span class="fc" id="L281">		List&lt;CourseOffering&gt; offerings = dao.findByTcId(tc.getTcId());</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">		for(CourseOffering c : offerings) {</span>
+<span class="fc" id="L283">			sum = sum + c.getRatings();</span>
+<span class="fc" id="L284">		}</span>
+<span class="fc" id="L285">		avgRating = (double)sum/offerings.size();</span>
+<span class="fc" id="L286">		response.put(&quot;courseDetails&quot;, course);</span>
+<span class="fc" id="L287">		response.put(&quot;offerings&quot;, offerings);</span>
+<span class="fc" id="L288">		response.put(&quot;avgRating&quot;, avgRating);</span>
+<span class="fc" id="L289">		return response;</span>
+	}
+	
+	public int findCourseOfferingIdByTcIdAndLearnerId(int tcId, int learnerId) {
+<span class="nc" id="L293">		LOGGER.info(logPrefix+&quot;Returning course offering id for Trainer-Course mapping with ID - &quot;+tcId+&quot; and learner with ID - &quot;+learnerId);</span>
+<span class="nc" id="L294">		return dao.findByTcIdAndLearnerId(tcId, learnerId).getCourseOfferingId();</span>
+	}
+
+	/*
+	 * VIEW DETAILS OF COURSE OFFERINGS
+	 */	
+	public List&lt;Map&lt;String, Object&gt;&gt; viewCourseOfferingsDetails() throws ParseException {
+<span class="fc" id="L301">		LOGGER.info(logPrefix+&quot;Returning details of all Course Offerings&quot;);</span>
+<span class="fc" id="L302">		List&lt;Map&lt;String, Object&gt;&gt; response = new ArrayList&lt;Map&lt;String,Object&gt;&gt;();</span>
+		Map&lt;String, Object&gt; element;
+<span class="fc" id="L304">		List&lt;CourseOffering&gt; courseOfferingList = viewCourseOfferings();</span>
+<span class="fc bfc" id="L305" title="All 2 branches covered.">		for(CourseOffering co : courseOfferingList) {</span>
+<span class="fc" id="L306">			element = new HashMap&lt;String, Object&gt;();</span>
+<span class="fc" id="L307">			element.put(&quot;offering&quot;, co);</span>
+<span class="fc" id="L308">			element.put(&quot;learner&quot;, learnerService.getLearner(co.getLearnerId()));</span>
+<span class="fc" id="L309">			element.put(&quot;trainer&quot;, trainerService.getTrainer(tcService.getById(co.getTcId()).getTrainerId()));</span>
+<span class="fc" id="L310">			element.put(&quot;course&quot;, courseService.getCourse(tcService.getById(co.getTcId()).getCourseId()));</span>
+<span class="fc" id="L311">			response.add(element);</span>
+<span class="fc" id="L312">		}</span>
+<span class="fc" id="L313">		return response;</span>
+	}
+
+	/*
+	 * VIEW DETAILS OF COURSE OFFERINGS BY LEARNER ID
+	 */	
+	public List&lt;Map&lt;String, Object&gt;&gt; viewCourseOfferingsDetailsByLearnerId(int learnerid) throws ParseException {
+<span class="fc" id="L320">		LOGGER.info(logPrefix+&quot;Returning details of Course Offerings for learner with ID - &quot;+learnerid);</span>
+<span class="fc" id="L321">		List&lt;Map&lt;String, Object&gt;&gt; response = new ArrayList&lt;Map&lt;String,Object&gt;&gt;();</span>
+		Map&lt;String, Object&gt; element;
+<span class="fc" id="L323">		List&lt;CourseOffering&gt; courseOfferingList = viewCourseOfferings();</span>
+<span class="fc bfc" id="L324" title="All 2 branches covered.">		for(CourseOffering co : courseOfferingList) {</span>
+<span class="fc bfc" id="L325" title="All 2 branches covered.">			if(co.getLearnerId() == learnerid) {</span>
+<span class="fc" id="L326">				element = new HashMap&lt;String, Object&gt;();</span>
+<span class="fc" id="L327">				element.put(&quot;offerings&quot;, co);</span>
+<span class="fc" id="L328">				element.put(&quot;learners&quot;, learnerService.getLearner(co.getLearnerId()));</span>
+<span class="fc" id="L329">				element.put(&quot;trainers&quot;, trainerService.getTrainer(tcService.getById(co.getTcId()).getTrainerId()));</span>
+<span class="fc" id="L330">				element.put(&quot;courses&quot;, courseService.getCourse(tcService.getById(co.getTcId()).getCourseId()));</span>
+<span class="fc" id="L331">				response.add(element);</span>
+			}
+<span class="fc" id="L333">		}</span>
+<span class="fc" id="L334">		return response;</span>
+	}
+	
+	/*
+	 * VIEW COURSE ID, COURSE NAME AND COURSE SYLLABUS BY TCID
+	 */
+	public Course viewCourseDetailsBytcId(int tcId){
+<span class="nc" id="L341">		LOGGER.info(logPrefix+&quot;Returning details of Course for course offering with tcID - &quot;+tcId);</span>
+<span class="nc" id="L342">		Course c = tcService.getCourse(tcId);</span>
+<span class="nc" id="L343">		return c;</span>
+	}
+	
+	
+	/*
+	 * FIND TEACHER-COURSE MAPPINGS BY LEARNER ID
+	 */	
+	public List&lt;TeacherCourseMapping&gt; findTeacherCourseMappingsByLearnerId(int learnerId) {
+<span class="fc" id="L351">		LOGGER.info(logPrefix+&quot;Returning trainer-course mappings for learner with ID - &quot;+learnerId);</span>
+<span class="fc" id="L352">		List&lt;CourseOffering&gt; courseOfferingList = dao.findByLearnerId(learnerId);</span>
+<span class="fc" id="L353">		List&lt;TeacherCourseMapping&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L354" title="All 2 branches covered.">		for(CourseOffering co : courseOfferingList) {</span>
+<span class="fc" id="L355">			list.add(tcService.getById(co.getTcId()));</span>
+<span class="fc" id="L356">		}</span>
+<span class="fc" id="L357">		return list;</span>
+	}
+
+	/*
+	 * FIND LEARNERS BY TCID
+	 */	
+	public List&lt;Learner&gt; findLearnersByTcId(int tcId) {
+<span class="fc" id="L364">		LOGGER.info(logPrefix+&quot;Returning Learners for Trainer-Course mapping with TcId - &quot;+tcId);</span>
+<span class="fc" id="L365">		List&lt;CourseOffering&gt; courseOfferingList = dao.findByTcId(tcId);</span>
+<span class="fc" id="L366">		List&lt;Learner&gt; learners = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L367" title="All 2 branches covered.">		for(CourseOffering co : courseOfferingList) {</span>
+<span class="fc" id="L368">			learners.add(learnerService.getLearner(co.getLearnerId()));</span>
+<span class="fc" id="L369">		}</span>
+<span class="fc" id="L370">		return learners;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

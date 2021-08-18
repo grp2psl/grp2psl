@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CourseOffering.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">LearningManagementSystem</a> &gt; <a href="index.source.html" class="el_package">com.psl.entities</a> &gt; <span class="el_source">CourseOffering.java</span></div><h1>CourseOffering.java</h1><pre class="source lang-java linenums">/*
+ * Entity declaration of Course Offering
+ */
+
+// This shows that course is declared in com.psl.entities package
+package com.psl.entities;
+
+//Necessary imports for entity declaration
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+/*
+ * CourseOffering class stores mapping of learners with course offerings.
+ * learnerId and tcId is the composite primary key of course class
+ * Other attributes are feedback, ratings, startDate, endDate , status and percentage.
+ * Getter, setter and constructors both with and without parameters are declared.
+ * toString method is overridden to display instance of the class appropriately. 
+ */
+
+//Annotation to recognize CourseOffering as an Entity
+@Entity
+//Name of the MySql table in which CourseOffering Entity records are stored
+@Table(name = &quot;courseoffering&quot;)
+//Definition of CourseOffering Entity
+public class CourseOffering{
+	
+	@Id
+	@NotNull(message = &quot;Course Offering id field can't be null&quot;)
+	@Column(name = &quot;courseofferingid&quot;)
+	private int CourseOfferingId;
+	
+	/*
+	 * feedback attribute stores feedback of course offering in a string format 
+	 * with maximum limit on length of the string as 255.
+	 */
+	@Size(max = 255, message = &quot;Length of feedback can't be more than 255 characheters!&quot;)
+	private String feedback;
+	
+	/*
+	 * ratings can't be null and are stored in integer format
+	 */
+	@NotNull(message = &quot;ratings field can't be null&quot;)
+	private int ratings;
+	
+	/*
+	 * startDate stores the starting date of courseOffering in date format.
+	 * It is stored in startDate column. 
+	 */
+	@Column(name = &quot;startdate&quot;)
+	private Date startDate;
+	
+	/*
+	 * endDate stores the ending date of courseOffering in date format.
+	 * It is stored in endDate column. 
+	 */
+	@Column(name = &quot;enddate&quot;)
+	private Date endDate;
+	
+	/*
+	 * It is part of the composite key. 
+	 * Maps enrolled learners in the given courseOffering with it.
+	 * Stored in learnerid column
+	 * It can't be null
+	 */
+	@Column(name = &quot;learnerid&quot;)
+	@NotNull(message = &quot;learnerId field can't be null&quot;)
+	private int learnerId;
+
+	/*
+	 * It is part of the composite key. 
+	 * Maps given courseOffering with learners.
+	 * Stored in tcid column
+	 * It can't be null
+	 */
+	@Column(name = &quot;tcid&quot;)
+	@NotNull(message = &quot;tcId field can't be null&quot;)
+	private int tcId;
+	
+	/*
+	 * Status stores current status of learner with the given course offering
+	 * It can include strings like enrolled, approved, completed, pass , etc. 
+	 * Maximum length of the status string is 255 characters
+	 */
+	@Size(max = 255, message = &quot;Length of status can't be more than 255 characheters!&quot;)
+	private String status;
+	
+	/*
+	 * Percentage field stores percent score of learner on given course offering.
+	 * It can't be null.
+	 * By default it can be initialized with some negative value.
+	 */
+	//@NotNull(message = &quot;percentage field can't be null&quot;)	
+	private double percentage;
+	
+	/*
+	 * Public getter and setter methods of all attributes
+	 */
+	public String getFeedback() {
+<span class="fc" id="L105">		return feedback;</span>
+	}
+	public void setFeedback(String feedback) {
+<span class="nc" id="L108">		this.feedback = feedback;</span>
+<span class="nc" id="L109">	}</span>
+	
+	public int getCourseOfferingId() {
+<span class="fc" id="L112">		return CourseOfferingId;</span>
+	}
+	public void setCourseOfferingId(int courseofferingid) {
+<span class="fc" id="L115">		this.CourseOfferingId = courseofferingid;</span>
+<span class="fc" id="L116">	}</span>
+	public int getRatings() {
+<span class="fc" id="L118">		return ratings;</span>
+	}
+	public void setRatings(int ratings) {
+<span class="nc" id="L121">		this.ratings = ratings;</span>
+<span class="nc" id="L122">	}</span>
+	public Date getStartDate() {
+<span class="fc" id="L124">		return startDate;</span>
+	}
+	public void setStartDate(Date startdate) {
+<span class="fc" id="L127">		this.startDate = startdate;</span>
+<span class="fc" id="L128">	}</span>
+	public Date getEndDate() {
+<span class="nc" id="L130">		return endDate;</span>
+	}
+	public void setEndDate(Date enddate) {
+<span class="fc" id="L133">		this.endDate = enddate;</span>
+<span class="fc" id="L134">	}</span>
+	public int getLearnerId() {
+<span class="fc" id="L136">		return learnerId;</span>
+	}
+	public void setLearnerId(int learnerid) {
+<span class="fc" id="L139">		this.learnerId = learnerid;</span>
+<span class="fc" id="L140">	}</span>
+	public int getTcId() {
+<span class="fc" id="L142">		return tcId;</span>
+	}
+	public void setTcId(int tcid) {
+<span class="fc" id="L145">		this.tcId = tcid;</span>
+<span class="fc" id="L146">	}</span>
+	public String getStatus() {
+<span class="fc" id="L148">		return status;</span>
+	}
+	public void setStatus(String status) {
+<span class="fc" id="L151">		this.status = status;</span>
+<span class="fc" id="L152">	}</span>
+	public double getPercentage() {
+<span class="fc" id="L154">		return percentage;</span>
+	}
+	public void setPercentage(double percentage) {
+<span class="fc" id="L157">		this.percentage = percentage;</span>
+<span class="fc" id="L158">	}</span>
+	
+	//Parameterized Constructor
+	public CourseOffering(int courseofferingid, String feedback, int ratings, Date startdate, Date enddate,
+<span class="nc" id="L162">			int learnerid, int tcid, String status, double percentage) {</span>
+<span class="nc" id="L163">		this.CourseOfferingId = courseofferingid;</span>
+<span class="nc" id="L164">		this.feedback = feedback;</span>
+<span class="nc" id="L165">		this.ratings = ratings;</span>
+<span class="nc" id="L166">		this.startDate = startdate;</span>
+<span class="nc" id="L167">		this.endDate = enddate;</span>
+<span class="nc" id="L168">		this.learnerId = learnerid;</span>
+<span class="nc" id="L169">		this.tcId = tcid;</span>
+<span class="nc" id="L170">		this.status = status;</span>
+<span class="nc" id="L171">		this.percentage = percentage;</span>
+<span class="nc" id="L172">	}</span>
+	//Default Constructor
+<span class="fc" id="L174">	public CourseOffering() {</span>
+<span class="fc" id="L175">	}</span>
+	
+	//Overrides equal function which compares equality of two course offering objects.
+	@Override
+	public boolean equals(Object o) {
+<span class="nc bnc" id="L180" title="All 2 branches missed.">		if (o == this) {</span>
+<span class="nc" id="L181">			return true;</span>
+	    }
+		
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (!(o instanceof CourseOffering)) {</span>
+<span class="nc" id="L185">            return false;</span>
+        }
+		
+<span class="nc" id="L188">		CourseOffering Co = (CourseOffering)o;</span>
+		
+<span class="nc bnc" id="L190" title="All 6 branches missed.">		return ((feedback == null &amp;&amp; Co.getFeedback() == null)||feedback.equals(Co.getFeedback())) &amp;&amp;</span>
+<span class="nc bnc" id="L191" title="All 4 branches missed.">				ratings == Co.getRatings()&amp;&amp;</span>
+<span class="nc bnc" id="L192" title="All 6 branches missed.">				(( startDate == null &amp;&amp; Co.getStartDate() == null ) ||startDate.equals(Co.getStartDate()))&amp;&amp;</span>
+<span class="nc bnc" id="L193" title="All 4 branches missed.">				(( endDate == null &amp;&amp; Co.getEndDate() == null) || endDate.equals(Co.getEndDate())) &amp;&amp;</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">				learnerId == Co.getLearnerId() &amp;&amp;</span>
+<span class="nc bnc" id="L195" title="All 4 branches missed.">				tcId == Co.getTcId() &amp;&amp;</span>
+<span class="nc bnc" id="L196" title="All 4 branches missed.">				(( status == null &amp;&amp; Co.getStatus() == null ) ||status.equals(Co.getStatus()))&amp;&amp;</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">				percentage == Co.getPercentage() &amp;&amp;</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">				CourseOfferingId == Co.getCourseOfferingId();</span>
+	}
+	
+	@Override
+	public String toString() {
+<span class="fc" id="L203">		return &quot;Courseoffering [courseofferingid=&quot; + CourseOfferingId + &quot;, feedback=&quot; + feedback + &quot;, ratings=&quot;</span>
+				+ ratings + &quot;, startdate=&quot; + startDate + &quot;, enddate=&quot; + endDate + &quot;, learnerid=&quot; + learnerId + &quot;, tcid=&quot;
+				+ tcId + &quot;, status=&quot; + status + &quot;, percentage=&quot; + percentage + &quot;]&quot;;
+	}	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

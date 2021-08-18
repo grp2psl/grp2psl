@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExcelHelper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">LearningManagementSystem</a> &gt; <a href="index.source.html" class="el_package">com.psl.utils</a> &gt; <span class="el_source">ExcelHelper.java</span></div><h1>ExcelHelper.java</h1><pre class="source lang-java linenums">package com.psl.utils;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+<span class="fc" id="L18">public class ExcelHelper {</span>
+	/*
+	 * GENERALIZED METHOD TO DOWNLOAD EXCEL FILE
+	 */
+	public void generateExcel(String path, String fileName, String sheetName, List&lt;ExcelFields&gt; fields) throws IOException {
+<span class="fc" id="L23">		Workbook workbook = new XSSFWorkbook();</span>
+
+<span class="fc" id="L25">		Sheet sheet = workbook.createSheet(sheetName);</span>
+<span class="fc" id="L26">		sheet.setColumnWidth(0, 6000);</span>
+<span class="fc" id="L27">		sheet.setColumnWidth(1, 4000);</span>
+		
+		
+<span class="fc" id="L30">		Row header = sheet.createRow(0);</span>
+
+<span class="fc" id="L32">		CellStyle headerStyle = workbook.createCellStyle();</span>
+<span class="fc" id="L33">		headerStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());</span>
+
+<span class="fc" id="L35">		XSSFFont font = ((XSSFWorkbook) workbook).createFont();</span>
+<span class="fc" id="L36">		font.setFontName(&quot;Arial&quot;);</span>
+<span class="fc" id="L37">		font.setBold(true);</span>
+<span class="fc" id="L38">		headerStyle.setFont(font);</span>
+		
+		Cell headerCell;
+		
+
+<span class="fc bfc" id="L43" title="All 2 branches covered.">		for(int i = 0; i &lt; fields.size(); i++) {</span>
+<span class="fc" id="L44">			headerCell = header.createCell(i);</span>
+<span class="fc" id="L45">			headerCell.setCellValue(fields.get(i).getFieldName());</span>
+<span class="fc" id="L46">			headerCell.setCellStyle(headerStyle);			</span>
+		}
+				
+<span class="fc" id="L49">		Row data = sheet.createRow(1);</span>
+		Cell dataCell;
+		
+<span class="fc bfc" id="L52" title="All 2 branches covered.">		for(int i = 0; i &lt; fields.size(); i++) {</span>
+<span class="fc" id="L53">			dataCell = data.createCell(i);</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">			if(fields.get(i).getFieldType() == XSSFCell.CELL_TYPE_NUMERIC) {</span>
+<span class="fc" id="L55">				dataCell.setCellValue(Double.parseDouble(fields.get(i).getFieldValue()));</span>
+			}
+			else {
+<span class="fc" id="L58">				dataCell.setCellValue(fields.get(i).getFieldValue());</span>
+			}
+<span class="fc" id="L60">			dataCell.setCellType(fields.get(i).getFieldType());			</span>
+		}
+		
+<span class="fc" id="L63">		File file = new File(path, fileName);</span>
+<span class="fc" id="L64">		FileOutputStream outputStream = new FileOutputStream(file);</span>
+<span class="fc" id="L65">		workbook.write(outputStream);</span>
+<span class="fc" id="L66">		workbook.close();</span>
+<span class="fc" id="L67">		outputStream.close();</span>
+<span class="fc" id="L68">		System.out.println(file.getPath());</span>
+<span class="fc" id="L69">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LearnerController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">LearningManagementSystem</a> &gt; <a href="index.source.html" class="el_package">com.psl.controller</a> &gt; <span class="el_source">LearnerController.java</span></div><h1>LearnerController.java</h1><pre class="source lang-java linenums">/*
+ * Defines LearnerController which handles various url requests 
+ * related to Learner.
+ */
+package com.psl.controller;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
+//Importing required imports for Learner Controller Definition.
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.psl.entities.Learner;
+import com.psl.service.LearnerService;
+
+import io.swagger.v3.oas.annotations.Operation;
+
+/*Annotation to enable LearnerController to act as a RestController 
+ * Which handles all requests on url's having &quot;/learners&quot; prefix
+ */
+
+@RestController
+@CrossOrigin(origins = &quot;http://localhost:3000&quot;)
+//Definition of the class
+<span class="fc" id="L43">public class LearnerController {</span>
+	
+	//Autowiring with LearnerService
+	@Autowired
+	private LearnerService service;
+	
+<span class="fc" id="L49">	public static final Logger LOGGER = LoggerFactory.getLogger(LearnerController.class);</span>
+<span class="fc" id="L50">	private final String logPrefix = &quot;Learner Controller - &quot;;</span>
+
+	/*
+	 * This part handles get requests from url's having /learners/id pattern
+	 * Where id is learner Id
+	 * It gets learner details with given learnerId.
+	 * GET DETAILS OF LEARNER BY ID
+	 */	
+	@Operation(summary = &quot;GET DETAILS OF LEARNER BY ID&quot;)
+	@GetMapping({&quot;/learners/{id}&quot;, &quot;/managers/learners/{id}&quot;})
+	public Learner getLearner(@PathVariable int id) {
+<span class="nc" id="L61">		LOGGER.info(logPrefix+&quot;GET /{id} called to get details of a learner by ID&quot;);</span>
+<span class="nc" id="L62">		return service.getLearner(id);</span>
+	}
+
+	/*
+	 * GET DETAILS OF ALL LEARNERS
+	 */
+	@Operation(summary = &quot;GET DETAILS OF ALL LEARNERS&quot;)
+	@GetMapping(&quot;/managers/learners/&quot;)
+	public List&lt;Learner&gt; getAllLearners(){
+<span class="nc" id="L71">		LOGGER.info(logPrefix+&quot;GET / called to view all learners&quot;);</span>
+<span class="nc" id="L72">		return service.getAllLearners();</span>
+	}
+	
+	/*
+	 * This part handles post requests from url's ending with /learners/register pattern
+	 * It registers a new Learner using addLearner function
+	 * REGISTER LEARNER
+	 */
+	@Operation(summary = &quot;REGISTER LEARNER&quot;)
+	@PostMapping(&quot;/managers/learners/register&quot;)
+	public ResponseEntity&lt;String&gt; addLearner(@RequestBody Learner learner) {
+<span class="nc" id="L83">		LOGGER.info(logPrefix+&quot;POST /register called to add a new learner&quot;);</span>
+		try {
+<span class="nc" id="L85">			service.addLearner(learner);</span>
+<span class="nc" id="L86">			LOGGER.info(&quot;Learner registered successfully&quot;);</span>
+<span class="nc" id="L87">			return new ResponseEntity&lt;&gt;(&quot;Learner registered successfully&quot;, HttpStatus.OK);			</span>
+<span class="nc" id="L88">		}catch(DataIntegrityViolationException e) {</span>
+<span class="nc" id="L89">			LOGGER.error(e.getMessage());</span>
+<span class="nc" id="L90">			return new ResponseEntity&lt;&gt;(e.getMessage()+&quot;\nPlease register with another email ID&quot;, HttpStatus.CONFLICT);	</span>
+<span class="nc" id="L91">		}catch(Exception e) {</span>
+<span class="nc" id="L92">			LOGGER.error(e.getMessage());</span>
+<span class="nc" id="L93">			return new ResponseEntity&lt;&gt;(&quot;Server error. Please try again later&quot;, HttpStatus.INTERNAL_SERVER_ERROR);</span>
+		}
+	}
+	
+	/*
+	 * REGISTER MULTIPLE LEARNERS BY UPLOADING EXCEL FILE
+	 */
+	@Operation(summary = &quot;REGISTER MULTIPLE LEARNERS BY UPLOADING EXCEL FILE&quot;)
+	@PostMapping(&quot;/managers/learners/register-multiple&quot;)
+	public ResponseEntity&lt;String&gt; addMultipleLearners(@RequestParam(&quot;file&quot;) MultipartFile csvFilePath ) throws IOException {
+<span class="nc" id="L103">		LOGGER.info(logPrefix+&quot;POST /register-multiple called to add multiple learners&quot;);</span>
+		try {
+<span class="nc" id="L105">			service.addMultipleLearners(csvFilePath);</span>
+<span class="nc" id="L106">			LOGGER.info(&quot;Learners registered successfully&quot;);</span>
+<span class="nc" id="L107">			return new ResponseEntity&lt;&gt;(&quot;Learners registered successfully&quot;, HttpStatus.OK);			</span>
+<span class="nc" id="L108">		}catch(DataIntegrityViolationException e) {</span>
+<span class="nc" id="L109">			LOGGER.error(e.getMessage());</span>
+<span class="nc" id="L110">			return new ResponseEntity&lt;&gt;(e.getMessage()+&quot;\nPlease delete records till this email ID and upload the file again.&quot;, HttpStatus.CONFLICT);	</span>
+<span class="nc" id="L111">		}catch(Exception e) {</span>
+<span class="nc" id="L112">			LOGGER.error(e.getMessage());</span>
+<span class="nc" id="L113">			return new ResponseEntity&lt;&gt;(&quot;Server error. Please try again later&quot;, HttpStatus.INTERNAL_SERVER_ERROR);</span>
+		}
+	}
+	
+	/*
+	 * This part handles put requests from url's ending with /learners/update/id pattern
+	 * Where id is learner Id.
+	 * It updates credentials of Learner with given id.
+	 */
+	@Operation(summary = &quot;It updates credentials of Learner with given id&quot;)
+	@PutMapping({&quot;/learners/updatelearner/{id}/currentPassword/{currentPassword}/newPassword/{newPassword}&quot;, &quot;/managers/learners/updatelearner/{id}/currentPassword/{currentPassword}/newPassword/{newPassword}&quot;})
+	public ResponseEntity&lt;String&gt; updateLearner(@PathVariable int id,  @PathVariable String currentPassword,@PathVariable String newPassword) {
+<span class="nc" id="L125">		LOGGER.info(logPrefix+&quot;PUT /updateadmin called to update admin password&quot;);</span>
+<span class="nc" id="L126">		System.out.println(newPassword);</span>
+<span class="nc" id="L127">		System.out.println(currentPassword);</span>
+		
+<span class="nc" id="L129">		String pass=service.checkPassword(id);</span>
+<span class="nc" id="L130">		System.out.println(pass);</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		if(pass.contentEquals(currentPassword)) {</span>
+<span class="nc" id="L132">			service.updateLearnerPassword(id, newPassword);</span>
+<span class="nc" id="L133">			LOGGER.info(&quot;Password updated successfully&quot;);</span>
+<span class="nc" id="L134">			return new ResponseEntity&lt;&gt;(&quot; Password updated successfully&quot;, HttpStatus.OK);</span>
+		}
+		else {
+<span class="nc" id="L137">			LOGGER.error(&quot;Enter correct current password&quot;);</span>
+<span class="nc" id="L138">			return new ResponseEntity&lt;&gt;(&quot;Incorrect Password&quot;, HttpStatus.INTERNAL_SERVER_ERROR);</span>
+		}
+	}
+	
+	@PutMapping({&quot;/learners/update/{id}&quot;, &quot;/managers/learners/update/{id}&quot;})
+	public void updateLearner(@PathVariable int id, @RequestBody Map&lt;String, String&gt; credentials) {
+<span class="nc" id="L144">		LOGGER.info(logPrefix+&quot;PUT /update/{id} called to update details of a learner by ID&quot;);</span>
+<span class="nc" id="L145">		service.updateLearner(id, credentials.get(&quot;email&quot;), credentials.get(&quot;password&quot;));</span>
+<span class="nc" id="L146">	}</span>
+	
+	/*
+	 * DELETE LEARNER BY ID
+	 */
+	@Operation(summary = &quot;DELETE LEARNER BY ID&quot;)
+	@DeleteMapping(&quot;/managers/learners/{id}&quot;)
+	public void removeLearner(@PathVariable int id) {
+<span class="nc" id="L154">		LOGGER.info(logPrefix+&quot;DELETE /{id} called to delete a learner by ID&quot;);</span>
+<span class="nc" id="L155">		service.removeLearner(id);</span>
+<span class="nc" id="L156">	}</span>
+
+	/*
+	 * UPDATE LEARNER BY ID
+	 */
+	@Operation(summary = &quot;UPDATE LEARNER BY ID&quot;)
+	@PutMapping({&quot;/learners/update&quot;, &quot;/managers/learners/update&quot;})
+	public void updateLearner(@RequestBody Learner learner) {
+<span class="nc" id="L164">		LOGGER.info(logPrefix+&quot;PUT /update called to update details of a learner by ID&quot;);</span>
+<span class="nc" id="L165">		service.updateLearner(learner);</span>
+<span class="nc" id="L166">	}</span>
+	
+	/*
+	 * DOWNLOAD FORMAT OF EXCEL SHEET FOR UPLOADING MULTIPLE LEARNERS
+	 */
+	@Operation(summary = &quot;DOWNLOAD FORMAT OF EXCEL SHEET FOR UPLOADING MULTIPLE LEARNERS&quot;)
+	@GetMapping(&quot;/managers/learners/generate-excel&quot;)
+	public void downloadFileFromLocal() throws IOException {
+<span class="nc" id="L174">		LOGGER.info(logPrefix+&quot;GET /generate-excel called to download excel format for multiple learner registration&quot;);</span>
+<span class="nc" id="L175">		Path file = Paths.get(System.getProperty(&quot;user.home&quot;), &quot;Downloads&quot;);</span>
+<span class="nc" id="L176">		service.generateExcel(file.toString());</span>
+<span class="nc" id="L177">		System.out.println(file);</span>
+<span class="nc" id="L178">	}</span>
+
+	@Operation(summary = &quot;LEARNER LOGIN&quot;)
+	@GetMapping(&quot;/learners/login&quot;)
+	public ResponseEntity&lt;Learner&gt; login(@RequestParam String email, @RequestParam String password){
+<span class="nc" id="L183">		Learner result = service.login(email, password);</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		if(result == null) {</span>
+<span class="nc" id="L185">			return new ResponseEntity&lt;&gt;(null, HttpStatus.UNAUTHORIZED);	</span>
+		}
+<span class="nc" id="L187">		return new ResponseEntity&lt;&gt;(result, HttpStatus.OK);	</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

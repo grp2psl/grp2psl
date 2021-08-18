@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmailSenderService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">LearningManagementSystem</a> &gt; <a href="index.source.html" class="el_package">com.psl.service</a> &gt; <span class="el_source">EmailSenderService.java</span></div><h1>EmailSenderService.java</h1><pre class="source lang-java linenums">package com.psl.service;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
+
+/*
+ * SERVICE TO SEND MAILS
+ */
+@Service
+<span class="fc" id="L14">public class EmailSenderService {</span>
+	@Autowired
+	private JavaMailSender sender;
+
+<span class="fc" id="L18">	public static final Logger LOGGER = LoggerFactory.getLogger(EmailSenderService.class);</span>
+<span class="fc" id="L19">	private final String logPrefix = &quot;Email Sender Service - &quot;;</span>
+
+	public void sendEmail(String fromEmail, String toEmail, String body, String subject) {
+<span class="fc" id="L22">		LOGGER.info(logPrefix+&quot;Sending email from - &quot;+fromEmail+&quot; to - &quot;+toEmail+&quot; with subject - &quot;+subject+&quot; and body - &quot;+body);</span>
+<span class="fc" id="L23">		SimpleMailMessage message = new SimpleMailMessage();</span>
+<span class="fc" id="L24">		message.setFrom(fromEmail);</span>
+<span class="fc" id="L25">		message.setTo(toEmail);</span>
+<span class="fc" id="L26">		message.setText(body);</span>
+<span class="fc" id="L27">		message.setSubject(subject);</span>
+<span class="fc" id="L28">		sender.send(message);</span>
+<span class="fc" id="L29">		System.out.println(&quot;Mail sent..&quot;);</span>
+<span class="fc" id="L30">		LOGGER.info(logPrefix+&quot;Mail sent&quot;);</span>
+<span class="fc" id="L31">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TeacherCourseMapping.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">LearningManagementSystem</a> &gt; <a href="index.source.html" class="el_package">com.psl.entities</a> &gt; <span class="el_source">TeacherCourseMapping.java</span></div><h1>TeacherCourseMapping.java</h1><pre class="source lang-java linenums">/*
+ * Entity declaration of TeacherCourseMapping
+ */
+// This shows that TeacherCourseMapping is declared in com.psl.entities package
+package com.psl.entities;
+
+//Necessary imports for entity declaration
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+/*
+ * TeacherCourseMapping class stores details of trainer and cpurse Mapping
+ */
+@Entity
+//TeacherCourseMapping entity stored in table teachercoursemapping
+@Table(name = &quot;teachercoursemapping&quot;)
+public class TeacherCourseMapping {
+	/*
+	 * stores trainer id, in the sql table it is stored in trainerid column
+	 * Foreign key to the trainer table
+	 */
+	@Column(name = &quot;trainerid&quot;)
+	private int trainerId;
+	
+	/*
+	 * stores course id, in the sql table it is stored in courseid column
+	 * Foreign key to the course table
+	 */
+	@Column(name = &quot;courseid&quot;)
+	private int courseId;
+	
+	/*
+	 * Primary key of the table hence can't be null. 
+	 */
+	@Id
+	@Column(name = &quot;tcid&quot;)
+	@NotNull(message = &quot;tcId field can't be empty&quot;)
+	private int tcId;
+	
+	//Public getter and setter methods
+	public int getTrainerId() {
+<span class="fc" id="L46">		return trainerId;</span>
+	}
+	public void setTrainerId(int trainerId) {
+<span class="nc" id="L49">		this.trainerId = trainerId;</span>
+<span class="nc" id="L50">	}</span>
+	public int getCourseId() {
+<span class="fc" id="L52">		return courseId;</span>
+	}
+	public void setCourseId(int courseId) {
+<span class="nc" id="L55">		this.courseId = courseId;</span>
+<span class="nc" id="L56">	}</span>
+	public int getTcId() {
+<span class="fc" id="L58">		return tcId;</span>
+	}
+	public void setTcId(int tcId) {
+<span class="fc" id="L61">		this.tcId = tcId;</span>
+<span class="fc" id="L62">	}</span>
+	
+	//Overrides toString function to print object in this format
+	@Override
+	public String toString() {
+<span class="fc" id="L67">		return &quot;TeacherCourseMapping [trainerId=&quot; + trainerId + &quot;, courseId=&quot; + courseId + &quot;, tcId=&quot; + tcId + &quot;]&quot;;</span>
+	}
+	
+	//Parameterized Constructor
+	public TeacherCourseMapping(int trainerId, int courseId, int tcId) {
+<span class="fc" id="L72">		super();</span>
+<span class="fc" id="L73">		this.trainerId = trainerId;</span>
+<span class="fc" id="L74">		this.courseId = courseId;</span>
+<span class="fc" id="L75">		this.tcId = tcId;</span>
+<span class="fc" id="L76">	}</span>
+	
+	//Default Constructor
+	public TeacherCourseMapping() {
+<span class="fc" id="L80">		super();</span>
+<span class="fc" id="L81">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
