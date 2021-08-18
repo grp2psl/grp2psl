@@ -31,6 +31,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.psl.entities.Learner;
 import com.psl.service.LearnerService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 /*Annotation to enable LearnerController to act as a RestController 
  * Which handles all requests on url's having "/learners" prefix
  */
@@ -53,6 +55,7 @@ public class LearnerController {
 	 * It gets learner details with given learnerId.
 	 * GET DETAILS OF LEARNER BY ID
 	 */	
+	@Operation(summary = "GET DETAILS OF LEARNER BY ID")
 	@GetMapping({"/learners/{id}", "/managers/learners/{id}"})
 	public Learner getLearner(@PathVariable int id) {
 		LOGGER.info(logPrefix+"GET /{id} called to get details of a learner by ID");
@@ -62,6 +65,7 @@ public class LearnerController {
 	/*
 	 * GET DETAILS OF ALL LEARNERS
 	 */
+	@Operation(summary = "GET DETAILS OF ALL LEARNERS")
 	@GetMapping("/managers/learners/")
 	public List<Learner> getAllLearners(){
 		LOGGER.info(logPrefix+"GET / called to view all learners");
@@ -73,6 +77,7 @@ public class LearnerController {
 	 * It registers a new Learner using addLearner function
 	 * REGISTER LEARNER
 	 */
+	@Operation(summary = "REGISTER LEARNER")
 	@PostMapping("/managers/learners/register")
 	public ResponseEntity<String> addLearner(@RequestBody Learner learner) {
 		LOGGER.info(logPrefix+"POST /register called to add a new learner");
@@ -92,6 +97,7 @@ public class LearnerController {
 	/*
 	 * REGISTER MULTIPLE LEARNERS BY UPLOADING EXCEL FILE
 	 */
+	@Operation(summary = "REGISTER MULTIPLE LEARNERS BY UPLOADING EXCEL FILE")
 	@PostMapping("/managers/learners/register-multiple")
 	public ResponseEntity<String> addMultipleLearners(@RequestParam("file") MultipartFile csvFilePath ) throws IOException {
 		LOGGER.info(logPrefix+"POST /register-multiple called to add multiple learners");
@@ -113,6 +119,7 @@ public class LearnerController {
 	 * Where id is learner Id.
 	 * It updates credentials of Learner with given id.
 	 */
+	@Operation(summary = "It updates credentials of Learner with given id")
 	@PutMapping({"/learners/updatelearner/{id}/currentPassword/{currentPassword}/newPassword/{newPassword}", "/managers/learners/updatelearner/{id}/currentPassword/{currentPassword}/newPassword/{newPassword}"})
 	public ResponseEntity<String> updateLearner(@PathVariable int id,  @PathVariable String currentPassword,@PathVariable String newPassword) {
 		LOGGER.info(logPrefix+"PUT /updateadmin called to update admin password");
@@ -141,6 +148,7 @@ public class LearnerController {
 	/*
 	 * DELETE LEARNER BY ID
 	 */
+	@Operation(summary = "DELETE LEARNER BY ID")
 	@DeleteMapping("/managers/learners/{id}")
 	public void removeLearner(@PathVariable int id) {
 		LOGGER.info(logPrefix+"DELETE /{id} called to delete a learner by ID");
@@ -150,6 +158,7 @@ public class LearnerController {
 	/*
 	 * UPDATE LEARNER BY ID
 	 */
+	@Operation(summary = "UPDATE LEARNER BY ID")
 	@PutMapping({"/learners/update", "/managers/learners/update"})
 	public void updateLearner(@RequestBody Learner learner) {
 		LOGGER.info(logPrefix+"PUT /update called to update details of a learner by ID");
@@ -159,6 +168,7 @@ public class LearnerController {
 	/*
 	 * DOWNLOAD FORMAT OF EXCEL SHEET FOR UPLOADING MULTIPLE LEARNERS
 	 */
+	@Operation(summary = "DOWNLOAD FORMAT OF EXCEL SHEET FOR UPLOADING MULTIPLE LEARNERS")
 	@GetMapping("/managers/learners/generate-excel")
 	public void downloadFileFromLocal() throws IOException {
 		LOGGER.info(logPrefix+"GET /generate-excel called to download excel format for multiple learner registration");
@@ -167,6 +177,7 @@ public class LearnerController {
 		System.out.println(file);
 	}
 
+	@Operation(summary = "LEARNER LOGIN")
 	@GetMapping("/learners/login")
 	public ResponseEntity<Learner> login(@RequestParam String email, @RequestParam String password){
 		Learner result = service.login(email, password);

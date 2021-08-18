@@ -32,6 +32,9 @@ import com.psl.entities.TeacherCourseMapping;
 import com.psl.service.CourseOfferingService;
 import com.psl.service.ManagerService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+
 @RestController
 @RequestMapping("/managers")
 @CrossOrigin(origins="http://localhost:3000")
@@ -48,6 +51,7 @@ public class ManagerController {
 	/*
 	 * GET DETAILS OF MANAGER BY ID
 	 */
+	@Operation(summary = "GET DETAILS OF MANAGER BY ID")
 	@GetMapping("/{id}")
 	public Manager getManager(@PathVariable int id) {
 		LOGGER.info(logPrefix+"GET /{id} called to get details of a manager by ID");
@@ -57,6 +61,7 @@ public class ManagerController {
 	/*
 	 * ADD A MANAGER
 	 */
+	@Operation(summary = "ADD A MANAGER")
 	@PostMapping("/register")
 	public void addManager(@RequestBody Manager m) {
 		LOGGER.info(logPrefix+"POST /register called to add a manager");
@@ -66,6 +71,7 @@ public class ManagerController {
 	/*
 	 * UPDATE DETAILS OF MANAGER
 	 */
+	@Operation(summary = "UPDATE DETAILS OF MANAGER")
 	@PutMapping("/update")
 	public void updateManager(@RequestBody Manager manager) {
 		LOGGER.info(logPrefix+"PUT /update called to update details of a manager");
@@ -76,6 +82,7 @@ public class ManagerController {
 	 * ENROLL A LEARNER TO A COURSE
 	 * REQUEST BODY CONTENTS : {leanerid, tcid, startdate, enddate}
 	 */
+	@Operation(summary = "ENROLL A LEARNER TO A COURSE")
 	@PostMapping("/enroll-learner")
 	public void enrollLearner(@RequestBody CourseOffering offering) throws ParseException {
 		LOGGER.info(logPrefix+"POST /enroll-learner called to enroll a learner to a course");
@@ -86,6 +93,7 @@ public class ManagerController {
 	 * ENROLL MULTIPLE LEARNERS TO A COURSE
 	 * REQUEST PARAM WILL BE AN EXCEL FILE, FOR FILE CONTENTS USE /generate-excel-enrolment
 	 */
+	@Operation(summary = "ENROLL MULTIPLE LEARNERS TO A COURSE")
 	@PostMapping("/enroll-learners")
 	public void enrollMultipleLearners(@RequestParam("file") MultipartFile csvFilePath) throws IOException, ParseException {
 		LOGGER.info(logPrefix+"POST /enroll-learners called to enroll multiple learners to a course");
@@ -96,6 +104,7 @@ public class ManagerController {
 	 * UPDATE AN INDIVIDUAL TEST SCORE
 	 * REQUEST BODY CONTENTS : {percentage}
 	 */
+	@Operation(summary = "UPDATE AN INDIVIDUAL TEST SCORE")
 	@PutMapping("/update-test-scores/{id}")
 	public void updateTestScore(@RequestBody CourseOffering offering, @PathVariable int id) {
 		LOGGER.info(logPrefix+"PUT /update-test-scores/{id} called to update test score of a learner");
@@ -106,6 +115,7 @@ public class ManagerController {
 	 * UPDATE TEST SCORES OF MULTIPLE
 	 * REQUEST PARAM WILL BE AN EXCEL FILE, FOR FILE CONTENTS USE /generate-excel-score-update
 	 */
+	@Operation(summary = "UPDATE TEST SCORES OF MULTIPLE LEARNERS")
 	@PutMapping("/update-test-scores")
 	public void updateMultipleTestScores(@RequestParam("file") MultipartFile csvFilePath) throws IOException, ParseException {
 		LOGGER.info(logPrefix+"PUT /update-test-scores called to update test score of multiple learners");
@@ -115,6 +125,7 @@ public class ManagerController {
 	/*
 	 * VIEW ALL COURSE OFFERINGS
 	 */
+	@Operation(summary = "VIEW ALL COURSE OFFERINGS")
 	@GetMapping("/course-offerings")
 	public List<CourseOffering> viewCourseOfferings(){
 		LOGGER.info(logPrefix+"GET /course-offerings called to view all course offerings");
@@ -124,6 +135,7 @@ public class ManagerController {
 	/*
 	 * DELETE A COURSE OFFERING BY ID
 	 */
+	@Operation(summary = "DELETE A COURSE OFFERING BY ID")
 	@DeleteMapping("/course-offering/{id}")
 	public void removeCourseOffering(@PathVariable int id) {
 		LOGGER.info(logPrefix+"DELETE /course-offering/{id} called to delete a course offering by ID");
@@ -133,6 +145,7 @@ public class ManagerController {
 	/*
 	 * VIEW A TRAINER's DETAILS, COURSES AND RESPECTIVE OFFERINGS TAKEN BY THE TRAINER 
 	 */
+	@Operation(summary = "VIEW A TRAINER's DETAILS, COURSES AND RESPECTIVE OFFERINGS TAKEN BY THE TRAINER")
 	@GetMapping("/trainer/{id}")
 	public Map<String, Object> viewTrainerDetails(@PathVariable int id) {
 		LOGGER.info(logPrefix+"GET /trainer/{id} called to view details of a trainer, courses offered and respective offerings taken by the trainer");
@@ -142,6 +155,7 @@ public class ManagerController {
 	/*
 	 * VIEW A COURSE's DETAILS, ITS OFFERINGS AND AVERAGE RATING OF THE TRAINER
 	 */
+	@Operation(summary = "VIEW A COURSE's DETAILS, ITS OFFERINGS AND AVERAGE RATING OF THE TRAINER")
 	@GetMapping("/trainer/{id}/course/{course_id}")
 	public Map<String, Object> viewCourseDetails(@PathVariable int id, @PathVariable int course_id) {
 		LOGGER.info(logPrefix+"GET /trainer/{id}/course/{course_id} called to view details of a course, its offerings and average rating of the trainer");
@@ -151,6 +165,7 @@ public class ManagerController {
 	/*
 	 * DOWNLOAD THE EXCEL FORMAT FOR MULTIPLE ENROLMENT
 	 */
+	@Operation(summary = "DOWNLOAD THE EXCEL FORMAT FOR MULTIPLE ENROLMENT")
 	@GetMapping("/generate-excel-enrolment")
 	public void downloadFileFromLocalEnrolment() throws IOException {
 		LOGGER.info(logPrefix+"GET /generate-excel-enrolment called to download the excel format for multiple learner enrolment");
@@ -162,6 +177,7 @@ public class ManagerController {
 	/*
 	 * DOWNLOAD THE EXCEL FORMAT FOR UPDATING MULTIPLE SCORES
 	 */
+	@Operation(summary = "DOWNLOAD THE EXCEL FORMAT FOR UPDATING MULTIPLE SCORES")
 	@GetMapping("/generate-excel-score-update")
 	public void downloadFileFromLocalScoreUpdate() throws IOException {
 		LOGGER.info(logPrefix+"GET /generate-excel-score-update called to download the excel format for updating multiple scores");
@@ -174,7 +190,7 @@ public class ManagerController {
 	 * VIEW ALL COURSES ATTENDED BY LEARNER
 	 * RESPONSE BODY CONTAINS (LEARNER NAME,COURSE NAME,COURSE ID,LEARNER ID,PERCENTAGE AND STATUS)
 	 */
-	
+	@Operation(summary = "VIEW ALL COURSES ATTENDED BY LEARNER")	
 	@GetMapping("/course-attended/{id}")
 	public List<Map<String, Object>> viewCourseAttended(@PathVariable int id ){
 		LOGGER.info(logPrefix+"GET /course-attended/{id} called to view all courses attended by learner");
@@ -195,6 +211,7 @@ public class ManagerController {
 	 * UPDATE AN INDIVIDUAL TEST SCORE
 	 * REQUEST BODY CONTENTS : {percentage}
 	 */
+	@Operation(summary = "UPDATE AN INDIVIDUAL TEST SCORE")
 	@PutMapping("/update-test-score")
 	public ResponseEntity<String> updateTestScoreByCourseOfferingId(@RequestParam(value="tcId") int tcId, @RequestParam(value="learnerId") int learnerId, @RequestParam(value="percentage") int percentage) {
 		LOGGER.info(logPrefix+"PUT /update-test-score called to update test score of a learner by Course Offering ID");
@@ -212,6 +229,7 @@ public class ManagerController {
 	/*
 	 * VIEW DETAILS OF COURSE OFFERINGS
 	 */	
+	@Operation(summary = "VIEW DETAILS OF COURSE OFFERINGS")
 	@GetMapping("/viewCourseOfferingsDetails")
 	public List<Map<String, Object>> viewCourseOfferingsDetails() throws ParseException{
 		LOGGER.info(logPrefix+"GET /viewCourseOfferingDetails called to view all course offerings");
@@ -221,6 +239,7 @@ public class ManagerController {
 	/*
 	 * VIEW DETAILS OF COURSES ATTENDED
 	 */	
+	@Operation(summary = "VIEW DETAILS OF COURSES ATTENDED")
 	@GetMapping("/courses-attended/{id}")
 	public List<Map<String, Object>> viewCoursesAttended(@PathVariable int id ) throws ParseException{
 		LOGGER.info(logPrefix+"GET /course-attended/{id} called to view details of courses attended by a learner");
@@ -230,6 +249,7 @@ public class ManagerController {
 	/*
 	 * FIND TEACHER-COURSE MAPPINGS BY LEARNER ID
 	 */		
+	@Operation(summary = "FIND TEACHER-COURSE MAPPINGS BY LEARNER ID")
 	@GetMapping("/findTeacherCourseMappingsByLearnerId/{id}")
 	public List<TeacherCourseMapping> findTeacherCourseMappingsByLearnerId(@PathVariable("id") int learnerId) throws ParseException{
 		LOGGER.info(logPrefix+"GET /findTeacherCourseMappingsByLearnerId/{id} called to find teacher-course mappings by learner ID");
@@ -239,12 +259,14 @@ public class ManagerController {
 	/*
 	 * FIND LEARNERS BY TCID
 	 */	
+	@Operation(summary = "FIND LEARNERS BY TCID")
 	@GetMapping("/findLearnersByTcId/{id}")
 	public List<Learner> findLearnersByTcId(@PathVariable("id") int tcId) throws ParseException{
 		LOGGER.info(logPrefix+"GET /findLearnersByTcId/{id} called to find learners by TcID");
 		return offeringService.findLearnersByTcId(tcId);
 	}	
-	
+
+	@Operation(summary = "MANAGER LOGIN")
 	@GetMapping("/login")
 	public ResponseEntity<Manager> login(@RequestParam String email, @RequestParam String password){
 		Manager result = service.login(email, password);
@@ -258,7 +280,7 @@ public class ManagerController {
 	public String sayHello(){
 		return "Hello World!";
 	}
-	
+
 	@PutMapping({"/updateadmin/{id}/currentPassword/{currentPassword}/newPassword/{newPassword}"})
 	public ResponseEntity<String> updateAdmin(@PathVariable int id, @PathVariable String currentPassword,@PathVariable String newPassword ) {
 		LOGGER.info(logPrefix+"PUT /updateadmin called to update admin password");
